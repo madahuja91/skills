@@ -13,8 +13,9 @@ Pack manifest must also conform to `skills/agents/csa-document-assembler/schema.
 
 ## Pass requires
 
-- Markdown sections: `00`, `04`–`10`, `README.md`
-- HTML: `arc42-c4/index.html`, `context.html`, `containers.html`, `components.html`
+- Pack under single `active_root` only (no `src/src`; `active-root-hygiene` pass)
+- Markdown sections: `00`, `04`–`10`, `README.md` (**Markdown only**)
+- HTML: `arc42-c4/index.html`, `context.html`, `containers.html`, `components.html` (**HTML only** — never C4 `.md`)
 - No C4 Markdown (`01`/`02`/`03`)
 - Machine artifacts synced + `traceability_graph.json` + `mermaid_diagrams.json`
 - Required Mermaid diagrams present and correctly fenced/rendered (`mermaid-diagrams`):

@@ -7,8 +7,18 @@
     "agent_outputs_validate_against_agent_schema": true,
     "gate_reports_validate_against_quality_gate_framework_and_gate_schema": true
   },
-  "skill_count": 48,
+  "skill_count": 49,
   "skills": [
+    {
+      "id": "active-root-hygiene",
+      "path": "shared/active-root-hygiene",
+      "category": "shared",
+      "skill_md": "shared/active-root-hygiene/SKILL.md",
+      "schema": "shared/active-root-hygiene/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Enforces a single ACTIVE_ROOT (typically one src/) with no nested src/src or duplicate roots; Completeness must fail or auto-remove duplicates."
+    },
     {
       "id": "arc42-c4-views",
       "path": "standards/arc42-c4-views",

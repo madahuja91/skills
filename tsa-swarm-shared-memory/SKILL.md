@@ -12,21 +12,25 @@ Authoritative contract: [`schema.json`](schema.json)
 
 ## Paths
 
+Exactly **one** ACTIVE_ROOT (prefer workspace `src/`). Never create `src/src` or a second root.
+
 ```text
-ACTIVE_ROOT/
+ACTIVE_ROOT/   # e.g. src/  — single root for the whole swarm
   artifacts/                 # accepted TSA specialist JSON
   quality_gate_reports/
-  tsa_pack/                  # Assembler output
+  tsa_pack/                  # Assembler output (MD + arc42-c4 HTML)
   _internal/swarm/
-    swarm_state.json
+    swarm_state.json         # MUST include active_root
     handoffs.jsonl
     context_memory.md
 ```
 
 ## Rules
 
-1. Manager bootstraps ACTIVE_ROOT + swarm files before workers.
-2. Every turn: read swarm_state + latest handoffs before acting.
-3. Parallel peers sync only via shared memory + accepted artifact paths.
-4. Bump `checkpoint.seq` after writes; emit `swarm_handoff.to[]` for dependents.
-5. Completeness updates `loop` only — never rewrites specialist content.
+1. Manager bootstraps **one** ACTIVE_ROOT + swarm files; set `swarm_state.active_root`.
+2. Every subagent (sequential or parallel) reads `active_root` and writes **only** there.
+3. Every turn: read swarm_state + latest handoffs before acting.
+4. Parallel peers sync only via shared memory + accepted artifact paths under `active_root`.
+5. Bump `checkpoint.seq` after writes; emit `swarm_handoff.to[]` for dependents.
+6. Completeness updates `loop` only — never rewrites specialist content; must run `active-root-hygiene` and delete nested/duplicate roots immediately.
+7. Deliverables: Markdown pack sections; arc42/C4 as HTML under `tsa_pack/arc42-c4/` only.

@@ -26,15 +26,31 @@ Subagent invoked by CSA Architecture Manager **after every specialist** (and Ass
 }
 ```
 
+## HARD: Single ACTIVE_ROOT (every Completeness run)
+
+Follow `active-root-hygiene`:
+
+1. Read canonical `active_root` from swarm_state (typically single `src/`).
+2. Detect nested `src/src` and duplicate roots/pack trees.
+3. **Remove duplicates immediately**; log `removed_paths`.
+4. **Fail blocking** if nesting remains or agents wrote to multiple roots.
+5. Sequential and parallel subagents must share the **same** `active_root`.
+
+## Deliverable format checks (document gates)
+
+- Narrative CSA sections + epic seeds: **Markdown only**
+- arc42/C4: **HTML only** under `csa_pack/arc42-c4/` — never C4 `.md`
+
 ## Procedure
 
-1. Load agent skill schema + `quality-rubric.md` for the gate.
-2. Validate JSON Schema; score `schema_conformance`.
-3. Apply rubric metrics for evidence, completeness, confidence.
-4. Build `blocking_gaps` (critical/high that block acceptance) and `warnings`.
-5. If fail: write `remediation_brief` using agent `remediation-hints.md`.
-6. Write report to `artifacts/quality_gate_reports/{gate_id}-{artifact_stem}.json`.
-7. Return report JSON to Manager.
+1. Run **active-root-hygiene** checks first.
+2. Load agent skill schema + `quality-rubric.md` for the gate.
+3. Validate JSON Schema; score `schema_conformance`.
+4. Apply rubric metrics for evidence, completeness, confidence.
+5. Build `blocking_gaps` (critical/high that block acceptance) and `warnings`.
+6. If fail: write `remediation_brief` using agent `remediation-hints.md`.
+7. Write report to `artifacts/quality_gate_reports/{gate_id}-{artifact_stem}.json` under `active_root` only.
+8. Return report JSON to Manager.
 
 ## Mapping gate → skill
 

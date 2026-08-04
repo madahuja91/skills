@@ -79,6 +79,9 @@
         "boolean",
         "null"
       ]
+    },
+    "active_root_hygiene": {
+      "$ref": "https://csa.local/schemas/active-root-hygiene.json"
     }
   },
   "additionalProperties": true

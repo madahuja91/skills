@@ -17,10 +17,10 @@ Parallel swarm agents must **not** sync only through chat. They share one on-dis
 
 ## ACTIVE_ROOT layout
 
-Manager bootstraps (adapt service/date from run):
+Manager bootstraps **exactly one** ACTIVE_ROOT (prefer workspace `src/`). **Never** create nested `src/src` or a second active root. Set `swarm_state.active_root` once. All sequential/parallel subagents write only under that path (see `active-root-hygiene`).
 
 ```text
-ACTIVE_ROOT/
+ACTIVE_ROOT/                          # e.g. src/ — single root for the whole swarm
   artifacts/                          # accepted specialist JSON (public machine)
     discovery.json
     domain.json
@@ -32,7 +32,7 @@ ACTIVE_ROOT/
   _internal/
     run_plan.json
     swarm/
-      swarm_state.json                # shared memory (source of truth between agents)
+      swarm_state.json                # MUST include active_root
       handoffs.jsonl                  # append-only handoff log
       context_memory.md               # short rolling digest
     completeness_validation/          # Completeness Validator only

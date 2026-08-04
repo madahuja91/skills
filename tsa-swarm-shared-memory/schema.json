@@ -6,7 +6,8 @@
   "required": [
     "phase",
     "checkpoint",
-    "artifacts_index"
+    "artifacts_index",
+    "active_root"
   ],
   "properties": {
     "phase": {
@@ -36,6 +37,10 @@
     },
     "loop": {
       "type": "object"
+    },
+    "active_root": {
+      "type": "string",
+      "minLength": 1
     }
   },
   "additionalProperties": true

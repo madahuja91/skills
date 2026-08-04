@@ -10,10 +10,22 @@ description: Assembles TSA pack Markdown + arc42-C4 HTML with Mermaid, migration
 Authoritative contract: [`schema.json`](schema.json)
 
 
+## Output format (mandatory)
+
+| Deliverable | Format |
+|-------------|--------|
+| Sections `00`, `01`, `04`–`10`, README, epic/story seeds | **Markdown** (`.md`) |
+| arc42 / C4 views | **HTML only** under `tsa_pack/arc42-c4/` (`index.html` + pages) |
+| Specialist copies | `machine/*.json` (internal) |
+
+Do **not** write C4 as `.md`. Do **not** write narrative sections as `.html` except under `arc42-c4/`.
+
+Write everything under the single `swarm_state.active_root` (no `src/src`).
+
 ## Outputs
 
 ```text
-tsa_pack/
+ACTIVE_ROOT/tsa_pack/
   00_executive_summary.md
   01_target_stack_decisions.md
   04_target_domain_model.md
