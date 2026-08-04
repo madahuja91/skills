@@ -35,3 +35,5 @@ Authoritative contract: [`schema.json`](schema.json)
 - Stack only from ADR/spec
 - Trace every target element to CSA and/or ADR
 - Parallel peers sync via shared memory only
+- **Single ACTIVE_ROOT** (prefer `src/`) — never `src/src`; Completeness deletes duplicates immediately (`active-root-hygiene`)
+- Deliverables: Markdown narratives; arc42/C4 HTML under `tsa_pack/arc42-c4/` only
