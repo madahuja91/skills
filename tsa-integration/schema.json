@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsa.local/schemas/tsa-integration.json",
+  "title": "tsa-integration",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "agent_id",
+    "agent_version",
+    "timestamp",
+    "schema_version",
+    "overall_confidence_score",
+    "csa_refs",
+    "adr_refs",
+    "target_integrations"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string"
+    },
+    "agent_id": {
+      "const": "integration"
+    },
+    "agent_version": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "overall_confidence_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "csa_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "adr_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validation_results": {
+      "type": "object"
+    },
+    "target_integrations": {
+      "type": [
+        "object",
+        "array",
+        "string",
+        "number",
+        "boolean",
+        "null"
+      ]
+    },
+    "coexistence_bridges": {
+      "type": [
+        "object",
+        "array",
+        "string",
+        "number",
+        "boolean",
+        "null"
+      ]
+    },
+    "async_sync_choices": {
+      "type": [
+        "object",
+        "array",
+        "string",
+        "number",
+        "boolean",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

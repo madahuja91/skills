@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsa.local/schemas/tsa-swarm-shared-memory.json",
+  "title": "TsaSwarmSharedMemory",
+  "type": "object",
+  "required": [
+    "phase",
+    "checkpoint",
+    "artifacts_index"
+  ],
+  "properties": {
+    "phase": {
+      "type": "string",
+      "enum": [
+        "bootstrap",
+        "intake",
+        "fan_out",
+        "assemble",
+        "done"
+      ]
+    },
+    "checkpoint": {
+      "type": "object",
+      "required": [
+        "seq"
+      ],
+      "properties": {
+        "seq": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "artifacts_index": {
+      "type": "object"
+    },
+    "loop": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

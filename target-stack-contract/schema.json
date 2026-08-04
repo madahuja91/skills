@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsa.local/schemas/target-stack-contract.json",
+  "title": "TargetStackDecisions",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "decisions",
+    "unresolved"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "source_adr_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "decisions": {
+      "type": "object",
+      "properties": {
+        "language_runtime": {
+          "type": "object"
+        },
+        "datastore": {
+          "type": "object"
+        },
+        "messaging": {
+          "type": "object"
+        },
+        "api_style": {
+          "type": "object"
+        },
+        "deployment_target": {
+          "type": "object"
+        }
+      }
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

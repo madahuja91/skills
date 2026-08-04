@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsa.local/schemas/gate-tsa-tech.json",
+  "title": "gate-tsa-tech",
+  "type": "object",
+  "required": [
+    "gate_id",
+    "result"
+  ],
+  "properties": {
+    "gate_id": {
+      "const": "gate-tsa-tech"
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "pass_with_warnings"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": true
+}
