@@ -1,0 +1,57 @@
+{
+  "artifact_id": "lineage-20260804120300",
+  "agent_id": "data_lineage",
+  "agent_version": "1.0.0",
+  "timestamp": "2026-08-04T12:03:00Z",
+  "schema_version": "1.0.0",
+  "scope": { "codebase_root": "files/legacy-app", "modules": ["claims"] },
+  "overall_confidence_score": 72,
+  "lineage_scope": "field_level",
+  "data_sources": [
+    {
+      "source_id": "DS-oracle-claims",
+      "source_name": "CLAIMS_DB",
+      "source_type": "database",
+      "technology": "Oracle",
+      "data_entities": [
+        {
+          "entity_name": "CLAIM",
+          "entity_type": "table",
+          "fields": [
+            { "field_name": "CLAIM_ID", "data_type": "NUMBER", "is_primary_key": true }
+          ]
+        }
+      ],
+      "access_patterns": [],
+      "confidence_score": 85,
+      "evidence": [{ "path": "db/claims.sql", "kind": "ddl" }]
+    }
+  ],
+  "field_lineage": [
+    {
+      "lineage_id": "LIN-claim-id-ui-to-db",
+      "source_field": { "source_name": "ClaimServlet", "entity_name": "ClaimForm", "field_name": "claimId", "data_type": "String" },
+      "target_field": { "target_name": "CLAIMS_DB", "entity_name": "CLAIM", "field_name": "CLAIM_ID", "data_type": "NUMBER" },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [{ "path": "claims/src/ClaimDao.java", "kind": "code" }]
+    }
+  ],
+  "validation_results": {
+    "lineage_completeness": {
+      "total_fields_analyzed": 1,
+      "fields_with_complete_lineage": 1,
+      "fields_missing_lineage": [],
+      "completeness_percentage": 100
+    }
+  },
+  "recommendations": []
+}

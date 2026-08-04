@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/epic-story-mapping.json",
+  "title": "CSAEpicStoryMarkdownSeeds",
+  "description": "Schema-based contract for Markdown Function/Epic/Story seed files",
+  "type": "object",
+  "required": ["format", "files", "rules"],
+  "properties": {
+    "format": { "const": "markdown" },
+    "files": {
+      "type": "object",
+      "required": ["functions", "epics", "stories"],
+      "properties": {
+        "functions": {
+          "type": "object",
+          "required": ["path", "section_heading", "item_id_pattern", "required_fields"],
+          "properties": {
+            "path": { "const": "csa_pack/epic_story_seeds/functions.md" },
+            "section_heading": { "const": "# Functions" },
+            "item_id_pattern": { "const": "^FN-" },
+            "required_fields": {
+              "type": "array",
+              "items": { "type": "string" },
+              "default": ["Description", "Capability IDs", "CSA refs"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "epics": {
+          "type": "object",
+          "required": ["path", "section_heading", "item_id_pattern", "required_fields"],
+          "properties": {
+            "path": { "const": "csa_pack/epic_story_seeds/epics.md" },
+            "section_heading": { "const": "# Epics" },
+            "item_id_pattern": { "const": "^EP-" },
+            "required_fields": {
+              "type": "array",
+              "items": { "type": "string" },
+              "default": ["Function", "Description", "CSA refs"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "stories": {
+          "type": "object",
+          "required": ["path", "section_heading", "item_id_pattern", "required_fields"],
+          "properties": {
+            "path": { "const": "csa_pack/epic_story_seeds/stories.md" },
+            "section_heading": { "const": "# Stories" },
+            "item_id_pattern": { "const": "^US-" },
+            "required_fields": {
+              "type": "array",
+              "items": { "type": "string" },
+              "default": [
+                "Epic",
+                "Capability",
+                "Trace IDs",
+                "Acceptance criteria hooks"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "rules": {
+      "type": "object",
+      "required": [
+        "every_function_has_epic",
+        "every_epic_has_csa_refs",
+        "every_story_has_trace_and_ac"
+      ],
+      "properties": {
+        "every_function_has_epic": { "type": "boolean", "const": true },
+        "every_epic_has_csa_refs": { "type": "boolean", "const": true },
+        "every_story_has_trace_and_ac": { "type": "boolean", "const": true }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

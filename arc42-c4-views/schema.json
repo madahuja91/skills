@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/arc42-c4-html-pack.json",
+  "title": "Arc42C4HtmlPack",
+  "description": "Manifest for arc42/C4 HTML index site deliverable",
+  "type": "object",
+  "required": ["format", "entry", "pages", "system_name"],
+  "properties": {
+    "format": { "const": "html" },
+    "entry": {
+      "type": "string",
+      "const": "csa_pack/arc42-c4/index.html"
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "title"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": ["index", "context", "containers", "components"]
+          },
+          "path": { "type": "string", "pattern": ".*\\.html$" },
+          "title": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "system_name": { "type": "string", "minLength": 1 },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["architecture.c4_views", "discovery", "integration", "domain"]
+      }
+    },
+    "relative_links_only": { "type": "boolean", "const": true },
+    "markdown_c4_forbidden": { "type": "boolean", "const": true },
+    "mermaid_required": { "type": "boolean", "const": true },
+    "mermaid_diagram_ids": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "string",
+        "enum": [
+          "diag-c4-context",
+          "diag-c4-containers",
+          "diag-c4-components"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

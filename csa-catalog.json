@@ -1,0 +1,284 @@
+{
+  "$schema": "https://csa.local/schemas/skills-catalog.json",
+  "catalog_version": "1.0.0",
+  "policy": {
+    "every_skill_must_have_schema_json": true,
+    "every_skill_md_must_reference_schema_section": true,
+    "agent_outputs_validate_against_agent_schema": true,
+    "gate_reports_validate_against_quality_gate_framework_and_gate_schema": true
+  },
+  "skill_count": 27,
+  "skills": [
+    {
+      "id": "arc42-c4-views",
+      "path": "standards/arc42-c4-views",
+      "category": "standards",
+      "skill_md": "standards/arc42-c4-views/SKILL.md",
+      "schema": "standards/arc42-c4-views/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Builds arc42-aligned C4 Context/Container/Component views as an HTML index site (not Markdown). Use when assembling architecture visualization outputs."
+    },
+    {
+      "id": "csa-architecture-manager",
+      "path": "orchestrator/csa-architecture-manager",
+      "category": "orchestrator",
+      "skill_md": "orchestrator/csa-architecture-manager/SKILL.md",
+      "schema": "orchestrator/csa-architecture-manager/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Orchestrator Manager strategy for CSA \u2014 bootstraps shared swarm memory, fans out specialist subagents in parallel, gates via Completeness Validator, re-runs up to 2 times, then assembles CSA pack. Use as the primary workflow orchestrator agent."
+    },
+    {
+      "id": "csa-artifact-contract",
+      "path": "shared/csa-artifact-contract",
+      "category": "shared",
+      "skill_md": "shared/csa-artifact-contract/SKILL.md",
+      "schema": "shared/csa-artifact-contract/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Shared CSA artifact metadata, ID conventions, confidence scoring, and evidence reference rules. Use when producing or validating any CSA specialist artifact JSON."
+    },
+    {
+      "id": "csa-business-domain",
+      "path": "agents/csa-business-domain",
+      "category": "agents",
+      "skill_md": "agents/csa-business-domain/SKILL.md",
+      "schema": "agents/csa-business-domain/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Extract DDD domains, entities, business rules, and capabilities from legacy code for CSA. Use when Manager invokes Business Domain analysis."
+    },
+    {
+      "id": "csa-completeness-validator",
+      "path": "agents/csa-completeness-validator",
+      "category": "agents",
+      "skill_md": "agents/csa-completeness-validator/SKILL.md",
+      "schema": "agents/csa-completeness-validator/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Validates CSA specialist artifacts against JSON Schema and gate rubrics; emits pass/fail gate reports with remediation briefs. Use after every specialist run as Manager subagent."
+    },
+    {
+      "id": "csa-data-lineage",
+      "path": "agents/csa-data-lineage",
+      "category": "agents",
+      "skill_md": "agents/csa-data-lineage/SKILL.md",
+      "schema": "agents/csa-data-lineage/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Field-level and entity-level data lineage for legacy CSA. Use when Manager invokes Data Lineage analysis."
+    },
+    {
+      "id": "csa-discover",
+      "path": "agents/csa-discover",
+      "category": "agents",
+      "skill_md": "agents/csa-discover/SKILL.md",
+      "schema": "agents/csa-discover/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Technology inventory and artifact classification for legacy CSA discovery. Use when the Manager invokes Discover or when classifying a legacy codebase stack, modules, and dependencies."
+    },
+    {
+      "id": "csa-document-assembler",
+      "path": "agents/csa-document-assembler",
+      "category": "agents",
+      "skill_md": "agents/csa-document-assembler/SKILL.md",
+      "schema": "agents/csa-document-assembler/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Assembles Hybrid CSA pack \u2014 Markdown deliverables plus arc42-C4 HTML index \u2014 and Markdown epic/story seeds from accepted machine artifacts. Use when Manager invokes Document Assembler after gated specialists."
+    },
+    {
+      "id": "csa-integration",
+      "path": "agents/csa-integration",
+      "category": "agents",
+      "skill_md": "agents/csa-integration/SKILL.md",
+      "schema": "agents/csa-integration/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Classify legacy integrations (REST/EVENT/BATCH/LEGACY), sync vs async, and resilience patterns for CSA. Use when Manager invokes Integration Analysis."
+    },
+    {
+      "id": "csa-swarm-shared-memory",
+      "path": "shared/csa-swarm-shared-memory",
+      "category": "shared",
+      "skill_md": "shared/csa-swarm-shared-memory/SKILL.md",
+      "schema": "shared/csa-swarm-shared-memory/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Shared-memory protocol for CSA Orchestrator swarm \u2014 swarm_state, handoffs, context_memory, and artifact index so parallel specialists sync outputs. Use for Manager bootstrap and every subagent turn."
+    },
+    {
+      "id": "csa-tech-architecture",
+      "path": "agents/csa-tech-architecture",
+      "category": "agents",
+      "skill_md": "agents/csa-tech-architecture/SKILL.md",
+      "schema": "agents/csa-tech-architecture/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Runtime-aware technical architecture, C4 layers, components, and tech debt for CSA. Use when Manager invokes Technology Architecture analysis."
+    },
+    {
+      "id": "data-lineage-pack",
+      "path": "standards/data-lineage-pack",
+      "category": "standards",
+      "skill_md": "standards/data-lineage-pack/SKILL.md",
+      "schema": "standards/data-lineage-pack/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Standard structure for CSA data architecture and lineage documentation. Use during Data Lineage analysis and Assembler section 06."
+    },
+    {
+      "id": "ddd-domain-pack",
+      "path": "standards/ddd-domain-pack",
+      "category": "standards",
+      "skill_md": "standards/ddd-domain-pack/SKILL.md",
+      "schema": "standards/ddd-domain-pack/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "DDD structuring for CSA domain model \u2014 bounded contexts, aggregates, entities, and business rules as Markdown. Use during Business Domain analysis and Assembler domain docs."
+    },
+    {
+      "id": "epic-story-mapping",
+      "path": "standards/epic-story-mapping",
+      "category": "standards",
+      "skill_md": "standards/epic-story-mapping/SKILL.md",
+      "schema": "standards/epic-story-mapping/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Maps CSA capabilities and traceability into Function, Epic, and Story seeds as Markdown for modernization backlog generation. Use during Document Assembler and epic-story readiness gate."
+    },
+    {
+      "id": "evidence-citation",
+      "path": "shared/evidence-citation",
+      "category": "shared",
+      "skill_md": "shared/evidence-citation/SKILL.md",
+      "schema": "shared/evidence-citation/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Rules for citing file paths, line ranges, and artifact kinds on CSA claims. Use when writing specialist artifacts or validating evidence coverage."
+    },
+    {
+      "id": "gate-business-domain",
+      "path": "gates/gate-business-domain",
+      "category": "gates",
+      "skill_md": "gates/gate-business-domain/SKILL.md",
+      "schema": "gates/gate-business-domain/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Quality gate for CSA domain.json. Use when validating Business Domain specialist output."
+    },
+    {
+      "id": "gate-csa-document",
+      "path": "gates/gate-csa-document",
+      "category": "gates",
+      "skill_md": "gates/gate-csa-document/SKILL.md",
+      "schema": "gates/gate-csa-document/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Quality gate for assembled csa_pack Markdown sections, arc42-C4 HTML index, and machine artifacts. Use after Document Assembler."
+    },
+    {
+      "id": "gate-data-lineage",
+      "path": "gates/gate-data-lineage",
+      "category": "gates",
+      "skill_md": "gates/gate-data-lineage/SKILL.md",
+      "schema": "gates/gate-data-lineage/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Quality gate for CSA lineage.json. Use when validating Data Lineage specialist output."
+    },
+    {
+      "id": "gate-discover",
+      "path": "gates/gate-discover",
+      "category": "gates",
+      "skill_md": "gates/gate-discover/SKILL.md",
+      "schema": "gates/gate-discover/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Quality gate for CSA discovery.json. Use when Completeness Validator evaluates Discover output."
+    },
+    {
+      "id": "gate-epic-story-readiness",
+      "path": "gates/gate-epic-story-readiness",
+      "category": "gates",
+      "skill_md": "gates/gate-epic-story-readiness/SKILL.md",
+      "schema": "gates/gate-epic-story-readiness/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Final gate ensuring functions/epics/stories Markdown seeds are CSA-traceable before epic generation. Use after epic_story_seeds Markdown files are written."
+    },
+    {
+      "id": "gate-integration",
+      "path": "gates/gate-integration",
+      "category": "gates",
+      "skill_md": "gates/gate-integration/SKILL.md",
+      "schema": "gates/gate-integration/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Quality gate for CSA integration.json. Use when validating Integration specialist output."
+    },
+    {
+      "id": "gate-tech-architecture",
+      "path": "gates/gate-tech-architecture",
+      "category": "gates",
+      "skill_md": "gates/gate-tech-architecture/SKILL.md",
+      "schema": "gates/gate-tech-architecture/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Quality gate for CSA architecture.json. Use when validating Tech Architecture specialist output."
+    },
+    {
+      "id": "legacy-framework-heuristics",
+      "path": "shared/legacy-framework-heuristics",
+      "category": "shared",
+      "skill_md": "shared/legacy-framework-heuristics/SKILL.md",
+      "schema": "shared/legacy-framework-heuristics/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Detection heuristics for 20+ year legacy stacks (J2EE, .NET Framework, VB, COBOL, classic ASP, ESB, batch). Use during Discover and when validating stack claims."
+    },
+    {
+      "id": "legacy-ibm-mq",
+      "path": "shared/legacy-ibm-mq",
+      "category": "shared",
+      "skill_md": "shared/legacy-ibm-mq/SKILL.md",
+      "schema": "shared/legacy-ibm-mq/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Detection heuristics for IBM MQ (native com.ibm.mq and JMS) queue managers, channels, queues, and put/get patterns in legacy Java. Use during Discover and Integration analysis. Do not hardcode customer queue names."
+    },
+    {
+      "id": "legacy-stored-procedures",
+      "path": "shared/legacy-stored-procedures",
+      "category": "shared",
+      "skill_md": "shared/legacy-stored-procedures/SKILL.md",
+      "schema": "shared/legacy-stored-procedures/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Detection and documentation heuristics for legacy stored procedures, packages, and ORM call sites (PL/SQL, TopLink, iBatis/MyBatis, JDBC CallableStatement). Use during Discover, Domain, Data Lineage, and Completeness validation. Do not hardcode customer package names."
+    },
+    {
+      "id": "mermaid-diagrams",
+      "path": "standards/mermaid-diagrams",
+      "category": "standards",
+      "skill_md": "standards/mermaid-diagrams/SKILL.md",
+      "schema": "standards/mermaid-diagrams/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Author and render Mermaid diagrams correctly in CSA Markdown and arc42-C4 HTML. Use whenever Assembler, arc42-c4-views, DDD, lineage, or integration docs need architecture/domain/lineage/integration diagrams."
+    },
+    {
+      "id": "quality-gate-framework",
+      "path": "shared/quality-gate-framework",
+      "category": "shared",
+      "skill_md": "shared/quality-gate-framework/SKILL.md",
+      "schema": "shared/quality-gate-framework/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Shared CSA quality gate contract, scoring dimensions, severity rules, and remediation brief format. Use when Completeness Validator or Manager evaluates specialist artifacts."
+    }
+  ],
+  "missing_schemas": []
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/completeness-validator-invocation.json",
+  "title": "CompletenessValidatorInvocation",
+  "type": "object",
+  "required": ["artifact_path", "gate_id", "attempt", "max_reruns"],
+  "properties": {
+    "artifact_path": { "type": "string" },
+    "gate_id": { "type": "string" },
+    "attempt": { "type": "integer", "minimum": 1 },
+    "max_reruns": { "type": "integer", "const": 2 },
+    "prior_context": { "type": "string" }
+  },
+  "additionalProperties": false
+}

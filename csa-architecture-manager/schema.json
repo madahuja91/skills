@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/execution-plan.json",
+  "title": "CSAExecutionPlan",
+  "type": "object",
+  "required": ["plan_id", "codebase_root", "modules_in_scope", "steps", "updated_at"],
+  "properties": {
+    "plan_id": { "type": "string" },
+    "codebase_root": { "type": "string" },
+    "modules_in_scope": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "discovery_confidence_threshold": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 60
+    },
+    "max_reruns": { "type": "integer", "const": 2 },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step_id", "agent", "status", "attempt", "gate_id"],
+        "properties": {
+          "step_id": { "type": "string" },
+          "agent": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "running", "accepted", "failed", "escalated", "skipped"]
+          },
+          "attempt": { "type": "integer", "minimum": 1 },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "gate_id": { "type": ["string", "null"] },
+          "artifact_path": { "type": "string" },
+          "last_gate_result": {
+            "type": "string",
+            "enum": ["pass", "fail", "pass_with_warnings"]
+          },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "parallel_groups": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "escalations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step_id", "reason"],
+        "properties": {
+          "step_id": { "type": "string" },
+          "reason": { "type": "string" },
+          "gate_report_path": { "type": "string" }
+        }
+      }
+    },
+    "updated_at": { "type": "string" }
+  },
+  "additionalProperties": false
+}

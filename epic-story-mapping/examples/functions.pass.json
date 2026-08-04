@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "functions": [
+    {
+      "function_id": "FN-claim-intake",
+      "name": "Claim Intake",
+      "description": "Submit and validate insurance claims",
+      "capability_ids": ["CAP-claim-intake"],
+      "domain_ids": ["DOM-claims"],
+      "csa_refs": [
+        { "kind": "section", "ref": "csa_pack/05_business_capabilities.md" },
+        { "kind": "capability_id", "ref": "CAP-claim-intake" }
+      ]
+    }
+  ]
+}

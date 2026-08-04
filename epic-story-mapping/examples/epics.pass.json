@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "epics": [
+    {
+      "epic_id": "EP-claim-intake-core",
+      "function_id": "FN-claim-intake",
+      "name": "Modernize Claim Intake Core",
+      "description": "Preserve claim status workflow and persistence",
+      "data_ownership": ["CLAIM"],
+      "integration_ids": ["INT-policy-soap"],
+      "csa_refs": [
+        { "kind": "section", "ref": "csa_pack/04_domain_model_ddd.md" },
+        { "kind": "rule_id", "ref": "BR-claim-status-transition" },
+        { "kind": "integration_id", "ref": "INT-policy-soap" }
+      ],
+      "priority_hint": "high"
+    }
+  ]
+}

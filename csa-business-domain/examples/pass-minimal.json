@@ -1,0 +1,85 @@
+{
+  "artifact_id": "domain-20260804120100",
+  "agent_id": "business_domain",
+  "agent_version": "1.0.0",
+  "timestamp": "2026-08-04T12:01:00Z",
+  "schema_version": "1.0.0",
+  "scope": { "codebase_root": "files/legacy-app", "modules": ["claims"] },
+  "overall_confidence_score": 82,
+  "business_domains": [
+    {
+      "domain_id": "DOM-claims",
+      "domain_name": "Claims",
+      "canonical_name": "Claims",
+      "description": "Insurance claim intake and adjudication",
+      "normalization_applied": false,
+      "entities": [
+        {
+          "entity_id": "ENT-claim",
+          "entity_name": "Claim",
+          "canonical_name": "Claim",
+          "entity_type": "aggregate",
+          "attributes": [],
+          "relationships": [],
+          "confidence_score": 90,
+          "extraction_source": "code",
+          "evidence": [{ "path": "claims/src/Claim.java", "kind": "code" }]
+        }
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-claim-status-transition",
+          "rule_name": "Claim status transition",
+          "rule_category": "workflow",
+          "rule_description": "Claim may move Submitted -> UnderReview -> Approved|Rejected",
+          "pseudo_code": "if status==Submitted then allow UnderReview",
+          "implementation_location": {
+            "file_path": "claims/src/ClaimService.java",
+            "method_name": "updateStatus",
+            "line_numbers": [40, 80]
+          },
+          "validation_type": "server_side",
+          "business_impact": "critical",
+          "dependencies": [],
+          "configuration_variations": [],
+          "confidence_score": 88,
+          "extraction_source": "code",
+          "evidence": [{ "path": "claims/src/ClaimService.java", "lines": [40, 80], "kind": "code" }]
+        }
+      ],
+      "cross_domain_dependencies": [],
+      "confidence_score": 85
+    }
+  ],
+  "business_capabilities": [
+    {
+      "capability_id": "CAP-claim-intake",
+      "capability_name": "Claim Intake",
+      "capability_description": "Submit and validate new claims",
+      "supporting_domains": ["DOM-claims"],
+      "business_value": "Core revenue ops",
+      "complexity_score": 60,
+      "implementation_components": [],
+      "business_rules_applied": ["BR-claim-status-transition"],
+      "data_dependencies": [],
+      "integration_dependencies": [],
+      "confidence_score": 80
+    }
+  ],
+  "validation_results": {
+    "domain_completeness": {
+      "total_domains_identified": 1,
+      "domains_with_complete_rules": 1,
+      "domains_missing_rules": [],
+      "completeness_percentage": 100
+    },
+    "confidence_distribution": {
+      "high_confidence_rules": 1,
+      "medium_confidence_rules": 0,
+      "low_confidence_rules": 0,
+      "average_confidence_score": 88
+    },
+    "missing_business_logic": []
+  },
+  "recommendations": []
+}

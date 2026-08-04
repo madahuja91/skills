@@ -1,0 +1,38 @@
+{
+  "pack_version": "1.0.0",
+  "generated_at": "2026-08-04T12:10:00Z",
+  "sections": [
+    { "id": "00", "path": "csa_pack/00_executive_summary.md", "title": "Executive Summary", "format": "markdown" },
+    { "id": "04", "path": "csa_pack/04_domain_model_ddd.md", "title": "Domain Model (DDD)", "format": "markdown" },
+    { "id": "05", "path": "csa_pack/05_business_capabilities.md", "title": "Business Capabilities", "format": "markdown" },
+    { "id": "06", "path": "csa_pack/06_data_architecture_lineage.md", "title": "Data Architecture & Lineage", "format": "markdown" },
+    { "id": "07", "path": "csa_pack/07_integration_landscape.md", "title": "Integration Landscape", "format": "markdown" },
+    { "id": "08", "path": "csa_pack/08_runtime_ops_tech_debt.md", "title": "Runtime Ops & Tech Debt", "format": "markdown" },
+    { "id": "09", "path": "csa_pack/09_traceability_matrix.md", "title": "Traceability Matrix", "format": "markdown" },
+    { "id": "10", "path": "csa_pack/10_gaps_risks_assumptions.md", "title": "Gaps Risks Assumptions", "format": "markdown" }
+  ],
+  "arc42_c4_html": {
+    "index": "csa_pack/arc42-c4/index.html",
+    "pages": [
+      "csa_pack/arc42-c4/context.html",
+      "csa_pack/arc42-c4/containers.html",
+      "csa_pack/arc42-c4/components.html"
+    ],
+    "format": "html"
+  },
+  "machine_artifacts": [
+    "csa_pack/machine/discovery.json",
+    "csa_pack/machine/domain.json",
+    "csa_pack/machine/architecture.json",
+    "csa_pack/machine/lineage.json",
+    "csa_pack/machine/integration.json",
+    "csa_pack/machine/traceability_graph.json",
+    "csa_pack/machine/quality_gate_summary.json"
+  ],
+  "epic_story_seeds": [
+    "csa_pack/epic_story_seeds/functions.md",
+    "csa_pack/epic_story_seeds/epics.md",
+    "csa_pack/epic_story_seeds/stories.md"
+  ],
+  "traceability_graph_path": "csa_pack/machine/traceability_graph.json"
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/gate-epic-story-readiness.json",
+  "title": "GateEpicStoryReadinessEvaluation",
+  "type": "object",
+  "required": ["gate_id", "target_root", "rubric_checks", "result"],
+  "properties": {
+    "gate_id": { "const": "gate-epic-story-readiness" },
+    "target_root": {
+      "type": "string",
+      "pattern": ".*epic_story_seeds.*"
+    },
+    "target_schema": { "const": "skills/standards/epic-story-mapping/schema.json" },
+    "required_files": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": ["functions.md", "epics.md", "stories.md"]
+    },
+    "rubric_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check_id", "description", "passed", "blocking"],
+        "properties": {
+          "check_id": {
+            "type": "string",
+            "enum": [
+              "markdown_files_present",
+              "function_has_epic",
+              "epic_has_csa_refs",
+              "story_has_trace_and_ac",
+              "no_critical_in_scope_gaps"
+            ]
+          },
+          "description": { "type": "string" },
+          "passed": { "type": "boolean" },
+          "blocking": { "type": "boolean" },
+          "observed": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "result": {
+      "type": "string",
+      "enum": ["pass", "fail", "pass_with_warnings"]
+    }
+  },
+  "additionalProperties": false
+}

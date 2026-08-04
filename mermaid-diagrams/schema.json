@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/mermaid-diagrams.json",
+  "title": "CsaMermaidDiagramPack",
+  "description": "Inventory of Mermaid diagrams required in the CSA pack with render targets",
+  "type": "object",
+  "required": ["schema_version", "renderer", "diagrams"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "renderer": {
+      "type": "object",
+      "required": ["markdown_fence", "html_container", "html_runtime"],
+      "properties": {
+        "markdown_fence": { "const": "```mermaid" },
+        "html_container": { "const": "pre.mermaid" },
+        "html_runtime": {
+          "type": "string",
+          "description": "CDN ESM URL or equivalent Mermaid runtime used in HTML pages"
+        }
+      },
+      "additionalProperties": false
+    },
+    "diagrams": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "diagram_type", "required", "render_target"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "diag-c4-context",
+              "diag-c4-containers",
+              "diag-c4-components",
+              "diag-domain-context-map",
+              "diag-lineage-critical",
+              "diag-integration-landscape",
+              "diag-exec-overview",
+              "diag-runtime",
+              "diag-capability-map"
+            ]
+          },
+          "path": { "type": "string", "minLength": 1 },
+          "diagram_type": {
+            "type": "string",
+            "enum": [
+              "flowchart",
+              "sequenceDiagram",
+              "C4Context",
+              "C4Container",
+              "C4Component"
+            ]
+          },
+          "required": { "type": "boolean" },
+          "render_target": {
+            "type": "string",
+            "enum": ["markdown", "html"]
+          },
+          "source_artifacts": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "discovery",
+                "domain",
+                "architecture",
+                "lineage",
+                "integration"
+              ]
+            }
+          },
+          "node_count": { "type": "integer", "minimum": 1, "maximum": 40 },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

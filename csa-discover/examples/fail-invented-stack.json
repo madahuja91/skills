@@ -1,0 +1,47 @@
+{
+  "artifact_id": "discover-bad",
+  "agent_id": "discover",
+  "agent_version": "1.0.0",
+  "timestamp": "2026-08-04T12:00:00Z",
+  "schema_version": "1.0.0",
+  "scope": { "codebase_root": "files/legacy-app" },
+  "overall_confidence_score": 95,
+  "artifact_inventory": {
+    "total_artifacts": 10,
+    "classified_artifacts": {
+      "code": [],
+      "data": [],
+      "config": [],
+      "runtime": [],
+      "documentation": []
+    },
+    "unclassified_artifacts": [],
+    "missing_artifacts": []
+  },
+  "technology_stack": {
+    "programming_languages": [],
+    "frameworks": [
+      {
+        "framework_name": "Spring Boot",
+        "version": "3.2",
+        "category": "web",
+        "confidence_score": 95,
+        "evidence": [{ "path": "unknown", "kind": "inferred", "note": "assumed modern stack" }]
+      }
+    ],
+    "databases": [],
+    "infrastructure": []
+  },
+  "dependency_analysis": {
+    "internal_dependencies": [],
+    "external_dependencies": [],
+    "dependency_graph": { "nodes": [], "edges": [] }
+  },
+  "risk_assessment": {
+    "deprecated_technologies": [],
+    "security_vulnerabilities": [],
+    "compatibility_issues": [],
+    "missing_critical_artifacts": [],
+    "overall_risk_score": 10
+  }
+}

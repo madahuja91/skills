@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-integration.json",
+  "title": "CSAIntegrationArtifact",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "agent_id",
+    "agent_version",
+    "timestamp",
+    "schema_version",
+    "scope",
+    "overall_confidence_score",
+    "integrations",
+    "integration_patterns_summary",
+    "validation_results"
+  ],
+  "properties": {
+    "artifact_id": { "type": "string" },
+    "agent_id": { "const": "integration" },
+    "agent_version": { "type": "string" },
+    "timestamp": { "type": "string" },
+    "schema_version": { "const": "1.0.0" },
+    "scope": { "type": "object" },
+    "overall_confidence_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "analysis_scope": {
+      "type": "string",
+      "enum": ["all_integrations", "critical_integrations", "external_only"]
+    },
+    "processing_time_ms": { "type": "integer" },
+    "integrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "integration_id",
+          "integration_name",
+          "pattern_type",
+          "sync_async",
+          "integration_direction",
+          "confidence_score"
+        ],
+        "properties": {
+          "integration_id": { "type": "string", "pattern": "^INT-" },
+          "integration_name": { "type": "string" },
+          "pattern_type": {
+            "type": "string",
+            "enum": ["synchronous", "asynchronous", "data", "enterprise", "security", "legacy"]
+          },
+          "sync_async": {
+            "type": "string",
+            "enum": ["synchronous", "asynchronous", "hybrid"]
+          },
+          "integration_direction": {
+            "type": "string",
+            "enum": ["inbound", "outbound", "bidirectional"]
+          },
+          "technology_stack": { "type": "object" },
+          "endpoints": { "type": "array" },
+          "performance_metrics": { "type": "object" },
+          "scalability_characteristics": { "type": "object" },
+          "error_handling_patterns": { "type": "object" },
+          "async_candidate_analysis": { "type": "object" },
+          "dependencies": { "type": "array" },
+          "business_impact": { "type": "object" },
+          "monitoring_observability": { "type": "object" },
+          "security_analysis": { "type": "object" },
+          "confidence_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "extraction_source": {
+            "type": "string",
+            "enum": ["code", "configuration", "documentation", "monitoring"]
+          },
+          "uncertainty_reason": { "type": "string" },
+          "evidence": { "type": "array" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "integration_patterns_summary": { "type": "object" },
+    "integration_architecture": { "type": "object" },
+    "optimization_recommendations": { "type": "array" },
+    "validation_results": {
+      "type": "object",
+      "required": ["integration_completeness"],
+      "properties": {
+        "integration_completeness": { "type": "object" },
+        "performance_data_availability": { "type": "object" },
+        "async_analysis_coverage": { "type": "object" }
+      }
+    }
+  },
+  "additionalProperties": false
+}

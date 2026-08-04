@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-document-assembler-manifest.json",
+  "title": "CSADocumentPackManifest",
+  "type": "object",
+  "required": [
+    "pack_version",
+    "sections",
+    "arc42_c4_html",
+    "machine_artifacts",
+    "epic_story_seeds",
+    "traceability_graph_path"
+  ],
+  "properties": {
+    "pack_version": { "type": "string", "const": "1.0.0" },
+    "generated_at": { "type": "string" },
+    "sections": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "format"],
+        "properties": {
+          "id": { "type": "string" },
+          "path": { "type": "string" },
+          "title": { "type": "string" },
+          "format": { "type": "string", "const": "markdown" }
+        }
+      }
+    },
+    "arc42_c4_html": {
+      "type": "object",
+      "required": ["index", "pages", "format"],
+      "properties": {
+        "index": { "type": "string", "pattern": ".*index\\.html$" },
+        "pages": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "pattern": ".*\\.html$" }
+        },
+        "format": { "type": "string", "const": "html" }
+      },
+      "additionalProperties": false
+    },
+    "machine_artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "epic_story_seeds": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "type": "string", "pattern": ".*\\.md$" }
+    },
+    "traceability_graph_path": { "type": "string" },
+    "mermaid_diagrams_path": {
+      "type": "string",
+      "const": "csa_pack/machine/mermaid_diagrams.json"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,38 @@
+{
+  "gate_id": "gate-discover",
+  "target_artifact": "artifacts/discovery.json",
+  "target_agent_id": "discover",
+  "result": "fail",
+  "scores": {
+    "schema_conformance": 100,
+    "evidence_coverage": 20,
+    "completeness": 40,
+    "confidence_floor": 30
+  },
+  "blocking_gaps": [
+    {
+      "gap_id": "DISC-014",
+      "severity": "critical",
+      "field_path": "$.technology_stack.frameworks",
+      "problem": "Spring Boot claimed with inferred evidence only; descriptors suggest Java EE",
+      "required_action": "Re-scan WEB-INF and descriptors; replace invented framework",
+      "suggested_tools": ["read_file", "command_line"]
+    }
+  ],
+  "warnings": [],
+  "remediation_brief": {
+    "summary": "Invented modern stack must be corrected before swarm proceeds",
+    "required_actions": [
+      "Remove Spring Boot entry",
+      "Classify framework from web.xml",
+      "Attach descriptor evidence"
+    ],
+    "files_to_revisit": ["WEB-INF/web.xml", "META-INF/MANIFEST.MF"],
+    "schema_fields_missing": []
+  },
+  "rerun_recommended": true,
+  "attempt": 1,
+  "max_reruns": 2,
+  "max_reruns_remaining": 1,
+  "timestamp": "2026-08-04T12:05:00Z"
+}

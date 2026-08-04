@@ -1,0 +1,863 @@
+{
+  "pattern": "orchestrator-swarm",
+  "strategy": "manager",
+  "shared_memory": {
+    "skill": "csa-swarm-shared-memory",
+    "paths": [
+      "ACTIVE_ROOT/_internal/swarm/swarm_state.json",
+      "ACTIVE_ROOT/_internal/swarm/handoffs.jsonl",
+      "ACTIVE_ROOT/_internal/swarm/context_memory.md"
+    ]
+  },
+  "orchestrator": {
+    "name": "CSA-Architecture-Manager",
+    "role": "orchestrator",
+    "roleDescription": "manager",
+    "skills": [
+      {
+        "id": "github.com/sanjz11/skills/csa-architecture-manager@main",
+        "ref": "main",
+        "host": "github.com",
+        "name": "csa-architecture-manager",
+        "repo": "skills",
+        "owner": "sanjz11",
+        "addedAt": "2026-08-04T13:47:01.000Z",
+        "addedBy": "workflow",
+        "repo_url": "https://github.com/sanjz11/skills.git",
+        "sourceType": "git"
+      },
+      {
+        "id": "github.com/sanjz11/skills/csa-swarm-shared-memory@main",
+        "ref": "main",
+        "host": "github.com",
+        "name": "csa-swarm-shared-memory",
+        "repo": "skills",
+        "owner": "sanjz11",
+        "addedAt": "2026-08-04T13:47:01.000Z",
+        "addedBy": "workflow",
+        "repo_url": "https://github.com/sanjz11/skills.git",
+        "sourceType": "git"
+      },
+      {
+        "id": "github.com/sanjz11/skills/quality-gate-framework@main",
+        "ref": "main",
+        "host": "github.com",
+        "name": "quality-gate-framework",
+        "repo": "skills",
+        "owner": "sanjz11",
+        "addedAt": "2026-08-04T13:47:01.000Z",
+        "addedBy": "workflow",
+        "repo_url": "https://github.com/sanjz11/skills.git",
+        "sourceType": "git"
+      }
+    ],
+    "default_tools": [
+      "read_file",
+      "write_file",
+      "command_line",
+      "todo",
+      "memory",
+      "skills"
+    ]
+  },
+  "subagent_templates": [
+    {
+      "name": "CSA-Discover-Agent",
+      "role": "subagent",
+      "roleDescription": "worker",
+      "skills": [
+        {
+          "id": "github.com/sanjz11/skills/csa-discover@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-discover",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-swarm-shared-memory@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-swarm-shared-memory",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-artifact-contract@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-artifact-contract",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/evidence-citation@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "evidence-citation",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-framework-heuristics@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-framework-heuristics",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-stored-procedures@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-stored-procedures",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-ibm-mq@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-ibm-mq",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        }
+      ],
+      "output_artifact": "artifacts/discovery.json",
+      "gate_id": "gate-discover",
+      "parallel_eligible": false,
+      "default_tools": [
+        "read_file",
+        "write_file",
+        "command_line",
+        "todo",
+        "memory",
+        "skills"
+      ]
+    },
+    {
+      "name": "CSA-BusinessDomain-Agent",
+      "role": "subagent",
+      "roleDescription": "worker",
+      "skills": [
+        {
+          "id": "github.com/sanjz11/skills/csa-business-domain@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-business-domain",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-swarm-shared-memory@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-swarm-shared-memory",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-artifact-contract@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-artifact-contract",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/evidence-citation@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "evidence-citation",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-stored-procedures@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-stored-procedures",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/ddd-domain-pack@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "ddd-domain-pack",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/mermaid-diagrams@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "mermaid-diagrams",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        }
+      ],
+      "output_artifact": "artifacts/domain.json",
+      "gate_id": "gate-business-domain",
+      "parallel_eligible": true,
+      "default_tools": [
+        "read_file",
+        "write_file",
+        "command_line",
+        "todo",
+        "memory",
+        "skills"
+      ]
+    },
+    {
+      "name": "TechnologyArchitecture-Agent",
+      "role": "subagent",
+      "roleDescription": "worker",
+      "skills": [
+        {
+          "id": "github.com/sanjz11/skills/csa-tech-architecture@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-tech-architecture",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-swarm-shared-memory@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-swarm-shared-memory",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-artifact-contract@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-artifact-contract",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/evidence-citation@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "evidence-citation",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-framework-heuristics@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-framework-heuristics",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-ibm-mq@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-ibm-mq",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/arc42-c4-views@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "arc42-c4-views",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/mermaid-diagrams@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "mermaid-diagrams",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        }
+      ],
+      "output_artifact": "artifacts/architecture.json",
+      "gate_id": "gate-tech-architecture",
+      "parallel_eligible": true,
+      "default_tools": [
+        "read_file",
+        "write_file",
+        "command_line",
+        "todo",
+        "memory",
+        "skills"
+      ]
+    },
+    {
+      "name": "Data-Lineage-Agent",
+      "role": "subagent",
+      "roleDescription": "worker",
+      "skills": [
+        {
+          "id": "github.com/sanjz11/skills/csa-data-lineage@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-data-lineage",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-swarm-shared-memory@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-swarm-shared-memory",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-artifact-contract@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-artifact-contract",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/evidence-citation@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "evidence-citation",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-stored-procedures@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-stored-procedures",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/data-lineage-pack@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "data-lineage-pack",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/mermaid-diagrams@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "mermaid-diagrams",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        }
+      ],
+      "output_artifact": "artifacts/lineage.json",
+      "gate_id": "gate-data-lineage",
+      "parallel_eligible": true,
+      "default_tools": [
+        "read_file",
+        "write_file",
+        "command_line",
+        "todo",
+        "memory",
+        "skills"
+      ]
+    },
+    {
+      "name": "Integration-Analysis-Agent",
+      "role": "subagent",
+      "roleDescription": "worker",
+      "skills": [
+        {
+          "id": "github.com/sanjz11/skills/csa-integration@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-integration",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-swarm-shared-memory@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-swarm-shared-memory",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-artifact-contract@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-artifact-contract",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/evidence-citation@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "evidence-citation",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-framework-heuristics@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-framework-heuristics",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-ibm-mq@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-ibm-mq",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/mermaid-diagrams@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "mermaid-diagrams",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        }
+      ],
+      "output_artifact": "artifacts/integration.json",
+      "gate_id": "gate-integration",
+      "parallel_eligible": true,
+      "default_tools": [
+        "read_file",
+        "write_file",
+        "command_line",
+        "todo",
+        "memory",
+        "skills"
+      ]
+    },
+    {
+      "name": "Completeness-Validation-Agent",
+      "role": "subagent",
+      "roleDescription": "completeness-checker",
+      "skills": [
+        {
+          "id": "github.com/sanjz11/skills/csa-completeness-validator@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-completeness-validator",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-swarm-shared-memory@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-swarm-shared-memory",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/quality-gate-framework@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "quality-gate-framework",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-stored-procedures@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-stored-procedures",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/legacy-ibm-mq@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "legacy-ibm-mq",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/gate-discover@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "gate-discover",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/gate-business-domain@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "gate-business-domain",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/gate-tech-architecture@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "gate-tech-architecture",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/gate-data-lineage@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "gate-data-lineage",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/gate-integration@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "gate-integration",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/gate-csa-document@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "gate-csa-document",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/gate-epic-story-readiness@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "gate-epic-story-readiness",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        }
+      ],
+      "output_artifact": "_internal/completeness_validation/",
+      "gate_id": null,
+      "parallel_eligible": false,
+      "default_tools": [
+        "read_file",
+        "write_file",
+        "todo",
+        "memory",
+        "skills"
+      ]
+    },
+    {
+      "name": "CSA-Document-Assembler",
+      "role": "subagent",
+      "roleDescription": "worker",
+      "skills": [
+        {
+          "id": "github.com/sanjz11/skills/csa-document-assembler@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-document-assembler",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-swarm-shared-memory@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-swarm-shared-memory",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/csa-artifact-contract@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "csa-artifact-contract",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/mermaid-diagrams@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "mermaid-diagrams",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/arc42-c4-views@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "arc42-c4-views",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/ddd-domain-pack@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "ddd-domain-pack",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/data-lineage-pack@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "data-lineage-pack",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        },
+        {
+          "id": "github.com/sanjz11/skills/epic-story-mapping@main",
+          "ref": "main",
+          "host": "github.com",
+          "name": "epic-story-mapping",
+          "repo": "skills",
+          "owner": "sanjz11",
+          "addedAt": "2026-08-04T13:47:01.000Z",
+          "addedBy": "workflow",
+          "repo_url": "https://github.com/sanjz11/skills.git",
+          "sourceType": "git"
+        }
+      ],
+      "output_artifact": "csa_pack/",
+      "gate_id": "gate-csa-document",
+      "parallel_eligible": false,
+      "default_tools": [
+        "read_file",
+        "write_file",
+        "todo",
+        "memory",
+        "skills"
+      ]
+    }
+  ],
+  "skills_repository": "https://github.com/sanjz11/skills.git",
+  "skills_install": "clone-once-to-.agents/skills"
+}

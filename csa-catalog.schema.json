@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/skills-catalog.json",
+  "title": "CSASkillsCatalog",
+  "type": "object",
+  "required": ["catalog_version", "policy", "skill_count", "skills"],
+  "properties": {
+    "catalog_version": { "type": "string" },
+    "policy": { "type": "object" },
+    "skill_count": { "type": "integer", "minimum": 1 },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "schema", "has_schema"],
+        "properties": {
+          "id": { "type": "string" },
+          "path": { "type": "string" },
+          "category": { "type": "string" },
+          "skill_md": { "type": "string" },
+          "schema": { "type": ["string", "null"] },
+          "schema_required": { "type": "boolean" },
+          "has_schema": { "type": "boolean" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "missing_schemas": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

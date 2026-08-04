@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "stories": [
+    {
+      "story_id": "US-claim-status-transition",
+      "epic_id": "EP-claim-intake-core",
+      "capability_id": "CAP-claim-intake",
+      "title": "Preserve claim status transition rules",
+      "narrative": "As an adjuster, I need claim status transitions enforced as in legacy ClaimService",
+      "trace_ids": ["BR-claim-status-transition", "CMP-claim-service"],
+      "acceptance_criteria_hooks": [
+        "Submitted -> UnderReview allowed",
+        "Invalid transitions rejected with legacy-equivalent message"
+      ],
+      "csa_refs": [
+        { "kind": "section", "ref": "csa_pack/09_traceability_matrix.md" },
+        { "kind": "rule_id", "ref": "BR-claim-status-transition" }
+      ]
+    }
+  ]
+}

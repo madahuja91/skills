@@ -1,0 +1,97 @@
+{
+  "artifact_id": "discover-20260804120000",
+  "agent_id": "discover",
+  "agent_version": "1.0.0",
+  "timestamp": "2026-08-04T12:00:00Z",
+  "schema_version": "1.0.0",
+  "scope": {
+    "codebase_root": "files/legacy-app",
+    "modules": ["claims"],
+    "exclusions": ["**/bin/**", "**/obj/**"]
+  },
+  "overall_confidence_score": 78,
+  "artifact_inventory": {
+    "total_artifacts": 120,
+    "classified_artifacts": {
+      "code": [{ "path": "claims/src/ClaimService.java", "category": "code", "subtype": "service" }],
+      "data": [{ "path": "db/claims.sql", "category": "data", "subtype": "ddl" }],
+      "config": [{ "path": "WEB-INF/web.xml", "category": "config", "subtype": "descriptor" }],
+      "runtime": [],
+      "documentation": []
+    },
+    "unclassified_artifacts": [],
+    "missing_artifacts": ["APM traces", "deployment runbooks"]
+  },
+  "technology_stack": {
+    "programming_languages": [
+      {
+        "language": "Java",
+        "version": "1.6",
+        "usage_percentage": 92,
+        "file_count": 80,
+        "confidence_score": 90,
+        "evidence": [{ "path": "claims/src/ClaimService.java", "lines": [1, 5], "kind": "code" }]
+      }
+    ],
+    "frameworks": [
+      {
+        "framework_name": "Java EE Servlet",
+        "version": "2.5",
+        "category": "web",
+        "usage_pattern": "WAR with web.xml",
+        "confidence_score": 85,
+        "evidence": [{ "path": "WEB-INF/web.xml", "kind": "descriptor" }]
+      }
+    ],
+    "databases": [
+      {
+        "database_type": "Oracle",
+        "version": "unknown",
+        "connection_pattern": "JDBC DataSource",
+        "usage_context": "claims persistence",
+        "confidence_score": 70,
+        "evidence": [{ "path": "db/claims.sql", "kind": "ddl" }]
+      }
+    ],
+    "infrastructure": [
+      {
+        "component_type": "app_server",
+        "technology": "unknown",
+        "version": "unknown",
+        "configuration": {},
+        "confidence_score": 40,
+        "evidence": [{ "path": "WEB-INF/web.xml", "kind": "descriptor", "note": "WAR layout implies app server; vendor not proven" }]
+      }
+    ]
+  },
+  "dependency_analysis": {
+    "internal_dependencies": [
+      {
+        "source_module": "claims",
+        "target_module": "common",
+        "dependency_type": "compile",
+        "relationship_strength": "strong",
+        "confidence_score": 80
+      }
+    ],
+    "external_dependencies": [],
+    "dependency_graph": { "nodes": ["claims", "common"], "edges": [["claims", "common"]] }
+  },
+  "risk_assessment": {
+    "deprecated_technologies": ["Java 1.6"],
+    "security_vulnerabilities": [],
+    "compatibility_issues": [],
+    "missing_critical_artifacts": ["APM traces"],
+    "overall_risk_score": 65
+  },
+  "module_map": [
+    {
+      "module_id": "MOD-claims",
+      "module_name": "claims",
+      "root_path": "claims",
+      "primary_languages": ["Java"],
+      "estimated_size_files": 80
+    }
+  ],
+  "recommendations": []
+}

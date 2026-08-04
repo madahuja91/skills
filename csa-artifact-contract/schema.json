@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-artifact-contract.json",
+  "title": "CSAArtifactEnvelope",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "agent_id",
+    "agent_version",
+    "timestamp",
+    "schema_version",
+    "scope",
+    "overall_confidence_score"
+  ],
+  "properties": {
+    "artifact_id": { "type": "string", "minLength": 1 },
+    "agent_id": {
+      "type": "string",
+      "enum": [
+        "discover",
+        "business_domain",
+        "tech_architecture",
+        "data_lineage",
+        "integration",
+        "document_assembler",
+        "completeness_validator"
+      ]
+    },
+    "agent_version": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "scope": {
+      "type": "object",
+      "required": ["codebase_root"],
+      "properties": {
+        "codebase_root": { "type": "string" },
+        "modules": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "exclusions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "overall_confidence_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "processing_time_ms": { "type": "integer", "minimum": 0 },
+    "recommendations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "priority", "description", "action_required"],
+        "properties": {
+          "category": { "type": "string" },
+          "priority": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low"]
+          },
+          "description": { "type": "string" },
+          "action_required": { "type": "string" },
+          "estimated_effort": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "definitions": {
+    "evidence": {
+      "type": "object",
+      "required": ["path", "kind"],
+      "properties": {
+        "path": { "type": "string" },
+        "lines": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 1 },
+          "minItems": 1,
+          "maxItems": 2
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "code",
+            "config",
+            "ddl",
+            "descriptor",
+            "doc",
+            "log",
+            "inferred"
+          ]
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "confidenceScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    }
+  }
+}
