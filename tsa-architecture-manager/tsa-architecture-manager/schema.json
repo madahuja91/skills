@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tsa.local/schemas/tsa-architecture-manager.json",
+  "title": "TsaManagerExecutionPlan",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "phase",
+    "inputs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "phase": {
+      "type": "string"
+    },
+    "inputs": {
+      "type": "object",
+      "required": [
+        "csa_pack_path",
+        "target_spec_path"
+      ],
+      "properties": {
+        "csa_pack_path": {
+          "type": "string"
+        },
+        "target_spec_path": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}
