@@ -24,7 +24,8 @@ Depth floors: skill **`csa-rich-content`**.
   - HTML: `diag-c4-context`, `diag-c4-containers`, `diag-c4-components` with Mermaid runtime on those pages
 - Critical gaps documented in `10_gaps_risks_assumptions.md`
 - **Richness (blocking):** word-count every required MD/HTML file against `csa-rich-content` floors; fail stubs
-- **Executive richness (blocking):** inventory/component tables, migration readiness scorecard, ≥5 risks with mitigation
+- **Executive richness (blocking):** inventory/component tables, modernization readiness scorecard, ≥5 risks with mitigation
 - **Tables (blocking):** Markdown tables in `00`, `04`–`08`, `10`
+- **`index.html` hub (blocking):** ≥5000 words, ≥8 tables, ≥2 Mermaid + runtime, all required anchors (`overview`…`pack`); as-is CSA framing (no TSA migration-strategy body). Stub nav-only index fails (`index_html_hub_richness`)
 
-Emit report with `gate_id: gate-csa-document`. Observed fields must include measured word counts when failing depth checks.
+Emit report with `gate_id: gate-csa-document`. Observed fields must include measured word counts / table / Mermaid counts when failing depth checks.

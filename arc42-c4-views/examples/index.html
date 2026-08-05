@@ -2,22 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>CSA arc42 / C4 — Index</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSA — Current State Architecture (arc42 / C4 Index)</title>
   <style>
-    body { font-family: system-ui, sans-serif; margin: 2rem; line-height: 1.45; max-width: 960px; }
-    nav a { margin-right: 1rem; }
-    .note { color: #444; font-size: 0.95rem; }
+    body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; color: #243047; background: #eef2f7; }
+    .wrap { max-width: 1200px; margin: 0 auto; background: #fff; }
+    header { background: #1f2a37; color: #fff; padding: 2rem 2rem 1.5rem; }
+    header h1 { margin: 0 0 .5rem; font-size: 1.9rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: 1rem; background: #f3f6fa; padding: 1rem 2rem; border-bottom: 3px solid #3b82f6; }
+    .meta .item { min-width: 120px; text-align: center; }
+    .meta .n { font-size: 1.6rem; font-weight: 700; color: #2563eb; }
+    .meta .l { font-size: .75rem; text-transform: uppercase; color: #64748b; }
+    nav.top { background: #334155; display: flex; flex-wrap: wrap; }
+    nav.top a { color: #fff; text-decoration: none; padding: .9rem 1rem; }
+    nav.top a:hover { background: #2563eb; }
+    main { padding: 2rem; }
+    section { margin-bottom: 2.5rem; }
+    h2 { border-bottom: 3px solid #2563eb; padding-bottom: .4rem; color: #1f2a37; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+    th, td { border: 1px solid #cbd5e1; padding: .55rem .7rem; text-align: left; vertical-align: top; }
+    th { background: #334155; color: #fff; }
+    pre.mermaid { background: #f8fafc; padding: 1rem; border-radius: 8px; overflow: auto; }
+    .note { color: #475569; }
+    footer { background: #1f2a37; color: #fff; text-align: center; padding: 1.5rem; }
   </style>
 </head>
 <body>
-  <h1>Current State Architecture — C4 / arc42</h1>
-  <p class="note">HTML index entry for architecture views. Narrative CSA sections remain Markdown.</p>
-  <nav>
-    <a href="./context.html">Context</a>
-    <a href="./containers.html">Containers</a>
-    <a href="./components.html">Components</a>
-  </nav>
-  <h2>Summary</h2>
-  <p>Replace with system name and short as-is summary from accepted artifacts.</p>
+  <div class="wrap">
+    <header>
+      <h1>{SystemName} — Current State Architecture</h1>
+      <p>Rich arc42/C4 HTML hub assembled from accepted CSA artifacts (as-is). Not a target/migration design.</p>
+    </header>
+    <div class="meta">
+      <div class="item"><div class="n">{N}</div><div class="l">Artifacts</div></div>
+      <div class="item"><div class="n">{N}</div><div class="l">Domains</div></div>
+      <div class="item"><div class="n">{N}</div><div class="l">Integrations</div></div>
+      <div class="item"><div class="n">{N}</div><div class="l">Confidence</div></div>
+    </div>
+    <nav class="top">
+      <a href="#overview">Overview</a>
+      <a href="#inventory">Inventory</a>
+      <a href="#stack">Stack</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#domains">Domains</a>
+      <a href="#data">Data</a>
+      <a href="#integrations">Integrations</a>
+      <a href="#c4">C4</a>
+      <a href="#runtime">Runtime</a>
+      <a href="#risks">Risks</a>
+      <a href="#traceability">Traceability</a>
+      <a href="#pack">Pack</a>
+      <a href="./context.html">Context</a>
+      <a href="./containers.html">Containers</a>
+      <a href="./components.html">Components</a>
+    </nav>
+    <main>
+      <section id="overview"><h2>Current-state overview</h2><p class="note">Replace with long evidenced overview + readiness scorecard tables.</p></section>
+      <section id="inventory"><h2>Discovery inventory</h2><p class="note">Counts + module tables from discovery.json.</p></section>
+      <section id="stack"><h2>Technology stack (as-is)</h2><p class="note">Observed stack only — no target cloud stack.</p></section>
+      <section id="architecture"><h2>Architecture diagrams</h2>
+        <pre class="mermaid">flowchart TB
+  U[Users] --> S[System]
+</pre>
+      </section>
+      <section id="domains"><h2>Domains and capabilities</h2></section>
+      <section id="data"><h2>Data and lineage</h2></section>
+      <section id="integrations"><h2>Integration landscape</h2></section>
+      <section id="c4"><h2>C4 building blocks</h2>
+        <pre class="mermaid">C4Context
+  title System Context
+  Person(user, "User")
+  System(sys, "System", "As-is")
+</pre>
+      </section>
+      <section id="runtime"><h2>Runtime, ops, tech debt</h2></section>
+      <section id="risks"><h2>Gaps, risks, assumptions</h2></section>
+      <section id="traceability"><h2>Traceability</h2></section>
+      <section id="pack"><h2>Pack links</h2>
+        <p><a href="../00_executive_summary.md">Executive summary (MD)</a> · <a href="./context.html">C4 Context</a></p>
+      </section>
+    </main>
+    <footer>Generated CSA arc42/C4 index — expand all sections from accepted artifacts before publish.</footer>
+  </div>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose" });
+  </script>
 </body>
 </html>

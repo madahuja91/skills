@@ -64,7 +64,8 @@
               "narrative_depth_minimums",
               "executive_richness",
               "narrative_tables_present",
-              "html_c4_prose_depth"
+              "html_c4_prose_depth",
+              "index_html_hub_richness"
             ]
           },
           "description": { "type": "string" },

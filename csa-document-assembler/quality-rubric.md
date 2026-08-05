@@ -13,5 +13,6 @@
 | **Narrative depth** meets `csa-rich-content` word floors | required (blocking) |
 | Executive has inventory tables + readiness scorecard + ≥5 risks | required (blocking) |
 | Sections 00, 04–08, 10 each contain ≥1 Markdown table | required (blocking) |
-| Each HTML C4 page ≥400 words prose + Mermaid runtime | required (blocking) |
-| Epic seeds meet function/epic/story word floors | required (blocking) |
+| `index.html` hub ≥5000 words, ≥8 tables, ≥2 Mermaid, required anchors | required (blocking) |
+| C4 detail pages ≥800 words each + Mermaid runtime | required (blocking) |
+| CSA index must not be TSA migration-strategy framed | required (blocking) |

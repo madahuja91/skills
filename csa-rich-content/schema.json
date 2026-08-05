@@ -3,9 +3,9 @@
   "$id": "https://csa.local/schemas/csa-rich-content.json",
   "title": "CsaRichContentDepthContract",
   "type": "object",
-  "required": ["contract_version", "markdown_word_floors", "html_word_floor", "specialist_list_floors"],
+  "required": ["contract_version", "markdown_word_floors", "html_word_floors", "index_hub", "specialist_list_floors"],
   "properties": {
-    "contract_version": { "type": "string", "const": "1.0.0" },
+    "contract_version": { "type": "string", "const": "1.1.0" },
     "markdown_word_floors": {
       "type": "object",
       "required": [
@@ -17,10 +17,7 @@
         "08_runtime_ops_tech_debt.md",
         "09_traceability_matrix.md",
         "10_gaps_risks_assumptions.md",
-        "README.md",
-        "epic_story_seeds/functions.md",
-        "epic_story_seeds/epics.md",
-        "epic_story_seeds/stories.md"
+        "README.md"
       ],
       "properties": {
         "00_executive_summary.md": { "type": "integer", "const": 1200 },
@@ -31,14 +28,40 @@
         "08_runtime_ops_tech_debt.md": { "type": "integer", "const": 700 },
         "09_traceability_matrix.md": { "type": "integer", "const": 500 },
         "10_gaps_risks_assumptions.md": { "type": "integer", "const": 800 },
-        "README.md": { "type": "integer", "const": 200 },
-        "epic_story_seeds/functions.md": { "type": "integer", "const": 400 },
-        "epic_story_seeds/epics.md": { "type": "integer", "const": 600 },
-        "epic_story_seeds/stories.md": { "type": "integer", "const": 900 }
+        "README.md": { "type": "integer", "const": 200 }
       },
       "additionalProperties": false
     },
-    "html_word_floor": { "type": "integer", "const": 400 },
+    "html_word_floors": {
+      "type": "object",
+      "required": [
+        "arc42-c4/index.html",
+        "arc42-c4/context.html",
+        "arc42-c4/containers.html",
+        "arc42-c4/components.html"
+      ],
+      "properties": {
+        "arc42-c4/index.html": { "type": "integer", "const": 5000 },
+        "arc42-c4/context.html": { "type": "integer", "const": 800 },
+        "arc42-c4/containers.html": { "type": "integer", "const": 800 },
+        "arc42-c4/components.html": { "type": "integer", "const": 800 }
+      },
+      "additionalProperties": false
+    },
+    "index_hub": {
+      "type": "object",
+      "required": ["min_tables", "min_mermaid_blocks", "required_anchors"],
+      "properties": {
+        "min_tables": { "type": "integer", "const": 8 },
+        "min_mermaid_blocks": { "type": "integer", "const": 2 },
+        "required_anchors": {
+          "type": "array",
+          "minItems": 12,
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
     "specialist_list_floors": {
       "type": "object",
       "properties": {
@@ -59,6 +82,7 @@
           "executive_richness",
           "narrative_tables_present",
           "html_c4_prose_depth",
+          "index_html_hub_richness",
           "specialist_list_depth"
         ]
       }

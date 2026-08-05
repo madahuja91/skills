@@ -86,7 +86,9 @@ Load skills: `csa-rich-content`, `mermaid-diagrams`, `arc42-c4-views`, `ddd-doma
    - `06` → `diag-lineage-critical`
    - `07` → `diag-integration-landscape`
    - optional: `05` capability map, `08` runtime when evidence exists
-3. Build **HTML** C4/arc42 site via `arc42-c4-views` + `mermaid-diagrams` → `csa_pack/arc42-c4/*.html` with required Mermaid C4 diagrams, Mermaid runtime init, and deep prose (≥400 words/page per `csa-rich-content`).
+3. Build **HTML** C4/arc42 site via `arc42-c4-views` + `mermaid-diagrams` → `csa_pack/arc42-c4/*.html`.
+   - **`index.html` is the rich hub** (≥5000 words, ≥8 tables, ≥2 Mermaid, all required anchors) consolidating inventory/stack/domains/data/integrations/C4/runtime/risks/traceability — **as-is CSA**, not TSA migration strategy.
+   - `context.html` / `containers.html` / `components.html` deepen C4 (≥800 words each + required Mermaid).
 4. Write `machine/mermaid_diagrams.json` inventory conforming to `standards/mermaid-diagrams/schema.json`.
 5. In `00_executive_summary.md` and `README.md`, link to `./arc42-c4/index.html` (not to removed C4 `.md` files).
 6. Construct `machine/traceability_graph.json`, then write a **wide** `09_traceability_matrix.md`.

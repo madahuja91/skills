@@ -9,7 +9,7 @@ description: Enforces deep, long-form CSA specialist JSON and Markdown/HTML pack
 
 Depth contract: [`schema.json`](schema.json)
 
-Thin stub summaries that only satisfy file presence **FAIL**. Target quality is reference packs like multi-thousand-word executive summaries, capability maps, tech-stack analyses, and risk reports — not outline bullets.
+Thin stub summaries that only satisfy file presence **FAIL**. Target quality is reference packs like multi-thousand-word executive summaries and a **rich arc42 `index.html` hub** — not outline bullets.
 
 ## HARD: Specialist machine JSON (before Completeness pass)
 
@@ -31,41 +31,46 @@ Count **words** in each file (Assembler + `gate-csa-document`). Below floor = **
 
 | File | Min words | Required substance (must include) |
 |------|-----------|-----------------------------------|
-| `00_executive_summary.md` | 1200 | Component/inventory tables; tech stack summary; migration readiness scorecard with scored dimensions; top ≥5 risks with impact + mitigation; evidence/confidence; Mermaid overview |
+| `00_executive_summary.md` | 1200 | Component/inventory tables; tech stack summary; modernization readiness scorecard; top ≥5 risks with impact + mitigation; evidence/confidence; Mermaid overview |
 | `04_domain_model_ddd.md` | 900 | Per-domain sections (purpose, ubiquitous language, entities table, rules table, dependencies); context-map Mermaid |
 | `05_business_capabilities.md` | 800 | Capability inventory table; per-capability flows/actors/systems/evidence; optional capability Mermaid |
 | `06_data_architecture_lineage.md` | 900 | Sources table; critical field lineage tables; transformation/SP call chains; quality/security risks; lineage Mermaid |
 | `07_integration_landscape.md` | 900 | Integration catalog table; inbound/outbound flows; MQ/SOAP/HTTP/CORBA detail when evidenced; reliability gaps; landscape Mermaid |
 | `08_runtime_ops_tech_debt.md` | 700 | Runtime/packaging evidence; debt register with severity; resilience/ops gaps; open questions |
-| `09_traceability_matrix.md` | 500 | Wide matrices (capability↔component↔integration↔lineage↔epic); not a 5-row stub |
+| `09_traceability_matrix.md` | 500 | Wide matrices (capability↔component↔integration↔lineage); not a 5-row stub |
 | `10_gaps_risks_assumptions.md` | 800 | Ranked risks; assumptions; missing evidence; remediation themes |
-| `README.md` | 200 | Index of all sections + link to `arc42-c4/index.html` |
-| `epic_story_seeds/functions.md` | 400 | One section per major capability/domain |
-| `epic_story_seeds/epics.md` | 600 | ≥5 epics with CSA refs |
-| `epic_story_seeds/stories.md` | 900 | ≥10 stories with acceptance-criteria hooks + CSA refs |
+| `README.md` | 200 | Index of all sections + prominent link to `arc42-c4/index.html` as primary HTML hub |
 
-## HARD: HTML C4 (`arc42-c4/`)
+Do **not** require `epic_story_seeds/` (out of scope).
 
-Each of `index.html`, `context.html`, `containers.html`, `components.html`:
+## HARD: HTML C4 — rich `index.html` hub
 
-- ≥400 words of explanatory HTML prose **plus** required Mermaid diagram(s) with runtime init
-- Named actors/systems/containers/components from accepted artifacts — not 3-box toy diagrams
+Obey `arc42-c4-views`.
+
+| File | Min words (text) | Extra blocking checks |
+|------|------------------|------------------------|
+| `arc42-c4/index.html` | **5000** | ≥8 `<table>`; ≥2 Mermaid blocks + runtime; all anchors: overview, inventory, stack, architecture, domains, data, integrations, c4, runtime, risks, traceability, pack; CSA framing (as-is) — no TSA migration-strategy body |
+| `arc42-c4/context.html` | 800 | Mermaid `diag-c4-context` + runtime |
+| `arc42-c4/containers.html` | 800 | Mermaid `diag-c4-containers` + runtime |
+| `arc42-c4/components.html` | 800 | Mermaid `diag-c4-components` + runtime |
+
+`index.html` must consolidate CSA information (inventory, stack, domains, data, integrations, C4, debt, risks, traceability). Detail pages deepen C4; they do not replace the hub.
 
 ## Assembler expansion rules
 
-1. **Expand, do not paraphrase.** Turn every domain, capability, component, integration, and lineage row into tables and prose.
-2. Use `discovery.json` inventory counts and representative paths to build executive inventory tables (languages, modules, WAR/EAR, SQL/packages, MQ, CORBA, configs).
-3. **Do not invent** facts. If evidence is thin, write a long **Gaps / Unknowns** section and still meet word floors with evidenced detail + explicit unknowns.
-4. Optional rich extras (when evidence exists): `csa_pack/business_logic.md`, `csa_pack/resilience_gaps.md`, OpenAPI-ish stubs under `csa_pack/oas/*.yaml` for evidenced service boundaries.
-5. Anti-patterns that **fail** depth: outline-only bullets, “see machine/*.json”, single short paragraph per section, diagrams with unlabeled boxes only.
+1. **Expand, do not paraphrase.** Turn every domain, capability, component, integration, and lineage row into tables and prose in **both** Markdown and the HTML index hub.
+2. Use `discovery.json` inventory counts and representative paths for executive + `#inventory` tables.
+3. **Do not invent** facts. Thin evidence → long Gaps sections with explicit unknowns — still meet floors.
+4. Anti-patterns that **fail**: stub index with only nav links; “see machine/*.json”; unlabeled 3-box diagrams; TSA migration/effort/target-microservice sections inside CSA index.
 
 ## Completeness / gate enforcement
 
 For `gate-csa-document`, Completeness MUST:
 
 1. Word-count each required Markdown/HTML file.
-2. Fail if any floor in this skill is missed (`check_id: narrative_depth_minimums`).
-3. Fail if executive summary lacks scorecard **or** ≥5 risks (`check_id: executive_richness`).
-4. Fail if major MD sections lack at least one Markdown table (`check_id: narrative_tables_present`) for 00, 04–08, 10.
+2. Fail if any floor in this skill is missed (`narrative_depth_minimums`).
+3. Fail if executive summary lacks scorecard **or** ≥5 risks (`executive_richness`).
+4. Fail if major MD sections lack ≥1 Markdown table (`narrative_tables_present`) for 00, 04–08, 10.
+5. Fail if `index.html` missing required anchors, table/Mermaid floors, or is a stub hub (`index_html_hub_richness`).
 
-Specialist gates SHOULD fail shallow lists (few empty descriptions, missing evidence) even if schema-valid.
+Specialist gates SHOULD fail shallow lists even if schema-valid.
