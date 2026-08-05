@@ -12,8 +12,12 @@ description: >-
 - CS stories for legacy mapping
 
 ## Outputs
-- `artifacts/ts/ts_stories.json`
-- Use with SK-EPIC for `ts_epics.json`
+- `artifacts/ts/ts_stories.json` — **required**
+- `artifacts/ts/stories/*.md` — **required** one MD per story (TS template including migration fields)
+- Use with SK-EPIC for `ts_epics.json` + `artifacts/ts/epics/*.md`
+
+## Dual surface (mandatory)
+JSON + Markdown for every epic/story. Do not finish with only one format.
 
 ## Required TS-only fields
 Legacy Mapping, ADR References, TSA Component, Gap Analysis Summary,

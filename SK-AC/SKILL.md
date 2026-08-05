@@ -13,9 +13,11 @@ description: >-
 - `mode`: cs | ts
 
 ## Outputs
-- Update stories and/or write:
-  - CS: `artifacts/cs/acceptance_criteria.json`
-  - TS: `artifacts/ts/acceptance_criteria.json`
+- Update stories and write:
+  - CS: `artifacts/cs/acceptance_criteria.json` **and** embed/update AC sections in each story MD
+  - TS: `artifacts/ts/acceptance_criteria.json` **and** embed/update AC sections in each story MD
+
+Dual surface required: JSON pack + Markdown story files kept in sync.
 
 ```json
 {

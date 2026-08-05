@@ -12,8 +12,15 @@ description: >-
 - Template version (default 1.0.0)
 
 ## Outputs
-- `artifacts/cs/cs_stories.json` (array of stories per story.schema)
-- Optionally draft MD under `artifacts/cs/stories/`
+- `artifacts/cs/cs_stories.json` (array of stories per story.schema) — **required**
+- `artifacts/cs/stories/*.md` — **required** one MD file per story (use enterprise CS template)
+
+## Dual surface (mandatory)
+Every story MUST be written as:
+1. JSON entry in `cs_stories.json` (system of record)
+2. Matching Markdown file for human / Jira review
+
+Do not finish with JSON-only or MD-only.
 
 ## Required story fields
 ID, Title, Business Objective, Description, Functional Requirements, Business Rules,

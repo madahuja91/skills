@@ -69,4 +69,7 @@ swarm_handoff:
 5. Emit `swarm_handoff`
 
 ## Tone
-Enterprise artifacts only: JSON system-of-record, compact MD projection, tables/IDs/Gherkin — no narrative filler.
+Enterprise artifacts only.
+- **JSON** = system of record
+- **Markdown** = required human projection (epics/stories must emit both)
+- Prefer tables, ID-linked refs, Given/When/Then, checklists — no narrative filler

@@ -31,10 +31,12 @@ description: >-
 
 ## Rubrics
 ### CS (G1–G3)
-Requirement completeness, business rule coverage, story consistency/duplicates
+Requirement completeness, business rule coverage, story consistency/duplicates,
+**dual surface** (each story/epic has JSON + MD)
 
 ### TS (G4–G6, G8 support)
-ADR compliance, TSA alignment, duplicate detection, test/AC coverage signals
+ADR compliance, TSA alignment, duplicate detection, test/AC coverage signals,
+**dual surface** (each story/epic has JSON + MD)
 
 ## Must not
 Silently rewrite stories; emit findings + suggested_fix only.

@@ -53,4 +53,5 @@ Also load and obey `SK-SWARM` for shared-state file shapes.
 
 ## Completeness policy (optimized)
 - After each design peer: path-audit claimed files; one rewrite max on fail
+- For story/epic peers: require **both** JSON and MD paths in artifacts_index
 - LLM Quality/Trace: critical targets + one phase-end batch — not after every leaf

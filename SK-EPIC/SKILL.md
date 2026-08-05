@@ -13,8 +13,8 @@ description: >-
 - clustering_policy (default: by capability)
 
 ## Outputs
-- CS: `artifacts/cs/cs_epics.json`
-- TS: `artifacts/ts/ts_epics.json`
+- CS: `artifacts/cs/cs_epics.json` **and** `artifacts/cs/epics/*.md` (required dual surface)
+- TS: `artifacts/ts/ts_epics.json` **and** `artifacts/ts/epics/*.md` (required dual surface)
 
 ```json
 {

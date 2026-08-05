@@ -13,8 +13,10 @@ description: >-
 - `mode`: cs | ts
 
 ## Outputs
-- CS: `artifacts/cs/test_scenarios.json`
-- TS: `artifacts/ts/test_scenarios.json`
+- CS: `artifacts/cs/test_scenarios.json` **and** update Testing Scenarios section in each story MD
+- TS: `artifacts/ts/test_scenarios.json` **and** update Testing Scenarios section in each story MD
+
+Dual surface required: JSON pack + Markdown story files kept in sync.
 
 ```json
 {
