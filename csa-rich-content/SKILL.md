@@ -62,6 +62,7 @@ Obey `arc42-c4-views`.
 2. Use `discovery.json` inventory counts and representative paths for executive + `#inventory` tables.
 3. **Do not invent** facts. Thin evidence → long Gaps sections with explicit unknowns — still meet floors.
 4. Anti-patterns that **fail**: stub index with only nav links; “see machine/*.json”; unlabeled 3-box diagrams; TSA migration/effort/target-microservice sections inside CSA index.
+5. Anti-patterns that **fail** even if long: pasting the same inventory/scorecard/domain/integration catalog into every Markdown file — obey `csa-section-boundaries`. Meet word floors with **unique** section depth; cross-link for shared facts.
 
 ## Completeness / gate enforcement
 
@@ -72,5 +73,6 @@ For `gate-csa-document`, Completeness MUST:
 3. Fail if executive summary lacks scorecard **or** ≥5 risks (`executive_richness`).
 4. Fail if major MD sections lack ≥1 Markdown table (`narrative_tables_present`) for 00, 04–08, 10.
 5. Fail if `index.html` missing required anchors, table/Mermaid floors, or is a stub hub (`index_html_hub_richness`).
+6. Fail if Markdown siblings violate `csa-section-boundaries` (`section_anti_redundancy`).
 
 Specialist gates SHOULD fail shallow lists even if schema-valid.

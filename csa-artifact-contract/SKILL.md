@@ -58,3 +58,12 @@ Prefer `code|config|ddl|descriptor` over `inferred`. If only inferred, set confi
 ## Unknown over invention
 
 For 20+ year legacy stacks: if version/framework cannot be proven, set value to `"unknown"` with evidence of what was searched. Never invent modern framework names.
+
+## HARD: Separation of concerns
+
+Obey skill **`csa-section-boundaries`** when assembling or validating human deliverables:
+
+- Each specialist JSON stays in its schema lane (domain ≠ lineage ≠ integration ≠ architecture dump of everything).
+- Pack Markdown sections must not reprint the same executive/inventory/evidence baseline.
+- Cross-link to the canonical owner section or `arc42-c4/index.html#…` instead of duplicating tables.
+

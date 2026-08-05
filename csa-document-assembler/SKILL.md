@@ -25,10 +25,14 @@ Produce industry-standard Current State Architecture documentation for moderniza
 
 Do **not** write C4 content as `.md`. Do **not** write human narrative sections as `.html` except under `arc42-c4/`.
 
-## HARD: Rich content
+## HARD: Rich content + unique sections
 
-Obey skill **`csa-rich-content`** (word floors, tables, scorecards, risk registers, HTML prose depth).  
-Thin paraphrases of JSON (**~1 page stubs**) are **failures**. Expand every accepted entity into tables and multi-section prose.
+Obey skills **`csa-rich-content`** and **`csa-section-boundaries`**.
+
+- Meet word floors with **section-owned** depth — not by pasting the HTML index / discovery rollup into every file.
+- `arc42-c4/index.html` = consolidated hub (allowed to summarize all concerns).
+- `csa_pack/00`, `04`–`10` = distinct deep-dives; cross-link instead of duplicate.
+- Do **not** replace sectioned pack with `*-report.md` or a single mega `*_Rich_Pack.md` as the only Markdown deliverable.
 
 ## Inputs (accepted only)
 
@@ -75,12 +79,12 @@ csa_pack/
 
 Optional when evidence supports: `business_logic.md`, `resilience_gaps.md`, `oas/*.yaml`.
 
-Load skills: `csa-rich-content`, `mermaid-diagrams`, `arc42-c4-views`, `ddd-domain-pack`, `data-lineage-pack`, `epic-story-mapping`, `csa-artifact-contract`.
+Load skills: `csa-rich-content`, `csa-section-boundaries`, `mermaid-diagrams`, `arc42-c4-views`, `ddd-domain-pack`, `data-lineage-pack`, `csa-artifact-contract`.
 
 ## Procedure
 
 1. Copy accepted machine JSON into `csa_pack/machine/`.
-2. **Exhaustively expand** Markdown sections `00`, `04`–`10` from accepted artifacts **and** discovery inventory counts/paths (`ddd-domain-pack`, lineage, integration, etc.). Apply **`mermaid-diagrams`** for all required MD diagrams:
+2. **Exhaustively expand** Markdown sections `00`, `04`–`10` from accepted artifacts — each section owns only its concern (`csa-section-boundaries`). Put full consolidation in `index.html`. Apply **`mermaid-diagrams`** for required MD diagrams:
    - `00` → `diag-exec-overview`
    - `04` → `diag-domain-context-map`
    - `06` → `diag-lineage-critical`
@@ -92,16 +96,17 @@ Load skills: `csa-rich-content`, `mermaid-diagrams`, `arc42-c4-views`, `ddd-doma
 4. Write `machine/mermaid_diagrams.json` inventory conforming to `standards/mermaid-diagrams/schema.json`.
 5. In `00_executive_summary.md` and `README.md`, link to `./arc42-c4/index.html` (not to removed C4 `.md` files).
 6. Construct `machine/traceability_graph.json`, then write a **wide** `09_traceability_matrix.md`.
-7. Aggregate gaps into a **ranked** `10_gaps_risks_assumptions.md`.
-8. Generate **Markdown** epic/story seeds via `epic-story-mapping` meeting seed word floors.
-9. Self-check word floors from `csa-rich-content`; rewrite any short section before finishing.
+7. Aggregate gaps into a **ranked** `10_gaps_risks_assumptions.md` (canonical risk register).
+8. Apply **`csa-section-boundaries`**: strip duplicated scorecards/inventories/catalogs from non-owner Markdown; replace with cross-links to owner section or `index.html#…`.
+9. Self-check word floors from `csa-rich-content` **and** anti-redundancy from `csa-section-boundaries`; rewrite overlapping sections before finishing.
 10. Write `machine/pack_manifest.json` + `machine/quality_gate_summary.json`.
 
 ## Rules
 
 - Do not invent systems, queues, packages, or versions.
-- You **may and must** expand discovery + specialist JSON into long human docs (tables, inventories, scorecards). That is assembly, not re-discovery.
+- You **may and must** expand discovery + specialist JSON into long human docs (tables, inventories, scorecards) **into the owning section / HTML hub only**.
 - Do not stop at “see machine/*.json”.
-- Every epic/story seed must cite CSA section paths and/or machine IDs.
+- Do not paste the same Evidence Baseline / readiness scorecard / full domain catalog into every Markdown file.
 - Mark assumptions clearly when confidence was pass_with_warnings.
 - Required Mermaid diagrams must render correctly (MD fences + HTML `pre.mermaid` + runtime).
+- Primary client Markdown lives under `csa_pack/00`–`10` + `README.md` only (plus HTML).

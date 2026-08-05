@@ -27,5 +27,7 @@ Depth floors: skill **`csa-rich-content`**.
 - **Executive richness (blocking):** inventory/component tables, modernization readiness scorecard, ≥5 risks with mitigation
 - **Tables (blocking):** Markdown tables in `00`, `04`–`08`, `10`
 - **`index.html` hub (blocking):** ≥5000 words, ≥8 tables, ≥2 Mermaid + runtime, all required anchors (`overview`…`pack`); as-is CSA framing (no TSA migration-strategy body). Stub nav-only index fails (`index_html_hub_richness`)
+- **Anti-redundancy (blocking):** obey `csa-section-boundaries` — fail Jaccard > 0.32 between Markdown siblings or duplicated owned catalogs (`section_anti_redundancy`)
+- **Pack shape (blocking):** `csa_pack/00`–`10` present; mega-pack-only or `*-report.md` substitutes without sectioned pack = fail
 
-Emit report with `gate_id: gate-csa-document`. Observed fields must include measured word counts / table / Mermaid counts when failing depth checks.
+Emit report with `gate_id: gate-csa-document`. Observed fields must include measured word counts / table / Mermaid counts / pair similarity when failing depth or redundancy checks.

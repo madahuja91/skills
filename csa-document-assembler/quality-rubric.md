@@ -16,3 +16,5 @@
 | `index.html` hub ≥5000 words, ≥8 tables, ≥2 Mermaid, required anchors | required (blocking) |
 | C4 detail pages ≥800 words each + Mermaid runtime | required (blocking) |
 | CSA index must not be TSA migration-strategy framed | required (blocking) |
+| Markdown sections obey `csa-section-boundaries` (no copy-paste across 00/04–10) | required (blocking) |
+| Primary pack is `csa_pack/00`–`10` (not mega-pack / `*-report.md` substitutes) | required (blocking) |
