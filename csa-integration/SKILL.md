@@ -23,6 +23,10 @@ Write `artifacts/integration.json` per `schema.json`.
 5. Flag async candidates with justification.
 6. Sync outputs through `csa-swarm-shared-memory`.
 
+## HARD: Depth (`csa-rich-content`)
+
+Classify **all** evidenced external I/O with rich descriptions (endpoints/queues/adapters, direction, reliability). Do not stop after 3–5 sample integrations when discovery shows more.
+
 ## Assembler note
 
 Section `07_integration_landscape.md` must include Mermaid diagram **`diag-integration-landscape`** (`flowchart` or `sequenceDiagram`) per `mermaid-diagrams`, sourced only from this artifact.

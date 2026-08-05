@@ -40,6 +40,7 @@ Follow `active-root-hygiene`:
 
 - Narrative CSA sections + epic seeds: **Markdown only**
 - arc42/C4: **HTML only** under `csa_pack/arc42-c4/` — never C4 `.md`
+- **Richness:** load `csa-rich-content` and **word-count** required files; stub packs fail `gate-csa-document` even if files exist
 
 ## Procedure
 
@@ -47,10 +48,12 @@ Follow `active-root-hygiene`:
 2. Load agent skill schema + `quality-rubric.md` for the gate.
 3. Validate JSON Schema; score `schema_conformance`.
 4. Apply rubric metrics for evidence, completeness, confidence.
-5. Build `blocking_gaps` (critical/high that block acceptance) and `warnings`.
-6. If fail: write `remediation_brief` using agent `remediation-hints.md`.
-7. Write report to `artifacts/quality_gate_reports/{gate_id}-{artifact_stem}.json` under `active_root` only.
-8. Return report JSON to Manager.
+5. For specialist gates: apply `csa-rich-content` list-depth expectations (many evidenced rows with descriptions).
+6. For `gate-csa-document` / epic readiness: measure word counts + tables + executive scorecard/risks; fail below floors.
+7. Build `blocking_gaps` (critical/high that block acceptance) and `warnings`.
+8. If fail: write `remediation_brief` using agent `remediation-hints.md` (include measured vs required words).
+9. Write report to `artifacts/quality_gate_reports/{gate_id}-{artifact_stem}.json` under `active_root` only.
+10. Return report JSON to Manager.
 
 ## Mapping gate → skill
 

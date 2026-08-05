@@ -47,7 +47,8 @@ On start:
 5. After **each** specialist write: Completeness Validator → accept / rework / escalate. Update shared `artifacts_index` + `loop`.
 6. Wait for parallel **join_complete** (all accepted or escalated).
 7. Invoke **CSA-Document-Assembler** → `gate-csa-document` → `gate-epic-story-readiness`.
-8. Set `phase=done`; summarize.
+8. If `gate-csa-document` fails on **narrative depth** (`csa-rich-content`), rework Assembler (up to `max_reruns`) — do not accept stub Markdown/HTML.
+9. Set `phase=done`; summarize.
 
 ## Swarm constitution
 
@@ -67,11 +68,12 @@ Ensure Discover/Lineage/Domain/Integration load:
 - `legacy-ibm-mq`
 - `legacy-framework-heuristics`
 - `csa-swarm-shared-memory`
+- `csa-rich-content` (specialists + Assembler must meet depth floors)
 
 Do not hardcode customer names from any sample codebase.
 
 ## Outputs
 
 - Shared memory under `ACTIVE_ROOT/_internal/swarm/`
-- Accepted machine artifacts under `ACTIVE_ROOT/artifacts/`
-- Final `csa_pack/` (Markdown sections with required Mermaid + `arc42-c4/*.html` with Mermaid runtime) and Markdown epic/story seeds
+- Accepted machine artifacts under `ACTIVE_ROOT/artifacts/` (deep inventories, not tiny summaries)
+- Final `csa_pack/` **long-form** Markdown (word floors in `csa-rich-content`) + `arc42-c4/*.html` with Mermaid runtime + Markdown epic/story seeds

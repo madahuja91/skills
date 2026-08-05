@@ -23,6 +23,10 @@ Write `artifacts/lineage.json` per `schema.json`.
 5. Prefer table-level completeness for huge schemas; deepen field-level on critical entities only when scoped by Manager.
 6. Sync via `csa-swarm-shared-memory`.
 
+## HARD: Depth (`csa-rich-content`)
+
+Prefer many evidenced field_lineage / transformation rows (SP call chains, table hops). A handful of placeholder lineage rows fails Completeness when discovery shows substantial SQL/packages.
+
 ## Gate
 
 `gate-data-lineage` — primary entities must have a path; see `quality-rubric.md`.

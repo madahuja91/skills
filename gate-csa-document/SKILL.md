@@ -1,6 +1,6 @@
 ---
 name: gate-csa-document
-description: Quality gate for assembled csa_pack Markdown sections, arc42-C4 HTML index, and machine artifacts. Use after Document Assembler.
+description: Quality gate for assembled csa_pack Markdown sections, arc42-C4 HTML index, rich narrative depth, and machine artifacts. Use after Document Assembler.
 ---
 
 # Gate: CSA Document
@@ -10,6 +10,7 @@ description: Quality gate for assembled csa_pack Markdown sections, arc42-C4 HTM
 Authoritative evaluation contract: [`schema.json`](schema.json)
 
 Pack manifest must also conform to `skills/agents/csa-document-assembler/schema.json`.
+Depth floors: skill **`csa-rich-content`**.
 
 ## Pass requires
 
@@ -22,5 +23,8 @@ Pack manifest must also conform to `skills/agents/csa-document-assembler/schema.
   - MD: `diag-exec-overview`, `diag-domain-context-map`, `diag-lineage-critical`, `diag-integration-landscape`
   - HTML: `diag-c4-context`, `diag-c4-containers`, `diag-c4-components` with Mermaid runtime on those pages
 - Critical gaps documented in `10_gaps_risks_assumptions.md`
+- **Richness (blocking):** word-count every required MD/HTML file against `csa-rich-content` floors; fail stubs
+- **Executive richness (blocking):** inventory/component tables, migration readiness scorecard, ≥5 risks with mitigation
+- **Tables (blocking):** Markdown tables in `00`, `04`–`08`, `10`
 
-Emit report with `gate_id: gate-csa-document`.
+Emit report with `gate_id: gate-csa-document`. Observed fields must include measured word counts when failing depth checks.

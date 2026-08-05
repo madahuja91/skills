@@ -1,6 +1,6 @@
 ---
 name: csa-document-assembler
-description: Assembles Hybrid CSA pack — Markdown deliverables with required Mermaid, arc42-C4 HTML index with Mermaid runtime, and Markdown epic/story seeds from accepted machine artifacts. Use when Manager invokes Document Assembler after gated specialists.
+description: Assembles Hybrid CSA pack — deep Markdown deliverables with required Mermaid, arc42-C4 HTML index with Mermaid runtime, and Markdown epic/story seeds from accepted machine artifacts. Use when Manager invokes Document Assembler after gated specialists.
 ---
 
 # CSA Document Assembler
@@ -12,7 +12,7 @@ Authoritative output/invocation contract: [schema.json](schema.json)
 
 ## Goal
 
-Produce industry-standard Current State Architecture documentation for modernization epic/story generation.
+Produce industry-standard Current State Architecture documentation for modernization epic/story generation — **reference-quality depth**, not stubs.
 
 ## Output format rules (mandatory)
 
@@ -24,6 +24,11 @@ Produce industry-standard Current State Architecture documentation for moderniza
 | Specialist working copies | `machine/*.json` only (internal tooling — not human primary deliverable) |
 
 Do **not** write C4 content as `.md`. Do **not** write human narrative sections as `.html` except under `arc42-c4/`.
+
+## HARD: Rich content
+
+Obey skill **`csa-rich-content`** (word floors, tables, scorecards, risk registers, HTML prose depth).  
+Thin paraphrases of JSON (**~1 page stubs**) are **failures**. Expand every accepted entity into tables and multi-section prose.
 
 ## Inputs (accepted only)
 
@@ -68,28 +73,33 @@ csa_pack/
     pack_manifest.json
 ```
 
-Load skills: `mermaid-diagrams`, `arc42-c4-views`, `ddd-domain-pack`, `data-lineage-pack`, `epic-story-mapping`, `csa-artifact-contract`.
+Optional when evidence supports: `business_logic.md`, `resilience_gaps.md`, `oas/*.yaml`.
+
+Load skills: `csa-rich-content`, `mermaid-diagrams`, `arc42-c4-views`, `ddd-domain-pack`, `data-lineage-pack`, `epic-story-mapping`, `csa-artifact-contract`.
 
 ## Procedure
 
 1. Copy accepted machine JSON into `csa_pack/machine/`.
-2. Write Markdown sections `00`, `04`–`10` from accepted artifacts (`ddd-domain-pack`, lineage, integration, etc.) and apply **`mermaid-diagrams`** for all required MD diagrams:
+2. **Exhaustively expand** Markdown sections `00`, `04`–`10` from accepted artifacts **and** discovery inventory counts/paths (`ddd-domain-pack`, lineage, integration, etc.). Apply **`mermaid-diagrams`** for all required MD diagrams:
    - `00` → `diag-exec-overview`
    - `04` → `diag-domain-context-map`
    - `06` → `diag-lineage-critical`
    - `07` → `diag-integration-landscape`
    - optional: `05` capability map, `08` runtime when evidence exists
-3. Build **HTML** C4/arc42 site via `arc42-c4-views` + `mermaid-diagrams` → `csa_pack/arc42-c4/*.html` with required Mermaid C4 diagrams and Mermaid runtime init.
+3. Build **HTML** C4/arc42 site via `arc42-c4-views` + `mermaid-diagrams` → `csa_pack/arc42-c4/*.html` with required Mermaid C4 diagrams, Mermaid runtime init, and deep prose (≥400 words/page per `csa-rich-content`).
 4. Write `machine/mermaid_diagrams.json` inventory conforming to `standards/mermaid-diagrams/schema.json`.
 5. In `00_executive_summary.md` and `README.md`, link to `./arc42-c4/index.html` (not to removed C4 `.md` files).
-6. Construct `machine/traceability_graph.json`, then write `09_traceability_matrix.md`.
-7. Aggregate gaps into `10_gaps_risks_assumptions.md`.
-8. Generate **Markdown** epic/story seeds via `epic-story-mapping`.
-9. Write `machine/pack_manifest.json` + `machine/quality_gate_summary.json`.
+6. Construct `machine/traceability_graph.json`, then write a **wide** `09_traceability_matrix.md`.
+7. Aggregate gaps into a **ranked** `10_gaps_risks_assumptions.md`.
+8. Generate **Markdown** epic/story seeds via `epic-story-mapping` meeting seed word floors.
+9. Self-check word floors from `csa-rich-content`; rewrite any short section before finishing.
+10. Write `machine/pack_manifest.json` + `machine/quality_gate_summary.json`.
 
 ## Rules
 
-- Do not re-analyze the codebase; assemble from accepted artifacts only.
+- Do not invent systems, queues, packages, or versions.
+- You **may and must** expand discovery + specialist JSON into long human docs (tables, inventories, scorecards). That is assembly, not re-discovery.
+- Do not stop at “see machine/*.json”.
 - Every epic/story seed must cite CSA section paths and/or machine IDs.
 - Mark assumptions clearly when confidence was pass_with_warnings.
 - Required Mermaid diagrams must render correctly (MD fences + HTML `pre.mermaid` + runtime).

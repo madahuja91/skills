@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-rich-content.json",
+  "title": "CsaRichContentDepthContract",
+  "type": "object",
+  "required": ["contract_version", "markdown_word_floors", "html_word_floor", "specialist_list_floors"],
+  "properties": {
+    "contract_version": { "type": "string", "const": "1.0.0" },
+    "markdown_word_floors": {
+      "type": "object",
+      "required": [
+        "00_executive_summary.md",
+        "04_domain_model_ddd.md",
+        "05_business_capabilities.md",
+        "06_data_architecture_lineage.md",
+        "07_integration_landscape.md",
+        "08_runtime_ops_tech_debt.md",
+        "09_traceability_matrix.md",
+        "10_gaps_risks_assumptions.md",
+        "README.md",
+        "epic_story_seeds/functions.md",
+        "epic_story_seeds/epics.md",
+        "epic_story_seeds/stories.md"
+      ],
+      "properties": {
+        "00_executive_summary.md": { "type": "integer", "const": 1200 },
+        "04_domain_model_ddd.md": { "type": "integer", "const": 900 },
+        "05_business_capabilities.md": { "type": "integer", "const": 800 },
+        "06_data_architecture_lineage.md": { "type": "integer", "const": 900 },
+        "07_integration_landscape.md": { "type": "integer", "const": 900 },
+        "08_runtime_ops_tech_debt.md": { "type": "integer", "const": 700 },
+        "09_traceability_matrix.md": { "type": "integer", "const": 500 },
+        "10_gaps_risks_assumptions.md": { "type": "integer", "const": 800 },
+        "README.md": { "type": "integer", "const": 200 },
+        "epic_story_seeds/functions.md": { "type": "integer", "const": 400 },
+        "epic_story_seeds/epics.md": { "type": "integer", "const": 600 },
+        "epic_story_seeds/stories.md": { "type": "integer", "const": 900 }
+      },
+      "additionalProperties": false
+    },
+    "html_word_floor": { "type": "integer", "const": 400 },
+    "specialist_list_floors": {
+      "type": "object",
+      "properties": {
+        "domain.business_domains": { "type": "integer", "minimum": 1 },
+        "domain.business_capabilities": { "type": "integer", "minimum": 8 },
+        "architecture.architecture_layers": { "type": "integer", "minimum": 5 },
+        "lineage.field_lineage": { "type": "integer", "minimum": 15 },
+        "integration.integrations": { "type": "integer", "minimum": 8 }
+      },
+      "additionalProperties": false
+    },
+    "blocking_checks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "narrative_depth_minimums",
+          "executive_richness",
+          "narrative_tables_present",
+          "html_c4_prose_depth",
+          "specialist_list_depth"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

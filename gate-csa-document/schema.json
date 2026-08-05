@@ -60,7 +60,11 @@
               "gaps_documented",
               "mermaid_required_diagrams_present",
               "mermaid_html_runtime_present",
-              "mermaid_inventory_present"
+              "mermaid_inventory_present",
+              "narrative_depth_minimums",
+              "executive_richness",
+              "narrative_tables_present",
+              "html_c4_prose_depth"
             ]
           },
           "description": { "type": "string" },
