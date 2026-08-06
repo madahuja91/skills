@@ -8,19 +8,48 @@
     "canonical_owners",
     "max_markdown_pair_jaccard",
     "forbidden_primary_deliverables",
-    "blocking_check_id"
+    "blocking_check_id",
+    "required_pack_markdown"
   ],
   "properties": {
-    "contract_version": { "type": "string", "const": "1.0.0" },
+    "contract_version": { "type": "string", "const": "3.0.0" },
     "canonical_owners": {
       "type": "object",
-      "additionalProperties": { "type": "string" }
+      "required": [
+        "metrics_and_readiness",
+        "business_architecture",
+        "application_architecture",
+        "data_and_integration",
+        "risks_gaps_traceability"
+      ],
+      "properties": {
+        "metrics_and_readiness": { "const": "Executive_Summary.md" },
+        "business_architecture": { "const": "Business_Architecture.md" },
+        "application_architecture": { "const": "Application_Architecture.md" },
+        "data_and_integration": { "const": "Data_and_Integration.md" },
+        "risks_gaps_traceability": { "const": "Risks_Gaps_and_Traceability.md" }
+      },
+      "additionalProperties": false
     },
     "max_markdown_pair_jaccard": { "type": "number", "const": 0.32 },
     "forbidden_primary_deliverables": {
       "type": "array",
-      "items": { "type": "string" },
-      "minItems": 1
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "00_executive_summary.md",
+          "04_domain_model_ddd.md",
+          "05_business_capabilities.md",
+          "06_data_architecture_lineage.md",
+          "07_integration_landscape.md",
+          "08_runtime_ops_tech_debt.md",
+          "09_traceability_matrix.md",
+          "10_gaps_risks_assumptions.md",
+          "*_Rich_Pack.md",
+          "*-report.md"
+        ]
+      }
     },
     "blocking_check_id": {
       "type": "string",
@@ -28,8 +57,19 @@
     },
     "required_pack_markdown": {
       "type": "array",
-      "items": { "type": "string" },
-      "minItems": 8
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "string",
+        "enum": [
+          "Executive_Summary.md",
+          "Business_Architecture.md",
+          "Application_Architecture.md",
+          "Data_and_Integration.md",
+          "Risks_Gaps_and_Traceability.md",
+          "README.md"
+        ]
+      }
     }
   },
   "additionalProperties": false

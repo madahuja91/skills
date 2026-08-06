@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://csa.local/schemas/10_gaps_risks_assumptions.schema.json",
-  "title": "CSA_GapsRisksAssumptions_Schema",
+  "$id": "https://csa.local/schemas/Risks_Gaps_and_Traceability.schema.json",
+  "title": "CSA_Risks_Gaps_and_Traceability",
   "type": "object",
-  "required": ["gaps", "risks", "assumptions"],
+  "required": ["gaps", "risks", "assumptions", "traceability_links"],
   "properties": {
     "gaps": {
       "type": "array",
@@ -46,6 +46,22 @@
           "assumption_id": { "type": "string", "pattern": "^ASM-" },
           "statement": { "type": "string", "minLength": 15 },
           "confidence": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "traceability_links": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["capability_id", "component_id", "integration_id", "lineage_id", "evidence"],
+        "properties": {
+          "capability_id": { "type": "string" },
+          "component_id": { "type": "string" },
+          "integration_id": { "type": "string" },
+          "lineage_id": { "type": "string" },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }

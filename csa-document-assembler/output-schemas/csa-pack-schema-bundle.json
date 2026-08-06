@@ -3,75 +3,78 @@
   "$id": "https://csa.local/schemas/csa-pack-schema-bundle.json",
   "title": "CsaPackSchemaBundle",
   "type": "object",
-  "required": ["version", "schemas", "markdown_section_machine_json"],
+  "required": ["version", "schemas", "markdown_section_machine_json", "client_deliverables"],
   "properties": {
-    "version": { "type": "string", "const": "2.1.0" },
+    "version": { "type": "string", "const": "3.0.0" },
+    "client_deliverables": {
+      "type": "object",
+      "description": "Lean CSA pack clients actually need — 5 Markdown docs + C4 HTML hub",
+      "required": ["markdown", "html"],
+      "properties": {
+        "markdown": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 6,
+          "items": {
+            "type": "string",
+            "enum": [
+              "Executive_Summary.md",
+              "Business_Architecture.md",
+              "Application_Architecture.md",
+              "Data_and_Integration.md",
+              "Risks_Gaps_and_Traceability.md",
+              "README.md"
+            ]
+          }
+        },
+        "html": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "arc42-c4/index.html",
+              "arc42-c4/context.html",
+              "arc42-c4/containers.html",
+              "arc42-c4/components.html"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
     "markdown_section_machine_json": {
       "type": "object",
-      "description": "Primary MD sections must be rendered from these machine JSON files after schema validation",
       "required": [
-        "00_executive_summary",
-        "04_domain_model_ddd",
-        "05_business_capabilities",
-        "06_data_architecture_lineage",
-        "07_integration_landscape",
-        "08_runtime_ops_tech_debt",
-        "09_traceability_matrix",
-        "10_gaps_risks_assumptions"
+        "Executive_Summary",
+        "Business_Architecture",
+        "Application_Architecture",
+        "Data_and_Integration",
+        "Risks_Gaps_and_Traceability"
       ],
       "properties": {
-        "00_executive_summary": { "const": "csa_pack/machine/sections/00_executive_summary.json" },
-        "04_domain_model_ddd": { "const": "csa_pack/machine/sections/04_domain_model_ddd.json" },
-        "05_business_capabilities": { "const": "csa_pack/machine/sections/05_business_capabilities.json" },
-        "06_data_architecture_lineage": { "const": "csa_pack/machine/sections/06_data_architecture_lineage.json" },
-        "07_integration_landscape": { "const": "csa_pack/machine/sections/07_integration_landscape.json" },
-        "08_runtime_ops_tech_debt": { "const": "csa_pack/machine/sections/08_runtime_ops_tech_debt.json" },
-        "09_traceability_matrix": { "const": "csa_pack/machine/sections/09_traceability_matrix.json" },
-        "10_gaps_risks_assumptions": { "const": "csa_pack/machine/sections/10_gaps_risks_assumptions.json" }
+        "Executive_Summary": { "const": "csa_pack/machine/sections/Executive_Summary.json" },
+        "Business_Architecture": { "const": "csa_pack/machine/sections/Business_Architecture.json" },
+        "Application_Architecture": { "const": "csa_pack/machine/sections/Application_Architecture.json" },
+        "Data_and_Integration": { "const": "csa_pack/machine/sections/Data_and_Integration.json" },
+        "Risks_Gaps_and_Traceability": { "const": "csa_pack/machine/sections/Risks_Gaps_and_Traceability.json" }
       },
       "additionalProperties": false
     },
     "schemas": {
       "type": "object",
       "required": [
-        "00_executive_summary",
-        "01_goals_and_constraints",
-        "03_context_and_scope",
-        "04_domain_model_ddd",
-        "05_business_capabilities",
-        "05_building_block_view",
-        "06_data_architecture_lineage",
-        "06_runtime_view",
-        "07_integration_landscape",
-        "07_deployment_view",
-        "08_runtime_ops_tech_debt",
-        "08_cross_cutting_concepts",
-        "09_architectural_decisions",
-        "09_traceability_matrix",
-        "10_quality_scenarios",
-        "10_gaps_risks_assumptions",
-        "11_risks_and_tech_debt",
-        "12_glossary"
+        "Executive_Summary",
+        "Business_Architecture",
+        "Application_Architecture",
+        "Data_and_Integration",
+        "Risks_Gaps_and_Traceability"
       ],
       "properties": {
-        "00_executive_summary": { "const": "00_executive_summary.schema.json" },
-        "01_goals_and_constraints": { "const": "01_goals_and_constraints.schema.json" },
-        "03_context_and_scope": { "const": "03_context_and_scope.schema.json" },
-        "04_domain_model_ddd": { "const": "04_domain_model_ddd.schema.json" },
-        "05_business_capabilities": { "const": "05_business_capabilities.schema.json" },
-        "05_building_block_view": { "const": "05_building_block_view.schema.json" },
-        "06_data_architecture_lineage": { "const": "06_data_architecture_lineage.schema.json" },
-        "06_runtime_view": { "const": "06_runtime_view.schema.json" },
-        "07_integration_landscape": { "const": "07_integration_landscape.schema.json" },
-        "07_deployment_view": { "const": "07_deployment_view.schema.json" },
-        "08_runtime_ops_tech_debt": { "const": "08_runtime_ops_tech_debt.schema.json" },
-        "08_cross_cutting_concepts": { "const": "08_cross_cutting_concepts.schema.json" },
-        "09_architectural_decisions": { "const": "09_architectural_decisions.schema.json" },
-        "09_traceability_matrix": { "const": "09_traceability_matrix.schema.json" },
-        "10_quality_scenarios": { "const": "10_quality_scenarios.schema.json" },
-        "10_gaps_risks_assumptions": { "const": "10_gaps_risks_assumptions.schema.json" },
-        "11_risks_and_tech_debt": { "const": "11_risks_and_tech_debt.schema.json" },
-        "12_glossary": { "const": "12_glossary.schema.json" }
+        "Executive_Summary": { "const": "Executive_Summary.schema.json" },
+        "Business_Architecture": { "const": "Business_Architecture.schema.json" },
+        "Application_Architecture": { "const": "Application_Architecture.schema.json" },
+        "Data_and_Integration": { "const": "Data_and_Integration.schema.json" },
+        "Risks_Gaps_and_Traceability": { "const": "Risks_Gaps_and_Traceability.schema.json" }
       },
       "additionalProperties": false
     }

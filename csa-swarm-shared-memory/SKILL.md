@@ -15,6 +15,27 @@ Also maintain `handoffs.jsonl` (append-only JSON lines) and `context_memory.md` 
 
 Parallel swarm agents must **not** sync only through chat. They share one on-disk checkpoint so peers and Completeness Validator see the same truth.
 
+## HARD: Bootstrap before any worker (blocking)
+
+Manager MUST create these files **before** Discover or any specialist runs. Completeness fails the run if any are missing:
+
+1. `ACTIVE_ROOT/_internal/swarm/swarm_state.json` (full minimum shape below)
+2. `ACTIVE_ROOT/_internal/swarm/handoffs.jsonl` (may start empty)
+3. `ACTIVE_ROOT/_internal/swarm/context_memory.md` (seed digest)
+4. `ACTIVE_ROOT/_internal/run_plan.json`
+
+If agents “run in parallel” without these files, they are **not** a swarm — they are isolated chats. That causes rediscovery, ID collisions, and hour+ runtimes.
+
+## HARD: Fast parallel control loop
+
+1. Bootstrap shared memory (above).
+2. Discover → Completeness (Discover only).
+3. **Fan-out** Domain + Tech + Lineage + Integration **in parallel** (no Completeness between peers).
+4. On **join_complete**, Completeness validates each accepted specialist artifact (batch allowed; max 1 rework each).
+5. Assembler once → gate-csa-document (max 1 Assembler rework).
+
+Do **not** serialize the parallel wave by waiting for Completeness after each peer before starting the next.
+
 ## ACTIVE_ROOT layout
 
 Manager bootstraps **exactly one** ACTIVE_ROOT — prefer workspace-relative **`src/`**. **Never** invent `/app/temp/csa-run` or a second root. Set `swarm_state.active_root` once. All sequential/parallel subagents write **only** under that path (see `active-root-hygiene`).
@@ -78,7 +99,7 @@ Write `active_root.txt` (one relative line, e.g. `src`) at workspace root when p
     "last_design_agent": "",
     "completeness": "PASS_COMPLETE|FAIL_INCOMPLETE|PENDING",
     "attempt": 1,
-    "max_reruns": 2
+    "max_reruns": 1
   },
   "checkpoint": { "seq": 0, "updated_by": "", "updated_at": "" }
 }

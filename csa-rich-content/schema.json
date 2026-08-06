@@ -15,15 +15,26 @@
     "blocking_checks"
   ],
   "properties": {
-    "contract_version": { "type": "string", "const": "2.1.0" },
+    "contract_version": { "type": "string", "const": "3.0.0" },
     "quality_mode": {
       "type": "string",
-      "const": "schema_first_structurally_complete_non_redundant"
+      "const": "lean_pack_schema_first_structurally_complete"
     },
     "required_markdown_files": {
       "type": "array",
-      "minItems": 9,
-      "items": { "type": "string" }
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "string",
+        "enum": [
+          "Executive_Summary.md",
+          "Business_Architecture.md",
+          "Application_Architecture.md",
+          "Data_and_Integration.md",
+          "Risks_Gaps_and_Traceability.md",
+          "README.md"
+        ]
+      }
     },
     "required_html_files": {
       "type": "array",
@@ -32,44 +43,37 @@
     },
     "required_section_machine_json": {
       "type": "array",
-      "minItems": 8,
+      "minItems": 5,
       "items": {
         "type": "string",
         "enum": [
-          "csa_pack/machine/sections/00_executive_summary.json",
-          "csa_pack/machine/sections/04_domain_model_ddd.json",
-          "csa_pack/machine/sections/05_business_capabilities.json",
-          "csa_pack/machine/sections/06_data_architecture_lineage.json",
-          "csa_pack/machine/sections/07_integration_landscape.json",
-          "csa_pack/machine/sections/08_runtime_ops_tech_debt.json",
-          "csa_pack/machine/sections/09_traceability_matrix.json",
-          "csa_pack/machine/sections/10_gaps_risks_assumptions.json"
+          "csa_pack/machine/sections/Executive_Summary.json",
+          "csa_pack/machine/sections/Business_Architecture.json",
+          "csa_pack/machine/sections/Application_Architecture.json",
+          "csa_pack/machine/sections/Data_and_Integration.json",
+          "csa_pack/machine/sections/Risks_Gaps_and_Traceability.json"
         ]
       }
     },
     "section_min_rows": {
       "type": "object",
       "required": [
-        "00.key_metrics_table",
-        "00.top_technical_risks",
-        "04.bounded_contexts",
-        "05.capability_taxonomy",
-        "06.data_lineage_matrix",
-        "07.integration_inventory",
-        "08.tech_debt_register",
-        "09.links",
-        "10.risks"
+        "Executive_Summary.key_metrics_table",
+        "Business_Architecture.capability_taxonomy",
+        "Application_Architecture.key_components",
+        "Data_and_Integration.data_lineage_matrix",
+        "Data_and_Integration.integration_inventory",
+        "Risks_Gaps_and_Traceability.risks",
+        "Risks_Gaps_and_Traceability.traceability_links"
       ],
       "properties": {
-        "00.key_metrics_table": { "type": "integer", "const": 5 },
-        "00.top_technical_risks": { "type": "integer", "const": 5 },
-        "04.bounded_contexts": { "type": "integer", "const": 3 },
-        "05.capability_taxonomy": { "type": "integer", "const": 8 },
-        "06.data_lineage_matrix": { "type": "integer", "const": 10 },
-        "07.integration_inventory": { "type": "integer", "const": 6 },
-        "08.tech_debt_register": { "type": "integer", "const": 5 },
-        "09.links": { "type": "integer", "const": 10 },
-        "10.risks": { "type": "integer", "const": 5 }
+        "Executive_Summary.key_metrics_table": { "type": "integer", "const": 5 },
+        "Business_Architecture.capability_taxonomy": { "type": "integer", "const": 8 },
+        "Application_Architecture.key_components": { "type": "integer", "const": 8 },
+        "Data_and_Integration.data_lineage_matrix": { "type": "integer", "const": 10 },
+        "Data_and_Integration.integration_inventory": { "type": "integer", "const": 6 },
+        "Risks_Gaps_and_Traceability.risks": { "type": "integer", "const": 5 },
+        "Risks_Gaps_and_Traceability.traceability_links": { "type": "integer", "const": 10 }
       },
       "additionalProperties": false
     },
@@ -114,7 +118,8 @@
           "index_html_hub_richness",
           "table_prose_duplication",
           "section_anti_redundancy",
-          "pack_shape_valid"
+          "pack_shape_valid",
+          "shared_memory_present"
         ]
       }
     }

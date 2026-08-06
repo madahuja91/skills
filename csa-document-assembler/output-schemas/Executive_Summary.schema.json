@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://csa.local/schemas/00_executive_summary.schema.json",
-  "title": "CSA_ExecutiveSummary_Schema",
+  "$id": "https://csa.local/schemas/Executive_Summary.schema.json",
+  "title": "CSA_Executive_Summary",
   "type": "object",
   "required": [
     "system_overview",

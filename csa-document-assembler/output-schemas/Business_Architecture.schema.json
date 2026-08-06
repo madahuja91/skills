@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://csa.local/schemas/04_domain_model_ddd.schema.json",
-  "title": "CSA_DomainModel_DDD_Schema",
+  "$id": "https://csa.local/schemas/Business_Architecture.schema.json",
+  "title": "CSA_Business_Architecture",
   "type": "object",
-  "required": ["bounded_contexts", "context_relationships", "ubiquitous_dictionary"],
+  "required": ["bounded_contexts", "capability_taxonomy", "ubiquitous_dictionary", "gap_analysis_bullets"],
   "properties": {
     "bounded_contexts": {
       "type": "array",
@@ -23,7 +23,7 @@
               "required": ["aggregate_root", "entities"],
               "properties": {
                 "aggregate_root": { "type": "string", "minLength": 2 },
-                "entities": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+                "entities": { "type": "array", "minItems": 1, "items": { "type": "string" } },
                 "value_objects": { "type": "array", "items": { "type": "string" } }
               },
               "additionalProperties": false
@@ -34,19 +34,33 @@
         "additionalProperties": false
       }
     },
-    "context_relationships": {
+    "capability_taxonomy": {
       "type": "array",
-      "minItems": 2,
+      "minItems": 8,
       "items": {
         "type": "object",
-        "required": ["upstream_context", "downstream_context", "relationship_type"],
+        "required": [
+          "capability_id",
+          "l1_capability",
+          "l2_capability",
+          "criticality",
+          "realizing_components",
+          "evidence"
+        ],
         "properties": {
-          "upstream_context": { "type": "string" },
-          "downstream_context": { "type": "string" },
-          "relationship_type": {
+          "capability_id": { "type": "string", "pattern": "^CAP-" },
+          "l1_capability": { "type": "string", "minLength": 2 },
+          "l2_capability": { "type": "string", "minLength": 2 },
+          "criticality": {
             "type": "string",
-            "enum": ["Customer-Supplier", "Conformist", "Anti-Corruption Layer", "Shared Kernel", "Partnership", "Open Host"]
-          }
+            "enum": ["Mission-Critical", "Business-Operational", "Administrative"]
+          },
+          "realizing_components": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 2 }
+          },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }
@@ -64,6 +78,11 @@
         },
         "additionalProperties": false
       }
+    },
+    "gap_analysis_bullets": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "type": "string", "minLength": 20 }
     }
   },
   "additionalProperties": false

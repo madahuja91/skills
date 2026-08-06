@@ -12,14 +12,11 @@
       "type": "array",
       "items": { "type": "string" },
       "default": [
-        "00_executive_summary.md",
-        "04_domain_model_ddd.md",
-        "05_business_capabilities.md",
-        "06_data_architecture_lineage.md",
-        "07_integration_landscape.md",
-        "08_runtime_ops_tech_debt.md",
-        "09_traceability_matrix.md",
-        "10_gaps_risks_assumptions.md",
+        "Executive_Summary.md",
+        "Business_Architecture.md",
+        "Application_Architecture.md",
+        "Data_and_Integration.md",
+        "Risks_Gaps_and_Traceability.md",
         "README.md"
       ]
     },
@@ -27,14 +24,11 @@
       "type": "array",
       "items": { "type": "string" },
       "default": [
-        "machine/sections/00_executive_summary.json",
-        "machine/sections/04_domain_model_ddd.json",
-        "machine/sections/05_business_capabilities.json",
-        "machine/sections/06_data_architecture_lineage.json",
-        "machine/sections/07_integration_landscape.json",
-        "machine/sections/08_runtime_ops_tech_debt.json",
-        "machine/sections/09_traceability_matrix.json",
-        "machine/sections/10_gaps_risks_assumptions.json"
+        "machine/sections/Executive_Summary.json",
+        "machine/sections/Business_Architecture.json",
+        "machine/sections/Application_Architecture.json",
+        "machine/sections/Data_and_Integration.json",
+        "machine/sections/Risks_Gaps_and_Traceability.json"
       ]
     },
     "required_html_pages": {
@@ -51,6 +45,14 @@
       "type": "array",
       "items": { "type": "string" },
       "default": [
+        "00_executive_summary.md",
+        "04_domain_model_ddd.md",
+        "05_business_capabilities.md",
+        "06_data_architecture_lineage.md",
+        "07_integration_landscape.md",
+        "08_runtime_ops_tech_debt.md",
+        "09_traceability_matrix.md",
+        "10_gaps_risks_assumptions.md",
         "01_system_context_c4.md",
         "02_containers_c4.md",
         "03_components_c4.md"
@@ -65,10 +67,12 @@
           "check_id": {
             "type": "string",
             "enum": [
+              "shared_memory_present",
               "markdown_sections_present",
               "section_machine_json_present",
               "html_c4_index_present",
               "readme_links_html_index",
+              "no_numbered_legacy_sections",
               "no_c4_markdown",
               "machine_artifacts_synced",
               "traceability_graph_present",
