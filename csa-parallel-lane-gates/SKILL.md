@@ -57,9 +57,10 @@ After join, Completeness MUST:
    - `csa_pack/Risks_Gaps_and_Traceability.md`
    - `csa_pack/README.md`
    - `csa_pack/arc42-c4/{index,context,containers,components}.html`
-3. Map content from artifact fields (see `csa-section-boundaries`). Do not invent.
-4. Leave gate reports under `artifacts/quality_gate_reports/` — never inside `csa_pack/`.
-5. Delete or refuse `deliverables/` and `csa_pack/machine/` if created.
+3. Map **schema fields about the legacy codebase only** (`csa-section-boundaries`). Do not invent.
+4. **No workflow meta in `csa_pack/`** (no swarm/gate/PASS/FAIL/ACTIVE_ROOT/handoffs/lane/rework text). That stays in `_internal/` and `artifacts/quality_gate_reports/`.
+5. Leave gate reports under `artifacts/quality_gate_reports/` — never inside `csa_pack/`.
+6. Delete or refuse `deliverables/` and `csa_pack/machine/` if created.
 
 ## Per-lane Completeness
 
