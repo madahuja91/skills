@@ -97,7 +97,7 @@
       "schema": "agents/csa-document-assembler/schema.json",
       "schema_required": true,
       "has_schema": true,
-      "description": "Thin-packages lean CSA pack (5 Markdown docs + arc42/C4 HTML) from accepted specialist artifacts after per-lane gates. Use when Manager invokes Document Assembler."
+      "description": "DEPRECATED — Completeness now renders lean csa_pack. Do not invoke."
     },
     {
       "id": "csa-integration",
