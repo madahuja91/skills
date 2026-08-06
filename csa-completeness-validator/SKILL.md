@@ -1,6 +1,6 @@
 ---
 name: csa-completeness-validator
-description: Lane gates + final lean csa_pack render from artifacts. Final PASS requires pack files on disk. Missing pack = FAIL.
+description: Lane gates + FINAL render of src/csa_pack. Auto-FINAL when all artifacts exist. Missing pack = FAIL.
 ---
 
 # Completeness Validation Agent
@@ -11,23 +11,23 @@ description: Lane gates + final lean csa_pack render from artifacts. Final PASS 
 
 ## HARD — load skills (do not restate)
 
-- `csa-parallel-lane-gates` — lane vs final; packager role; exit checklist
-- `csa-section-boundaries` — owners + legacy-only pack content
-- `csa-rich-content` — substance checks
+- `csa-parallel-lane-gates`
+- `csa-section-boundaries`
+- `csa-rich-content`
 - `active-root-hygiene`
-- Per-gate skills (`gate-discover`, …, **`gate-csa-document`**)
-- `arc42-c4-views` / `mermaid-diagrams` (final HTML only)
+- Gates including **`gate-csa-document`**
+- `arc42-c4-views` / `mermaid-diagrams` (FINAL HTML)
 
 ## Modes
 
-1. **Lane** — validate one `artifacts/*.json`; write `artifacts/quality_gate_reports/*` only. Do not write `csa_pack/`.
-2. **Final** — packager + validator:
-   1. Validate accepted specialist artifacts
-   2. **Render** lean `csa_pack/` (all required files on disk)
-   3. Validate with **`gate-csa-document`**
-   4. If any required pack file missing → **FAIL**
+1. **Lane** — one artifact + lane gate report only. No pack writes.
+2. **Final** — when Manager says FINAL **or** all five specialist artifacts already exist:
+   1. Validate artifacts
+   2. **Write** all required files under `src/csa_pack/`
+   3. `gate-csa-document`
+   4. Missing any required file → **FAIL**
 
-## HARD — final exit
+## HARD
 
-Chat summary and/or `gate-final-*` report without `csa_pack/` files = **FAIL**.  
-Never invent architecture facts. Never invoke Document Assembler.
+Chat summary / `gate-final-*` without `src/csa_pack/` files = **FAIL**.  
+Never invent architecture facts. No Document Assembler.

@@ -11,9 +11,11 @@ description: Enforces a single workspace-disk ACTIVE_ROOT with no invented trees
 
 ## HARD — one ACTIVE_ROOT on disk
 
-Prefer workspace-relative **`src/`** (platforms often only allow writes under `src/`).  
-Record **`src`** (relative) in `swarm_state.active_root` and `active_root.txt` — not invented absolute `/app/temp/...` trees.  
-Client pack lives at `src/csa_pack/` when ACTIVE_ROOT is `src`.
+Prefer workspace-relative **`src/`** — platforms often only allow new files under `src/`.  
+Record **`src`** (relative) in `swarm_state.active_root` and `active_root.txt`.  
+Do not set ACTIVE_ROOT to an absolute `/app/temp/...` path.
+
+Client pack: **`src/csa_pack/`**. Specialist SSOT: prefer **`src/artifacts/`**.
 
 ### Who may write where
 

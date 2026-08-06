@@ -17,7 +17,10 @@
     "pack_missing_is_fail"
   ],
   "properties": {
-    "contract_version": { "type": "string", "const": "2.1.0" },
+    "contract_version": {
+      "type": "string",
+      "const": "2.1.0"
+    },
     "completeness_mode": {
       "type": "string",
       "const": "per_lane_then_completeness_renders_pack"
@@ -40,8 +43,14 @@
         ]
       }
     },
-    "final_gate_id": { "type": "string", "const": "gate-csa-document" },
-    "pack_missing_is_fail": { "type": "boolean", "const": true },
+    "final_gate_id": {
+      "type": "string",
+      "const": "gate-csa-document"
+    },
+    "pack_missing_is_fail": {
+      "type": "boolean",
+      "const": true
+    },
     "lane_gates": {
       "type": "object",
       "required": [
@@ -54,46 +63,81 @@
       "properties": {
         "discover": {
           "type": "object",
-          "required": ["gate_id", "artifact_path"],
+          "required": [
+            "gate_id",
+            "artifact_path"
+          ],
           "properties": {
-            "gate_id": { "const": "gate-discover" },
-            "artifact_path": { "const": "artifacts/discovery.json" }
+            "gate_id": {
+              "const": "gate-discover"
+            },
+            "artifact_path": {
+              "const": "artifacts/discovery.json"
+            }
           },
           "additionalProperties": false
         },
         "business_domain": {
           "type": "object",
-          "required": ["gate_id", "artifact_path"],
+          "required": [
+            "gate_id",
+            "artifact_path"
+          ],
           "properties": {
-            "gate_id": { "const": "gate-business-domain" },
-            "artifact_path": { "const": "artifacts/domain.json" }
+            "gate_id": {
+              "const": "gate-business-domain"
+            },
+            "artifact_path": {
+              "const": "artifacts/domain.json"
+            }
           },
           "additionalProperties": false
         },
         "tech_architecture": {
           "type": "object",
-          "required": ["gate_id", "artifact_path"],
+          "required": [
+            "gate_id",
+            "artifact_path"
+          ],
           "properties": {
-            "gate_id": { "const": "gate-tech-architecture" },
-            "artifact_path": { "const": "artifacts/architecture.json" }
+            "gate_id": {
+              "const": "gate-tech-architecture"
+            },
+            "artifact_path": {
+              "const": "artifacts/architecture.json"
+            }
           },
           "additionalProperties": false
         },
         "data_lineage": {
           "type": "object",
-          "required": ["gate_id", "artifact_path"],
+          "required": [
+            "gate_id",
+            "artifact_path"
+          ],
           "properties": {
-            "gate_id": { "const": "gate-data-lineage" },
-            "artifact_path": { "const": "artifacts/lineage.json" }
+            "gate_id": {
+              "const": "gate-data-lineage"
+            },
+            "artifact_path": {
+              "const": "artifacts/lineage.json"
+            }
           },
           "additionalProperties": false
         },
         "integration": {
           "type": "object",
-          "required": ["gate_id", "artifact_path"],
+          "required": [
+            "gate_id",
+            "artifact_path"
+          ],
           "properties": {
-            "gate_id": { "const": "gate-integration" },
-            "artifact_path": { "const": "artifacts/integration.json" }
+            "gate_id": {
+              "const": "gate-integration"
+            },
+            "artifact_path": {
+              "const": "artifacts/integration.json"
+            }
           },
           "additionalProperties": false
         }
@@ -102,7 +146,10 @@
     },
     "join_policy": {
       "type": "object",
-      "required": ["wait_for", "post_join_action"],
+      "required": [
+        "wait_for",
+        "post_join_action"
+      ],
       "properties": {
         "wait_for": {
           "type": "string",
@@ -125,16 +172,16 @@
       "items": {
         "type": "string",
         "enum": [
-          "csa_pack/Executive_Summary.md",
-          "csa_pack/Business_Architecture.md",
-          "csa_pack/Application_Architecture.md",
-          "csa_pack/Data_and_Integration.md",
-          "csa_pack/Risks_Gaps_and_Traceability.md",
-          "csa_pack/README.md",
-          "csa_pack/arc42-c4/index.html",
-          "csa_pack/arc42-c4/context.html",
-          "csa_pack/arc42-c4/containers.html",
-          "csa_pack/arc42-c4/components.html"
+          "src/csa_pack/Executive_Summary.md",
+          "src/csa_pack/Business_Architecture.md",
+          "src/csa_pack/Application_Architecture.md",
+          "src/csa_pack/Data_and_Integration.md",
+          "src/csa_pack/Risks_Gaps_and_Traceability.md",
+          "src/csa_pack/README.md",
+          "src/csa_pack/arc42-c4/index.html",
+          "src/csa_pack/arc42-c4/context.html",
+          "src/csa_pack/arc42-c4/containers.html",
+          "src/csa_pack/arc42-c4/components.html"
         ]
       }
     },
@@ -157,14 +204,28 @@
     },
     "client_doc_count": {
       "type": "object",
-      "required": ["markdown_named_docs", "allow_extra_client_markdown", "allow_assembler"],
+      "required": [
+        "markdown_named_docs",
+        "allow_extra_client_markdown",
+        "allow_assembler"
+      ],
       "properties": {
-        "markdown_named_docs": { "type": "integer", "const": 5 },
-        "allow_extra_client_markdown": { "type": "boolean", "const": false },
-        "allow_assembler": { "type": "boolean", "const": false }
+        "markdown_named_docs": {
+          "type": "integer",
+          "const": 5
+        },
+        "allow_extra_client_markdown": {
+          "type": "boolean",
+          "const": false
+        },
+        "allow_assembler": {
+          "type": "boolean",
+          "const": false
+        }
       },
       "additionalProperties": false
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "contract_version": "2.2.0"
 }

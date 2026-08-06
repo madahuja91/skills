@@ -11,20 +11,19 @@ description: Quality gate for lean csa_pack — legacy schema content only. Forb
 
 ## Pass requires
 
-- Single `active_root`; `active-root-hygiene` pass
-- Shared memory present under `_internal/swarm/`
-- Accepted specialist artifacts under `artifacts/` (JSON SSOT)
-- Markdown: five named docs + README under `csa_pack/` **on disk**
-- HTML: `csa_pack/arc42-c4/{index,context,containers,components}.html` **on disk**
-- Pack content is **legacy codebase + schema inventories only**
-- **Forbidden paths:** `deliverables/`, `csa_pack/machine/`, numbered `01_`–`05_` packs, gate reports inside `csa_pack/`
-- **Forbidden content in `csa_pack/`:** swarm/orchestrator/Completeness/Assembler/lane/join/rework text; gate PASS/FAIL; ACTIVE_ROOT; handoffs; checkpoint; agent remediation briefs
-- Substance mapped from artifact schemas; missing required specialist fields are blockers
+- `ACTIVE_ROOT=src` preferred; `active-root-hygiene` pass
+- Shared memory under `_internal/swarm/` (under ACTIVE_ROOT)
+- Accepted specialist artifacts
+- On disk under **`src/csa_pack/`**:
+  - five named Markdown docs + `README.md`
+  - `arc42-c4/{index,context,containers,components}.html`
+- Pack content = legacy codebase + schema inventories only
+- Forbidden: `deliverables/`, `csa_pack/machine/`, workflow meta inside pack
 
 ## HARD fail
 
-- Any required pack file missing
-- Chat-only / gate-report-only final with no `csa_pack/`
-- Using any gate id other than `gate-csa-document` for the pack gate
+- Any required `src/csa_pack/` file missing
+- Chat-only / gate-report-only final
+- Gate id other than `gate-csa-document`
 
 Emit `gate_id: gate-csa-document`.

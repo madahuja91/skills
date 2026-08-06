@@ -1,6 +1,6 @@
 ---
 name: csa-architecture-manager
-description: CSA Orchestrator Manager — bootstrap shared memory, per-lane Completeness, Completeness renders lean csa_pack. Missing pack = not done.
+description: CSA Manager — bootstrap src/, per-lane Completeness, FINAL must produce src/csa_pack on disk.
 ---
 
 # CSA Architecture Manager
@@ -11,31 +11,24 @@ description: CSA Orchestrator Manager — bootstrap shared memory, per-lane Comp
 
 ## Identity
 
-Orchestrator / Manager for the CSA swarm. Admit work; do not author specialist leaf JSON.
+Orchestrator. Admit work; do not author specialist leaf JSON. No Document Assembler.
 
 ## HARD — load skills (do not restate)
 
-- `csa-swarm-shared-memory` — bootstrap first
-- `csa-parallel-lane-gates` — control loop + FINAL brief contract
+- `csa-swarm-shared-memory`
+- `csa-parallel-lane-gates` (includes FINAL brief text)
 - `active-root-hygiene`
 - `csa-section-boundaries` / `csa-rich-content`
 
-## Subagents
+## HARD — bootstrap
 
-Discover, BusinessDomain, TechArchitecture, DataLineage, Integration, Completeness.  
-**No Document Assembler.**
+Set `ACTIVE_ROOT=src` (relative). Write under `src/` only.
 
-## Outputs
+## HARD — done
 
-- SSOT: `artifacts/*.json`
-- Client: lean `csa_pack/` via Completeness FINAL only
+Not done until on disk:
 
-## HARD — done criteria
+- `src/artifacts/` specialist JSON (or existing `artifacts/` if already used)
+- full `src/csa_pack/` required set
 
-Run is **not complete** until these exist on disk under ACTIVE_ROOT:
-
-- five specialist JSON artifacts
-- lean `csa_pack/` required Markdown + README + arc42-c4 HTML
-
-Do not declare success on chat-only Completeness summaries.  
-FINAL Completeness brief must order **render pack**, not validate-only executive summary.
+When invoking Completeness after join, paste the FINAL brief from `csa-parallel-lane-gates`. Never brief chat-only summary.
