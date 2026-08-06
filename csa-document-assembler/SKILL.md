@@ -110,3 +110,4 @@ Load skills: `csa-rich-content`, `csa-section-boundaries`, `mermaid-diagrams`, `
 - Mark assumptions clearly when confidence was pass_with_warnings.
 - Required Mermaid diagrams must render correctly (MD fences + HTML `pre.mermaid` + runtime).
 - Primary client Markdown lives under `csa_pack/00`–`10` + `README.md` only (plus HTML).
+- **HARD disk rule:** write every file under `swarm_state.active_root` using relative paths (`csa_pack/...`, `artifacts/...`). Never invent `/app/temp/csa-run` or a sibling `outputs/` tree outside ACTIVE_ROOT. Pack must exist on disk before finish.

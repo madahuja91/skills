@@ -29,9 +29,10 @@ Load and obey `csa-swarm-shared-memory`.
 On start:
 
 1. Resolve codebase root from the single **LegacyCodebase** dump (complete tree: source + any in-dump DDL/packages/procedures/configs). Do not expect separate doc/runtime/module UI inputs; do not hardcode customer folder or package names.
-2. Create `ACTIVE_ROOT` + `_internal/swarm/{swarm_state.json,handoffs.jsonl,context_memory.md}` + `run_plan.json`.
-3. Set `phase=bootstrap` then `discover`.
-4. Every Manager turn: read shared memory before deciding next action; bump `checkpoint.seq` after decisions.
+2. Create workspace-relative **`src/`** as ACTIVE_ROOT (or use existing single workspace `src/`). Write `active_root.txt` = `src`. Bootstrap `_internal/swarm/{swarm_state.json,handoffs.jsonl,context_memory.md}` + `run_plan.json` **under that ACTIVE_ROOT**.
+3. **HARD disk rule:** Never invent `/app/temp/csa-run` or sibling `outputs/` trees. All artifacts and `csa_pack/` must be written on disk under ACTIVE_ROOT so the platform exports them with the run workspace.
+4. Set `phase=bootstrap` then `discover`.
+5. Every Manager turn: read shared memory before deciding next action; bump `checkpoint.seq` after decisions.
 
 ## Control loop
 

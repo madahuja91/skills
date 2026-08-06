@@ -17,7 +17,9 @@ Parallel swarm agents must **not** sync only through chat. They share one on-dis
 
 ## ACTIVE_ROOT layout
 
-Manager bootstraps **exactly one** ACTIVE_ROOT (prefer workspace `src/`). **Never** create nested `src/src` or a second active root. Set `swarm_state.active_root` once. All sequential/parallel subagents write only under that path (see `active-root-hygiene`).
+Manager bootstraps **exactly one** ACTIVE_ROOT — prefer workspace-relative **`src/`**. **Never** invent `/app/temp/csa-run` or a second root. Set `swarm_state.active_root` once. All sequential/parallel subagents write **only** under that path (see `active-root-hygiene`).
+
+**HARD — disk persistence:** Every client deliverable and machine artifact MUST exist as real files under ACTIVE_ROOT (`artifacts/`, `csa_pack/`, `_internal/`). Do not write packs to a parallel absolute `outputs/` tree outside ACTIVE_ROOT.
 
 ```text
 ACTIVE_ROOT/                          # e.g. src/ — single root for the whole swarm
@@ -27,8 +29,8 @@ ACTIVE_ROOT/                          # e.g. src/ — single root for the whole 
     architecture.json
     lineage.json
     integration.json
-  quality_gate_reports/
-  csa_pack/                           # Assembler output (MD + arc42-c4 HTML)
+    quality_gate_reports/
+  csa_pack/                           # Assembler output (MD + arc42-c4 HTML) ON DISK
   _internal/
     run_plan.json
     swarm/
@@ -39,7 +41,7 @@ ACTIVE_ROOT/                          # e.g. src/ — single root for the whole 
     agent_execution_log.json
 ```
 
-Write `active_root.txt` (one relative line) at workspace root when platform expects it.
+Write `active_root.txt` (one relative line, e.g. `src`) at workspace root when platform expects it.
 
 ## swarm_state.json minimum shape
 
@@ -121,3 +123,5 @@ Write `active_root.txt` (one relative line) at workspace root when platform expe
 - Private unsynced copies of discovery/domain
 - Declaring phase done while `artifacts_index` still pending
 - Skipping checkpoint.seq bump
+- Writing to invented absolute paths (`/app/temp/csa-run/...`) instead of ACTIVE_ROOT-relative disk paths
+- Putting `csa_pack` only under a sibling `outputs/` folder outside ACTIVE_ROOT

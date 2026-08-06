@@ -20,7 +20,7 @@ Authoritative contract: [`schema.json`](schema.json)
 
 Do **not** write C4 as `.md`. Do **not** write narrative sections as `.html` except under `arc42-c4/`.
 
-Write everything under the single `swarm_state.active_root` (no `src/src`).
+Write everything under the single `swarm_state.active_root` on disk (no `src/src`). Never invent `/app/temp/csa-run` or a sibling `outputs/` tree outside ACTIVE_ROOT.
 
 ## Outputs
 

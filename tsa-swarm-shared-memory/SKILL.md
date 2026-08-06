@@ -27,10 +27,11 @@ ACTIVE_ROOT/   # e.g. src/  — single root for the whole swarm
 
 ## Rules
 
-1. Manager bootstraps **one** ACTIVE_ROOT + swarm files; set `swarm_state.active_root`.
-2. Every subagent (sequential or parallel) reads `active_root` and writes **only** there.
+1. Manager bootstraps **one** ACTIVE_ROOT (prefer `src/`) + swarm files; set `swarm_state.active_root`.
+2. Every subagent (sequential or parallel) reads `active_root` and writes **only** there on disk.
 3. Every turn: read swarm_state + latest handoffs before acting.
 4. Parallel peers sync only via shared memory + accepted artifact paths under `active_root`.
 5. Bump `checkpoint.seq` after writes; emit `swarm_handoff.to[]` for dependents.
 6. Completeness updates `loop` only — never rewrites specialist content; must run `active-root-hygiene` and delete nested/duplicate roots immediately.
 7. Deliverables: Markdown pack sections; arc42/C4 as HTML under `tsa_pack/arc42-c4/` only.
+8. **HARD disk rule:** Never invent `/app/temp/csa-run` or sibling `outputs/` outside ACTIVE_ROOT. `tsa_pack/` and `artifacts/` must exist on disk under ACTIVE_ROOT.

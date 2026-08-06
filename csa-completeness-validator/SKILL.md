@@ -26,15 +26,17 @@ Subagent invoked by CSA Architecture Manager **after every specialist** (and Ass
 }
 ```
 
-## HARD: Single ACTIVE_ROOT (every Completeness run)
+## HARD: Single ACTIVE_ROOT on workspace disk (every Completeness run)
 
 Follow `active-root-hygiene`:
 
-1. Read canonical `active_root` from swarm_state (typically single `src/`).
+1. Read canonical `active_root` from swarm_state (prefer `src/`).
 2. Detect nested `src/src` and duplicate roots/pack trees.
-3. **Remove duplicates immediately**; log `removed_paths`.
-4. **Fail blocking** if nesting remains or agents wrote to multiple roots.
-5. Sequential and parallel subagents must share the **same** `active_root`.
+3. **Detect invented absolute trees** (e.g. `/app/temp/csa-run/outputs` while ACTIVE_ROOT is elsewhere) — **fail blocking** unless the same files also exist under ACTIVE_ROOT; require remediation to ACTIVE_ROOT-only paths.
+4. **Remove duplicates immediately**; log `removed_paths`.
+5. **Fail blocking** if nesting remains, agents wrote to multiple roots, or pack/artifacts are missing on disk under ACTIVE_ROOT.
+6. Sequential and parallel subagents must share the **same** `active_root`.
+7. Document gates pass only when `ACTIVE_ROOT/csa_pack/**` exists on disk (not chat-only).
 
 ## Deliverable format checks (document gates)
 
