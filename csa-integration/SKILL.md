@@ -9,11 +9,9 @@ description: Classify legacy integrations (REST/EVENT/BATCH/LEGACY), sync vs asy
 
 Authoritative output/invocation contract: [schema.json](schema.json)
 
+## Shared worker rules
 
-## HARD: Artifacts only
-
-Write `artifacts/integration.json` including `interface_contracts`, `exception_mappings`, `resilience_posture`.  
-Do **not** write `csa_pack/` or `deliverables/`. Completeness renders `Data_and_Integration.md` later.
+Obey `csa-specialist-worker` (do not restate). Output: `artifacts/integration.json` including `interface_contracts`, `exception_mappings`, `resilience_posture`.
 
 ## Procedure
 
@@ -23,15 +21,10 @@ Do **not** write `csa_pack/` or `deliverables/`. Completeness renders `Data_and_
 4. Fill `interface_contracts` (operation summaries — not separate OAS files), `exception_mappings`, and `resilience_posture`.
 5. Capture error handling when present; mark unknown honestly.
 6. Flag async candidates with justification.
-7. Sync outputs through `csa-swarm-shared-memory`.
 
-## HARD: Depth (`csa-rich-content`)
+## Completeness note
 
-Classify **all** evidenced external I/O with rich descriptions (endpoints/queues/adapters, direction, reliability). Do not stop after 3–5 sample integrations when discovery shows more.
-
-## Assembler note
-
-`Data_and_Integration.md` must include Mermaid diagram **`diag-integration-landscape`** (`flowchart` or `sequenceDiagram`) per `mermaid-diagrams`, sourced only from this artifact. Fold contracts/exceptions/resilience into that same doc — never emit OAS YAML or `exception_http_mapping.md` as client deliverables.
+`Data_and_Integration.md` must include Mermaid diagram `diag-integration-landscape` (`flowchart` or `sequenceDiagram`) per `mermaid-diagrams`, sourced only from this artifact. Fold contracts/exceptions/resilience into that same doc — never emit OAS YAML or `exception_http_mapping.md` as client deliverables.
 
 ## Gate
 

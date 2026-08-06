@@ -9,11 +9,9 @@ description: Runtime-aware technical architecture, C4 layers, components, and te
 
 Authoritative output/invocation contract: [schema.json](schema.json)
 
+## Shared worker rules
 
-## HARD: Artifacts only
-
-Write `artifacts/architecture.json` including `deployment_topology`, `security_controls`, `cross_cutting_concerns`, `build_and_runtime`.  
-Do **not** write `csa_pack/` or `deliverables/`.
+Obey `csa-specialist-worker` (do not restate). Output: `artifacts/architecture.json` including `deployment_topology`, `security_controls`, `cross_cutting_concerns`, `build_and_runtime`.
 
 ## Procedure
 
@@ -22,11 +20,7 @@ Do **not** write `csa_pack/` or `deliverables/`.
 3. Fill `deployment_topology`, `security_controls`, `cross_cutting_concerns`, and `build_and_runtime` (feeds Application Architecture — no separate tech-stack doc).
 4. Compare static structure vs runtime (logs/APM) when available; else mark `analysis_scope: static`.
 5. Score technical debt; list dead/orphan candidates honestly.
-6. Fill C4 context/containers/critical components for Assembler Mermaid (`mermaid-diagrams` + `arc42-c4-views`).
-
-## HARD: Depth (`csa-rich-content`)
-
-Emit dense layers/components/C4 elements with evidence. Tiny 3-component stubs fail Completeness.
+6. Fill C4 context/containers/critical components for Completeness Mermaid (`mermaid-diagrams` + `arc42-c4-views`).
 
 ## Anti-patterns
 

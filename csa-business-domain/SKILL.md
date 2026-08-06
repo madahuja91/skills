@@ -9,25 +9,18 @@ description: Extract DDD domains, entities, business rules, and capabilities fro
 
 Authoritative output/invocation contract: [schema.json](schema.json)
 
+## Shared worker rules
 
-## HARD: Artifacts only
-
-Write `artifacts/domain.json` per schema field names (`business_domains`, `business_capabilities`, `workflows`, `operation_dispatch_rules`, …).  
-Do **not** write `csa_pack/`, `deliverables/`, or `csa_pack/machine/`. Completeness renders the client pack later.
+Obey `csa-specialist-worker` (do not restate). Output: `artifacts/domain.json` with exact schema field names (`business_domains`, `business_capabilities`, `workflows`, `operation_dispatch_rules`, …).
 
 ## Procedure
 
 1. Identify bounded contexts / domains from packages, screens, services, tables, and stored procedures.
 2. Normalize duplicate names into `canonical_name`.
 3. Extract business rules with pseudo-code and `implementation_location` when code-backed; use `legacy-stored-procedures` for PL/SQL / `{call}` / TopLink / iBatis call sites (never hardcode procedure names).
-4. Capture `workflows`, `operation_dispatch_rules`, `feature_flags`, and `provider_selection_rules` when evidenced (feeds Business Architecture pack sections — do not invent).
+4. Capture `workflows`, `operation_dispatch_rules`, `feature_flags`, and `provider_selection_rules` when evidenced — do not invent.
 5. Map capabilities to domains.
 6. Score confidence by source (code > docs > config > inferred).
-7. Sync via `csa-swarm-shared-memory`.
-
-## HARD: Depth (`csa-rich-content`)
-
-Produce a **dense** `domain.json`: many evidenced domains/entities/rules/capabilities with multi-sentence descriptions and evidence paths. A handful of shallow rows is a Completeness fail.
 
 ## Anti-patterns
 

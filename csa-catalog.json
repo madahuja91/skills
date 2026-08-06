@@ -7,7 +7,7 @@
     "agent_outputs_validate_against_agent_schema": true,
     "gate_reports_validate_against_quality_gate_framework_and_gate_schema": true
   },
-  "skill_count": 52,
+  "skill_count": 53,
   "skills": [
     {
       "id": "active-root-hygiene",
@@ -17,7 +17,7 @@
       "schema": "shared/active-root-hygiene/schema.json",
       "schema_required": true,
       "has_schema": true,
-      "description": "Enforces a single ACTIVE_ROOT (typically one src/) with no nested src/src or duplicate roots; Completeness must fail or auto-remove duplicates."
+      "description": "Enforces a single workspace-disk ACTIVE_ROOT with no invented trees; specialists write artifacts only; Completeness owns lean csa_pack."
     },
     {
       "id": "arc42-c4-views",
@@ -37,7 +37,7 @@
       "schema": "orchestrator/csa-architecture-manager/schema.json",
       "schema_required": true,
       "has_schema": true,
-      "description": "Orchestrator Manager strategy for CSA — bootstraps shared swarm memory, fans out specialist subagents in parallel with per-lane Completeness, thin Assembler packaging, then final pack gate. Use as the primary workflow orchestrator agent."
+      "description": "Orchestrator Manager for CSA — bootstraps shared swarm memory, per-lane Completeness, Completeness renders lean csa_pack. No Document Assembler."
     },
     {
       "id": "csa-artifact-contract",
@@ -110,16 +110,6 @@
       "description": "Classify legacy integrations (REST/EVENT/BATCH/LEGACY), sync vs async, and resilience patterns for CSA. Use when Manager invokes Integration Analysis."
     },
     {
-      "id": "csa-rich-content",
-      "path": "shared/csa-rich-content",
-      "category": "shared",
-      "skill_md": "shared/csa-rich-content/SKILL.md",
-      "schema": "shared/csa-rich-content/schema.json",
-      "schema_required": true,
-      "has_schema": true,
-      "description": "Enforces deep, long-form CSA specialist JSON and Markdown/HTML pack narratives (reference-quality depth)."
-    },
-    {
       "id": "csa-parallel-lane-gates",
       "path": "shared/csa-parallel-lane-gates",
       "category": "shared",
@@ -130,6 +120,16 @@
       "description": "HARD CSA swarm control loop — per-lane Completeness, then Completeness renders lean csa_pack from artifacts. No Document Assembler. No duplicate deliverables/machine folders."
     },
     {
+      "id": "csa-rich-content",
+      "path": "shared/csa-rich-content",
+      "category": "shared",
+      "skill_md": "shared/csa-rich-content/SKILL.md",
+      "schema": "shared/csa-rich-content/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Enforces deep, long-form CSA specialist JSON and Markdown/HTML pack narratives (reference-quality depth)."
+    },
+    {
       "id": "csa-section-boundaries",
       "path": "shared/csa-section-boundaries",
       "category": "shared",
@@ -138,6 +138,16 @@
       "schema_required": true,
       "has_schema": true,
       "description": "Enforces separation of concerns across CSA pack Markdown sections and HTML index to prevent duplicated summaries/evidence dumps."
+    },
+    {
+      "id": "csa-specialist-worker",
+      "path": "shared/csa-specialist-worker",
+      "category": "shared",
+      "skill_md": "shared/csa-specialist-worker/SKILL.md",
+      "schema": "shared/csa-specialist-worker/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "Shared HARD rules for CSA specialist subagents — artifacts-only writes, ACTIVE_ROOT hygiene, schema floors, swarm sync. Use on Discover/Domain/Tech/Lineage/Integration."
     },
     {
       "id": "csa-swarm-shared-memory",
