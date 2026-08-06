@@ -1,115 +1,143 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://tsa.local/schemas/tsa-migration-strategy.json",
-  "title": "tsa-migration-strategy",
+  "$id": "https://tsa.local/schemas/enterprise-migration-strategy.json",
+  "title": "Enterprise_Migration_Strategy_Schema",
   "type": "object",
   "required": [
-    "artifact_id",
-    "agent_id",
-    "agent_version",
-    "timestamp",
-    "schema_version",
-    "overall_confidence_score",
-    "csa_refs",
-    "adr_refs",
-    "pattern"
+    "application_disposition_matrix",
+    "wave_planning_and_dependencies",
+    "coexistence_and_data_sync_architecture",
+    "testing_and_verification_strategy",
+    "cutover_and_fallback_playbook"
   ],
   "properties": {
-    "artifact_id": {
-      "type": "string"
-    },
-    "agent_id": {
-      "const": "migration_strategy"
-    },
-    "agent_version": {
-      "type": "string"
-    },
-    "timestamp": {
-      "type": "string"
-    },
-    "schema_version": {
-      "const": "1.0.0"
-    },
-    "overall_confidence_score": {
-      "type": "integer",
-      "minimum": 0,
-      "maximum": 100
-    },
-    "csa_refs": {
+    "application_disposition_matrix": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "required": [
+          "legacy_component_id",
+          "legacy_component_name",
+          "disposition_strategy",
+          "target_service_mapping"
+        ],
+        "properties": {
+          "legacy_component_id": { "type": "string" },
+          "legacy_component_name": { "type": "string" },
+          "disposition_strategy": {
+            "type": "string",
+            "enum": ["Rehost", "Replatform", "Refactor/Rearchitect", "Repurchase", "Retain", "Retire"]
+          },
+          "target_service_mapping": { "type": "string" },
+          "business_criticality": {
+            "type": "string",
+            "enum": ["Tier-1 Mission Critical", "Tier-2 Business Operational", "Tier-3 Non-Critical"]
+          }
+        },
+        "additionalProperties": false
       }
     },
-    "adr_refs": {
+    "wave_planning_and_dependencies": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "required": ["wave_id", "wave_name", "pre_requisite_waves", "components_in_wave"],
+        "properties": {
+          "wave_id": { "type": "string" },
+          "wave_name": { "type": "string" },
+          "pre_requisite_waves": { "type": "array", "items": { "type": "string" } },
+          "components_in_wave": { "type": "array", "items": { "type": "string" } },
+          "estimated_duration_weeks": { "type": "integer" }
+        },
+        "additionalProperties": false
       }
     },
-    "validation_results": {
-      "type": "object"
+    "coexistence_and_data_sync_architecture": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["boundary_name", "integration_pattern", "data_synchronization"],
+        "properties": {
+          "boundary_name": { "type": "string" },
+          "integration_pattern": {
+            "type": "string",
+            "enum": [
+              "API Gateway Strangler",
+              "Change Data Capture (CDC)",
+              "Dual-Write with Reconciliation",
+              "Message Bus Mirroring"
+            ]
+          },
+          "data_synchronization": {
+            "type": "object",
+            "required": ["source_db", "target_db", "sync_mechanism", "consistency_model"],
+            "properties": {
+              "source_db": { "type": "string" },
+              "target_db": { "type": "string" },
+              "sync_mechanism": { "type": "string" },
+              "consistency_model": {
+                "type": "string",
+                "enum": ["Strict Instant", "Eventual (Latency < 5s)", "Batch Catchup"]
+              },
+              "data_reconciliation_job": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
     },
-    "pattern": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
+    "testing_and_verification_strategy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["phase_id", "verification_type", "success_criteria", "rollback_trigger_threshold"],
+        "properties": {
+          "phase_id": { "type": "string" },
+          "verification_type": {
+            "type": "string",
+            "enum": ["Shadow Traffic Replay", "Dark Launching", "Synthetic Load Testing", "Canary Verification"]
+          },
+          "success_criteria": { "type": "string" },
+          "rollback_trigger_threshold": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
     },
-    "waves": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "cutover": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "rollback": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "exit_criteria": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "risks": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
+    "cutover_and_fallback_playbook": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "wave_id",
+          "maintenance_window_required",
+          "go_no_go_criteria",
+          "cutover_steps",
+          "fallback_rollback_procedure"
+        ],
+        "properties": {
+          "wave_id": { "type": "string" },
+          "maintenance_window_required": { "type": "boolean" },
+          "max_allowed_downtime_minutes": { "type": "integer" },
+          "go_no_go_criteria": { "type": "array", "items": { "type": "string" } },
+          "cutover_steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["step", "action", "responsible_role"],
+              "properties": {
+                "step": { "type": "integer" },
+                "action": { "type": "string" },
+                "responsible_role": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "fallback_rollback_procedure": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
     }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

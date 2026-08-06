@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://tsa.local/schemas/tsa-document-assembler.json",
-  "title": "tsa-document-assembler",
+  "$id": "https://tsa.local/schemas/tsa-document-outputs.json",
+  "title": "tsa-document-outputs",
   "type": "object",
   "required": [
     "artifact_id",
@@ -12,24 +12,20 @@
     "overall_confidence_score",
     "csa_refs",
     "adr_refs",
-    "pack_manifest"
+    "deliverables"
   ],
   "properties": {
     "artifact_id": {
       "type": "string"
     },
-    "agent_id": {
-      "const": "document_assembler"
-    },
+    "agent_id": { "const": "document_assembler" },
     "agent_version": {
       "type": "string"
     },
     "timestamp": {
       "type": "string"
     },
-    "schema_version": {
-      "const": "1.0.0"
-    },
+    "schema_version": { "const": "2.0.0" },
     "overall_confidence_score": {
       "type": "integer",
       "minimum": 0,
@@ -50,36 +46,15 @@
     "validation_results": {
       "type": "object"
     },
-    "pack_manifest": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "sections": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "mermaid_diagrams_path": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
+    "deliverables": {
+      "type": "object",
+      "required": ["adr_blueprint_md", "migration_strategy_md"],
+      "properties": {
+        "adr_blueprint_md": { "type": "string", "const": "tsa_pack/ADR_Blueprint.md" },
+        "migration_strategy_md": { "type": "string", "const": "tsa_pack/Migration_Strategy.md" }
+      },
+      "additionalProperties": false
     }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

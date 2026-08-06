@@ -1,105 +1,54 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://tsa.local/schemas/tsa-tech-architecture.json",
-  "title": "tsa-tech-architecture",
+  "$id": "https://tsa.local/schemas/tsa-specification.json",
+  "title": "TSA_Specification_Schema",
   "type": "object",
-  "required": [
-    "artifact_id",
-    "agent_id",
-    "agent_version",
-    "timestamp",
-    "schema_version",
-    "overall_confidence_score",
-    "csa_refs",
-    "adr_refs",
-    "layers"
-  ],
+  "required": ["target_architecture_pattern", "target_services", "target_integration_patterns"],
   "properties": {
-    "artifact_id": {
-      "type": "string"
+    "target_architecture_pattern": {
+      "type": "string",
+      "enum": ["Microservices", "Event-Driven Microservices", "Modular Monolith", "Serverless"]
     },
-    "agent_id": {
-      "const": "tech_architecture"
-    },
-    "agent_version": {
-      "type": "string"
-    },
-    "timestamp": {
-      "type": "string"
-    },
-    "schema_version": {
-      "const": "1.0.0"
-    },
-    "overall_confidence_score": {
-      "type": "integer",
-      "minimum": 0,
-      "maximum": 100
-    },
-    "csa_refs": {
+    "target_services": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "required": [
+          "service_id",
+          "service_name",
+          "bounded_context",
+          "tech_stack",
+          "replaced_legacy_components",
+          "data_ownership"
+        ],
+        "properties": {
+          "service_id": { "type": "string" },
+          "service_name": { "type": "string" },
+          "bounded_context": { "type": "string" },
+          "tech_stack": { "type": "string" },
+          "replaced_legacy_components": { "type": "array", "items": { "type": "string" } },
+          "data_ownership": { "type": "string" }
+        },
+        "additionalProperties": false
       }
     },
-    "adr_refs": {
+    "target_integration_patterns": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "required": ["pattern_type", "source_service", "target_service", "protocol"],
+        "properties": {
+          "pattern_type": {
+            "type": "string",
+            "enum": ["REST API Gateway", "Kafka Event Bus", "gRPC Internal", "CDC / Debezium"]
+          },
+          "source_service": { "type": "string" },
+          "target_service": { "type": "string" },
+          "protocol": { "type": "string" }
+        },
+        "additionalProperties": false
       }
-    },
-    "validation_results": {
-      "type": "object"
-    },
-    "layers": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "containers": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "components": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "c4_views": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "tech_decisions": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
     }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }
