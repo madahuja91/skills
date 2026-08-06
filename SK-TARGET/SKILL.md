@@ -12,9 +12,11 @@ description: >-
 - CS stories for legacy mapping
 
 ## Outputs
-- `artifacts/ts/ts_stories.json` — **required**
-- `artifacts/ts/stories/*.md` — **required** one MD per story (TS template including migration fields)
-- Use with SK-EPIC for `ts_epics.json` + `artifacts/ts/epics/*.md`
+- `artifacts/ts/ts_stories.json` — **required** (each story includes **`epic_id`**)
+- Nested Markdown — **required**:
+  - `artifacts/ts/epics/<EPIC-ID>/stories/<STORY-ID>.md`
+- Use with SK-EPIC for `ts_epics.json` + `artifacts/ts/epics/<EPIC-ID>/epic.md`
+- Do not use a flat `artifacts/ts/stories/` primary layout
 
 ## Dual surface (mandatory)
 JSON + Markdown for every epic/story. Do not finish with only one format.

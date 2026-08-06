@@ -12,17 +12,17 @@ description: >-
 - `mode`: cs | ts
 
 ## Outputs
-- CS: `artifacts/traceability/trace_cs.json`
+- CS: `artifacts/traceability/trace_cs.json` (+ optional `artifacts/gates/trace_cs_summary.json`)
 - TS: `artifacts/traceability/trace_ts.json`
 
 Include: `score` (0..1), `matrix`, `missing_links`, `orphan_artifacts`.
 
 ## Required link types
 ### CS
-capability → requirement → story → AC → test; requirement → rule → story
+capability → requirement → story → AC → test; requirement → rule → story; **story → epic** (`epic_id`)
 
 ### TS
-All CS links plus story → legacy_story | gap_item → adr | tsa_component
+All CS links plus story → legacy_story | gap_item → adr | tsa_component; **story → epic**
 
 ## Scoring
 `score = satisfied_required_links / total_required_links`  

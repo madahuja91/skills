@@ -14,10 +14,11 @@ description: >-
 
 ## Outputs
 - Update stories and write:
-  - CS: `artifacts/cs/acceptance_criteria.json` **and** embed/update AC sections in each story MD
-  - TS: `artifacts/ts/acceptance_criteria.json` **and** embed/update AC sections in each story MD
+  - CS: `artifacts/cs/acceptance_criteria.json` **and** update AC **table** in each nested story MD under `epics/<EPIC-ID>/stories/`
+  - TS: `artifacts/ts/acceptance_criteria.json` **and** update AC **table** in each nested story MD
 
 Dual surface required: JSON pack + Markdown story files kept in sync.
+AC Markdown section must be a table with columns: ID | Given | When | Then | Covers FR | Covers BR.
 
 ```json
 {

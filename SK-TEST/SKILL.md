@@ -13,10 +13,10 @@ description: >-
 - `mode`: cs | ts
 
 ## Outputs
-- CS: `artifacts/cs/test_scenarios.json` **and** update Testing Scenarios section in each story MD
-- TS: `artifacts/ts/test_scenarios.json` **and** update Testing Scenarios section in each story MD
+- CS: `artifacts/cs/test_scenarios.json` **and** update Testing Scenarios **tables** in each nested story MD
+- TS: `artifacts/ts/test_scenarios.json` **and** update Testing Scenarios **tables** in each nested story MD
 
-Dual surface required: JSON pack + Markdown story files kept in sync.
+Dual surface required. Use separate tables for Positive / Negative / Integration (columns: ID | Preconditions/Systems | Steps | Expected | Covers AC).
 
 ```json
 {

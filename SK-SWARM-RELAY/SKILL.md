@@ -33,13 +33,17 @@ Also load and obey `SK-SWARM` for shared-state file shapes.
 ### Current State
 - First tick fan_out: `Legacy Code Analyzer`, `CSA Analyzer`
 - Typical path (peers may reorder): Capability → (FR ∥ BR) → CS Story → AC → Test → Quality ∥ Trace → join_complete
-- Gates before PASS: G1–G3 evidence from Quality Reviewer + Traceability Validator
+- Gates before PASS: G1–G3 evidence from Quality Reviewer + Traceability Validator under `artifacts/gates/` + `artifacts/traceability/`
+- Do not reject join_complete solely for 1-story epics
+- No human approval UI — gates are skill/agent enforced
 
 ### Target State
 - First tick fan_out: `ADR Analyzer`, `TSA Analyzer`
 - Typical path: Gap & Impact → Target Story → AC → Test → Quality ∥ Trace → join_complete
 - Reject join_complete if `gap_register` or TS stories missing
-- Gates before PASS: G4–G8 evidence
+- Do not reject join_complete solely for 1-story epics
+- Gates before PASS: G4–G8 evidence under `artifacts/gates/` + `artifacts/traceability/`
+- No human approval UI — gates are skill/agent enforced
 
 ### Master
 - Interpret `run_mode`: `cs_only` | `ts_only` | `full`
