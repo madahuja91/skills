@@ -13,6 +13,17 @@ description: Shared HARD rules for CSA specialist subagents — artifacts-only w
 
 You are a **specialist worker** under CSA-Architecture-Manager. Produce one schema-valid artifact JSON. Do not orchestrate peers. Do not render the client pack.
 
+## Standard system prompt (workflow)
+
+Agent prompts must use this shape only — **no** stack/product names, **no** skill-name lists (skills are attached on the node):
+
+```text
+# <AgentName>
+Role: Specialist worker. <one-line job>.
+Write: artifacts/<name>.json (schema in attached agent skill).
+Execution: Obey attached skills. Do not restate skill policy. Complete without waiting.
+```
+
 ## HARD — obey these skills (do not restate them in prompts)
 
 | Concern | Skill |
