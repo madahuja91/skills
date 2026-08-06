@@ -1,9 +1,9 @@
 ---
 name: csa-rich-content
-description: Enforces concise, schema-driven CSA outputs with zero redundancy. Use for every specialist output, Document Assembler, and gate-csa-document validation.
+description: Enforces schema-complete CSA specialist JSON and Markdown/HTML packs with structural depth floors (not word fluff). Use for specialists, Assembler, and gate-csa-document.
 ---
 
-# CSA Output Quality (schema-first)
+# CSA Output Quality (schema-first + structural depth)
 
 ## Schema
 
@@ -11,43 +11,51 @@ Depth and structure contract: [`schema.json`](schema.json)
 
 ## Core policy
 
-1. **Schema over verbosity**: completeness is measured by required schema fields and evidence coverage, not by word count.
-2. **SSOT**: tabular data appears once in its owning section. Never restate table rows as narrative paragraphs.
-3. **Concise prose**: insights are bullet points (1–2 sentences), only for interpretation, risk, and implications.
-4. **No fluff**: fail boilerplate, repeated summaries, and repeated evidence baselines.
+1. **Schema completeness first**: every required array must meet `minItems` and nested required fields with evidence.
+2. **SSOT**: data in tables/diagrams once; insights only as bullets that do not restate table rows.
+3. **No stubs**: empty inventories, 1-row catalogs, or “see machine/*.json” fail.
+4. **No fluff**: do not pad with repeated paragraphs; expand with real evidenced rows.
 
-## Specialist JSON quality
+## HARD: Specialist list floors (blocking unless evidence exhausted)
 
-Specialist artifacts must be schema-valid, evidence-backed, and non-empty in required arrays.  
-Use `unknown` with evidence trail instead of invented values.
+If evidence is exhausted, document gaps in `10` and still emit all found rows.
 
-## Pack quality rules (`csa_pack/`)
+| Artifact | Minimum depth |
+|----------|---------------|
+| `discovery.json` | Full inventory retained; do not sample-only |
+| `domain.json` | ≥3 domains **or** all evidenced; each with ≥1 entity and ≥1 rule when present; ≥8 capabilities |
+| `architecture.json` | ≥5 layers **or** all evidenced; ≥12 components across layers when code supports |
+| `lineage.json` | ≥3 data stores; ≥10 lineage rows when SQL/code supports; ≥5 SP business rules when SP evidence exists |
+| `integration.json` | ≥6 integrations **or** all evidenced endpoints/queues/adapters |
 
-- Required Markdown files: `00`, `04`–`10`, `README.md`
-- Required HTML files: `arc42-c4/index.html`, `context.html`, `containers.html`, `components.html`
-- No epic/story seed outputs
-- No C4 Markdown files
+Every list item needs stable ID, name, concise description, and `evidence[]` with real paths.
 
-### Redundancy controls
+## HARD: Pack machine JSON then Markdown
 
-- Do not duplicate full inventory tables across multiple Markdown files.
-- Do not duplicate the same risk register in more than one section.
-- Do not duplicate full domain catalogs outside `04`.
-- Do not duplicate full integration catalogs outside `07`.
-- Do not duplicate full lineage matrices outside `06` / `09`.
+Assembler MUST write schema-valid section JSON under `csa_pack/machine/sections/` then render Markdown from those JSON files:
 
-### `index.html` policy
+- `00_executive_summary.json` → `00_executive_summary.md`
+- `04_domain_model_ddd.json` → `04_domain_model_ddd.md`
+- `05_business_capabilities.json` → `05_business_capabilities.md`
+- `06_data_architecture_lineage.json` → `06_data_architecture_lineage.md`
+- `07_integration_landscape.json` → `07_integration_landscape.md`
+- `08_runtime_ops_tech_debt.json` → `08_runtime_ops_tech_debt.md`
+- `09_traceability_matrix.json` → `09_traceability_matrix.md`
+- `10_gaps_risks_assumptions.json` → `10_gaps_risks_assumptions.md`
 
-`index.html` is the consolidated hub and may summarize all concerns.  
-Markdown files remain section-specific deep dives and must cross-link to owner sections when needed.
+Validate each JSON against `skills/agents/csa-document-assembler/output-schemas/*.schema.json`.
+
+## HARD: Structural completeness (not word floors)
+
+Fail when any of these are missed:
+
+1. Required files missing
+2. Section machine JSON missing or schema-invalid (`schema_conformance`)
+3. Inventory `minItems` not met without documented evidence exhaustion
+4. Table/prose duplication or section ownership violation
+5. Stub index.html (missing required anchors/tables/Mermaid)
 
 ## Completeness enforcement
 
-For `gate-csa-document`, Completeness must fail when:
-
-1. Required files are missing (`required_files_present`)
-2. Required schemas are invalid (`schema_conformance`)
-3. Section ownership is violated (`section_ownership_violation`)
-4. Markdown siblings are overly similar (`section_anti_redundancy`)
-5. Tables are repeated as prose (`table_prose_duplication`)
-6. Pack shape is wrong (mega-pack/report-only substitute)
+Completeness validates schema + minItems on machine section JSON and specialist artifacts.  
+Do **not** fail on word count. Do **fail** on empty required arrays and missing evidence.

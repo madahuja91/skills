@@ -7,42 +7,55 @@
   "properties": {
     "data_stores": {
       "type": "array",
+      "minItems": 3,
       "items": {
         "type": "object",
-        "required": ["store_id", "engine", "schema_name"],
+        "required": ["store_id", "engine", "schema_name", "primary_purpose", "evidence"],
         "properties": {
-          "store_id": { "type": "string" },
-          "engine": { "type": "string" },
-          "schema_name": { "type": "string" },
-          "primary_purpose": { "type": "string" }
+          "store_id": { "type": "string", "minLength": 2 },
+          "engine": { "type": "string", "minLength": 2 },
+          "schema_name": { "type": "string", "minLength": 1 },
+          "primary_purpose": { "type": "string", "minLength": 15 },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }
     },
     "data_lineage_matrix": {
       "type": "array",
+      "minItems": 10,
       "items": {
         "type": "object",
-        "required": ["lineage_id", "source_entity", "transformation_logic", "target_entity"],
+        "required": [
+          "lineage_id",
+          "source_entity",
+          "transformation_logic",
+          "target_entity",
+          "execution_trigger",
+          "evidence"
+        ],
         "properties": {
-          "lineage_id": { "type": "string" },
-          "source_entity": { "type": "string" },
-          "transformation_logic": { "type": "string" },
-          "target_entity": { "type": "string" },
-          "execution_trigger": { "type": "string" }
+          "lineage_id": { "type": "string", "pattern": "^LIN-" },
+          "source_entity": { "type": "string", "minLength": 2 },
+          "transformation_logic": { "type": "string", "minLength": 15 },
+          "target_entity": { "type": "string", "minLength": 2 },
+          "execution_trigger": { "type": "string", "minLength": 3 },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }
     },
     "business_logic_in_db": {
       "type": "array",
+      "minItems": 5,
       "items": {
         "type": "object",
-        "required": ["sp_name", "extracted_business_rule", "complexity"],
+        "required": ["sp_name", "extracted_business_rule", "complexity", "evidence"],
         "properties": {
-          "sp_name": { "type": "string" },
-          "extracted_business_rule": { "type": "string" },
-          "complexity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] }
+          "sp_name": { "type": "string", "minLength": 2 },
+          "extracted_business_rule": { "type": "string", "minLength": 20 },
+          "complexity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }

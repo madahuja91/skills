@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/08_runtime_ops_tech_debt.schema.json",
+  "title": "CSA_RuntimeOpsTechDebt_Schema",
+  "type": "object",
+  "required": ["runtime_evidence", "packaging_topology", "tech_debt_register", "ops_gaps"],
+  "properties": {
+    "runtime_evidence": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["artifact", "observed_behavior", "confidence", "evidence"],
+        "properties": {
+          "artifact": { "type": "string" },
+          "observed_behavior": { "type": "string", "minLength": 15 },
+          "confidence": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW", "UNKNOWN"] },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "packaging_topology": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["deployable_name", "type", "contents_summary", "evidence"],
+        "properties": {
+          "deployable_name": { "type": "string" },
+          "type": { "type": "string", "enum": ["WAR", "EAR", "JAR", "Batch", "Service", "Unknown"] },
+          "contents_summary": { "type": "string", "minLength": 10 },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "tech_debt_register": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["debt_id", "title", "category", "severity", "impact", "evidence"],
+        "properties": {
+          "debt_id": { "type": "string", "pattern": "^DEBT-" },
+          "title": { "type": "string", "minLength": 5 },
+          "category": {
+            "type": "string",
+            "enum": ["Architecture", "Code", "Data", "Integration", "Ops", "Security", "Testing"]
+          },
+          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+          "impact": { "type": "string", "minLength": 15 },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ops_gaps": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "type": "string", "minLength": 15 }
+    }
+  },
+  "additionalProperties": false
+}

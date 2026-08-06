@@ -3,29 +3,49 @@
   "$id": "https://csa.local/schemas/04_domain_model_ddd.schema.json",
   "title": "CSA_DomainModel_DDD_Schema",
   "type": "object",
-  "required": ["bounded_contexts", "ubiquitous_dictionary"],
+  "required": ["bounded_contexts", "context_relationships", "ubiquitous_dictionary"],
   "properties": {
     "bounded_contexts": {
       "type": "array",
+      "minItems": 3,
       "items": {
         "type": "object",
-        "required": ["context_name", "domain_type", "description", "aggregates"],
+        "required": ["context_name", "domain_type", "description", "aggregates", "evidence"],
         "properties": {
-          "context_name": { "type": "string" },
+          "context_name": { "type": "string", "minLength": 2 },
           "domain_type": { "type": "string", "enum": ["Core", "Supporting", "Generic"] },
-          "description": { "type": "string", "maxLength": 200 },
+          "description": { "type": "string", "minLength": 40, "maxLength": 400 },
           "aggregates": {
             "type": "array",
+            "minItems": 1,
             "items": {
               "type": "object",
               "required": ["aggregate_root", "entities"],
               "properties": {
-                "aggregate_root": { "type": "string" },
-                "entities": { "type": "array", "items": { "type": "string" } },
+                "aggregate_root": { "type": "string", "minLength": 2 },
+                "entities": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
                 "value_objects": { "type": "array", "items": { "type": "string" } }
               },
               "additionalProperties": false
             }
+          },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "context_relationships": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["upstream_context", "downstream_context", "relationship_type"],
+        "properties": {
+          "upstream_context": { "type": "string" },
+          "downstream_context": { "type": "string" },
+          "relationship_type": {
+            "type": "string",
+            "enum": ["Customer-Supplier", "Conformist", "Anti-Corruption Layer", "Shared Kernel", "Partnership", "Open Host"]
           }
         },
         "additionalProperties": false
@@ -33,12 +53,13 @@
     },
     "ubiquitous_dictionary": {
       "type": "array",
+      "minItems": 8,
       "items": {
         "type": "object",
         "required": ["term", "definition"],
         "properties": {
-          "term": { "type": "string" },
-          "definition": { "type": "string" },
+          "term": { "type": "string", "minLength": 2 },
+          "definition": { "type": "string", "minLength": 15 },
           "legacy_mapping": { "type": "string" }
         },
         "additionalProperties": false

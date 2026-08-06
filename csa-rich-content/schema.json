@@ -8,14 +8,17 @@
     "quality_mode",
     "required_markdown_files",
     "required_html_files",
+    "required_section_machine_json",
+    "section_min_rows",
+    "specialist_list_floors",
     "ssot_rules",
     "blocking_checks"
   ],
   "properties": {
-    "contract_version": { "type": "string", "const": "2.0.0" },
+    "contract_version": { "type": "string", "const": "2.1.0" },
     "quality_mode": {
       "type": "string",
-      "const": "schema_first_concise_non_redundant"
+      "const": "schema_first_structurally_complete_non_redundant"
     },
     "required_markdown_files": {
       "type": "array",
@@ -26,6 +29,60 @@
       "type": "array",
       "minItems": 4,
       "items": { "type": "string" }
+    },
+    "required_section_machine_json": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "string",
+        "enum": [
+          "csa_pack/machine/sections/00_executive_summary.json",
+          "csa_pack/machine/sections/04_domain_model_ddd.json",
+          "csa_pack/machine/sections/05_business_capabilities.json",
+          "csa_pack/machine/sections/06_data_architecture_lineage.json",
+          "csa_pack/machine/sections/07_integration_landscape.json",
+          "csa_pack/machine/sections/08_runtime_ops_tech_debt.json",
+          "csa_pack/machine/sections/09_traceability_matrix.json",
+          "csa_pack/machine/sections/10_gaps_risks_assumptions.json"
+        ]
+      }
+    },
+    "section_min_rows": {
+      "type": "object",
+      "required": [
+        "00.key_metrics_table",
+        "00.top_technical_risks",
+        "04.bounded_contexts",
+        "05.capability_taxonomy",
+        "06.data_lineage_matrix",
+        "07.integration_inventory",
+        "08.tech_debt_register",
+        "09.links",
+        "10.risks"
+      ],
+      "properties": {
+        "00.key_metrics_table": { "type": "integer", "const": 5 },
+        "00.top_technical_risks": { "type": "integer", "const": 5 },
+        "04.bounded_contexts": { "type": "integer", "const": 3 },
+        "05.capability_taxonomy": { "type": "integer", "const": 8 },
+        "06.data_lineage_matrix": { "type": "integer", "const": 10 },
+        "07.integration_inventory": { "type": "integer", "const": 6 },
+        "08.tech_debt_register": { "type": "integer", "const": 5 },
+        "09.links": { "type": "integer", "const": 10 },
+        "10.risks": { "type": "integer", "const": 5 }
+      },
+      "additionalProperties": false
+    },
+    "specialist_list_floors": {
+      "type": "object",
+      "properties": {
+        "domain.business_domains": { "type": "integer", "minimum": 3 },
+        "domain.business_capabilities": { "type": "integer", "minimum": 8 },
+        "architecture.architecture_layers": { "type": "integer", "minimum": 5 },
+        "lineage.field_lineage": { "type": "integer", "minimum": 10 },
+        "integration.integrations": { "type": "integer", "minimum": 6 }
+      },
+      "additionalProperties": false
     },
     "ssot_rules": {
       "type": "object",
@@ -49,7 +106,10 @@
         "type": "string",
         "enum": [
           "required_files_present",
+          "section_machine_json_present",
           "schema_conformance",
+          "section_min_rows",
+          "specialist_list_depth",
           "section_ownership_violation",
           "index_html_hub_richness",
           "table_prose_duplication",

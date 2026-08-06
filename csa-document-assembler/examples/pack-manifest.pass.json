@@ -1,5 +1,5 @@
 {
-  "pack_version": "1.0.0",
+  "pack_version": "2.1.0",
   "generated_at": "2026-08-04T12:10:00Z",
   "sections": [
     { "id": "00", "path": "csa_pack/00_executive_summary.md", "title": "Executive Summary", "format": "markdown" },
@@ -27,12 +27,60 @@
     "csa_pack/machine/lineage.json",
     "csa_pack/machine/integration.json",
     "csa_pack/machine/traceability_graph.json",
-    "csa_pack/machine/quality_gate_summary.json"
+    "csa_pack/machine/quality_gate_summary.json",
+    "csa_pack/machine/mermaid_diagrams.json"
   ],
-  "epic_story_seeds": [
-    "csa_pack/epic_story_seeds/functions.md",
-    "csa_pack/epic_story_seeds/epics.md",
-    "csa_pack/epic_story_seeds/stories.md"
+  "section_machine_json": [
+    {
+      "id": "00",
+      "path": "csa_pack/machine/sections/00_executive_summary.json",
+      "schema": "00_executive_summary.schema.json",
+      "markdown_path": "csa_pack/00_executive_summary.md"
+    },
+    {
+      "id": "04",
+      "path": "csa_pack/machine/sections/04_domain_model_ddd.json",
+      "schema": "04_domain_model_ddd.schema.json",
+      "markdown_path": "csa_pack/04_domain_model_ddd.md"
+    },
+    {
+      "id": "05",
+      "path": "csa_pack/machine/sections/05_business_capabilities.json",
+      "schema": "05_business_capabilities.schema.json",
+      "markdown_path": "csa_pack/05_business_capabilities.md"
+    },
+    {
+      "id": "06",
+      "path": "csa_pack/machine/sections/06_data_architecture_lineage.json",
+      "schema": "06_data_architecture_lineage.schema.json",
+      "markdown_path": "csa_pack/06_data_architecture_lineage.md"
+    },
+    {
+      "id": "07",
+      "path": "csa_pack/machine/sections/07_integration_landscape.json",
+      "schema": "07_integration_landscape.schema.json",
+      "markdown_path": "csa_pack/07_integration_landscape.md"
+    },
+    {
+      "id": "08",
+      "path": "csa_pack/machine/sections/08_runtime_ops_tech_debt.json",
+      "schema": "08_runtime_ops_tech_debt.schema.json",
+      "markdown_path": "csa_pack/08_runtime_ops_tech_debt.md"
+    },
+    {
+      "id": "09",
+      "path": "csa_pack/machine/sections/09_traceability_matrix.json",
+      "schema": "09_traceability_matrix.schema.json",
+      "markdown_path": "csa_pack/09_traceability_matrix.md"
+    },
+    {
+      "id": "10",
+      "path": "csa_pack/machine/sections/10_gaps_risks_assumptions.json",
+      "schema": "10_gaps_risks_assumptions.schema.json",
+      "markdown_path": "csa_pack/10_gaps_risks_assumptions.md"
+    }
   ],
-  "traceability_graph_path": "csa_pack/machine/traceability_graph.json"
+  "traceability_graph_path": "csa_pack/machine/traceability_graph.json",
+  "schema_bundle_path": "skills/agents/csa-document-assembler/output-schemas/csa-pack-schema-bundle.json",
+  "mermaid_diagrams_path": "csa_pack/machine/mermaid_diagrams.json"
 }

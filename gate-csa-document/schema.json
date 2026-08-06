@@ -23,6 +23,20 @@
         "README.md"
       ]
     },
+    "required_section_machine_json": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [
+        "machine/sections/00_executive_summary.json",
+        "machine/sections/04_domain_model_ddd.json",
+        "machine/sections/05_business_capabilities.json",
+        "machine/sections/06_data_architecture_lineage.json",
+        "machine/sections/07_integration_landscape.json",
+        "machine/sections/08_runtime_ops_tech_debt.json",
+        "machine/sections/09_traceability_matrix.json",
+        "machine/sections/10_gaps_risks_assumptions.json"
+      ]
+    },
     "required_html_pages": {
       "type": "array",
       "items": { "type": "string" },
@@ -52,6 +66,7 @@
             "type": "string",
             "enum": [
               "markdown_sections_present",
+              "section_machine_json_present",
               "html_c4_index_present",
               "readme_links_html_index",
               "no_c4_markdown",
@@ -63,6 +78,8 @@
               "mermaid_inventory_present",
               "required_files_present",
               "schema_conformance",
+              "section_min_rows",
+              "specialist_list_depth",
               "section_ownership_violation",
               "index_html_hub_richness",
               "table_prose_duplication",

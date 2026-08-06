@@ -30,6 +30,7 @@
     "processing_time_ms": { "type": "integer" },
     "integrations": {
       "type": "array",
+      "minItems": 6,
       "items": {
         "type": "object",
         "required": [

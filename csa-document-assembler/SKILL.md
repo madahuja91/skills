@@ -1,6 +1,6 @@
 ---
 name: csa-document-assembler
-description: Assembles Hybrid CSA pack from accepted artifacts using schema-first, concise, non-redundant Markdown + arc42/C4 HTML outputs. Use when Manager invokes Document Assembler after gated specialists.
+description: Assembles Hybrid CSA pack from accepted artifacts using machine-JSON-first, schema-complete Markdown + arc42/C4 HTML. Use when Manager invokes Document Assembler after gated specialists.
 ---
 
 # CSA Document Assembler
@@ -9,29 +9,51 @@ description: Assembles Hybrid CSA pack from accepted artifacts using schema-firs
 
 Authoritative output/invocation contract: [schema.json](schema.json)
 
+Per-section machine contracts: [output-schemas/](output-schemas/) + [csa-pack-schema-bundle.json](output-schemas/csa-pack-schema-bundle.json)
 
 ## Goal
 
-Produce industry-standard Current State Architecture documentation with strict schema conformance, concise analysis, and zero table/prose duplication.
+Produce industry-standard Current State Architecture documentation with strict schema conformance, structural inventory depth, and zero table/prose duplication.
 
 ## Output format rules (mandatory)
 
 | Deliverable | Format |
 |-------------|--------|
-| CSA narrative sections (`00`, `04`–`10`) | **Markdown** (`.md`) |
-| arc42 / C4 views | **HTML index site** under `csa_pack/arc42-c4/` (skill `arc42-c4-views`) |
-| Specialist working copies | `machine/*.json` only (internal tooling — not human primary deliverable) |
+| Section machine JSON (`00`, `04`–`10`) | **JSON** under `csa_pack/machine/sections/` (schema-validated first) |
+| CSA narrative sections (`00`, `04`–`10`) | **Markdown** rendered from those JSON files |
+| arc42 / C4 views | **HTML** under `csa_pack/arc42-c4/` (skill `arc42-c4-views`) |
+| Specialist copies | `csa_pack/machine/{discovery,domain,architecture,lineage,integration}.json` |
 
-Do **not** write C4 content as `.md`. Do **not** write human narrative sections as `.html` except under `arc42-c4/`.
+Do **not** write C4 content as `.md`. Do **not** invent Markdown without writing the matching section JSON first.
+
+## HARD: Machine JSON then Markdown
+
+1. Build each section object to pass the matching `output-schemas/*.schema.json` (`minItems`, required fields, evidence).
+2. Write `csa_pack/machine/sections/{id}.json`.
+3. Render `csa_pack/{id}.md` from that JSON only (tables for inventories; bullets for insights).
+4. Fail if MD exists without valid section JSON, or if any `minItems` floor is missed without documented evidence exhaustion in `10`.
+
+Industry floors (blocking unless evidence exhausted and logged in `10`):
+
+| Section | Key floor |
+|---------|-----------|
+| `00` | ≥5 metrics, ≥4 scorecard dims, ≥5 findings, ≥5 risks |
+| `04` | ≥3 bounded contexts, ≥8 glossary terms |
+| `05` | ≥8 capabilities |
+| `06` | ≥3 stores, ≥10 lineage rows, ≥5 SP rules when SP evidence exists |
+| `07` | ≥6 integrations |
+| `08` | ≥5 tech-debt items, ≥3 runtime evidence rows |
+| `09` | ≥10 traceability links |
+| `10` | ≥5 gaps, ≥5 risks, ≥3 assumptions |
 
 ## HARD: Rich content + unique sections
 
-Obey skills **`csa-rich-content`** and **`csa-section-boundaries`**.
+Obey **`csa-rich-content`** and **`csa-section-boundaries`**.
 
-- Meet word floors with **section-owned** depth — not by pasting the HTML index / discovery rollup into every file.
-- `arc42-c4/index.html` = consolidated hub (allowed to summarize all concerns).
+- Meet **structural depth floors** (row/list `minItems`) — not word fluff.
+- `arc42-c4/index.html` = consolidated hub.
 - `csa_pack/00`, `04`–`10` = distinct deep-dives; cross-link instead of duplicate.
-- Do **not** replace sectioned pack with `*-report.md` or a single mega `*_Rich_Pack.md` as the only Markdown deliverable.
+- Do **not** replace sectioned pack with mega `*_Rich_Pack.md` only.
 
 ## Inputs (accepted only)
 
@@ -54,13 +76,22 @@ csa_pack/
   08_runtime_ops_tech_debt.md
   09_traceability_matrix.md
   10_gaps_risks_assumptions.md
-  README.md                            # pack index linking MD sections + arc42-c4/index.html
+  README.md
   arc42-c4/
-    index.html                         # HTML entry (C4/arc42)
+    index.html
     context.html
     containers.html
     components.html
-  machine/                             # internal JSON copies for gates/tooling
+  machine/
+    sections/
+      00_executive_summary.json
+      04_domain_model_ddd.json
+      05_business_capabilities.json
+      06_data_architecture_lineage.json
+      07_integration_landscape.json
+      08_runtime_ops_tech_debt.json
+      09_traceability_matrix.json
+      10_gaps_risks_assumptions.json
     discovery.json
     domain.json
     architecture.json
@@ -72,37 +103,28 @@ csa_pack/
     pack_manifest.json
 ```
 
-Optional when evidence supports: `business_logic.md`, `resilience_gaps.md`, `oas/*.yaml`.
-
 Load skills: `csa-rich-content`, `csa-section-boundaries`, `mermaid-diagrams`, `arc42-c4-views`, `ddd-domain-pack`, `data-lineage-pack`, `csa-artifact-contract`.
 
 ## Procedure
 
-1. Copy accepted machine JSON into `csa_pack/machine/`.
-2. Render Markdown sections `00`, `04`–`10` from accepted artifacts with strict section ownership (`csa-section-boundaries`). Keep prose concise and insight-oriented; keep factual inventories in tables only. Apply **`mermaid-diagrams`** for required MD diagrams:
+1. Copy accepted specialist JSON into `csa_pack/machine/`.
+2. **Populate** `machine/sections/*.json` from specialist artifacts until each passes its schema (`minItems` + evidence).
+3. Render Markdown `00`, `04`–`10` from those section JSON files with section ownership. Apply **`mermaid-diagrams`**:
    - `00` → `diag-exec-overview`
    - `04` → `diag-domain-context-map`
    - `06` → `diag-lineage-critical`
    - `07` → `diag-integration-landscape`
-   - optional: `05` capability map, `08` runtime when evidence exists
-3. Build **HTML** C4/arc42 site via `arc42-c4-views` + `mermaid-diagrams` → `csa_pack/arc42-c4/*.html`.
-   - `index.html` is the consolidated hub for context, inventory, and navigation.
-   - `context.html` / `containers.html` / `components.html` carry detailed C4 views.
-4. Write `machine/mermaid_diagrams.json` inventory conforming to `standards/mermaid-diagrams/schema.json`.
-5. In `00_executive_summary.md` and `README.md`, link to `./arc42-c4/index.html` (not to removed C4 `.md` files).
-6. Construct `machine/traceability_graph.json`, then write a **wide** `09_traceability_matrix.md`.
-7. Aggregate gaps into a **ranked** `10_gaps_risks_assumptions.md` (canonical risk register).
-8. Apply **`csa-section-boundaries`**: remove duplicated scorecards/inventories/catalogs from non-owner Markdown; replace with cross-links to owner section.
-9. Validate output against `output-schemas/csa-pack-schema-bundle.json` and each per-section schema in `output-schemas/*.schema.json`; fail fast on schema gaps or repeated table/prose content.
-10. Write `machine/pack_manifest.json` + `machine/quality_gate_summary.json`.
+4. Build **HTML** C4/arc42 site via `arc42-c4-views`.
+5. Write `machine/mermaid_diagrams.json`, `machine/traceability_graph.json`.
+6. Aggregate gaps into ranked `10` (JSON + MD).
+7. Apply **`csa-section-boundaries`** (cross-link; no catalog paste).
+8. Validate against `output-schemas/csa-pack-schema-bundle.json`.
+9. Write `machine/pack_manifest.json` + `machine/quality_gate_summary.json`.
 
 ## Rules
 
 - Do not invent systems, queues, packages, or versions.
-- You must generate concise, schema-driven docs with SSOT table ownership per section.
+- Expand inventories with evidenced rows — do not stop at sample stubs.
 - Do not stop at “see machine/*.json”.
-- Do not paste the same Evidence Baseline / readiness scorecard / full domain catalog into every Markdown file.
-- Mark assumptions clearly when confidence was pass_with_warnings.
-- Required Mermaid diagrams must render correctly (MD fences + HTML `pre.mermaid` + runtime).
-- Primary client Markdown lives under `csa_pack/00`–`10` + `README.md` only (plus HTML).
-- **HARD disk rule:** write every file under `swarm_state.active_root` using relative paths (`csa_pack/...`, `artifacts/...`). Never invent external output trees outside ACTIVE_ROOT.
+- Mark assumptions when confidence was pass_with_warnings.
+- **HARD disk rule:** write every file under `swarm_state.active_root` using relative paths. Never invent external output trees outside ACTIVE_ROOT.

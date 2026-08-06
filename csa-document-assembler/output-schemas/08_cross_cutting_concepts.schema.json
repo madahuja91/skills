@@ -7,9 +7,16 @@
   "properties": {
     "architecture_concepts": {
       "type": "array",
+      "minItems": 4,
       "items": {
         "type": "object",
-        "required": ["concept_category", "implementation_pattern", "key_classes_or_frameworks", "architectural_rules"],
+        "required": [
+          "concept_category",
+          "implementation_pattern",
+          "key_classes_or_frameworks",
+          "architectural_rules",
+          "evidence"
+        ],
         "properties": {
           "concept_category": {
             "type": "string",
@@ -21,9 +28,10 @@
               "Configuration Management"
             ]
           },
-          "implementation_pattern": { "type": "string" },
-          "key_classes_or_frameworks": { "type": "array", "items": { "type": "string" } },
-          "architectural_rules": { "type": "array", "items": { "type": "string" } }
+          "implementation_pattern": { "type": "string", "minLength": 10 },
+          "key_classes_or_frameworks": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "architectural_rules": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 10 } },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }

@@ -7,15 +7,16 @@
   "properties": {
     "links": {
       "type": "array",
+      "minItems": 10,
       "items": {
         "type": "object",
-        "required": ["capability_id", "component_id", "integration_id", "lineage_id"],
+        "required": ["capability_id", "component_id", "integration_id", "lineage_id", "evidence"],
         "properties": {
           "capability_id": { "type": "string" },
           "component_id": { "type": "string" },
           "integration_id": { "type": "string" },
           "lineage_id": { "type": "string" },
-          "evidence": { "type": "array", "items": { "type": "string" } }
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }

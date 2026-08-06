@@ -7,16 +7,18 @@
   "properties": {
     "adrs": {
       "type": "array",
+      "minItems": 3,
       "items": {
         "type": "object",
-        "required": ["adr_id", "title", "status", "context_problem", "decision_outcome"],
+        "required": ["adr_id", "title", "status", "context_problem", "decision_outcome", "evidence"],
         "properties": {
-          "adr_id": { "type": "string" },
-          "title": { "type": "string" },
-          "status": { "type": "string", "enum": ["ACCEPTED", "PROPOSED", "DEPRECATED", "SUPERSEDED"] },
-          "context_problem": { "type": "string" },
-          "decision_outcome": { "type": "string" },
-          "consequences": { "type": "array", "items": { "type": "string" } }
+          "adr_id": { "type": "string", "pattern": "^ADR-" },
+          "title": { "type": "string", "minLength": 5 },
+          "status": { "type": "string", "enum": ["ACCEPTED", "PROPOSED", "DEPRECATED", "SUPERSEDED", "OBSERVED"] },
+          "context_problem": { "type": "string", "minLength": 20 },
+          "decision_outcome": { "type": "string", "minLength": 20 },
+          "consequences": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 10 } },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }

@@ -3,10 +3,11 @@
   "$id": "https://csa.local/schemas/07_integration_landscape.schema.json",
   "title": "CSA_IntegrationLandscape_Schema",
   "type": "object",
-  "required": ["integration_inventory"],
+  "required": ["integration_inventory", "integration_risks"],
   "properties": {
     "integration_inventory": {
       "type": "array",
+      "minItems": 6,
       "items": {
         "type": "object",
         "required": [
@@ -15,24 +16,41 @@
           "target_system",
           "protocol",
           "data_format",
-          "communication_pattern"
+          "communication_pattern",
+          "criticality",
+          "evidence"
         ],
         "properties": {
-          "interface_id": { "type": "string" },
-          "source_system": { "type": "string" },
-          "target_system": { "type": "string" },
-          "protocol": { "type": "string", "enum": ["IBM MQ", "JMS", "REST", "SOAP", "FTP/SFTP", "DB Link"] },
+          "interface_id": { "type": "string", "pattern": "^INT-" },
+          "source_system": { "type": "string", "minLength": 2 },
+          "target_system": { "type": "string", "minLength": 2 },
+          "protocol": {
+            "type": "string",
+            "enum": ["IBM MQ", "JMS", "REST", "SOAP", "FTP/SFTP", "DB Link", "CORBA", "File Share", "Other"]
+          },
           "endpoint_queue_name": { "type": "string" },
-          "data_format": { "type": "string", "enum": ["XML", "JSON", "Fixed-Length", "CSV", "Binary"] },
+          "data_format": {
+            "type": "string",
+            "enum": ["XML", "JSON", "Fixed-Length", "CSV", "Binary", "Other"]
+          },
           "communication_pattern": {
             "type": "string",
             "enum": ["Sync", "Async Fire-and-Forget", "Async Request-Reply"]
-          }
+          },
+          "criticality": {
+            "type": "string",
+            "enum": ["Mission-Critical", "Business-Operational", "Administrative"]
+          },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }
     },
-    "integration_risks": { "type": "array", "items": { "type": "string" } }
+    "integration_risks": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "type": "string", "minLength": 20 }
+    }
   },
   "additionalProperties": false
 }

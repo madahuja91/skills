@@ -8,11 +8,12 @@
     "sections",
     "arc42_c4_html",
     "machine_artifacts",
+    "section_machine_json",
     "traceability_graph_path",
     "schema_bundle_path"
   ],
   "properties": {
-    "pack_version": { "type": "string", "const": "2.0.0" },
+    "pack_version": { "type": "string", "const": "2.1.0" },
     "generated_at": { "type": "string" },
     "sections": {
       "type": "array",
@@ -45,6 +46,21 @@
     "machine_artifacts": {
       "type": "array",
       "items": { "type": "string" }
+    },
+    "section_machine_json": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "schema"],
+        "properties": {
+          "id": { "type": "string" },
+          "path": { "type": "string", "pattern": "^csa_pack/machine/sections/.*\\.json$" },
+          "schema": { "type": "string", "pattern": ".*\\.schema\\.json$" },
+          "markdown_path": { "type": "string", "pattern": "^csa_pack/.*\\.md$" }
+        },
+        "additionalProperties": false
+      }
     },
     "traceability_graph_path": { "type": "string" },
     "schema_bundle_path": {

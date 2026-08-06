@@ -7,28 +7,32 @@
   "properties": {
     "business_context": {
       "type": "array",
+      "minItems": 3,
       "items": {
         "type": "object",
-        "required": ["neighbor_system", "role_description", "business_data_exchanged"],
+        "required": ["neighbor_system", "role_description", "business_data_exchanged", "evidence"],
         "properties": {
-          "neighbor_system": { "type": "string" },
-          "role_description": { "type": "string" },
-          "business_data_exchanged": { "type": "string" }
+          "neighbor_system": { "type": "string", "minLength": 2 },
+          "role_description": { "type": "string", "minLength": 15 },
+          "business_data_exchanged": { "type": "string", "minLength": 10 },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }
     },
     "technical_context_interfaces": {
       "type": "array",
+      "minItems": 3,
       "items": {
         "type": "object",
-        "required": ["interface_id", "external_party", "direction", "protocol_technology"],
+        "required": ["interface_id", "external_party", "direction", "protocol_technology", "evidence"],
         "properties": {
-          "interface_id": { "type": "string" },
-          "external_party": { "type": "string" },
+          "interface_id": { "type": "string", "pattern": "^INT-" },
+          "external_party": { "type": "string", "minLength": 2 },
           "direction": { "type": "string", "enum": ["INBOUND", "OUTBOUND", "BIDIRECTIONAL"] },
-          "protocol_technology": { "type": "string" },
-          "data_format": { "type": "string" }
+          "protocol_technology": { "type": "string", "minLength": 2 },
+          "data_format": { "type": "string" },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
         },
         "additionalProperties": false
       }

@@ -5,9 +5,51 @@
   "type": "object",
   "required": ["gaps", "risks", "assumptions"],
   "properties": {
-    "gaps": { "type": "array", "items": { "type": "object" } },
-    "risks": { "type": "array", "items": { "type": "object" } },
-    "assumptions": { "type": "array", "items": { "type": "object" } }
+    "gaps": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["gap_id", "description", "impact", "needed_evidence"],
+        "properties": {
+          "gap_id": { "type": "string", "pattern": "^GAP-" },
+          "description": { "type": "string", "minLength": 20 },
+          "impact": { "type": "string", "minLength": 10 },
+          "needed_evidence": { "type": "string", "minLength": 10 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "risks": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["risk_id", "title", "severity", "impact_area", "mitigation"],
+        "properties": {
+          "risk_id": { "type": "string", "pattern": "^RISK-" },
+          "title": { "type": "string", "minLength": 5 },
+          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+          "impact_area": { "type": "string", "minLength": 3 },
+          "mitigation": { "type": "string", "minLength": 15 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["assumption_id", "statement", "confidence"],
+        "properties": {
+          "assumption_id": { "type": "string", "pattern": "^ASM-" },
+          "statement": { "type": "string", "minLength": 15 },
+          "confidence": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] }
+        },
+        "additionalProperties": false
+      }
+    }
   },
   "additionalProperties": false
 }

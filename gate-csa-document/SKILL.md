@@ -1,6 +1,6 @@
 ---
 name: gate-csa-document
-description: Quality gate for assembled csa_pack Markdown sections, arc42-C4 HTML index, rich narrative depth, and machine artifacts. Use after Document Assembler.
+description: Quality gate for assembled csa_pack machine section JSON, Markdown sections, arc42-C4 HTML, structural depth floors, and SSOT. Use after Document Assembler.
 ---
 
 # Gate: CSA Document
@@ -10,23 +10,25 @@ description: Quality gate for assembled csa_pack Markdown sections, arc42-C4 HTM
 Authoritative evaluation contract: [`schema.json`](schema.json)
 
 Pack manifest must also conform to `skills/agents/csa-document-assembler/schema.json`.
-Schema and SSOT policy: skill **`csa-rich-content`**.
+Schema and structural-depth policy: skill **`csa-rich-content`**.
 
 ## Pass requires
 
 - Pack under single `active_root` only (no `src/src`; `active-root-hygiene` pass)
-- Markdown sections: `00`, `04`–`10`, `README.md` (**Markdown only**)
-- HTML: `arc42-c4/index.html`, `context.html`, `containers.html`, `components.html` (**HTML only** — never C4 `.md`)
+- **Machine section JSON first:** all of `csa_pack/machine/sections/{00,04,05,06,07,08,09,10}_*.json` present and schema-valid
+- Markdown sections: `00`, `04`–`10`, `README.md` rendered from those JSON files
+- HTML: `arc42-c4/index.html`, `context.html`, `containers.html`, `components.html`
 - No C4 Markdown (`01`/`02`/`03`)
 - Machine artifacts synced + `traceability_graph.json` + `mermaid_diagrams.json`
-- Required Mermaid diagrams present and correctly fenced/rendered (`mermaid-diagrams`):
-  - MD: `diag-exec-overview`, `diag-domain-context-map`, `diag-lineage-critical`, `diag-integration-landscape`
-  - HTML: `diag-c4-context`, `diag-c4-containers`, `diag-c4-components` with Mermaid runtime on those pages
+- Required Mermaid diagrams present (`mermaid-diagrams`)
 - Critical gaps documented in `10_gaps_risks_assumptions.md`
-- **Schema conformance (blocking):** validate mapped section artifacts against `skills/agents/csa-document-assembler/output-schemas/csa-pack-schema-bundle.json`
-- **SSOT compliance (blocking):** table facts appear once in owner sections; no paragraph restatement of table rows (`table_prose_duplication`)
-- **`index.html` hub (blocking):** required anchors (`overview`…`pack`), Mermaid runtime, and CSA framing (no TSA migration-strategy body)
-- **Anti-redundancy (blocking):** obey `csa-section-boundaries` — fail Jaccard > 0.32 between Markdown siblings or duplicated owned catalogs (`section_anti_redundancy`)
-- **Pack shape (blocking):** `csa_pack/00`–`10` present; mega-pack-only or `*-report.md` substitutes without sectioned pack = fail
+- **Schema conformance (blocking):** validate section machine JSON against `output-schemas/*.schema.json` via `csa-pack-schema-bundle.json`
+- **Section min rows (blocking):** enforce `csa-rich-content.section_min_rows` (not word counts)
+- **SSOT (blocking):** table facts once in owner sections; no paragraph restatement of table rows
+- **`index.html` hub (blocking):** required anchors, Mermaid runtime, CSA framing
+- **Anti-redundancy (blocking):** `csa-section-boundaries` — Jaccard > 0.32 fails
+- **Pack shape (blocking):** sectioned `csa_pack/00`–`10` present (mega-pack-only fails)
 
-Emit report with `gate_id: gate-csa-document`. Observed fields must include failed schema paths, duplicated ownership evidence, table-prose duplication evidence, and pair similarity when redundancy checks fail.
+Do **not** fail on word count. Do **fail** on empty/`minItems`-short inventories without evidence-exhaustion gaps in `10`.
+
+Emit report with `gate_id: gate-csa-document`. Observed fields must include failed schema paths, missing section JSON, min-row shortfalls, duplication evidence, and pair similarity when redundancy checks fail.

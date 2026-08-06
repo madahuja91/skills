@@ -4,7 +4,12 @@
   "agent_version": "1.0.0",
   "timestamp": "2026-08-04T12:01:00Z",
   "schema_version": "1.0.0",
-  "scope": { "codebase_root": "files/legacy-app", "modules": ["claims"] },
+  "scope": {
+    "codebase_root": "files/legacy-app",
+    "modules": [
+      "claims"
+    ]
+  },
   "overall_confidence_score": 82,
   "business_domains": [
     {
@@ -23,7 +28,12 @@
           "relationships": [],
           "confidence_score": 90,
           "extraction_source": "code",
-          "evidence": [{ "path": "claims/src/Claim.java", "kind": "code" }]
+          "evidence": [
+            {
+              "path": "claims/src/Claim.java",
+              "kind": "code"
+            }
+          ]
         }
       ],
       "business_rules": [
@@ -36,7 +46,10 @@
           "implementation_location": {
             "file_path": "claims/src/ClaimService.java",
             "method_name": "updateStatus",
-            "line_numbers": [40, 80]
+            "line_numbers": [
+              40,
+              80
+            ]
           },
           "validation_type": "server_side",
           "business_impact": "critical",
@@ -44,7 +57,136 @@
           "configuration_variations": [],
           "confidence_score": 88,
           "extraction_source": "code",
-          "evidence": [{ "path": "claims/src/ClaimService.java", "lines": [40, 80], "kind": "code" }]
+          "evidence": [
+            {
+              "path": "claims/src/ClaimService.java",
+              "lines": [
+                40,
+                80
+              ],
+              "kind": "code"
+            }
+          ]
+        }
+      ],
+      "cross_domain_dependencies": [],
+      "confidence_score": 85
+    },
+    {
+      "domain_id": "DOM-extra2",
+      "domain_name": "Supporting Domain 2",
+      "canonical_name": "Supporting Domain 2",
+      "description": "Insurance claim intake and adjudication",
+      "normalization_applied": false,
+      "entities": [
+        {
+          "entity_id": "ENT-extra2",
+          "entity_name": "Entity2",
+          "canonical_name": "Claim",
+          "entity_type": "aggregate",
+          "attributes": [],
+          "relationships": [],
+          "confidence_score": 90,
+          "extraction_source": "code",
+          "evidence": [
+            {
+              "path": "claims/src/Claim.java",
+              "kind": "code"
+            }
+          ]
+        }
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-claim-status-transition",
+          "rule_name": "Claim status transition",
+          "rule_category": "workflow",
+          "rule_description": "Claim may move Submitted -> UnderReview -> Approved|Rejected",
+          "pseudo_code": "if status==Submitted then allow UnderReview",
+          "implementation_location": {
+            "file_path": "claims/src/ClaimService.java",
+            "method_name": "updateStatus",
+            "line_numbers": [
+              40,
+              80
+            ]
+          },
+          "validation_type": "server_side",
+          "business_impact": "critical",
+          "dependencies": [],
+          "configuration_variations": [],
+          "confidence_score": 88,
+          "extraction_source": "code",
+          "evidence": [
+            {
+              "path": "claims/src/ClaimService.java",
+              "lines": [
+                40,
+                80
+              ],
+              "kind": "code"
+            }
+          ]
+        }
+      ],
+      "cross_domain_dependencies": [],
+      "confidence_score": 85
+    },
+    {
+      "domain_id": "DOM-extra3",
+      "domain_name": "Supporting Domain 3",
+      "canonical_name": "Supporting Domain 3",
+      "description": "Insurance claim intake and adjudication",
+      "normalization_applied": false,
+      "entities": [
+        {
+          "entity_id": "ENT-extra3",
+          "entity_name": "Entity3",
+          "canonical_name": "Claim",
+          "entity_type": "aggregate",
+          "attributes": [],
+          "relationships": [],
+          "confidence_score": 90,
+          "extraction_source": "code",
+          "evidence": [
+            {
+              "path": "claims/src/Claim.java",
+              "kind": "code"
+            }
+          ]
+        }
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-claim-status-transition",
+          "rule_name": "Claim status transition",
+          "rule_category": "workflow",
+          "rule_description": "Claim may move Submitted -> UnderReview -> Approved|Rejected",
+          "pseudo_code": "if status==Submitted then allow UnderReview",
+          "implementation_location": {
+            "file_path": "claims/src/ClaimService.java",
+            "method_name": "updateStatus",
+            "line_numbers": [
+              40,
+              80
+            ]
+          },
+          "validation_type": "server_side",
+          "business_impact": "critical",
+          "dependencies": [],
+          "configuration_variations": [],
+          "confidence_score": 88,
+          "extraction_source": "code",
+          "evidence": [
+            {
+              "path": "claims/src/ClaimService.java",
+              "lines": [
+                40,
+                80
+              ],
+              "kind": "code"
+            }
+          ]
         }
       ],
       "cross_domain_dependencies": [],
@@ -56,14 +198,81 @@
       "capability_id": "CAP-claim-intake",
       "capability_name": "Claim Intake",
       "capability_description": "Submit and validate new claims",
-      "supporting_domains": ["DOM-claims"],
+      "supporting_domains": [
+        "DOM-claims"
+      ],
       "business_value": "Core revenue ops",
       "complexity_score": 60,
       "implementation_components": [],
-      "business_rules_applied": ["BR-claim-status-transition"],
+      "business_rules_applied": [
+        "BR-claim-status-transition"
+      ],
       "data_dependencies": [],
       "integration_dependencies": [],
       "confidence_score": 80
+    },
+    {
+      "capability_id": "CAP-002",
+      "capability_name": "Capability 2",
+      "capability_description": "Example capability 2 for schema floor validation",
+      "supporting_domains": [
+        "DOM-claims"
+      ],
+      "confidence_score": 70
+    },
+    {
+      "capability_id": "CAP-003",
+      "capability_name": "Capability 3",
+      "capability_description": "Example capability 3 for schema floor validation",
+      "supporting_domains": [
+        "DOM-claims"
+      ],
+      "confidence_score": 70
+    },
+    {
+      "capability_id": "CAP-004",
+      "capability_name": "Capability 4",
+      "capability_description": "Example capability 4 for schema floor validation",
+      "supporting_domains": [
+        "DOM-claims"
+      ],
+      "confidence_score": 70
+    },
+    {
+      "capability_id": "CAP-005",
+      "capability_name": "Capability 5",
+      "capability_description": "Example capability 5 for schema floor validation",
+      "supporting_domains": [
+        "DOM-claims"
+      ],
+      "confidence_score": 70
+    },
+    {
+      "capability_id": "CAP-006",
+      "capability_name": "Capability 6",
+      "capability_description": "Example capability 6 for schema floor validation",
+      "supporting_domains": [
+        "DOM-claims"
+      ],
+      "confidence_score": 70
+    },
+    {
+      "capability_id": "CAP-007",
+      "capability_name": "Capability 7",
+      "capability_description": "Example capability 7 for schema floor validation",
+      "supporting_domains": [
+        "DOM-claims"
+      ],
+      "confidence_score": 70
+    },
+    {
+      "capability_id": "CAP-008",
+      "capability_name": "Capability 8",
+      "capability_description": "Example capability 8 for schema floor validation",
+      "supporting_domains": [
+        "DOM-claims"
+      ],
+      "confidence_score": 70
     }
   ],
   "validation_results": {

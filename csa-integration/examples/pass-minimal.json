@@ -4,7 +4,12 @@
   "agent_version": "1.0.0",
   "timestamp": "2026-08-04T12:04:00Z",
   "schema_version": "1.0.0",
-  "scope": { "codebase_root": "files/legacy-app", "modules": ["claims"] },
+  "scope": {
+    "codebase_root": "files/legacy-app",
+    "modules": [
+      "claims"
+    ]
+  },
   "overall_confidence_score": 74,
   "analysis_scope": "all_integrations",
   "integrations": [
@@ -23,7 +28,122 @@
       "endpoints": [],
       "confidence_score": 80,
       "extraction_source": "code",
-      "evidence": [{ "path": "claims/src/PolicyClient.java", "kind": "code" }]
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "integration_id": "INT-002",
+      "integration_name": "Integration 2",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "integration_id": "INT-003",
+      "integration_name": "Integration 3",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "integration_id": "INT-004",
+      "integration_name": "Integration 4",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "integration_id": "INT-005",
+      "integration_name": "Integration 5",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "integration_id": "INT-006",
+      "integration_name": "Integration 6",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
     }
   ],
   "integration_patterns_summary": {
@@ -36,7 +156,10 @@
       "security": 0,
       "legacy": 1
     },
-    "async_candidates": { "total_candidates": 0, "high_priority_candidates": 0 }
+    "async_candidates": {
+      "total_candidates": 0,
+      "high_priority_candidates": 0
+    }
   },
   "validation_results": {
     "integration_completeness": {
