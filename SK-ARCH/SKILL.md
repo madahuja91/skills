@@ -5,6 +5,11 @@ description: >-
   interfaces, data domains, and NFR anchors. mode=csa|tsa.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-ARCH — Architecture Analysis
 
 ## Inputs

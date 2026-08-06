@@ -5,6 +5,11 @@ description: >-
   ADR refs, TSA components, and migration impact.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-TARGET — Target Story Mapping
 
 ## Inputs

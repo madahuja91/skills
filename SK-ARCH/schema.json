@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://epic-story.local/schemas/sk-arch.json",
+  "title": "ArchitectureAnalysis",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "skill_id",
+    "active_root",
+    "artifact_paths",
+    "mode",
+    "components",
+    "views_or_contexts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "skill_id": {
+      "const": "SK-ARCH"
+    },
+    "active_root": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Workspace-relative ACTIVE_ROOT (prefer src). Never src/src."
+    },
+    "artifact_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Expected under ACTIVE_ROOT: artifacts/cs/csa_analysis.json, artifacts/ts/tsa_analysis.json"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "csa",
+        "tsa"
+      ]
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "views_or_contexts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "integrations": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": true
+}

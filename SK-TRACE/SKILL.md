@@ -5,6 +5,11 @@ description: >-
   test, and (TS) legacy/gap/ADR/TSA links.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-TRACE — Traceability Validation
 
 ## Inputs

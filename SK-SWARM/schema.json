@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://epic-story.local/schemas/sk-swarm.json",
+  "title": "SwarmState",
+  "type": "object",
+  "required": [
+    "swarm_id",
+    "phase",
+    "active_root",
+    "roster",
+    "artifacts_index",
+    "shared_context",
+    "checkpoint"
+  ],
+  "properties": {
+    "swarm_id": {
+      "type": "string"
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "CurrentState",
+        "TargetState",
+        "Master"
+      ]
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "CREATE",
+        "UPDATE"
+      ]
+    },
+    "active_root": {
+      "type": "string",
+      "description": "Prefer workspace-relative src. Forbidden: src/src, invented /app/temp trees."
+    },
+    "run_plan_path": {
+      "type": "string"
+    },
+    "roster": {
+      "type": "object",
+      "required": [
+        "eligible",
+        "completed",
+        "in_flight",
+        "blocked"
+      ],
+      "properties": {
+        "eligible": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "completed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "in_flight": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "blocked": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "artifacts_index": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "agent",
+          "paths",
+          "status"
+        ],
+        "properties": {
+          "agent": {
+            "type": "string"
+          },
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "FAIL",
+              "HANDED_OFF"
+            ]
+          }
+        }
+      }
+    },
+    "shared_context": {
+      "type": "object"
+    },
+    "checkpoint": {
+      "type": "object",
+      "required": [
+        "seq",
+        "updated_by",
+        "updated_at"
+      ],
+      "properties": {
+        "seq": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "updated_by": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

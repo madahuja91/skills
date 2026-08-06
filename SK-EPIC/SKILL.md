@@ -5,6 +5,11 @@ description: >-
   Used after story generation in CS or TS mode.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-EPIC — Epic Generation
 
 ## Inputs

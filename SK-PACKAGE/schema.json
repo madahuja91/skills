@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://epic-story.local/schemas/sk-package.json",
+  "title": "PackageManifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "skill_id",
+    "active_root",
+    "artifact_paths",
+    "manifests"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "skill_id": {
+      "const": "SK-PACKAGE"
+    },
+    "active_root": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Workspace-relative ACTIVE_ROOT (prefer src). Never src/src."
+    },
+    "artifact_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Expected under ACTIVE_ROOT: artifacts/package/cs_manifest.json, artifacts/package/ts_manifest.json, artifacts/package/final_manifest.json"
+    },
+    "manifests": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "entries"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "dual_surface_verified": {
+      "type": "boolean"
+    },
+    "template_version": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

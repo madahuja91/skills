@@ -5,6 +5,11 @@ description: >-
   swarm-relay: bootstrap, first-tick fan_out, obey peer handoffs, never author leaf artifacts.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-SWARM-RELAY — Orchestrator (Thin Relay)
 
 ## Identity
@@ -17,16 +22,23 @@ You are a **Swarm Relay** (message bus / runtime adapter), **not** a central bos
 - Asking the user which swarm agents to run (roster is default)
 
 ## Required relay loop
-1. Ensure ACTIVE_ROOT and `_internal/swarm/*` exist; bootstrap if missing
+1. **Create ACTIVE_ROOT (Manager duty — do this first)**
+   - WORKSPACE_ROOT = dir containing `.agents/` or `skills/` (if cwd is already under `src`, use parent)
+   - Create **exactly one** ACTIVE_ROOT: prefer workspace-relative `src/` (mkdir if missing)
+   - Write `WORKSPACE_ROOT/active_root.txt` with a single line: `src`
+   - Create `ACTIVE_ROOT/_internal/swarm/` (`swarm_state.json`, `handoffs.jsonl`, `context_memory.md`)
+   - Set `swarm_state.active_root` once to that path
+   - **Forbidden:** nested `src/src`, second ACTIVE_ROOT, invented `/app/temp/...` trees
+   - Load and obey `active-root-hygiene` + its `schema.json`
 2. Write/refresh `run_plan.json` with **all phase peers** in `agents.run` by default (`agents.skip` empty unless an input makes a peer impossible — record reason)
 3. First tick only: invoke entry peer(s) via `fan_out` if roster in_flight/completed empty
-4. On each peer return: read `swarm_handoff` + refresh swarm_state
+4. On each peer return: read `swarm_handoff` + refresh swarm_state; path-audit claimed files are under ACTIVE_ROOT only
 5. Route exactly as `to[]` requests; parallelize on `fan_out`
 6. Empty/invalid handoff → ask same peer to repair once; do not invent sequence
-7. Invoke Quality Reviewer / Traceability Validator when handed to, or as phase-end batch
+7. Invoke Quality Reviewer / Traceability Validator when handed to, or as phase-end batch (Quality must run active-root hygiene)
 8. Done when eligible ⊆ completed and `join_complete` / no pending handoffs
 
-Also load and obey `SK-SWARM` for shared-state file shapes.
+Also load and obey `SK-SWARM` for shared-state file shapes via the **skills** tool (attached local skills — do not paste skill bodies into prompts).
 
 ## Phase entry defaults
 

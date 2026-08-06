@@ -5,6 +5,11 @@ description: >-
   using the enterprise CS template.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-STORY — Current State Story Generation
 
 ## Inputs

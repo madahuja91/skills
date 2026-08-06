@@ -5,6 +5,11 @@ description: >-
   and capability set. Used by Functional Requirement Extractor.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-REQ — Requirement Extraction
 
 ## Inputs

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://epic-story.local/schemas/sk-legacy.json",
+  "title": "LegacyAnalysis",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "skill_id",
+    "active_root",
+    "artifact_paths",
+    "modules",
+    "entry_points",
+    "integrations",
+    "data_stores",
+    "observed_behaviors",
+    "risk_hotspots"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "skill_id": {
+      "const": "SK-LEGACY"
+    },
+    "active_root": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Workspace-relative ACTIVE_ROOT (prefer src). Never src/src."
+    },
+    "artifact_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Expected under ACTIVE_ROOT: artifacts/cs/legacy_analysis.json"
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "entry_points": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "integrations": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "data_stores": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "observed_behaviors": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "risk_hotspots": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": true
+}

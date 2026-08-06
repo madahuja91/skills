@@ -5,6 +5,11 @@ description: >-
   Used by Business Capability Extractor.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-CAP — Capability Synthesis
 
 ## Inputs

@@ -4,6 +4,11 @@ description: >-
   Assemble phase or final package manifests without inventing story content.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-PACKAGE — Packaging
 
 ## Outputs

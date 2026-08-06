@@ -5,6 +5,11 @@ description: >-
   requirements and business rules. mode=cs|ts.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-AC — Acceptance Criteria
 
 ## Inputs

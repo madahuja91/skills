@@ -5,6 +5,11 @@ description: >-
   constraints. Used by Business Rule Extractor.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-RULE — Business Rule Extraction
 
 ## Inputs

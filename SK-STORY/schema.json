@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://epic-story.local/schemas/sk-story.json",
+  "title": "CurrentStateStories",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "skill_id",
+    "active_root",
+    "artifact_paths",
+    "stories",
+    "dual_surface",
+    "nested_layout"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "skill_id": {
+      "const": "SK-STORY"
+    },
+    "active_root": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Workspace-relative ACTIVE_ROOT (prefer src). Never src/src."
+    },
+    "artifact_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Expected under ACTIVE_ROOT: artifacts/cs/cs_stories.json, artifacts/cs/epics/<EPIC-ID>/stories/<STORY-ID>.md"
+    },
+    "stories": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "epic_id",
+          "mode"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^CS-STORY-"
+          },
+          "title": {
+            "type": "string"
+          },
+          "epic_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "const": "cs"
+          }
+        }
+      }
+    },
+    "dual_surface": {
+      "type": "boolean",
+      "const": true
+    },
+    "nested_layout": {
+      "type": "boolean",
+      "const": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -5,6 +5,11 @@ description: >-
   guidelines. Classify New/Modified/Reused/Deprecated.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-GAP — Gap Analysis
 
 ## Inputs

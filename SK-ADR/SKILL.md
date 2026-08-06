@@ -5,6 +5,11 @@ description: >-
   functional impact. Used by ADR Analyzer.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-ADR — ADR Interpretation
 
 ## Inputs

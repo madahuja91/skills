@@ -5,6 +5,11 @@ description: >-
   observed behaviors, and risk hotspots. Used by Legacy Code Analyzer.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-LEGACY — Legacy Analysis
 
 ## Inputs

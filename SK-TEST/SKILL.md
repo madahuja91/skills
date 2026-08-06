@@ -5,6 +5,11 @@ description: >-
   acceptance criteria. mode=cs|ts (TS may include migration paths).
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-TEST — Test Scenario Generation
 
 ## Inputs

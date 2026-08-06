@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://epic-story.local/schemas/sk-swarm-relay.json",
+  "title": "SwarmRelayBootstrap",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "active_root",
+    "active_root_txt",
+    "swarm_files",
+    "run_plan_path",
+    "nested_src_src",
+    "result"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "active_root": {
+      "type": "string",
+      "description": "Manager-created ACTIVE_ROOT; prefer src"
+    },
+    "active_root_txt": {
+      "const": "active_root.txt",
+      "description": "File at WORKSPACE_ROOT recording ACTIVE_ROOT"
+    },
+    "swarm_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 3,
+      "description": "_internal/swarm/swarm_state.json, handoffs.jsonl, context_memory.md"
+    },
+    "run_plan_path": {
+      "type": "string"
+    },
+    "nested_src_src": {
+      "type": "boolean",
+      "const": false
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

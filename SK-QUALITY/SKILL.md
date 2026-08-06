@@ -5,6 +5,11 @@ description: >-
   and (TS) ADR compliance + TSA alignment. Emit findings only.
 ---
 
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+
 # SK-QUALITY — Quality Validation
 
 ## Inputs
@@ -31,6 +36,9 @@ description: >-
 ```
 
 ## Rubrics
+### Active root (always)
+- Fail/block if nested `src/src`, multi-root writes, or artifacts outside ACTIVE_ROOT (`active-root-hygiene`)
+
 ### CS (G1–G3) — always evaluate
 - G1 Requirement Completeness
 - G2 Business Rule Coverage

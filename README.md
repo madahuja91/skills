@@ -1,17 +1,23 @@
 # Skills Catalog (runtime)
 
-Procedures are loaded from GitHub at workflow start.
+Procedures live in local `skills/` folders (`SKILL.md` + `schema.json`). Agents load them via the **skills** tool and `input.skills` attachments — not by hardcoding skill bodies in prompts.
 
 | | |
 |--|--|
-| **Source** | https://github.com/madahuja91/skills (public) |
+| **Primary source** | Local `skills/` (mirrored to `.agents/skills/`) |
+| **Fallback** | https://github.com/madahuja91/skills (public) if local skills missing |
 | **Destination** | `.agents/skills/` |
-| **PAT required?** | **No** (repo is public). Optional `GITHUB_PAT` / `githubPat` only if the repo later becomes private. |
+| **PAT required?** | **No** for public fallback |
 
 ## Sync Skills node
-Runs `git clone --depth 1` (or `git fetch` + reset if already cloned) from that URL into `.agents/skills/`.
+1. Prefer copying local `skills/*` → `.agents/skills/`
+2. If local empty, `git clone --depth 1` from GitHub
+3. Bootstrap ACTIVE_ROOT = workspace-relative `src` + `active_root.txt` (never `src/src`)
 
-Agents then `read_file` paths like `.agents/skills/SK-SWARM/SKILL.md`.
+## ACTIVE_ROOT
+Manager/Orchestrator creates **one** ACTIVE_ROOT (`src`). All agents write only under it. See `active-root-hygiene`.
 
-## Local `skills/` folder
-This repo may still keep a local `skills/` mirror for editing/docs. Runtime Sync Skills uses **GitHub**, not the local folder.
+## Local skill folders
+Each skill has:
+- `SKILL.md` — procedure
+- `schema.json` — output contract
