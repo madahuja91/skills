@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/04_domain_model_ddd.schema.json",
+  "title": "CSA_DomainModel_DDD_Schema",
+  "type": "object",
+  "required": ["bounded_contexts", "ubiquitous_dictionary"],
+  "properties": {
+    "bounded_contexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["context_name", "domain_type", "description", "aggregates"],
+        "properties": {
+          "context_name": { "type": "string" },
+          "domain_type": { "type": "string", "enum": ["Core", "Supporting", "Generic"] },
+          "description": { "type": "string", "maxLength": 200 },
+          "aggregates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["aggregate_root", "entities"],
+              "properties": {
+                "aggregate_root": { "type": "string" },
+                "entities": { "type": "array", "items": { "type": "string" } },
+                "value_objects": { "type": "array", "items": { "type": "string" } }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ubiquitous_dictionary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["term", "definition"],
+        "properties": {
+          "term": { "type": "string" },
+          "definition": { "type": "string" },
+          "legacy_mapping": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

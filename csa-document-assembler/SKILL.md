@@ -1,6 +1,6 @@
 ---
 name: csa-document-assembler
-description: Assembles Hybrid CSA pack — deep Markdown deliverables with required Mermaid, arc42-C4 HTML index with Mermaid runtime, and Markdown epic/story seeds from accepted machine artifacts. Use when Manager invokes Document Assembler after gated specialists.
+description: Assembles Hybrid CSA pack from accepted artifacts using schema-first, concise, non-redundant Markdown + arc42/C4 HTML outputs. Use when Manager invokes Document Assembler after gated specialists.
 ---
 
 # CSA Document Assembler
@@ -12,7 +12,7 @@ Authoritative output/invocation contract: [schema.json](schema.json)
 
 ## Goal
 
-Produce industry-standard Current State Architecture documentation for modernization epic/story generation — **reference-quality depth**, not stubs.
+Produce industry-standard Current State Architecture documentation with strict schema conformance, concise analysis, and zero table/prose duplication.
 
 ## Output format rules (mandatory)
 
@@ -20,7 +20,6 @@ Produce industry-standard Current State Architecture documentation for moderniza
 |-------------|--------|
 | CSA narrative sections (`00`, `04`–`10`) | **Markdown** (`.md`) |
 | arc42 / C4 views | **HTML index site** under `csa_pack/arc42-c4/` (skill `arc42-c4-views`) |
-| Epic / story seeds | **Markdown** (`.md`) |
 | Specialist working copies | `machine/*.json` only (internal tooling — not human primary deliverable) |
 
 Do **not** write C4 content as `.md`. Do **not** write human narrative sections as `.html` except under `arc42-c4/`.
@@ -61,10 +60,6 @@ csa_pack/
     context.html
     containers.html
     components.html
-  epic_story_seeds/
-    functions.md
-    epics.md
-    stories.md
   machine/                             # internal JSON copies for gates/tooling
     discovery.json
     domain.json
@@ -84,30 +79,30 @@ Load skills: `csa-rich-content`, `csa-section-boundaries`, `mermaid-diagrams`, `
 ## Procedure
 
 1. Copy accepted machine JSON into `csa_pack/machine/`.
-2. **Exhaustively expand** Markdown sections `00`, `04`–`10` from accepted artifacts — each section owns only its concern (`csa-section-boundaries`). Put full consolidation in `index.html`. Apply **`mermaid-diagrams`** for required MD diagrams:
+2. Render Markdown sections `00`, `04`–`10` from accepted artifacts with strict section ownership (`csa-section-boundaries`). Keep prose concise and insight-oriented; keep factual inventories in tables only. Apply **`mermaid-diagrams`** for required MD diagrams:
    - `00` → `diag-exec-overview`
    - `04` → `diag-domain-context-map`
    - `06` → `diag-lineage-critical`
    - `07` → `diag-integration-landscape`
    - optional: `05` capability map, `08` runtime when evidence exists
 3. Build **HTML** C4/arc42 site via `arc42-c4-views` + `mermaid-diagrams` → `csa_pack/arc42-c4/*.html`.
-   - **`index.html` is the rich hub** (≥5000 words, ≥8 tables, ≥2 Mermaid, all required anchors) consolidating inventory/stack/domains/data/integrations/C4/runtime/risks/traceability — **as-is CSA**, not TSA migration strategy.
-   - `context.html` / `containers.html` / `components.html` deepen C4 (≥800 words each + required Mermaid).
+   - `index.html` is the consolidated hub for context, inventory, and navigation.
+   - `context.html` / `containers.html` / `components.html` carry detailed C4 views.
 4. Write `machine/mermaid_diagrams.json` inventory conforming to `standards/mermaid-diagrams/schema.json`.
 5. In `00_executive_summary.md` and `README.md`, link to `./arc42-c4/index.html` (not to removed C4 `.md` files).
 6. Construct `machine/traceability_graph.json`, then write a **wide** `09_traceability_matrix.md`.
 7. Aggregate gaps into a **ranked** `10_gaps_risks_assumptions.md` (canonical risk register).
-8. Apply **`csa-section-boundaries`**: strip duplicated scorecards/inventories/catalogs from non-owner Markdown; replace with cross-links to owner section or `index.html#…`.
-9. Self-check word floors from `csa-rich-content` **and** anti-redundancy from `csa-section-boundaries`; rewrite overlapping sections before finishing.
+8. Apply **`csa-section-boundaries`**: remove duplicated scorecards/inventories/catalogs from non-owner Markdown; replace with cross-links to owner section.
+9. Validate output against `output-schemas/csa-pack-schema-bundle.json` and each per-section schema in `output-schemas/*.schema.json`; fail fast on schema gaps or repeated table/prose content.
 10. Write `machine/pack_manifest.json` + `machine/quality_gate_summary.json`.
 
 ## Rules
 
 - Do not invent systems, queues, packages, or versions.
-- You **may and must** expand discovery + specialist JSON into long human docs (tables, inventories, scorecards) **into the owning section / HTML hub only**.
+- You must generate concise, schema-driven docs with SSOT table ownership per section.
 - Do not stop at “see machine/*.json”.
 - Do not paste the same Evidence Baseline / readiness scorecard / full domain catalog into every Markdown file.
 - Mark assumptions clearly when confidence was pass_with_warnings.
 - Required Mermaid diagrams must render correctly (MD fences + HTML `pre.mermaid` + runtime).
 - Primary client Markdown lives under `csa_pack/00`–`10` + `README.md` only (plus HTML).
-- **HARD disk rule:** write every file under `swarm_state.active_root` using relative paths (`csa_pack/...`, `artifacts/...`). Never invent `/app/temp/csa-run` or a sibling `outputs/` tree outside ACTIVE_ROOT. Pack must exist on disk before finish.
+- **HARD disk rule:** write every file under `swarm_state.active_root` using relative paths (`csa_pack/...`, `artifacts/...`). Never invent external output trees outside ACTIVE_ROOT.

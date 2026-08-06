@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/10_quality_scenarios.schema.json",
+  "title": "Arc42_QualityScenarios_Schema",
+  "type": "object",
+  "required": ["quality_tree", "scenarios"],
+  "properties": {
+    "quality_tree": { "type": "array", "items": { "type": "object" } },
+    "scenarios": { "type": "array", "items": { "type": "object" } }
+  },
+  "additionalProperties": false
+}

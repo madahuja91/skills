@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/09_traceability_matrix.schema.json",
+  "title": "CSA_TraceabilityMatrix_Schema",
+  "type": "object",
+  "required": ["links"],
+  "properties": {
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["capability_id", "component_id", "integration_id", "lineage_id"],
+        "properties": {
+          "capability_id": { "type": "string" },
+          "component_id": { "type": "string" },
+          "integration_id": { "type": "string" },
+          "lineage_id": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

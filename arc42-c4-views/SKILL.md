@@ -1,6 +1,6 @@
 ---
 name: arc42-c4-views
-description: Builds a rich arc42-aligned HTML CSA/TSA architecture site — comprehensive index.html hub plus C4 Context/Container/Component pages with Mermaid. Use when assembling architecture visualization outputs.
+description: Builds arc42-aligned HTML CSA/TSA architecture pages with schema-driven sections, Mermaid views, and non-redundant content.
 ---
 
 # arc42 + C4 Views (HTML index)
@@ -9,7 +9,7 @@ description: Builds a rich arc42-aligned HTML CSA/TSA architecture site — comp
 
 HTML pack manifest contract: [schema.json](schema.json)
 
-Also obey: `skills/standards/mermaid-diagrams/SKILL.md` and `csa-rich-content` (HTML depth floors).
+Also obey: `skills/standards/mermaid-diagrams/SKILL.md` and `csa-rich-content` (schema-first SSOT rules).
 
 ## Output format (mandatory)
 
@@ -23,9 +23,9 @@ csa_pack/arc42-c4/   (or tsa_pack/arc42-c4/)
   components.html      # C4 Level 3 critical Components + Mermaid diag-c4-components
 ```
 
-## HARD: `index.html` is the rich hub (not a stub nav page)
+## HARD: `index.html` is the hub (not a stub nav page)
 
-Humans open **`index.html` first**. It must be a **long, self-contained documentation page** (reference quality like a full architecture site: meta stats strip, sticky section nav, many tables, embedded Mermaid, prose).  
+Humans open **`index.html` first**. It must be a self-contained architecture hub with section anchors, evidence tables, and Mermaid views.  
 A short “summary + three links” page **FAILS** Completeness.
 
 ### Do include (CSA — current state)
@@ -58,9 +58,9 @@ Skip or omit for **CSA** (those belong in TSA packs):
 
 CSA framing = **as-is / current state**. You may include a short “modernization readiness scorecard” (dimensions + scores from evidence) under `#overview` or `#risks` — not a full migration strategy.
 
-### Depth floors for `index.html`
+### Structural minimums for `index.html`
 
-See `csa-rich-content`: **≥5000 words** of real HTML text (strip tags for counting), **≥8 HTML tables**, **≥2 Mermaid diagrams** embedded with runtime init, **all required anchors** present with non-empty sections.
+See `csa-rich-content`: required anchors, evidence-backed tables, Mermaid runtime, and no table-to-prose duplication.
 
 ### UI polish (match reference richness, not stub chrome)
 
@@ -71,7 +71,7 @@ See `csa-rich-content`: **≥5000 words** of real HTML text (strip tags for coun
 
 ## Detail pages (`context` / `containers` / `components`)
 
-Still required. Each must be substantial (≥800 words) with its required Mermaid diagram — they deepen C4; they do **not** replace the rich index.
+Still required with their Mermaid diagrams — they deepen C4 and do not replace `index.html`.
 
 | File | Must show | Required Mermaid |
 |------|-----------|------------------|
@@ -103,3 +103,11 @@ Build from accepted `architecture.c4_views` + discovery + domain + lineage + int
 - Context & scope → `#overview` + `context.html`
 - Building block view → `#architecture` / `#c4` + containers/components pages
 - Runtime / risks → `#runtime` / `#risks` (also Markdown `08` / `10`)
+- Goals & constraints → `01_goals_and_constraints.json`
+- Runtime scenarios → `06_runtime_view.json`
+- Deployment view → `07_deployment_view.json`
+- Cross-cutting concepts → `08_cross_cutting_concepts.json`
+- Architectural decisions → `09_architectural_decisions.json`
+- Quality scenarios → `10_quality_scenarios.json`
+- Risks and technical debt → `11_risks_and_tech_debt.json`
+- Glossary → `12_glossary.json`

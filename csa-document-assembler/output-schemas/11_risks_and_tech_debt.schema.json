@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/11_risks_and_tech_debt.schema.json",
+  "title": "Arc42_RisksAndTechDebt_Schema",
+  "type": "object",
+  "required": ["risk_register", "technical_debt_items"],
+  "properties": {
+    "risk_register": { "type": "array", "items": { "type": "object" } },
+    "technical_debt_items": { "type": "array", "items": { "type": "object" } }
+  },
+  "additionalProperties": false
+}

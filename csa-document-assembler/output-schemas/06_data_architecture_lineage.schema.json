@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/06_data_architecture_lineage.schema.json",
+  "title": "CSA_DataArchitectureLineage_Schema",
+  "type": "object",
+  "required": ["data_stores", "data_lineage_matrix", "business_logic_in_db"],
+  "properties": {
+    "data_stores": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["store_id", "engine", "schema_name"],
+        "properties": {
+          "store_id": { "type": "string" },
+          "engine": { "type": "string" },
+          "schema_name": { "type": "string" },
+          "primary_purpose": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "data_lineage_matrix": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["lineage_id", "source_entity", "transformation_logic", "target_entity"],
+        "properties": {
+          "lineage_id": { "type": "string" },
+          "source_entity": { "type": "string" },
+          "transformation_logic": { "type": "string" },
+          "target_entity": { "type": "string" },
+          "execution_trigger": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "business_logic_in_db": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sp_name", "extracted_business_rule", "complexity"],
+        "properties": {
+          "sp_name": { "type": "string" },
+          "extracted_business_rule": { "type": "string" },
+          "complexity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

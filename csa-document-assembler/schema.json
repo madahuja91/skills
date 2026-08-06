@@ -8,11 +8,11 @@
     "sections",
     "arc42_c4_html",
     "machine_artifacts",
-    "epic_story_seeds",
-    "traceability_graph_path"
+    "traceability_graph_path",
+    "schema_bundle_path"
   ],
   "properties": {
-    "pack_version": { "type": "string", "const": "1.0.0" },
+    "pack_version": { "type": "string", "const": "2.0.0" },
     "generated_at": { "type": "string" },
     "sections": {
       "type": "array",
@@ -46,12 +46,11 @@
       "type": "array",
       "items": { "type": "string" }
     },
-    "epic_story_seeds": {
-      "type": "array",
-      "minItems": 3,
-      "items": { "type": "string", "pattern": ".*\\.md$" }
-    },
     "traceability_graph_path": { "type": "string" },
+    "schema_bundle_path": {
+      "type": "string",
+      "const": "skills/agents/csa-document-assembler/output-schemas/csa-pack-schema-bundle.json"
+    },
     "mermaid_diagrams_path": {
       "type": "string",
       "const": "csa_pack/machine/mermaid_diagrams.json"

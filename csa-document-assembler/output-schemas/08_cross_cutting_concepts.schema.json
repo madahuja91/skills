@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/08_cross_cutting_concepts.schema.json",
+  "title": "Arc42_CrossCuttingConcepts_Schema",
+  "type": "object",
+  "required": ["architecture_concepts"],
+  "properties": {
+    "architecture_concepts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["concept_category", "implementation_pattern", "key_classes_or_frameworks", "architectural_rules"],
+        "properties": {
+          "concept_category": {
+            "type": "string",
+            "enum": [
+              "Authentication & Authorization",
+              "Logging & Tracing",
+              "Error & Exception Handling",
+              "Persistence & ORM",
+              "Configuration Management"
+            ]
+          },
+          "implementation_pattern": { "type": "string" },
+          "key_classes_or_frameworks": { "type": "array", "items": { "type": "string" } },
+          "architectural_rules": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

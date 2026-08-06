@@ -61,12 +61,13 @@
               "mermaid_required_diagrams_present",
               "mermaid_html_runtime_present",
               "mermaid_inventory_present",
-              "narrative_depth_minimums",
-              "executive_richness",
-              "narrative_tables_present",
-              "html_c4_prose_depth",
+              "required_files_present",
+              "schema_conformance",
+              "section_ownership_violation",
               "index_html_hub_richness",
-              "section_anti_redundancy"
+              "table_prose_duplication",
+              "section_anti_redundancy",
+              "pack_shape_valid"
             ]
           },
           "description": { "type": "string" },

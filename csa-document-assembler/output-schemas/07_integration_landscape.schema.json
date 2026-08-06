@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/07_integration_landscape.schema.json",
+  "title": "CSA_IntegrationLandscape_Schema",
+  "type": "object",
+  "required": ["integration_inventory"],
+  "properties": {
+    "integration_inventory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "interface_id",
+          "source_system",
+          "target_system",
+          "protocol",
+          "data_format",
+          "communication_pattern"
+        ],
+        "properties": {
+          "interface_id": { "type": "string" },
+          "source_system": { "type": "string" },
+          "target_system": { "type": "string" },
+          "protocol": { "type": "string", "enum": ["IBM MQ", "JMS", "REST", "SOAP", "FTP/SFTP", "DB Link"] },
+          "endpoint_queue_name": { "type": "string" },
+          "data_format": { "type": "string", "enum": ["XML", "JSON", "Fixed-Length", "CSV", "Binary"] },
+          "communication_pattern": {
+            "type": "string",
+            "enum": ["Sync", "Async Fire-and-Forget", "Async Request-Reply"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "integration_risks": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

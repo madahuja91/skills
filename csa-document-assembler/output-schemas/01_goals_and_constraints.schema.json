@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/01_goals_and_constraints.schema.json",
+  "title": "Arc42_GoalsAndConstraints_Schema",
+  "type": "object",
+  "required": ["quality_goals", "stakeholders", "constraints"],
+  "properties": {
+    "quality_goals": { "type": "array", "items": { "type": "object" } },
+    "stakeholders": { "type": "array", "items": { "type": "object" } },
+    "constraints": { "type": "array", "items": { "type": "object" } }
+  },
+  "additionalProperties": false
+}

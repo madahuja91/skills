@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/06_runtime_view.schema.json",
+  "title": "Arc42_RuntimeView_Schema",
+  "type": "object",
+  "required": ["key_scenarios"],
+  "properties": {
+    "key_scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scenario_id", "scenario_name", "sequence_steps"],
+        "properties": {
+          "scenario_id": { "type": "string" },
+          "scenario_name": { "type": "string" },
+          "trigger_event": { "type": "string" },
+          "sequence_steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["step_number", "caller", "receiver", "action_or_method", "sync_or_async"],
+              "properties": {
+                "step_number": { "type": "integer" },
+                "caller": { "type": "string" },
+                "receiver": { "type": "string" },
+                "action_or_method": { "type": "string" },
+                "sync_or_async": { "type": "string", "enum": ["SYNC", "ASYNC"] }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

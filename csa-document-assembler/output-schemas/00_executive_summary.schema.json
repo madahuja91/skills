@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/00_executive_summary.schema.json",
+  "title": "CSA_ExecutiveSummary_Schema",
+  "type": "object",
+  "required": ["system_overview", "key_metrics_table", "key_architectural_findings", "top_technical_risks"],
+  "properties": {
+    "system_overview": {
+      "type": "object",
+      "required": ["system_name", "primary_business_purpose", "architecture_pattern"],
+      "properties": {
+        "system_name": { "type": "string" },
+        "primary_business_purpose": { "type": "string" },
+        "architecture_pattern": {
+          "type": "string",
+          "enum": ["Monolith", "Distributed Stored Procedures", "Layered N-Tier", "Microservices", "Hybrid"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "key_metrics_table": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "count", "tech_stack", "health_status"],
+        "properties": {
+          "category": { "type": "string" },
+          "count": { "type": "integer" },
+          "tech_stack": { "type": "string" },
+          "health_status": { "type": "string", "enum": ["Healthy", "Legacy - Action Needed", "Critical Risk"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "key_architectural_findings": { "type": "array", "items": { "type": "string" } },
+    "top_technical_risks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["risk_id", "risk_title", "impact_area", "severity", "brief_mitigation"],
+        "properties": {
+          "risk_id": { "type": "string" },
+          "risk_title": { "type": "string" },
+          "impact_area": { "type": "string" },
+          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+          "brief_mitigation": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

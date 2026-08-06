@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/03_context_and_scope.schema.json",
+  "title": "Arc42_ContextAndScope_Schema",
+  "type": "object",
+  "required": ["business_context", "technical_context_interfaces"],
+  "properties": {
+    "business_context": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["neighbor_system", "role_description", "business_data_exchanged"],
+        "properties": {
+          "neighbor_system": { "type": "string" },
+          "role_description": { "type": "string" },
+          "business_data_exchanged": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "technical_context_interfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["interface_id", "external_party", "direction", "protocol_technology"],
+        "properties": {
+          "interface_id": { "type": "string" },
+          "external_party": { "type": "string" },
+          "direction": { "type": "string", "enum": ["INBOUND", "OUTBOUND", "BIDIRECTIONAL"] },
+          "protocol_technology": { "type": "string" },
+          "data_format": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

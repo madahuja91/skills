@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/07_deployment_view.schema.json",
+  "title": "Arc42_DeploymentView_Schema",
+  "type": "object",
+  "required": ["environments"],
+  "properties": {
+    "environments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["environment_name", "infrastructure_nodes"],
+        "properties": {
+          "environment_name": { "type": "string", "enum": ["DEV", "STAGING", "PROD"] },
+          "infrastructure_nodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["node_id", "node_type", "deployed_artifacts"],
+              "properties": {
+                "node_id": { "type": "string" },
+                "node_type": { "type": "string" },
+                "deployed_artifacts": { "type": "array", "items": { "type": "string" } },
+                "scaling_policy": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

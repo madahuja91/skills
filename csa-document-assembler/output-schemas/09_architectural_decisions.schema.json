@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/09_architectural_decisions.schema.json",
+  "title": "Arc42_ArchitecturalDecisions_Schema",
+  "type": "object",
+  "required": ["adrs"],
+  "properties": {
+    "adrs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["adr_id", "title", "status", "context_problem", "decision_outcome"],
+        "properties": {
+          "adr_id": { "type": "string" },
+          "title": { "type": "string" },
+          "status": { "type": "string", "enum": ["ACCEPTED", "PROPOSED", "DEPRECATED", "SUPERSEDED"] },
+          "context_problem": { "type": "string" },
+          "decision_outcome": { "type": "string" },
+          "consequences": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

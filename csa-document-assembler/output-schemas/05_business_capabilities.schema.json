@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/05_business_capabilities.schema.json",
+  "title": "CSA_BusinessCapabilities_Schema",
+  "type": "object",
+  "required": ["capability_taxonomy"],
+  "properties": {
+    "capability_taxonomy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["capability_id", "l1_capability", "l2_capability", "criticality", "realizing_components"],
+        "properties": {
+          "capability_id": { "type": "string" },
+          "l1_capability": { "type": "string" },
+          "l2_capability": { "type": "string" },
+          "criticality": {
+            "type": "string",
+            "enum": ["Mission-Critical", "Business-Operational", "Administrative"]
+          },
+          "realizing_components": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "gap_analysis_bullets": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}
