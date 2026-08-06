@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-parallel-lane-gates.json",
+  "title": "CsaParallelLaneGates",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "completeness_mode",
+    "forbidden_patterns",
+    "lane_gates",
+    "join_policy",
+    "assembler_mode",
+    "final_gate_policy",
+    "client_doc_count"
+  ],
+  "properties": {
+    "contract_version": { "type": "string", "const": "1.0.0" },
+    "completeness_mode": {
+      "type": "string",
+      "const": "per_lane_then_final_pack_only"
+    },
+    "forbidden_patterns": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "string",
+        "enum": [
+          "completeness_only_after_join",
+          "batch_post_join_full_audit_when_lane_gates_exist",
+          "assembler_reanalysis_of_source",
+          "cosmetic_only_hard_fail_when_substance_pass"
+        ]
+      }
+    },
+    "lane_gates": {
+      "type": "object",
+      "required": [
+        "discover",
+        "business_domain",
+        "tech_architecture",
+        "data_lineage",
+        "integration"
+      ],
+      "properties": {
+        "discover": {
+          "type": "object",
+          "required": ["gate_id", "artifact_path"],
+          "properties": {
+            "gate_id": { "const": "gate-discover" },
+            "artifact_path": { "const": "artifacts/discovery.json" }
+          },
+          "additionalProperties": false
+        },
+        "business_domain": {
+          "type": "object",
+          "required": ["gate_id", "artifact_path"],
+          "properties": {
+            "gate_id": { "const": "gate-business-domain" },
+            "artifact_path": { "const": "artifacts/domain.json" }
+          },
+          "additionalProperties": false
+        },
+        "tech_architecture": {
+          "type": "object",
+          "required": ["gate_id", "artifact_path"],
+          "properties": {
+            "gate_id": { "const": "gate-tech-architecture" },
+            "artifact_path": { "const": "artifacts/architecture.json" }
+          },
+          "additionalProperties": false
+        },
+        "data_lineage": {
+          "type": "object",
+          "required": ["gate_id", "artifact_path"],
+          "properties": {
+            "gate_id": { "const": "gate-data-lineage" },
+            "artifact_path": { "const": "artifacts/lineage.json" }
+          },
+          "additionalProperties": false
+        },
+        "integration": {
+          "type": "object",
+          "required": ["gate_id", "artifact_path"],
+          "properties": {
+            "gate_id": { "const": "gate-integration" },
+            "artifact_path": { "const": "artifacts/integration.json" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "join_policy": {
+      "type": "object",
+      "required": ["wait_for", "post_join_completeness"],
+      "properties": {
+        "wait_for": {
+          "type": "string",
+          "const": "all_parallel_lanes_accepted_or_escalated"
+        },
+        "post_join_completeness": {
+          "type": "string",
+          "const": "checklist_only_unless_missing_lane_gate_report"
+        }
+      },
+      "additionalProperties": false
+    },
+    "assembler_mode": {
+      "type": "string",
+      "const": "thin_render_from_accepted_artifacts"
+    },
+    "final_gate_policy": {
+      "type": "object",
+      "required": ["gate_ids", "substance_over_cosmetics"],
+      "properties": {
+        "gate_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["gate-csa-document", "gate-final-completeness"]
+          }
+        },
+        "substance_over_cosmetics": { "type": "boolean", "const": true }
+      },
+      "additionalProperties": false
+    },
+    "client_doc_count": {
+      "type": "object",
+      "required": ["markdown_named_docs", "allow_extra_client_markdown"],
+      "properties": {
+        "markdown_named_docs": { "type": "integer", "const": 5 },
+        "allow_extra_client_markdown": { "type": "boolean", "const": false }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -13,11 +13,12 @@ description: Quality gate for lean csa_pack (5 Markdown docs + arc42 HTML + mach
 
 - Single `active_root`; `active-root-hygiene` pass
 - **Shared memory present:** `_internal/swarm/{swarm_state.json,handoffs.jsonl,context_memory.md}`
-- Machine section JSON for all 5 docs, schema-valid
+- Machine section JSON for all 5 docs, schema-valid (including substance sections folded from reference packs — see `csa-section-boundaries`)
 - Markdown: `Executive_Summary.md`, `Business_Architecture.md`, `Application_Architecture.md`, `Data_and_Integration.md`, `Risks_Gaps_and_Traceability.md`, `README.md`
 - HTML: `arc42-c4/{index,context,containers,components}.html`
-- **Forbidden:** numbered `00`/`04`–`10` MD, C4-as-MD, mega-pack-only, epic/story seeds as required pack
+- **Forbidden:** numbered `00`/`04`–`10` MD, C4-as-MD, mega-pack-only, epic/story seeds, separate `business_logic.md` / OAS YAML client docs
 - Mermaid required diagrams present
-- section_min_rows + SSOT + anti-redundancy (Jaccard > 0.32 fails)
+- section_min_rows (substance) + SSOT + anti-redundancy (Jaccard > 0.32 fails)
+- Prefer substance schema failures over cosmetic-only HTML markup fails when inventories are complete (`csa-parallel-lane-gates`)
 
 Emit `gate_id: gate-csa-document`.

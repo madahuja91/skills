@@ -7,7 +7,7 @@
     "agent_outputs_validate_against_agent_schema": true,
     "gate_reports_validate_against_quality_gate_framework_and_gate_schema": true
   },
-  "skill_count": 51,
+  "skill_count": 52,
   "skills": [
     {
       "id": "active-root-hygiene",
@@ -37,7 +37,7 @@
       "schema": "orchestrator/csa-architecture-manager/schema.json",
       "schema_required": true,
       "has_schema": true,
-      "description": "Orchestrator Manager strategy for CSA — bootstraps shared swarm memory, fans out specialist subagents in parallel, gates via Completeness Validator, re-runs up to 2 times, then assembles CSA pack. Use as the primary workflow orchestrator agent."
+      "description": "Orchestrator Manager strategy for CSA — bootstraps shared swarm memory, fans out specialist subagents in parallel with per-lane Completeness, thin Assembler packaging, then final pack gate. Use as the primary workflow orchestrator agent."
     },
     {
       "id": "csa-artifact-contract",
@@ -67,7 +67,7 @@
       "schema": "agents/csa-completeness-validator/schema.json",
       "schema_required": true,
       "has_schema": true,
-      "description": "Validates CSA specialist artifacts against JSON Schema and gate rubrics; emits pass/fail gate reports with remediation briefs. Use after every specialist run as Manager subagent."
+      "description": "Validates CSA specialist artifacts against JSON Schema and gate rubrics per lane as each specialist finishes; final pack gate after thin Assembler. Use as Manager completeness-checker subagent."
     },
     {
       "id": "csa-data-lineage",
@@ -97,7 +97,7 @@
       "schema": "agents/csa-document-assembler/schema.json",
       "schema_required": true,
       "has_schema": true,
-      "description": "Assembles Hybrid CSA pack — Markdown deliverables plus arc42-C4 HTML index — and Markdown epic/story seeds from accepted machine artifacts. Use when Manager invokes Document Assembler after gated specialists."
+      "description": "Thin-packages lean CSA pack (5 Markdown docs + arc42/C4 HTML) from accepted specialist artifacts after per-lane gates. Use when Manager invokes Document Assembler."
     },
     {
       "id": "csa-integration",
@@ -118,6 +118,16 @@
       "schema_required": true,
       "has_schema": true,
       "description": "Enforces deep, long-form CSA specialist JSON and Markdown/HTML pack narratives (reference-quality depth)."
+    },
+    {
+      "id": "csa-parallel-lane-gates",
+      "path": "shared/csa-parallel-lane-gates",
+      "category": "shared",
+      "skill_md": "shared/csa-parallel-lane-gates/SKILL.md",
+      "schema": "shared/csa-parallel-lane-gates/schema.json",
+      "schema_required": true,
+      "has_schema": true,
+      "description": "HARD CSA swarm control loop — per-lane Completeness as each specialist finishes, cheap join checklist, thin Assembler, final pack Completeness only."
     },
     {
       "id": "csa-section-boundaries",

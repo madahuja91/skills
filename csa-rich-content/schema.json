@@ -15,10 +15,10 @@
     "blocking_checks"
   ],
   "properties": {
-    "contract_version": { "type": "string", "const": "3.0.0" },
+    "contract_version": { "type": "string", "const": "3.1.0" },
     "quality_mode": {
       "type": "string",
-      "const": "lean_pack_schema_first_structurally_complete"
+      "const": "lean_pack_schema_first_substance_complete"
     },
     "required_markdown_files": {
       "type": "array",
@@ -59,20 +59,38 @@
       "type": "object",
       "required": [
         "Executive_Summary.key_metrics_table",
+        "Executive_Summary.migration_effort_estimate",
         "Business_Architecture.capability_taxonomy",
+        "Business_Architecture.operation_dispatch_rules",
+        "Business_Architecture.capability_flows",
         "Application_Architecture.key_components",
+        "Application_Architecture.deployment_topology",
+        "Application_Architecture.security_controls",
         "Data_and_Integration.data_lineage_matrix",
         "Data_and_Integration.integration_inventory",
+        "Data_and_Integration.entity_catalog",
+        "Data_and_Integration.interface_contracts",
+        "Data_and_Integration.resilience_posture",
         "Risks_Gaps_and_Traceability.risks",
+        "Risks_Gaps_and_Traceability.remediation_actions",
         "Risks_Gaps_and_Traceability.traceability_links"
       ],
       "properties": {
         "Executive_Summary.key_metrics_table": { "type": "integer", "const": 5 },
+        "Executive_Summary.migration_effort_estimate": { "type": "integer", "const": 2 },
         "Business_Architecture.capability_taxonomy": { "type": "integer", "const": 8 },
+        "Business_Architecture.operation_dispatch_rules": { "type": "integer", "const": 5 },
+        "Business_Architecture.capability_flows": { "type": "integer", "const": 3 },
         "Application_Architecture.key_components": { "type": "integer", "const": 8 },
+        "Application_Architecture.deployment_topology": { "type": "integer", "const": 2 },
+        "Application_Architecture.security_controls": { "type": "integer", "const": 3 },
         "Data_and_Integration.data_lineage_matrix": { "type": "integer", "const": 10 },
         "Data_and_Integration.integration_inventory": { "type": "integer", "const": 6 },
+        "Data_and_Integration.entity_catalog": { "type": "integer", "const": 5 },
+        "Data_and_Integration.interface_contracts": { "type": "integer", "const": 3 },
+        "Data_and_Integration.resilience_posture": { "type": "integer", "const": 3 },
         "Risks_Gaps_and_Traceability.risks": { "type": "integer", "const": 5 },
+        "Risks_Gaps_and_Traceability.remediation_actions": { "type": "integer", "const": 3 },
         "Risks_Gaps_and_Traceability.traceability_links": { "type": "integer", "const": 10 }
       },
       "additionalProperties": false

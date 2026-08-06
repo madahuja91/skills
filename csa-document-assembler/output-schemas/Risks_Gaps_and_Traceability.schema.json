@@ -1,71 +1,114 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://csa.local/schemas/Risks_Gaps_and_Traceability.schema.json",
-  "title": "CSA_Risks_Gaps_and_Traceability",
-  "type": "object",
-  "required": ["gaps", "risks", "assumptions", "traceability_links"],
-  "properties": {
-    "gaps": {
-      "type": "array",
-      "minItems": 5,
-      "items": {
-        "type": "object",
-        "required": ["gap_id", "description", "impact", "needed_evidence"],
-        "properties": {
-          "gap_id": { "type": "string", "pattern": "^GAP-" },
-          "description": { "type": "string", "minLength": 20 },
-          "impact": { "type": "string", "minLength": 10 },
-          "needed_evidence": { "type": "string", "minLength": 10 }
-        },
-        "additionalProperties": false
-      }
-    },
-    "risks": {
-      "type": "array",
-      "minItems": 5,
-      "items": {
-        "type": "object",
-        "required": ["risk_id", "title", "severity", "impact_area", "mitigation"],
-        "properties": {
-          "risk_id": { "type": "string", "pattern": "^RISK-" },
-          "title": { "type": "string", "minLength": 5 },
-          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
-          "impact_area": { "type": "string", "minLength": 3 },
-          "mitigation": { "type": "string", "minLength": 15 }
-        },
-        "additionalProperties": false
-      }
-    },
-    "assumptions": {
-      "type": "array",
-      "minItems": 3,
-      "items": {
-        "type": "object",
-        "required": ["assumption_id", "statement", "confidence"],
-        "properties": {
-          "assumption_id": { "type": "string", "pattern": "^ASM-" },
-          "statement": { "type": "string", "minLength": 15 },
-          "confidence": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] }
-        },
-        "additionalProperties": false
-      }
-    },
-    "traceability_links": {
-      "type": "array",
-      "minItems": 10,
-      "items": {
-        "type": "object",
-        "required": ["capability_id", "component_id", "integration_id", "lineage_id", "evidence"],
-        "properties": {
-          "capability_id": { "type": "string" },
-          "component_id": { "type": "string" },
-          "integration_id": { "type": "string" },
-          "lineage_id": { "type": "string" },
-          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
-        },
-        "additionalProperties": false
-      }
-    }
-  },
-  "additionalProperties": false
-}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/Risks_Gaps_and_Traceability.schema.json",
+  "title": "CSA_Risks_Gaps_and_Traceability",
+  "type": "object",
+  "required": [
+    "gaps",
+    "risks",
+    "assumptions",
+    "remediation_actions",
+    "regression_risk_flags",
+    "traceability_links"
+  ],
+  "properties": {
+    "gaps": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["gap_id", "description", "impact", "needed_evidence"],
+        "properties": {
+          "gap_id": { "type": "string", "pattern": "^GAP-" },
+          "description": { "type": "string", "minLength": 20 },
+          "impact": { "type": "string", "minLength": 10 },
+          "needed_evidence": { "type": "string", "minLength": 10 },
+          "category": {
+            "type": "string",
+            "enum": ["evidence", "resilience", "contract", "data", "security", "ops", "other"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "risks": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["risk_id", "title", "severity", "impact_area", "mitigation"],
+        "properties": {
+          "risk_id": { "type": "string", "pattern": "^RISK-" },
+          "title": { "type": "string", "minLength": 5 },
+          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+          "impact_area": { "type": "string", "minLength": 3 },
+          "mitigation": { "type": "string", "minLength": 15 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["assumption_id", "statement", "confidence"],
+        "properties": {
+          "assumption_id": { "type": "string", "pattern": "^ASM-" },
+          "statement": { "type": "string", "minLength": 15 },
+          "confidence": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "remediation_actions": {
+      "type": "array",
+      "minItems": 3,
+      "description": "Actionable remediations from gap-check style findings — not a duplicate of Exec top-5 risks.",
+      "items": {
+        "type": "object",
+        "required": ["action_id", "related_gap_or_risk", "action", "priority"],
+        "properties": {
+          "action_id": { "type": "string", "pattern": "^ACT-" },
+          "related_gap_or_risk": { "type": "string", "minLength": 3 },
+          "action": { "type": "string", "minLength": 15 },
+          "priority": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "regression_risk_flags": {
+      "type": "array",
+      "minItems": 3,
+      "description": "Migration regression flags (reference gap_check / resilience critical paths).",
+      "items": {
+        "type": "object",
+        "required": ["flag_id", "area", "risk_if_missed", "evidence"],
+        "properties": {
+          "flag_id": { "type": "string", "pattern": "^REG-" },
+          "area": { "type": "string", "minLength": 3 },
+          "risk_if_missed": { "type": "string", "minLength": 15 },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "traceability_links": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["capability_id", "component_id", "integration_id", "lineage_id", "evidence"],
+        "properties": {
+          "capability_id": { "type": "string" },
+          "component_id": { "type": "string" },
+          "integration_id": { "type": "string" },
+          "lineage_id": { "type": "string" },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

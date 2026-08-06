@@ -168,5 +168,88 @@
       "integrations_missing_details": [],
       "completeness_percentage": 100
     }
-  }
+  },
+  "interface_contracts": [
+    {
+      "contract_id": "CTR-001",
+      "interface_id": "INT-policy-soap",
+      "operation": "submit",
+      "direction": "outbound",
+      "request_shape": "XML",
+      "response_shape": "XML",
+      "evidence": [
+        "Client.java:10"
+      ]
+    },
+    {
+      "contract_id": "CTR-002",
+      "interface_id": "INT-002",
+      "operation": "callback",
+      "direction": "inbound",
+      "evidence": [
+        "Listener.java:5"
+      ]
+    },
+    {
+      "contract_id": "CTR-003",
+      "interface_id": "INT-003",
+      "operation": "query",
+      "direction": "outbound",
+      "evidence": [
+        "QueryClient.java:3"
+      ]
+    }
+  ],
+  "exception_mappings": [
+    {
+      "exception_or_code": "TimeoutException",
+      "mapped_status_or_behavior": "retry then fail",
+      "interface_id": "INT-policy-soap",
+      "evidence": [
+        "Client.java:40"
+      ]
+    },
+    {
+      "exception_or_code": "ValidationError",
+      "mapped_status_or_behavior": "400-equivalent reject",
+      "evidence": [
+        "Validator.java:12"
+      ]
+    },
+    {
+      "exception_or_code": "MQRC_NO_MSG_AVAILABLE",
+      "mapped_status_or_behavior": "idle poll continue",
+      "interface_id": "INT-002",
+      "evidence": [
+        "MqPoller.java:22"
+      ]
+    }
+  ],
+  "resilience_posture": [
+    {
+      "interface_id": "INT-policy-soap",
+      "mechanism": "retry",
+      "status": "partial",
+      "notes": "simple loop",
+      "evidence": [
+        "Client.java:40"
+      ]
+    },
+    {
+      "interface_id": "INT-002",
+      "mechanism": "timeout",
+      "status": "present",
+      "evidence": [
+        "MqPoller.java:8"
+      ]
+    },
+    {
+      "interface_id": "INT-003",
+      "mechanism": "circuit_breaker",
+      "status": "absent",
+      "evidence": [
+        "README:1"
+      ]
+    }
+  ]
 }

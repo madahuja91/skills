@@ -19,9 +19,10 @@ Write `artifacts/domain.json` per `schema.json` using Discovery inventory.
 1. Identify bounded contexts / domains from packages, screens, services, tables, and stored procedures.
 2. Normalize duplicate names into `canonical_name`.
 3. Extract business rules with pseudo-code and `implementation_location` when code-backed; use `legacy-stored-procedures` for PL/SQL / `{call}` / TopLink / iBatis call sites (never hardcode procedure names).
-4. Map capabilities to domains for Function epic seeds.
-5. Score confidence by source (code > docs > config > inferred).
-6. Sync via `csa-swarm-shared-memory`.
+4. Capture `workflows`, `operation_dispatch_rules`, `feature_flags`, and `provider_selection_rules` when evidenced (feeds Business Architecture pack sections — do not invent).
+5. Map capabilities to domains.
+6. Score confidence by source (code > docs > config > inferred).
+7. Sync via `csa-swarm-shared-memory`.
 
 ## HARD: Depth (`csa-rich-content`)
 

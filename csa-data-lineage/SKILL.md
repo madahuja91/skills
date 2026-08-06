@@ -18,10 +18,11 @@ Write `artifacts/lineage.json` per `schema.json`.
 
 1. Catalog data sources (DB, files, APIs) from DDL/config/code.
 2. Apply `legacy-stored-procedures` to treat SP/package call sites as transformation nodes (link `{call PKG.PROC}` / TopLink / iBatis to SQL when present).
-3. Map primary entity fields source→target with transformation notes.
-4. Document validation points and ETL/batch jobs.
-5. Prefer table-level completeness for huge schemas; deepen field-level on critical entities only when scoped by Manager.
-6. Sync via `csa-swarm-shared-memory`.
+3. Build `entity_catalog` with key attributes (pk/fk/business_key) for Assembler Data_and_Integration — do not emit a separate entity document.
+4. Map primary entity fields source→target with transformation notes.
+5. Document validation points and ETL/batch jobs.
+6. Prefer table-level completeness for huge schemas; deepen field-level on critical entities only when scoped by Manager.
+7. Sync via `csa-swarm-shared-memory`.
 
 ## HARD: Depth (`csa-rich-content`)
 

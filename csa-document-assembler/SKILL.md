@@ -1,79 +1,70 @@
----
-name: csa-document-assembler
-description: Assembles lean CSA pack (5 client Markdown docs + arc42/C4 HTML) from accepted specialist artifacts. Use after gated specialists.
----
-
-# CSA Document Assembler
-
-## Schema
-
-- Manifest: [schema.json](schema.json)
-- Section contracts: [output-schemas/](output-schemas/) + [csa-pack-schema-bundle.json](output-schemas/csa-pack-schema-bundle.json)
-
-## Client deliverables (only these)
-
-Clients need Current State Architecture to answer: what exists, how business maps, how it is built, how data/integrations move, what blocks modernization.
-
-| File | Purpose |
-|------|---------|
-| `Executive_Summary.md` | Scope, metrics, readiness, top findings/risks |
-| `Business_Architecture.md` | Domains/DDD + capabilities |
-| `Application_Architecture.md` | Layers/components/runtime/tech debt + link to C4 HTML |
-| `Data_and_Integration.md` | Stores, lineage, SP logic, integrations |
-| `Risks_Gaps_and_Traceability.md` | Gaps/risks/assumptions + capability→component→integration→lineage links |
-| `README.md` | Pack index |
-| `arc42-c4/*.html` | C4 / arc42 visual hub (not duplicate Markdown) |
-
-**Do not generate** numbered `00`/`04`–`10` files, mega `*_Rich_Pack.md`, epic/story seeds, or other narrative extras.
-
-## HARD: Machine JSON then Markdown
-
-1. Write schema-valid JSON under `csa_pack/machine/sections/`:
-   - `Executive_Summary.json`
-   - `Business_Architecture.json`
-   - `Application_Architecture.json`
-   - `Data_and_Integration.json`
-   - `Risks_Gaps_and_Traceability.json`
-2. Render matching `.md` from those JSON files only.
-3. Build `arc42-c4/` HTML via `arc42-c4-views` + required Mermaid diagrams.
-
-## Inputs
-
-Accepted: `artifacts/{discovery,domain,architecture,lineage,integration}.json` + quality gate summary.
-
-## Outputs
-
-```text
-csa_pack/
-  Executive_Summary.md
-  Business_Architecture.md
-  Application_Architecture.md
-  Data_and_Integration.md
-  Risks_Gaps_and_Traceability.md
-  README.md
-  arc42-c4/
-    index.html
-    context.html
-    containers.html
-    components.html
-  machine/
-    sections/*.json
-    discovery.json
-    domain.json
-    architecture.json
-    lineage.json
-    integration.json
-    mermaid_diagrams.json
-    traceability_graph.json
-    quality_gate_summary.json
-    pack_manifest.json
-```
-
-Load: `csa-rich-content`, `csa-section-boundaries`, `mermaid-diagrams`, `arc42-c4-views`, `csa-artifact-contract`.
-
-## Rules
-
-- No invented systems/queues/packages.
-- Inventories meet schema `minItems` with evidence[]; expand rows, not fluff.
-- SSOT: tables once per owner doc; cross-link elsewhere.
-- Write only under ACTIVE_ROOT (`src/`).
+---
+name: csa-document-assembler
+description: Thin-packages lean CSA pack (5 client Markdown docs + arc42/C4 HTML) from accepted specialist artifacts. Use after per-lane gated specialists.
+---
+
+# CSA Document Assembler
+
+## Schema
+
+- Manifest: [schema.json](schema.json)
+- Section contracts: [output-schemas/](output-schemas/) + [csa-pack-schema-bundle.json](output-schemas/csa-pack-schema-bundle.json)
+
+**HARD:** obey `csa-parallel-lane-gates` (thin render) and `csa-section-boundaries` (fold reference sections into the same five docs).
+
+## Client deliverables (only these)
+
+| File | Purpose |
+|------|---------|
+| `Executive_Summary.md` | Scope, metrics, readiness, top risks, effort, strategy waves, success metrics |
+| `Business_Architecture.md` | Domains/capabilities + flows, dispatch rules, feature flags, provider selection |
+| `Application_Architecture.md` | Layers/components, build/runtime, deployment, security, cross-cutting, tech debt + C4 HTML |
+| `Data_and_Integration.md` | Stores, entity attributes, lineage, SP logic, integrations, contracts, exceptions, resilience |
+| `Risks_Gaps_and_Traceability.md` | Gaps/risks/assumptions, remediations, regression flags, traceability |
+| `README.md` | Pack index |
+| `arc42-c4/*.html` | C4 / arc42 visual hub |
+
+**Do not generate** numbered `00`/`04`–`10` files, `business_logic.md`, `resilience_gaps.md`, OAS YAML packs, mega `*_Rich_Pack.md`, or epic/story seeds.
+
+## HARD: Thin package (no re-analysis)
+
+1. Read accepted `artifacts/{discovery,domain,architecture,lineage,integration}.json` only.
+2. Map fields into `csa_pack/machine/sections/*.json` per output-schemas (fill new substance sections from specialist fields).
+3. Render matching `.md` from those JSON files only.
+4. Build `arc42-c4/` HTML via `arc42-c4-views` + required Mermaid.
+5. Do **not** re-scan source trees or invent inventories.
+
+## Mapping hints (specialist → section)
+
+| Section field | Primary specialist source |
+|---------------|---------------------------|
+| Exec effort/strategy/success | discovery + architecture debt + risks from all |
+| Business flows/dispatch/flags/providers | `domain.json` |
+| App deployment/security/cross-cutting/build | `architecture.json` |
+| Entity catalog / lineage | `lineage.json` |
+| Contracts / exceptions / resilience | `integration.json` |
+| Remediations / regression flags | union of specialist gaps + gate warnings |
+
+## Outputs
+
+```text
+csa_pack/
+  Executive_Summary.md
+  Business_Architecture.md
+  Application_Architecture.md
+  Data_and_Integration.md
+  Risks_Gaps_and_Traceability.md
+  README.md
+  arc42-c4/
+  machine/sections/*.json
+  machine/*.json
+```
+
+Load: `csa-parallel-lane-gates`, `csa-rich-content`, `csa-section-boundaries`, `mermaid-diagrams`, `arc42-c4-views`, `csa-artifact-contract`.
+
+## Rules
+
+- No invented systems/queues/packages.
+- Inventories meet schema `minItems` with evidence[].
+- SSOT: tables once per owner doc; cross-link elsewhere.
+- Write only under ACTIVE_ROOT (`src/`).

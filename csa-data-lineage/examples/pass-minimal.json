@@ -415,5 +415,107 @@
       "completeness_percentage": 100
     }
   },
-  "recommendations": []
+  "recommendations": [],
+  "entity_catalog": [
+    {
+      "entity_id": "ENT-001",
+      "entity_name": "Entity1",
+      "store_id": "DS-1",
+      "key_attributes": [
+        {
+          "name": "ID",
+          "role": "pk",
+          "type_hint": "NUMBER"
+        },
+        {
+          "name": "NAME",
+          "role": "business_key",
+          "type_hint": "VARCHAR2"
+        }
+      ],
+      "evidence": [
+        "ddl/entity1.sql:1"
+      ]
+    },
+    {
+      "entity_id": "ENT-002",
+      "entity_name": "Entity2",
+      "store_id": "DS-1",
+      "key_attributes": [
+        {
+          "name": "ID",
+          "role": "pk",
+          "type_hint": "NUMBER"
+        },
+        {
+          "name": "NAME",
+          "role": "business_key",
+          "type_hint": "VARCHAR2"
+        }
+      ],
+      "evidence": [
+        "ddl/entity2.sql:1"
+      ]
+    },
+    {
+      "entity_id": "ENT-003",
+      "entity_name": "Entity3",
+      "store_id": "DS-1",
+      "key_attributes": [
+        {
+          "name": "ID",
+          "role": "pk",
+          "type_hint": "NUMBER"
+        },
+        {
+          "name": "NAME",
+          "role": "business_key",
+          "type_hint": "VARCHAR2"
+        }
+      ],
+      "evidence": [
+        "ddl/entity3.sql:1"
+      ]
+    },
+    {
+      "entity_id": "ENT-004",
+      "entity_name": "Entity4",
+      "store_id": "DS-1",
+      "key_attributes": [
+        {
+          "name": "ID",
+          "role": "pk",
+          "type_hint": "NUMBER"
+        },
+        {
+          "name": "NAME",
+          "role": "business_key",
+          "type_hint": "VARCHAR2"
+        }
+      ],
+      "evidence": [
+        "ddl/entity4.sql:1"
+      ]
+    },
+    {
+      "entity_id": "ENT-005",
+      "entity_name": "Entity5",
+      "store_id": "DS-1",
+      "key_attributes": [
+        {
+          "name": "ID",
+          "role": "pk",
+          "type_hint": "NUMBER"
+        },
+        {
+          "name": "NAME",
+          "role": "business_key",
+          "type_hint": "VARCHAR2"
+        }
+      ],
+      "evidence": [
+        "ddl/entity5.sql:1"
+      ]
+    }
+  ]
 }

@@ -275,6 +275,80 @@
       "confidence_score": 70
     }
   ],
+  "workflows": [
+    {
+      "workflow_id": "WF-001",
+      "workflow_name": "Claims intake",
+      "steps": ["Capture claim", "Validate policy", "Route to adjuster"],
+      "capabilities": ["CAP-001"],
+      "evidence": ["src/ClaimService.java:10"]
+    },
+    {
+      "workflow_id": "WF-002",
+      "workflow_name": "Policy renewal",
+      "steps": ["Load policy", "Recalculate premium", "Issue renewal"],
+      "capabilities": ["CAP-002"],
+      "evidence": ["src/PolicyService.java:20"]
+    },
+    {
+      "workflow_id": "WF-003",
+      "workflow_name": "Payment posting",
+      "steps": ["Receive payment", "Allocate", "Update balance"],
+      "capabilities": ["CAP-003"],
+      "evidence": ["src/PaymentService.java:30"]
+    }
+  ],
+  "operation_dispatch_rules": [
+    {
+      "dispatch_key": "ClaimType",
+      "condition": "type==AUTO",
+      "handler": "AutoClaimHandler",
+      "fallback": "DefaultClaimHandler",
+      "evidence": ["src/ClaimRouter.java:12"]
+    },
+    {
+      "dispatch_key": "ClaimType",
+      "condition": "type==HOME",
+      "handler": "HomeClaimHandler",
+      "evidence": ["src/ClaimRouter.java:18"]
+    },
+    {
+      "dispatch_key": "Channel",
+      "condition": "channel==BATCH",
+      "handler": "BatchIntake",
+      "evidence": ["src/BatchRouter.java:5"]
+    },
+    {
+      "dispatch_key": "Channel",
+      "condition": "channel==ONLINE",
+      "handler": "OnlineIntake",
+      "evidence": ["src/OnlineRouter.java:5"]
+    },
+    {
+      "dispatch_key": "Priority",
+      "condition": "priority==HIGH",
+      "handler": "FastTrack",
+      "evidence": ["src/PriorityRouter.java:8"]
+    }
+  ],
+  "feature_flags": [
+    {
+      "flag_name": "ENABLE_FAST_TRACK",
+      "behavior_gated": "Routes high-priority claims to fast track",
+      "default_state": "false",
+      "source": "config",
+      "evidence": ["config/features.properties:3"]
+    }
+  ],
+  "provider_selection_rules": [
+    {
+      "rule_name": "Default adjuster desk",
+      "selector": "region",
+      "selected_provider_or_path": "RegionalDesk",
+      "default_fallback": "CentralDesk",
+      "evidence": ["src/DeskSelector.java:9"]
+    }
+  ],
   "validation_results": {
     "domain_completeness": {
       "total_domains_identified": 1,

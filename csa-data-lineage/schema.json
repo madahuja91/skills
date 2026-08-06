@@ -13,6 +13,7 @@
     "overall_confidence_score",
     "data_sources",
     "field_lineage",
+    "entity_catalog",
     "validation_results"
   ],
   "properties": {
@@ -76,6 +77,38 @@
       }
     },
     "data_transformations": { "type": "array" },
+    "entity_catalog": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["entity_id", "entity_name", "store_id", "key_attributes", "evidence"],
+        "properties": {
+          "entity_id": { "type": "string" },
+          "entity_name": { "type": "string" },
+          "store_id": { "type": "string" },
+          "key_attributes": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "required": ["name", "role"],
+              "properties": {
+                "name": { "type": "string" },
+                "role": {
+                  "type": "string",
+                  "enum": ["pk", "fk", "business_key", "payload", "audit", "status", "other"]
+                },
+                "type_hint": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "evidence": { "type": "array", "minItems": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
     "data_quality_assessment": { "type": "object" },
     "integration_patterns": { "type": "array" },
     "validation_results": {

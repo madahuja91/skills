@@ -1,12 +1,37 @@
 {
-  "pack_version": "3.0.0",
+  "pack_version": "3.1.0",
   "generated_at": "2026-08-06T12:00:00Z",
   "sections": [
-    { "id": "Executive_Summary", "path": "csa_pack/Executive_Summary.md", "title": "Executive Summary", "format": "markdown" },
-    { "id": "Business_Architecture", "path": "csa_pack/Business_Architecture.md", "title": "Business Architecture", "format": "markdown" },
-    { "id": "Application_Architecture", "path": "csa_pack/Application_Architecture.md", "title": "Application Architecture", "format": "markdown" },
-    { "id": "Data_and_Integration", "path": "csa_pack/Data_and_Integration.md", "title": "Data and Integration", "format": "markdown" },
-    { "id": "Risks_Gaps_and_Traceability", "path": "csa_pack/Risks_Gaps_and_Traceability.md", "title": "Risks Gaps and Traceability", "format": "markdown" }
+    {
+      "id": "Executive_Summary",
+      "path": "csa_pack/Executive_Summary.md",
+      "title": "Executive Summary",
+      "format": "markdown"
+    },
+    {
+      "id": "Business_Architecture",
+      "path": "csa_pack/Business_Architecture.md",
+      "title": "Business Architecture",
+      "format": "markdown"
+    },
+    {
+      "id": "Application_Architecture",
+      "path": "csa_pack/Application_Architecture.md",
+      "title": "Application Architecture",
+      "format": "markdown"
+    },
+    {
+      "id": "Data_and_Integration",
+      "path": "csa_pack/Data_and_Integration.md",
+      "title": "Data and Integration",
+      "format": "markdown"
+    },
+    {
+      "id": "Risks_Gaps_and_Traceability",
+      "path": "csa_pack/Risks_Gaps_and_Traceability.md",
+      "title": "Risks Gaps and Traceability",
+      "format": "markdown"
+    }
   ],
   "arc42_c4_html": {
     "index": "csa_pack/arc42-c4/index.html",

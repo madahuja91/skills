@@ -12,6 +12,9 @@
     "scope",
     "overall_confidence_score",
     "integrations",
+    "interface_contracts",
+    "exception_mappings",
+    "resilience_posture",
     "integration_patterns_summary",
     "validation_results"
   ],
@@ -78,6 +81,61 @@
       }
     },
     "integration_patterns_summary": { "type": "object" },
+    "interface_contracts": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["contract_id", "interface_id", "operation", "direction", "evidence"],
+        "properties": {
+          "contract_id": { "type": "string", "pattern": "^CTR-" },
+          "interface_id": { "type": "string", "pattern": "^INT-" },
+          "operation": { "type": "string" },
+          "direction": { "type": "string", "enum": ["inbound", "outbound", "bidirectional"] },
+          "request_shape": { "type": "string" },
+          "response_shape": { "type": "string" },
+          "evidence": { "type": "array", "minItems": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "exception_mappings": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["exception_or_code", "mapped_status_or_behavior", "evidence"],
+        "properties": {
+          "exception_or_code": { "type": "string" },
+          "mapped_status_or_behavior": { "type": "string" },
+          "interface_id": { "type": "string" },
+          "evidence": { "type": "array", "minItems": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "resilience_posture": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["interface_id", "mechanism", "status", "evidence"],
+        "properties": {
+          "interface_id": { "type": "string", "pattern": "^INT-" },
+          "mechanism": {
+            "type": "string",
+            "enum": ["circuit_breaker", "retry", "timeout", "fallback", "idempotency", "other"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["present", "partial", "absent", "unknown"]
+          },
+          "notes": { "type": "string" },
+          "evidence": { "type": "array", "minItems": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
     "integration_architecture": { "type": "object" },
     "optimization_recommendations": { "type": "array" },
     "validation_results": {

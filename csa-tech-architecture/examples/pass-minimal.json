@@ -183,5 +183,104 @@
       "coverage_percentage": 80
     }
   },
-  "recommendations": []
+  "recommendations": [],
+  "deployment_topology": [
+    {
+      "node_id": "N1",
+      "node_name": "AppServer",
+      "node_type": "app_server",
+      "hosts_or_modules": [
+        "app.war"
+      ],
+      "evidence": [
+        "deploy/weblogic.xml:1"
+      ]
+    },
+    {
+      "node_id": "N2",
+      "node_name": "OracleDB",
+      "node_type": "db",
+      "hosts_or_modules": [
+        "ORCL"
+      ],
+      "evidence": [
+        "config/db.properties:1"
+      ]
+    }
+  ],
+  "security_controls": [
+    {
+      "control_id": "SEC-1",
+      "control_type": "authentication",
+      "description": "Form login via container",
+      "evidence": [
+        "web.xml:10"
+      ]
+    },
+    {
+      "control_id": "SEC-2",
+      "control_type": "authorization",
+      "description": "Role constraints on servlets",
+      "evidence": [
+        "web.xml:40"
+      ]
+    },
+    {
+      "control_id": "SEC-3",
+      "control_type": "secrets",
+      "description": "DB credentials in properties",
+      "evidence": [
+        "db.properties:2"
+      ]
+    }
+  ],
+  "cross_cutting_concerns": [
+    {
+      "concern": "logging",
+      "implementation": "Log4j appenders",
+      "evidence": [
+        "log4j.xml:1"
+      ]
+    },
+    {
+      "concern": "caching",
+      "implementation": "In-process cache utility",
+      "evidence": [
+        "CacheUtil.java:1"
+      ]
+    },
+    {
+      "concern": "serialization",
+      "implementation": "Java serialization / XML",
+      "evidence": [
+        "Dto.java:1"
+      ]
+    }
+  ],
+  "build_and_runtime": [
+    {
+      "area": "runtime",
+      "technology": "WebLogic",
+      "notes": "EAR/WAR deployment descriptors present",
+      "evidence": [
+        "application.xml:1"
+      ]
+    },
+    {
+      "area": "framework",
+      "technology": "Servlet/JSP",
+      "notes": "Legacy web tier",
+      "evidence": [
+        "web.xml:1"
+      ]
+    },
+    {
+      "area": "build",
+      "technology": "unknown",
+      "notes": "No Maven/Gradle found in sample",
+      "evidence": [
+        "README:1"
+      ]
+    }
+  ]
 }

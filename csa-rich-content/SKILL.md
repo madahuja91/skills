@@ -22,22 +22,25 @@ No numbered `00`/`04`–`10` files. No mega-pack substitutes.
 
 ## Core policy
 
-1. Schema completeness first (`minItems` + evidence).
-2. SSOT: tables once; insight bullets only.
+1. Schema completeness first (`minItems` + evidence + substance sections).
+2. SSOT: tables once; insight bullets only (`csa-section-boundaries`).
 3. No stubs / empty inventories.
 4. Machine JSON under `csa_pack/machine/sections/` then render MD.
+5. Same five client docs only — fold reference sections into owners; never add documents.
 
 ## Specialist list floors
 
 | Artifact | Minimum depth |
 |----------|---------------|
-| `domain.json` | ≥3 domains or all evidenced; ≥8 capabilities |
-| `architecture.json` | ≥5 layers or all evidenced; dense components |
-| `lineage.json` | ≥3 stores; ≥10 lineage rows when SQL/code supports |
-| `integration.json` | ≥6 integrations or all evidenced |
+| `domain.json` | ≥3 domains; ≥8 capabilities; dispatch/feature/provider/workflow fields when evidenced |
+| `architecture.json` | ≥5 layers; dense components; deployment + security + cross-cutting |
+| `lineage.json` | ≥3 stores; ≥10 lineage rows; entity_catalog with attributes |
+| `integration.json` | ≥6 integrations; contracts + exception maps + resilience posture |
 
 ## Blocking checks
 
-required files, section machine JSON, schema conformance, section_min_rows, specialist_list_depth, SSOT, index hub richness, anti-redundancy, pack shape.
+required files, section machine JSON, schema conformance, section_min_rows (including substance sections), specialist_list_depth, SSOT, index hub richness, anti-redundancy, pack shape.
+
+Prefer substance schema failures over cosmetic-only HTML/Jaccard fails when inventories are complete.
 
 Do **not** fail on word count.

@@ -5,7 +5,7 @@
   "type": "object",
   "required": ["version", "schemas", "markdown_section_machine_json", "client_deliverables"],
   "properties": {
-    "version": { "type": "string", "const": "3.0.0" },
+    "version": { "type": "string", "const": "3.1.0" },
     "client_deliverables": {
       "type": "object",
       "description": "Lean CSA pack clients actually need — 5 Markdown docs + C4 HTML hub",

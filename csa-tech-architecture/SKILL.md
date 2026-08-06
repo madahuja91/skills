@@ -17,10 +17,11 @@ Write `artifacts/architecture.json` per `schema.json`. Populate `c4_views` for A
 ## Procedure
 
 1. Map presentation/business/data/integration/infrastructure layers from code + configs.
-2. Register components with `CMP-*` IDs and evidence.
-3. Compare static structure vs runtime (logs/APM) when available; else mark `analysis_scope: static`.
-4. Score technical debt; list dead/orphan candidates honestly.
-5. Fill C4 context/containers/critical components for Assembler Mermaid (`mermaid-diagrams` + `arc42-c4-views`).
+2. Register components with `CMP-*` IDs and evidence; include `interfaces` when evidenced.
+3. Fill `deployment_topology`, `security_controls`, `cross_cutting_concerns`, and `build_and_runtime` (feeds Application Architecture — no separate tech-stack doc).
+4. Compare static structure vs runtime (logs/APM) when available; else mark `analysis_scope: static`.
+5. Score technical debt; list dead/orphan candidates honestly.
+6. Fill C4 context/containers/critical components for Assembler Mermaid (`mermaid-diagrams` + `arc42-c4-views`).
 
 ## HARD: Depth (`csa-rich-content`)
 

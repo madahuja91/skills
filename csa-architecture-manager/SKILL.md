@@ -1,6 +1,6 @@
 ---
 name: csa-architecture-manager
-description: Orchestrator Manager strategy for CSA — bootstraps shared swarm memory, fans out specialist subagents in parallel, gates via Completeness Validator, re-runs up to 2 times, then assembles CSA pack. Use as the primary workflow orchestrator agent.
+description: Orchestrator Manager strategy for CSA — bootstraps shared swarm memory, fans out specialist subagents in parallel with per-lane Completeness, thin Assembler packaging, then final pack gate. Use as the primary workflow orchestrator agent.
 ---
 
 # CSA Architecture Manager (Orchestrator Strategy)
@@ -10,6 +10,8 @@ description: Orchestrator Manager strategy for CSA — bootstraps shared swarm m
 Execution plan contract: [`schema.json`](schema.json)
 
 Shared memory contract: `skills/shared/csa-swarm-shared-memory/schema.json`
+
+**HARD control loop:** load and obey `csa-parallel-lane-gates` (per-lane Completeness, cheap join, thin Assembler). Do not put a conflicting loop in prompts.
 
 ## Identity
 
@@ -36,45 +38,42 @@ On start:
 
 ## Control loop
 
-1. Invoke **CSA-Discover-Agent** (subagent).
-2. Invoke **Completeness-Validation-Agent** on Discover (`gate-discover`).
-3. On fail → rework same agent with remediation brief (`max_reruns=2`); do not fan-out yet.
-4. On pass → if discovery confidence ≥ 60, **fan_out** parallel swarm:
-   - CSA-BusinessDomain-Agent
-   - TechnologyArchitecture-Agent
-   - Data-Lineage-Agent
-   - Integration-Analysis-Agent  
-   Else sequence weakest areas first.
-5. After **each** specialist write: Completeness Validator → accept / rework / escalate. Update shared `artifacts_index` + `loop`.
-6. Wait for parallel **join_complete** (all accepted or escalated).
-7. Invoke **CSA-Document-Assembler** → `gate-csa-document` → `gate-epic-story-readiness`.
-8. If `gate-csa-document` fails on **narrative depth** (`csa-rich-content`), rework Assembler (up to `max_reruns`) — do not accept stub Markdown/HTML.
-9. Set `phase=done`; summarize.
+Follow **`csa-parallel-lane-gates`** exactly:
+
+1. Invoke **CSA-Discover-Agent** → **Completeness** (`gate-discover`) immediately; rework Discover only on fail (`max_reruns=2`).
+2. Fan-out in parallel: Domain, Tech, Lineage, Integration.
+3. As **each** specialist finishes, invoke Completeness for **that lane only**; rework that lane only. Peers keep running.
+4. Join when all four are accepted or escalated. Post-join = checklist of accepted paths (not a full Completeness re-audit unless a lane gate report is missing).
+5. Invoke **CSA-Document-Assembler** in thin-render mode → final Completeness (`gate-csa-document`).
+6. Set `phase=done`; summarize.
+
+Forbidden: “Completeness only after join” / batch post-join full audit when lane gates already exist.
 
 ## Swarm constitution
 
 | Layer | Owns |
 |-------|------|
-| Manager | Admit/join, completeness loop, re-runs, ACTIVE_ROOT bootstrap |
+| Manager | Admit/join, per-lane completeness loop, re-runs, ACTIVE_ROOT bootstrap |
 | Swarm peers | Specialty artifacts, shared memory updates, `swarm_handoff.to[]` |
 | Completeness | Judge outputs only; write `_internal/completeness_validation/*` |
 
-**Swarm proposes next; Manager admits only if completeness green.**
+**Swarm proposes next; Manager admits only if lane completeness is green.**
 
 ## Skills to enforce on peers
 
-Ensure Discover/Lineage/Domain/Integration load:
+Ensure Discover/Lineage/Domain/Integration/Tech load:
 
 - `legacy-stored-procedures`
 - `legacy-ibm-mq`
 - `legacy-framework-heuristics`
 - `csa-swarm-shared-memory`
-- `csa-rich-content` (specialists + Assembler must meet depth floors)
+- `csa-rich-content`
+- `csa-section-boundaries` (Assembler + final gate)
 
 Do not hardcode customer names from any sample codebase.
 
 ## Outputs
 
 - Shared memory under `ACTIVE_ROOT/_internal/swarm/`
-- Accepted machine artifacts under `ACTIVE_ROOT/artifacts/` (deep inventories, not tiny summaries)
-- Final `csa_pack/` **long-form** Markdown (word floors in `csa-rich-content`) + `arc42-c4/*.html` with Mermaid runtime + Markdown epic/story seeds
+- Accepted machine artifacts under `ACTIVE_ROOT/artifacts/`
+- Final lean `csa_pack/` — same five Markdown docs + `arc42-c4/*.html` (no extra client docs)
