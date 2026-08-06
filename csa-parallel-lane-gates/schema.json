@@ -12,17 +12,19 @@
     "packager",
     "client_pack_paths",
     "forbidden_output_paths",
-    "client_doc_count"
+    "client_doc_count",
+    "final_gate_id",
+    "pack_missing_is_fail"
   ],
   "properties": {
-    "contract_version": { "type": "string", "const": "2.0.0" },
+    "contract_version": { "type": "string", "const": "2.1.0" },
     "completeness_mode": {
       "type": "string",
       "const": "per_lane_then_completeness_renders_pack"
     },
     "forbidden_patterns": {
       "type": "array",
-      "minItems": 4,
+      "minItems": 6,
       "items": {
         "type": "string",
         "enum": [
@@ -31,10 +33,15 @@
           "write_deliverables_folder",
           "write_csa_pack_machine_sections",
           "duplicate_analysis_and_client_pack",
-          "cosmetic_only_hard_fail_when_substance_pass"
+          "cosmetic_only_hard_fail_when_substance_pass",
+          "final_validate_without_rendering_csa_pack",
+          "invented_final_gate_id",
+          "manager_success_without_csa_pack_on_disk"
         ]
       }
     },
+    "final_gate_id": { "type": "string", "const": "gate-csa-document" },
+    "pack_missing_is_fail": { "type": "boolean", "const": true },
     "lane_gates": {
       "type": "object",
       "required": [
