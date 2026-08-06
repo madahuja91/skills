@@ -67,7 +67,7 @@
       "schema": "agents/csa-completeness-validator/schema.json",
       "schema_required": true,
       "has_schema": true,
-      "description": "Validates CSA specialist artifacts against JSON Schema and gate rubrics per lane as each specialist finishes; final pack gate after thin Assembler. Use as Manager completeness-checker subagent."
+      "description": "Per-lane CSA gate checker; after join, renders lean csa_pack from artifacts and validates it. Replaces Document Assembler."
     },
     {
       "id": "csa-data-lineage",
@@ -127,7 +127,7 @@
       "schema": "shared/csa-parallel-lane-gates/schema.json",
       "schema_required": true,
       "has_schema": true,
-      "description": "HARD CSA swarm control loop — per-lane Completeness as each specialist finishes, cheap join checklist, thin Assembler, final pack Completeness only."
+      "description": "HARD CSA swarm control loop — per-lane Completeness, then Completeness renders lean csa_pack from artifacts. No Document Assembler. No duplicate deliverables/machine folders."
     },
     {
       "id": "csa-section-boundaries",

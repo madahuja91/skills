@@ -1,146 +1,91 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://csa.local/schemas/csa-rich-content.json",
-  "title": "CsaRichContentContract",
-  "type": "object",
-  "required": [
-    "contract_version",
-    "quality_mode",
-    "required_markdown_files",
-    "required_html_files",
-    "required_section_machine_json",
-    "section_min_rows",
-    "specialist_list_floors",
-    "ssot_rules",
-    "blocking_checks"
-  ],
-  "properties": {
-    "contract_version": { "type": "string", "const": "3.1.0" },
-    "quality_mode": {
-      "type": "string",
-      "const": "lean_pack_schema_first_substance_complete"
-    },
-    "required_markdown_files": {
-      "type": "array",
-      "minItems": 6,
-      "maxItems": 6,
-      "items": {
-        "type": "string",
-        "enum": [
-          "Executive_Summary.md",
-          "Business_Architecture.md",
-          "Application_Architecture.md",
-          "Data_and_Integration.md",
-          "Risks_Gaps_and_Traceability.md",
-          "README.md"
-        ]
-      }
-    },
-    "required_html_files": {
-      "type": "array",
-      "minItems": 4,
-      "items": { "type": "string" }
-    },
-    "required_section_machine_json": {
-      "type": "array",
-      "minItems": 5,
-      "items": {
-        "type": "string",
-        "enum": [
-          "csa_pack/machine/sections/Executive_Summary.json",
-          "csa_pack/machine/sections/Business_Architecture.json",
-          "csa_pack/machine/sections/Application_Architecture.json",
-          "csa_pack/machine/sections/Data_and_Integration.json",
-          "csa_pack/machine/sections/Risks_Gaps_and_Traceability.json"
-        ]
-      }
-    },
-    "section_min_rows": {
-      "type": "object",
-      "required": [
-        "Executive_Summary.key_metrics_table",
-        "Executive_Summary.migration_effort_estimate",
-        "Business_Architecture.capability_taxonomy",
-        "Business_Architecture.operation_dispatch_rules",
-        "Business_Architecture.capability_flows",
-        "Application_Architecture.key_components",
-        "Application_Architecture.deployment_topology",
-        "Application_Architecture.security_controls",
-        "Data_and_Integration.data_lineage_matrix",
-        "Data_and_Integration.integration_inventory",
-        "Data_and_Integration.entity_catalog",
-        "Data_and_Integration.interface_contracts",
-        "Data_and_Integration.resilience_posture",
-        "Risks_Gaps_and_Traceability.risks",
-        "Risks_Gaps_and_Traceability.remediation_actions",
-        "Risks_Gaps_and_Traceability.traceability_links"
-      ],
-      "properties": {
-        "Executive_Summary.key_metrics_table": { "type": "integer", "const": 5 },
-        "Executive_Summary.migration_effort_estimate": { "type": "integer", "const": 2 },
-        "Business_Architecture.capability_taxonomy": { "type": "integer", "const": 8 },
-        "Business_Architecture.operation_dispatch_rules": { "type": "integer", "const": 5 },
-        "Business_Architecture.capability_flows": { "type": "integer", "const": 3 },
-        "Application_Architecture.key_components": { "type": "integer", "const": 8 },
-        "Application_Architecture.deployment_topology": { "type": "integer", "const": 2 },
-        "Application_Architecture.security_controls": { "type": "integer", "const": 3 },
-        "Data_and_Integration.data_lineage_matrix": { "type": "integer", "const": 10 },
-        "Data_and_Integration.integration_inventory": { "type": "integer", "const": 6 },
-        "Data_and_Integration.entity_catalog": { "type": "integer", "const": 5 },
-        "Data_and_Integration.interface_contracts": { "type": "integer", "const": 3 },
-        "Data_and_Integration.resilience_posture": { "type": "integer", "const": 3 },
-        "Risks_Gaps_and_Traceability.risks": { "type": "integer", "const": 5 },
-        "Risks_Gaps_and_Traceability.remediation_actions": { "type": "integer", "const": 3 },
-        "Risks_Gaps_and_Traceability.traceability_links": { "type": "integer", "const": 10 }
-      },
-      "additionalProperties": false
-    },
-    "specialist_list_floors": {
-      "type": "object",
-      "properties": {
-        "domain.business_domains": { "type": "integer", "minimum": 3 },
-        "domain.business_capabilities": { "type": "integer", "minimum": 8 },
-        "architecture.architecture_layers": { "type": "integer", "minimum": 5 },
-        "lineage.field_lineage": { "type": "integer", "minimum": 10 },
-        "integration.integrations": { "type": "integer", "minimum": 6 }
-      },
-      "additionalProperties": false
-    },
-    "ssot_rules": {
-      "type": "object",
-      "required": [
-        "table_data_single_owner",
-        "insight_bullets_only",
-        "no_table_row_restatement_as_prose",
-        "section_cross_links_instead_of_copy_paste"
-      ],
-      "properties": {
-        "table_data_single_owner": { "type": "boolean", "const": true },
-        "insight_bullets_only": { "type": "boolean", "const": true },
-        "no_table_row_restatement_as_prose": { "type": "boolean", "const": true },
-        "section_cross_links_instead_of_copy_paste": { "type": "boolean", "const": true }
-      },
-      "additionalProperties": false
-    },
-    "blocking_checks": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "required_files_present",
-          "section_machine_json_present",
-          "schema_conformance",
-          "section_min_rows",
-          "specialist_list_depth",
-          "section_ownership_violation",
-          "index_html_hub_richness",
-          "table_prose_duplication",
-          "section_anti_redundancy",
-          "pack_shape_valid",
-          "shared_memory_present"
-        ]
-      }
-    }
-  },
-  "additionalProperties": false
-}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-rich-content.json",
+  "title": "CsaRichContentContract",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "quality_mode",
+    "json_ssot_root",
+    "required_markdown_files",
+    "required_html_files",
+    "forbid_machine_sections",
+    "forbid_deliverables_folder",
+    "specialist_list_floors",
+    "ssot_rules",
+    "blocking_checks"
+  ],
+  "properties": {
+    "contract_version": { "type": "string", "const": "4.0.0" },
+    "quality_mode": {
+      "type": "string",
+      "const": "artifacts_ssot_completeness_renders_lean_pack"
+    },
+    "json_ssot_root": { "type": "string", "const": "artifacts/" },
+    "required_markdown_files": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "string",
+        "enum": [
+          "Executive_Summary.md",
+          "Business_Architecture.md",
+          "Application_Architecture.md",
+          "Data_and_Integration.md",
+          "Risks_Gaps_and_Traceability.md",
+          "README.md"
+        ]
+      }
+    },
+    "required_html_files": {
+      "type": "array",
+      "minItems": 4,
+      "items": { "type": "string" }
+    },
+    "forbid_machine_sections": { "type": "boolean", "const": true },
+    "forbid_deliverables_folder": { "type": "boolean", "const": true },
+    "specialist_list_floors": {
+      "type": "object",
+      "properties": {
+        "domain.business_domains": { "type": "integer", "minimum": 3 },
+        "domain.business_capabilities": { "type": "integer", "minimum": 8 },
+        "architecture.architecture_layers": { "type": "integer", "minimum": 5 },
+        "lineage.field_lineage": { "type": "integer", "minimum": 10 },
+        "integration.integrations": { "type": "integer", "minimum": 6 }
+      },
+      "additionalProperties": false
+    },
+    "ssot_rules": {
+      "type": "object",
+      "required": [
+        "artifacts_are_json_ssot",
+        "table_data_single_owner",
+        "section_cross_links_instead_of_copy_paste"
+      ],
+      "properties": {
+        "artifacts_are_json_ssot": { "type": "boolean", "const": true },
+        "table_data_single_owner": { "type": "boolean", "const": true },
+        "section_cross_links_instead_of_copy_paste": { "type": "boolean", "const": true }
+      },
+      "additionalProperties": false
+    },
+    "blocking_checks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "required_files_present",
+          "artifact_schema_conformance",
+          "specialist_list_depth",
+          "forbidden_duplicate_trees",
+          "section_anti_redundancy",
+          "pack_shape_valid",
+          "shared_memory_present",
+          "index_html_hub_richness"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

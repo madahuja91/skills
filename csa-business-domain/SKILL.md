@@ -10,9 +10,10 @@ description: Extract DDD domains, entities, business rules, and capabilities fro
 Authoritative output/invocation contract: [schema.json](schema.json)
 
 
-## Goal
+## HARD: Artifacts only
 
-Write `artifacts/domain.json` per `schema.json` using Discovery inventory.
+Write `artifacts/domain.json` per schema field names (`business_domains`, `business_capabilities`, `workflows`, `operation_dispatch_rules`, …).  
+Do **not** write `csa_pack/`, `deliverables/`, or `csa_pack/machine/`. Completeness renders the client pack later.
 
 ## Procedure
 

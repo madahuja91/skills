@@ -1,6 +1,6 @@
 ---
 name: csa-parallel-lane-gates
-description: HARD control loop for CSA swarm — per-lane Completeness with each specialist, cheap join checklist, thin Assembler packaging, final pack Completeness only. Use by Manager, Completeness Validator, and Document Assembler.
+description: HARD CSA swarm control loop — per-lane Completeness, then Completeness renders lean csa_pack from artifacts. No Document Assembler. No duplicate deliverables/machine folders.
 ---
 
 # CSA Parallel Lane Gates
@@ -9,64 +9,68 @@ description: HARD control loop for CSA swarm — per-lane Completeness with each
 
 Contract: [`schema.json`](schema.json)
 
-## HARD: Forbidden control patterns
+## HARD: Forbidden
 
-Do **not**:
-
-1. Wait for all parallel specialists to finish, then run Completeness in a batch (“Completeness only after join”).
-2. Re-run a heavy Completeness LLM pass that only re-audits gates specialists already passed.
-3. Use Assembler to re-analyze the codebase or invent new inventories.
-4. Hard-fail final Completeness solely on Jaccard cosmetics or HTML `<table>` markup when substance schemas are met.
+1. Completeness only after join (batch) when lanes can finish independently.
+2. Invoking **CSA-Document-Assembler** (removed from the control loop).
+3. Writing client packs under `deliverables/`, numbered `01_`–`05_` MD, or `csa_pack/machine/sections/` copies of artifacts.
+4. Duplicating the same narrative into `analysis/` + `deliverables/` + `csa_pack/`.
+5. Hard-fail final gate on cosmetics when artifact substance schemas pass.
 
 ## Control loop (required)
 
 ```text
-Bootstrap shared memory (blocking)
-    → Discover
-    → Completeness(gate-discover)   # lane gate; rework Discover only
-    → Fan-out FOUR specialists IN PARALLEL:
-         Domain | Tech | Lineage | Integration
-         Each lane: specialist writes artifact + self gate report
-                    Manager invokes Completeness for THAT lane as soon as it finishes
-                    Fail → rework THAT lane only (peers keep running)
-    → Join when all four artifacts are accepted (or escalated)
-    → Join checklist ONLY (cheap): 4 accepted paths present in artifacts_index
-         Do NOT run a full Completeness LLM “post-join” audit unless a lane lacks a gate report
-    → Assembler (thin package — render only)
-    → Completeness(gate-csa-document / final)  # pack contract + substance schemas
+Bootstrap shared memory
+  → Discover → Completeness(gate-discover)
+  → Fan-out Domain | Tech | Lineage | Integration (parallel)
+       each lane: write artifacts/<name>.json ONLY
+                  Completeness(lane gate) as soon as that lane finishes
+  → Join when four artifacts accepted
+  → Completeness(FINAL):
+       validate accepted artifacts against specialist schemas
+       RENDER lean csa_pack from artifacts (no Assembler)
+       validate pack shape
 ```
+
+## Who writes what
+
+| Path | Owner | Allowed |
+|------|-------|---------|
+| `artifacts/*.json` | Specialists | YES — SSOT |
+| `artifacts/quality_gate_reports/*` | Completeness | YES |
+| `_internal/**` | Manager / Completeness / specialists (swarm only) | YES |
+| `csa_pack/{5 MD, README, arc42-c4/*.html}` | **Completeness (final only)** | YES |
+| `csa_pack/machine/**` | — | **NO** |
+| `deliverables/**` | — | **NO** |
+| `analysis/*.md` | Optional specialist scratch only | Not client deliverables |
+
+## Final Completeness = packager + validator
+
+After join, Completeness MUST:
+
+1. Read accepted `artifacts/{discovery,domain,architecture,lineage,integration}.json`.
+2. Render ONLY:
+   - `csa_pack/Executive_Summary.md`
+   - `csa_pack/Business_Architecture.md`
+   - `csa_pack/Application_Architecture.md`
+   - `csa_pack/Data_and_Integration.md`
+   - `csa_pack/Risks_Gaps_and_Traceability.md`
+   - `csa_pack/README.md`
+   - `csa_pack/arc42-c4/{index,context,containers,components}.html`
+3. Map content from artifact fields (see `csa-section-boundaries`). Do not invent.
+4. Leave gate reports under `artifacts/quality_gate_reports/` — never inside `csa_pack/`.
+5. Delete or refuse `deliverables/` and `csa_pack/machine/` if created.
 
 ## Per-lane Completeness
 
-| Lane finished | Invoke Completeness with |
-|---------------|--------------------------|
-| Discover | `gate-discover` + `artifacts/discovery.json` |
-| Business Domain | `gate-business-domain` + `artifacts/domain.json` |
-| Tech Architecture | `gate-tech-architecture` + `artifacts/architecture.json` |
-| Data Lineage | `gate-data-lineage` + `artifacts/lineage.json` |
-| Integration | `gate-integration` + `artifacts/integration.json` |
-
-Manager must invoke Completeness **as each lane completes**, not after the slowest peer.
-
-## Thin Assembler
-
-Assembler:
-
-1. Reads accepted `artifacts/*.json` + lane gate reports.
-2. Writes `csa_pack/machine/sections/*.json` mapped from specialist fields (see `csa-section-boundaries`).
-3. Renders the same 5 Markdown files + `README.md` + `arc42-c4/*.html`.
-4. Does **not** re-scan source, invent SP/queue names, or expand scope beyond accepted artifacts.
-
-## Final Completeness (pack only)
-
-Validate:
-
-- Lean 5-doc pack shape + machine section JSON schema conformance (including substance sections).
-- SSOT / anti-duplication (`csa-section-boundaries`).
-- Evidence preserved for SP/MQ when signals exist.
-
-Prefer remediation of **missing substance fields** over cosmetic HTML/Jaccard-only blockers when schemas pass.
+| Lane | gate_id | artifact |
+|------|---------|----------|
+| Discover | gate-discover | artifacts/discovery.json |
+| Domain | gate-business-domain | artifacts/domain.json |
+| Tech | gate-tech-architecture | artifacts/architecture.json |
+| Lineage | gate-data-lineage | artifacts/lineage.json |
+| Integration | gate-integration | artifacts/integration.json |
 
 ## Same document count
 
-Never create extra client Markdown docs. Fold reference-quality sections into the existing five owners only.
+Still exactly five named client Markdown docs + README + HTML hub. No extras.

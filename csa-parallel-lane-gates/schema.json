@@ -9,25 +9,28 @@
     "forbidden_patterns",
     "lane_gates",
     "join_policy",
-    "assembler_mode",
-    "final_gate_policy",
+    "packager",
+    "client_pack_paths",
+    "forbidden_output_paths",
     "client_doc_count"
   ],
   "properties": {
-    "contract_version": { "type": "string", "const": "1.0.0" },
+    "contract_version": { "type": "string", "const": "2.0.0" },
     "completeness_mode": {
       "type": "string",
-      "const": "per_lane_then_final_pack_only"
+      "const": "per_lane_then_completeness_renders_pack"
     },
     "forbidden_patterns": {
       "type": "array",
-      "minItems": 3,
+      "minItems": 4,
       "items": {
         "type": "string",
         "enum": [
           "completeness_only_after_join",
-          "batch_post_join_full_audit_when_lane_gates_exist",
-          "assembler_reanalysis_of_source",
+          "invoke_document_assembler",
+          "write_deliverables_folder",
+          "write_csa_pack_machine_sections",
+          "duplicate_analysis_and_client_pack",
           "cosmetic_only_hard_fail_when_substance_pass"
         ]
       }
@@ -92,44 +95,66 @@
     },
     "join_policy": {
       "type": "object",
-      "required": ["wait_for", "post_join_completeness"],
+      "required": ["wait_for", "post_join_action"],
       "properties": {
         "wait_for": {
           "type": "string",
           "const": "all_parallel_lanes_accepted_or_escalated"
         },
-        "post_join_completeness": {
+        "post_join_action": {
           "type": "string",
-          "const": "checklist_only_unless_missing_lane_gate_report"
+          "const": "completeness_final_render_and_validate_pack"
         }
       },
       "additionalProperties": false
     },
-    "assembler_mode": {
+    "packager": {
       "type": "string",
-      "const": "thin_render_from_accepted_artifacts"
+      "const": "Completeness-Validation-Agent"
     },
-    "final_gate_policy": {
-      "type": "object",
-      "required": ["gate_ids", "substance_over_cosmetics"],
-      "properties": {
-        "gate_ids": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": ["gate-csa-document", "gate-final-completeness"]
-          }
-        },
-        "substance_over_cosmetics": { "type": "boolean", "const": true }
-      },
-      "additionalProperties": false
+    "client_pack_paths": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "string",
+        "enum": [
+          "csa_pack/Executive_Summary.md",
+          "csa_pack/Business_Architecture.md",
+          "csa_pack/Application_Architecture.md",
+          "csa_pack/Data_and_Integration.md",
+          "csa_pack/Risks_Gaps_and_Traceability.md",
+          "csa_pack/README.md",
+          "csa_pack/arc42-c4/index.html",
+          "csa_pack/arc42-c4/context.html",
+          "csa_pack/arc42-c4/containers.html",
+          "csa_pack/arc42-c4/components.html"
+        ]
+      }
+    },
+    "forbidden_output_paths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "deliverables/",
+          "csa_pack/machine/",
+          "csa_pack/machine/sections/",
+          "00_*.md",
+          "01_*.md",
+          "02_*.md",
+          "03_*.md",
+          "04_*.md",
+          "05_*.md"
+        ]
+      }
     },
     "client_doc_count": {
       "type": "object",
-      "required": ["markdown_named_docs", "allow_extra_client_markdown"],
+      "required": ["markdown_named_docs", "allow_extra_client_markdown", "allow_assembler"],
       "properties": {
         "markdown_named_docs": { "type": "integer", "const": 5 },
-        "allow_extra_client_markdown": { "type": "boolean", "const": false }
+        "allow_extra_client_markdown": { "type": "boolean", "const": false },
+        "allow_assembler": { "type": "boolean", "const": false }
       },
       "additionalProperties": false
     }

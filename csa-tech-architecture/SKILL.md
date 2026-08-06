@@ -10,9 +10,10 @@ description: Runtime-aware technical architecture, C4 layers, components, and te
 Authoritative output/invocation contract: [schema.json](schema.json)
 
 
-## Goal
+## HARD: Artifacts only
 
-Write `artifacts/architecture.json` per `schema.json`. Populate `c4_views` for Assembler.
+Write `artifacts/architecture.json` including `deployment_topology`, `security_controls`, `cross_cutting_concerns`, `build_and_runtime`.  
+Do **not** write `csa_pack/` or `deliverables/`.
 
 ## Procedure
 

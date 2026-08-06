@@ -10,9 +10,10 @@ description: Classify legacy integrations (REST/EVENT/BATCH/LEGACY), sync vs asy
 Authoritative output/invocation contract: [schema.json](schema.json)
 
 
-## Goal
+## HARD: Artifacts only
 
-Write `artifacts/integration.json` per `schema.json`.
+Write `artifacts/integration.json` including `interface_contracts`, `exception_mappings`, `resilience_posture`.  
+Do **not** write `csa_pack/` or `deliverables/`. Completeness renders `Data_and_Integration.md` later.
 
 ## Procedure
 

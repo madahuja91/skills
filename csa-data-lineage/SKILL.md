@@ -10,9 +10,9 @@ description: Field-level and entity-level data lineage for legacy CSA. Use when 
 Authoritative output/invocation contract: [schema.json](schema.json)
 
 
-## Goal
+## HARD: Artifacts only
 
-Write `artifacts/lineage.json` per `schema.json`.
+Write `artifacts/lineage.json` including `entity_catalog`. Do **not** write `csa_pack/` or `deliverables/`.
 
 ## Procedure
 

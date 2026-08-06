@@ -6,14 +6,15 @@
   "required": [
     "contract_version",
     "canonical_owners",
-    "owned_substance_sections",
+    "json_ssot_root",
     "max_markdown_pair_jaccard",
     "forbidden_primary_deliverables",
     "blocking_check_id",
     "required_pack_markdown"
   ],
   "properties": {
-    "contract_version": { "type": "string", "const": "3.1.0" },
+    "contract_version": { "type": "string", "const": "4.0.0" },
+    "json_ssot_root": { "type": "string", "const": "artifacts/" },
     "canonical_owners": {
       "type": "object",
       "required": [
@@ -32,99 +33,6 @@
       },
       "additionalProperties": false
     },
-    "owned_substance_sections": {
-      "type": "object",
-      "required": [
-        "Executive_Summary",
-        "Business_Architecture",
-        "Application_Architecture",
-        "Data_and_Integration",
-        "Risks_Gaps_and_Traceability"
-      ],
-      "properties": {
-        "Executive_Summary": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "system_overview",
-              "key_metrics_table",
-              "modernization_readiness_scorecard",
-              "key_architectural_findings",
-              "top_technical_risks",
-              "migration_effort_estimate",
-              "recommended_migration_strategy",
-              "key_success_metrics"
-            ]
-          }
-        },
-        "Business_Architecture": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "bounded_contexts",
-              "capability_taxonomy",
-              "ubiquitous_dictionary",
-              "capability_flows",
-              "operation_dispatch_rules",
-              "feature_flag_catalogue",
-              "provider_selection_rules",
-              "gap_analysis_bullets"
-            ]
-          }
-        },
-        "Application_Architecture": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "architecture_layers",
-              "key_components",
-              "build_and_runtime",
-              "deployment_topology",
-              "security_controls",
-              "cross_cutting_concerns",
-              "runtime_evidence",
-              "tech_debt_register",
-              "ops_gaps"
-            ]
-          }
-        },
-        "Data_and_Integration": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "data_stores",
-              "entity_catalog",
-              "data_lineage_matrix",
-              "business_logic_in_db",
-              "integration_inventory",
-              "interface_contracts",
-              "exception_mappings",
-              "resilience_posture",
-              "integration_risks"
-            ]
-          }
-        },
-        "Risks_Gaps_and_Traceability": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "gaps",
-              "risks",
-              "assumptions",
-              "remediation_actions",
-              "regression_risk_flags",
-              "traceability_links"
-            ]
-          }
-        }
-      },
-      "additionalProperties": false
-    },
     "max_markdown_pair_jaccard": { "type": "number", "const": 0.32 },
     "forbidden_primary_deliverables": {
       "type": "array",
@@ -132,25 +40,24 @@
       "items": {
         "type": "string",
         "enum": [
+          "deliverables/",
+          "csa_pack/machine/",
+          "csa_pack/machine/sections/",
           "00_executive_summary.md",
+          "01_executive_summary.md",
           "01_business_capability_mapping.md",
-          "01_technology_stack_analysis.md",
+          "02_current_state_architecture.md",
+          "03_business_domain_and_capabilities.md",
           "03_data_integration_analysis.md",
+          "04_data_lineage_and_integrations.md",
           "04_architecture_diagrams.md",
-          "04_domain_model_ddd.md",
-          "05_business_capabilities.md",
-          "06_data_architecture_lineage.md",
-          "07_integration_landscape.md",
-          "08_runtime_ops_tech_debt.md",
-          "09_traceability_matrix.md",
-          "10_gaps_risks_assumptions.md",
+          "05_modernization_risks_and_recommendations.md",
           "business_logic.md",
           "resilience_gaps.md",
           "exception_http_mapping.md",
           "gap_check_report.md",
           "*_Rich_Pack.md",
-          "*-report.md",
-          "OAS/*.yaml"
+          "*-report.md"
         ]
       }
     },

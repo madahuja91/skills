@@ -1,24 +1,23 @@
 ---
 name: gate-csa-document
-description: Quality gate for lean csa_pack (5 Markdown docs + arc42 HTML + machine section JSON). Use after Document Assembler.
+description: Quality gate for lean csa_pack rendered by Completeness from artifacts. Forbids deliverables/ and csa_pack/machine/.
 ---
 
 # Gate: CSA Document
 
 ## Schema
 
-[`schema.json`](schema.json) · pack manifest `csa-document-assembler/schema.json` · policy `csa-rich-content`
+[`schema.json`](schema.json) · policy `csa-rich-content` · ownership `csa-section-boundaries`
 
 ## Pass requires
 
 - Single `active_root`; `active-root-hygiene` pass
-- **Shared memory present:** `_internal/swarm/{swarm_state.json,handoffs.jsonl,context_memory.md}`
-- Machine section JSON for all 5 docs, schema-valid (including substance sections folded from reference packs — see `csa-section-boundaries`)
-- Markdown: `Executive_Summary.md`, `Business_Architecture.md`, `Application_Architecture.md`, `Data_and_Integration.md`, `Risks_Gaps_and_Traceability.md`, `README.md`
-- HTML: `arc42-c4/{index,context,containers,components}.html`
-- **Forbidden:** numbered `00`/`04`–`10` MD, C4-as-MD, mega-pack-only, epic/story seeds, separate `business_logic.md` / OAS YAML client docs
-- Mermaid required diagrams present
-- section_min_rows (substance) + SSOT + anti-redundancy (Jaccard > 0.32 fails)
-- Prefer substance schema failures over cosmetic-only HTML markup fails when inventories are complete (`csa-parallel-lane-gates`)
+- Shared memory present under `_internal/swarm/`
+- Accepted specialist artifacts under `artifacts/` (JSON SSOT)
+- Markdown: five named docs + README under `csa_pack/`
+- HTML: `csa_pack/arc42-c4/{index,context,containers,components}.html`
+- **Forbidden:** `deliverables/`, `csa_pack/machine/`, numbered `01_`–`05_` packs, gate reports inside `csa_pack/`
+- Pack rendered by Completeness (no Document Assembler)
+- Substance mapped from artifact schemas; missing required specialist fields are blockers
 
 Emit `gate_id: gate-csa-document`.
