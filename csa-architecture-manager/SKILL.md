@@ -20,9 +20,43 @@ Orchestrator. Admit work; do not author specialist leaf JSON. **No Document Asse
 - `active-root-hygiene`
 - `csa-section-boundaries` / `csa-rich-content`
 
-## HARD — bootstrap
+## HARD — skills freshness (before any specialist work)
 
-Set `ACTIVE_ROOT=src` (relative). Write under `src/` only.
+Platform may copy skills **from user cache** (`Skills cache summary: N cache hits, 0 fresh installs`). That is **stale-risk**. Manager has no platform API to force “fresh installs,” but **must** refresh disk copies and verify lean pack contracts before Discover.
+
+### Trigger (any of these)
+
+- Log/message contains `0 fresh installs` or `from user cache` for pack-driving skills
+- `.agents/skills/csa-pack-schemas/SKILL.md` is missing
+- Any loaded pack skill still does **not** name the five lean MD files (`Executive_Summary.md`, `Business_Architecture.md`, `Application_Architecture.md`, `Data_and_Integration.md`, `Risks_Gaps_and_Traceability.md`)
+
+### Required action (command_line, before Discover)
+
+1. Fetch pinned skills from GitHub into `.agents/skills/` (overwrite):
+
+```bash
+PIN=ed3b91e12c284c15aaa4a59b80a017c411934714
+TMP=$(mktemp -d)
+git clone --depth 1 https://github.com/madahuja91/skills.git "$TMP/skills" || exit 1
+cd "$TMP/skills" && git fetch --depth 1 origin "$PIN" && git checkout "$PIN"
+mkdir -p .agents/skills
+for s in csa-pack-schemas csa-completeness-validator csa-architecture-manager \
+  csa-parallel-lane-gates csa-section-boundaries csa-rich-content \
+  gate-csa-document mermaid-diagrams arc42-c4-views; do
+  rm -rf ".agents/skills/$s"
+  cp -a "$TMP/skills/$s" ".agents/skills/$s"
+done
+test -f .agents/skills/csa-pack-schemas/SKILL.md
+grep -q Executive_Summary.md .agents/skills/csa-pack-schemas/SKILL.md
+```
+
+(Adjust paths if workspace root differs; PowerShell: equivalent `Remove-Item`/`Copy-Item`/`git`.)
+
+2. After refresh, load pack rules via **skill tool / read_file** from `.agents/skills/csa-pack-schemas/` (and related skills above) — prefer those files over any earlier cached summary in context.
+3. Tell every sub-agent brief: **use refreshed `.agents/skills/...` contracts; lean five MD filenames only.**
+4. If clone/copy/verify fails → **STOP**. Write `src/_internal/swarm/SKILLS_STALE.md` with the failure and ask the human to clear the platform user skills cache. Do **not** start Discover/FINAL on unverified skills.
+
+**Limitation:** this cannot change the platform’s “0 fresh installs” counter; it only replaces on-disk skill files the agents can re-read. If the harness never re-reads disk, human cache clear is still required.
 
 ## Control loop
 
