@@ -41,7 +41,8 @@ Rendered by **Completeness** from `artifacts/*.json`.
 
 ## Pack document floors (blocking)
 
-Each client MD must cover **all** `required` fields of its output-schema (tables/sections, not a stub summary). Approximate depth floors for Completeness judgment:
+**Primary gate = section / schema coverage** for each individual document.  
+Each client MD must cover **all** `required` fields of its output-schema (explicit headings/tables/lists — not a stub summary).
 
 | Doc | Must show (non-exhaustive) |
 |-----|----------------------------|
@@ -50,6 +51,8 @@ Each client MD must cover **all** `required` fields of its output-schema (tables
 | Application_Architecture | 5 layers + CMP-*≥8 + build/runtime + deploy + security + cross-cutting + runtime evidence + DEBT-*≥5 + ops gaps |
 | Data_and_Integration | stores≥3 + entities≥5 + LIN-*≥10 + SP rules≥5 + INT-*≥6 + contracts + exceptions + resilience |
 | Risks_Gaps_and_Traceability | GAP-*≥5 + RISK-*≥5 + ASM-*≥3 + ACT-*≥3 + REG-*≥3 + trace links≥10 |
+
+**Words:** optional **minimum** only (to catch empty stubs). Longer explanations are always allowed. **Never** enforce a maximum word/size limit on pack Markdown or schema string fields.
 
 ## Blocking checks
 

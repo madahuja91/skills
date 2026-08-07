@@ -63,7 +63,14 @@ Trigger when Manager says `mode=FINAL` **or** all five specialist artifacts alre
 
 ### HARD — what “schema-complete document” means
 
-File presence is **not** a pass. For each of the five docs, Completeness must prove the matching output-schema `required[]` list is fully populated (counts, IDs, evidence). Example blockers:
+**Primary gate = individual document section coverage** against that doc’s output-schema `required[]` (counts, IDs, evidence, tables/sections).  
+File presence alone is **not** a pass. Word count is **not** the pass criteria.
+
+- Optional **min** words only — to reject empty stubs.
+- Longer explanations are fine; **never** apply a max word/size ceiling.
+- Do not trim evidence or rationale to fit a length budget.
+
+Example blockers (missing sections / floors — not “too many words”):
 
 | Doc | Incomplete if missing |
 |-----|------------------------|
