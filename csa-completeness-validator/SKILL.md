@@ -50,15 +50,30 @@ Trigger when Manager says `mode=FINAL` **or** all five specialist artifacts alre
 
 1. Confirm five lane artifacts exist (discovery, domain, architecture, lineage, integration). Prefer lane gates `pass` / `pass_with_warnings`.
 2. Re-check each artifact against its agent schema. If a required schema field is missing/empty → **FAIL** with that lane’s `target_agent_id` — do not render a partial pack.
-3. Render every file in the **Pack Render Map** under `ACTIVE_ROOT/csa_pack/` (prefer `src/csa_pack/`).
-4. Validate pack substance against:
-   - `gate-csa-document`
-   - `csa-rich-content` / `csa-section-boundaries`
-   - `output-schemas/{Executive_Summary,Business_Architecture,Application_Architecture,Data_and_Integration,Risks_Gaps_and_Traceability}.schema.json`
+3. **Build pack substance first** (in working memory or `_internal/completeness_validation/pack_substance/`): one JSON object per client doc that validates **100%** against the matching `output-schemas/*.schema.json` using every required field and floor (`minItems`, enums, ID patterns). Specialist JSON alone is **not** enough.
+4. Render Markdown under `ACTIVE_ROOT/csa_pack/` from that substance — **every required schema field must appear as an explicit heading/table/list**. Thin stubs / rollup-only docs = **FAIL** (`pack_output_schema_conformance`).
+5. Validate:
+   - pack substance JSON vs output-schemas (blocking)
+   - Markdown section coverage of those same required fields (blocking)
+   - `gate-csa-document` + `csa-rich-content` / `csa-section-boundaries`
    - `mermaid-diagrams` + `arc42-c4-views`
-5. Write `artifacts/quality_gate_reports/gate-csa-document-csa_pack.json`.
-6. Missing any required pack file → **FAIL** (no soft pass).
-7. If pack fails because specialist substance is thin → name the **owner agent(s)** below so Manager re-runs them.
+6. Write `artifacts/quality_gate_reports/gate-csa-document-csa_pack.json`.
+7. Missing any required pack file → **FAIL** (no soft pass).
+8. If pack fails because specialist substance is thin → name the **owner agent(s)** below so Manager re-runs them.
+
+### HARD — what “schema-complete document” means
+
+File presence is **not** a pass. For each of the five docs, Completeness must prove the matching output-schema `required[]` list is fully populated (counts, IDs, evidence). Example blockers:
+
+| Doc | Incomplete if missing |
+|-----|------------------------|
+| Executive_Summary | readiness scorecard, ≥5 RISK-*, migration effort/strategy, success metrics |
+| Business_Architecture | ≥8 CAP-* taxonomy, dictionary, ≥5 dispatch rules, flags, provider rules |
+| Application_Architecture | 5 layers, ≥8 CMP-*, debt register, runtime evidence, ops gaps |
+| Data_and_Integration | ≥10 LIN-*, ≥5 DB business rules, ≥6 INT-*, contracts, exceptions, resilience |
+| Risks_Gaps_and_Traceability | ≥5 GAP-*/RISK-*, remediations, ≥3 REG-*, ≥10 traceability links |
+
+Do **not** mark FINAL PASS after only validating `artifacts/*.json`.
 
 ## Pack Render Map (exactly 5 client MD + README + arc42 HTML)
 

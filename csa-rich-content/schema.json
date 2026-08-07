@@ -79,6 +79,7 @@
         "enum": [
           "required_files_present",
           "artifact_schema_conformance",
+          "pack_output_schema_conformance",
           "specialist_list_depth",
           "forbidden_duplicate_trees",
           "section_anti_redundancy",

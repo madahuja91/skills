@@ -34,6 +34,7 @@ Substance contracts (validate content; do not require writing machine JSON):
   - `Risks_Gaps_and_Traceability.md`
   - `README.md`
   - `arc42-c4/{index,context,containers,components}.html`
+- **`pack_output_schema_conformance`:** each of the five MD docs covers every `required` field of its matching `output-schemas/*.schema.json` (substance JSON validated; stub/overview-only MD = FAIL)
 - Required Mermaid IDs present
 - Pack = legacy codebase evidence only (no workflow meta)
 

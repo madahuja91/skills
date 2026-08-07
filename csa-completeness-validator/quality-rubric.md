@@ -11,5 +11,7 @@
 | Lane mode never writes `csa_pack/` | required |
 | FINAL renders lean 5 MD + README + arc42 HTML | required |
 | FINAL validates pack against output-schemas + gate-csa-document | required |
+| FINAL proves every required pack-schema field is in MD (not stub) | required |
+| No PASS on specialist-artifact-only checks without pack substance | required |
 | No epic-story / numbered 00-10 / machine sections required | required |
 | No false pass on stub Markdown/HTML (`csa-rich-content`) | required |
