@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/Executive_Summary.schema.json",
+  "title": "CSA_Executive_Summary",
+  "description": "Knowledge-first executive summary. Narrative (purpose/value/responsibilities) first; evidence_appendix last. No maxLength.",
+  "type": "object",
+  "required": [
+    "purpose",
+    "business_context",
+    "business_value",
+    "key_responsibilities",
+    "capability_synopsis",
+    "major_business_rules_summary",
+    "system_overview",
+    "key_metrics_table",
+    "modernization_readiness_scorecard",
+    "key_architectural_findings",
+    "top_technical_risks",
+    "migration_effort_estimate",
+    "recommended_migration_strategy",
+    "key_success_metrics",
+    "modernization_outlook",
+    "evidence_appendix"
+  ],
+  "properties": {
+    "purpose": {
+      "type": "string",
+      "minLength": 80,
+      "description": "What this system is for in plain language (not a file inventory)."
+    },
+    "business_context": {
+      "type": "string",
+      "minLength": 80,
+      "description": "Why the system exists in the business landscape."
+    },
+    "business_value": {
+      "type": "string",
+      "minLength": 60,
+      "description": "Business value delivered to stakeholders."
+    },
+    "key_responsibilities": {
+      "type": "array",
+      "minItems": 4,
+      "items": { "type": "string", "minLength": 20 }
+    },
+    "capability_synopsis": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["capability_id", "name", "what", "why"],
+        "properties": {
+          "capability_id": { "type": "string", "pattern": "^CAP-" },
+          "name": { "type": "string", "minLength": 3 },
+          "what": { "type": "string", "minLength": 30 },
+          "why": { "type": "string", "minLength": 20 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "major_business_rules_summary": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["rule", "business_intent"],
+        "properties": {
+          "rule": { "type": "string", "minLength": 20 },
+          "business_intent": { "type": "string", "minLength": 15 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "system_overview": {
+      "type": "object",
+      "required": ["system_name", "primary_business_purpose", "architecture_pattern", "scope_summary"],
+      "properties": {
+        "system_name": { "type": "string", "minLength": 2 },
+        "primary_business_purpose": { "type": "string", "minLength": 40 },
+        "architecture_pattern": {
+          "type": "string",
+          "enum": ["Monolith", "Distributed Stored Procedures", "Layered N-Tier", "Microservices", "Hybrid"]
+        },
+        "scope_summary": { "type": "string", "minLength": 40 }
+      },
+      "additionalProperties": false
+    },
+    "key_metrics_table": {
+      "type": "array",
+      "minItems": 5,
+      "description": "Readiness-oriented metrics, not raw evidence dumps.",
+      "items": {
+        "type": "object",
+        "required": ["category", "count", "tech_stack", "health_status"],
+        "properties": {
+          "category": { "type": "string", "minLength": 2 },
+          "count": { "type": "integer", "minimum": 0 },
+          "tech_stack": { "type": "string", "minLength": 2 },
+          "health_status": {
+            "type": "string",
+            "enum": ["Healthy", "Legacy - Action Needed", "Critical Risk"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "modernization_readiness_scorecard": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["dimension", "score", "rationale"],
+        "properties": {
+          "dimension": { "type": "string", "minLength": 3 },
+          "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "rationale": { "type": "string", "minLength": 20 },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "key_architectural_findings": {
+      "type": "array",
+      "minItems": 5,
+      "items": { "type": "string", "minLength": 30 }
+    },
+    "top_technical_risks": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["risk_id", "risk_title", "impact_area", "severity", "impact", "recommendation"],
+        "properties": {
+          "risk_id": { "type": "string", "pattern": "^RISK-" },
+          "risk_title": { "type": "string", "minLength": 5 },
+          "impact_area": { "type": "string", "minLength": 3 },
+          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+          "impact": { "type": "string", "minLength": 20 },
+          "recommendation": { "type": "string", "minLength": 20 },
+          "brief_mitigation": { "type": "string", "minLength": 10 },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "migration_effort_estimate": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["approach", "effort_band", "summary"],
+        "properties": {
+          "approach": { "type": "string", "minLength": 3 },
+          "effort_band": { "type": "string", "minLength": 2 },
+          "summary": { "type": "string", "minLength": 20 },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "recommended_migration_strategy": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["phase", "intent"],
+        "properties": {
+          "phase": { "type": "string", "minLength": 3 },
+          "intent": { "type": "string", "minLength": 20 },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "key_success_metrics": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["metric", "target_or_signal"],
+        "properties": {
+          "metric": { "type": "string", "minLength": 3 },
+          "target_or_signal": { "type": "string", "minLength": 5 },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "modernization_outlook": {
+      "type": "object",
+      "required": ["current_state", "future_state", "cloud_readiness", "microservice_candidates", "estimated_effort"],
+      "properties": {
+        "current_state": { "type": "string", "minLength": 40 },
+        "future_state": { "type": "string", "minLength": 40 },
+        "cloud_readiness": { "type": "string", "minLength": 20 },
+        "microservice_candidates": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 10 }
+        },
+        "estimated_effort": { "type": "string", "minLength": 5 }
+      },
+      "additionalProperties": false
+    },
+    "evidence_appendix": {
+      "type": "array",
+      "minItems": 8,
+      "description": "Traceability only — rendered last in Markdown under Evidence Mapping (Appendix).",
+      "items": {
+        "type": "object",
+        "required": ["claim_ref", "path_or_artifact", "note"],
+        "properties": {
+          "claim_ref": { "type": "string", "minLength": 3 },
+          "path_or_artifact": { "type": "string", "minLength": 3 },
+          "note": { "type": "string", "minLength": 10 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

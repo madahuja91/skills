@@ -1,8 +1,8 @@
 ---
-name: csa6-pack-schemas
-description: DEPRECATED — use csa6-pack-schemas.
+name: csa7-pack-schemas
+description: DEPRECATED — use csa7-pack-schemas.
 ---
 
 # Deprecated
 
-Use **`csa6-pack-schemas`** instead (cache bust).
+Use **`csa7-pack-schemas`** instead (cache bust).

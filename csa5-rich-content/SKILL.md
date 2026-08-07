@@ -1,8 +1,8 @@
 ---
-name: csa6-rich-content
-description: DEPRECATED — use csa6-rich-content.
+name: csa7-rich-content
+description: DEPRECATED — use csa7-rich-content.
 ---
 
 # Deprecated
 
-Use **`csa6-rich-content`** instead (cache bust).
+Use **`csa7-rich-content`** instead (cache bust).

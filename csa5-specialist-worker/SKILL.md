@@ -1,8 +1,8 @@
 ---
-name: csa6-specialist-worker
-description: DEPRECATED — use csa6-specialist-worker.
+name: csa7-specialist-worker
+description: DEPRECATED — use csa7-specialist-worker.
 ---
 
 # Deprecated
 
-Use **`csa6-specialist-worker`** instead (cache bust).
+Use **`csa7-specialist-worker`** instead (cache bust).

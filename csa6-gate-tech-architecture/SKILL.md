@@ -1,22 +1,8 @@
 ---
-name: csa6-gate-tech-architecture
-description: Quality gate for CSA architecture.json. Use when validating Tech Architecture specialist output.
+name: csa7-gate-tech-architecture
+description: DEPRECATED — use csa7-gate-tech-architecture.
 ---
 
-# Gate: Tech Architecture
+# Deprecated
 
-## Schema
-
-Authoritative evaluation contract: [`schema.json`](schema.json)
-
-## Target
-
-- Artifact: `artifacts/architecture.json`
-- Artifact schema: `skills/agents/csa6-tech-architecture/schema.json`
-- Rubric: `skills/agents/csa6-tech-architecture/quality-rubric.md`
-
-## Blocking fails
-
-- Fewer than required layers without monolith justification; runtime claimed without evidence; schema invalid; component evidence &lt;70%.
-
-Emit report with `gate_id: gate-tech-architecture`.
+Use `csa7-gate-tech-architecture`.

@@ -1,8 +1,8 @@
 ---
-name: csa6-swarm-shared-memory
-description: DEPRECATED — use csa6-swarm-shared-memory.
+name: csa7-swarm-shared-memory
+description: DEPRECATED — use csa7-swarm-shared-memory.
 ---
 
 # Deprecated
 
-Use **`csa6-swarm-shared-memory`** instead (cache bust).
+Use **`csa7-swarm-shared-memory`** instead (cache bust).

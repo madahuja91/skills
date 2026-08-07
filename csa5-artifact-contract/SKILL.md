@@ -1,8 +1,8 @@
 ---
-name: csa6-artifact-contract
-description: DEPRECATED — use csa6-artifact-contract.
+name: csa7-artifact-contract
+description: DEPRECATED — use csa7-artifact-contract.
 ---
 
 # Deprecated
 
-Use **`csa6-artifact-contract`** instead (cache bust).
+Use **`csa7-artifact-contract`** instead (cache bust).

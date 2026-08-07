@@ -1,8 +1,8 @@
 ---
-name: csa6-discover
-description: DEPRECATED — use csa6-discover.
+name: csa7-discover
+description: DEPRECATED — use csa7-discover.
 ---
 
 # Deprecated
 
-Use **`csa6-discover`** instead (cache bust).
+Use **`csa7-discover`** instead (cache bust).

@@ -1,8 +1,8 @@
 ---
-name: csa6-data-lineage-pack
-description: DEPRECATED — use csa6-data-lineage-pack.
+name: csa7-data-lineage-pack
+description: DEPRECATED — use csa7-data-lineage-pack.
 ---
 
 # Deprecated
 
-Use **`csa6-data-lineage-pack`** instead (cache bust).
+Use **`csa7-data-lineage-pack`** instead (cache bust).

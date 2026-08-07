@@ -1,8 +1,8 @@
 ---
 name: csa-swarm-shared-memory
-description: DEPRECATED — use csa6-swarm-shared-memory. Renamed to bust platform skill cache.
+description: DEPRECATED — use csa7-swarm-shared-memory. Renamed to bust platform skill cache.
 ---
 
 # Deprecated
 
-Use **`csa6-swarm-shared-memory`** instead.
+Use **`csa7-swarm-shared-memory`** instead.

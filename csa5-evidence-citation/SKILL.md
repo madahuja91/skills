@@ -1,8 +1,8 @@
 ---
-name: csa6-evidence-citation
-description: DEPRECATED — use csa6-evidence-citation.
+name: csa7-evidence-citation
+description: DEPRECATED — use csa7-evidence-citation.
 ---
 
 # Deprecated
 
-Use **`csa6-evidence-citation`** instead (cache bust).
+Use **`csa7-evidence-citation`** instead (cache bust).

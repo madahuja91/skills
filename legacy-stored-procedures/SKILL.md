@@ -1,8 +1,8 @@
 ---
 name: legacy-stored-procedures
-description: DEPRECATED — use csa6-legacy-stored-procedures. Renamed to bust platform skill cache.
+description: DEPRECATED — use csa7-legacy-stored-procedures. Renamed to bust platform skill cache.
 ---
 
 # Deprecated
 
-Use **`csa6-legacy-stored-procedures`** instead.
+Use **`csa7-legacy-stored-procedures`** instead.

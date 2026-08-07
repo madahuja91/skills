@@ -1,8 +1,8 @@
 ---
-name: csa6-gate-document
-description: DEPRECATED — use csa6-gate-document.
+name: csa7-gate-document
+description: DEPRECATED — use csa7-gate-document.
 ---
 
 # Deprecated
 
-Use **`csa6-gate-document`** instead (cache bust).
+Use **`csa7-gate-document`** instead (cache bust).

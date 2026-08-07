@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/legacy-stored-procedures-findings.json",
+  "title": "LegacyStoredProcedureFindings",
+  "description": "Schema for stored procedure / package discovery findings (no hardcoded names)",
+  "type": "object",
+  "required": ["procedures", "call_sites", "scan_summary"],
+  "properties": {
+    "procedures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["object_name", "object_type", "confidence_score", "evidence"],
+        "properties": {
+          "object_name": { "type": "string" },
+          "schema_name": { "type": "string" },
+          "object_type": {
+            "type": "string",
+            "enum": ["procedure", "function", "package", "package_body", "unknown"]
+          },
+          "dialect": {
+            "type": "string",
+            "enum": ["oracle", "sqlserver", "db2", "postgres", "unknown"]
+          },
+          "source_path": { "type": "string" },
+          "confidence_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "https://csa.local/schemas/csa7-evidence-citation.json" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "call_sites": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["callee", "call_style", "confidence_score", "evidence"],
+        "properties": {
+          "callee": { "type": "string" },
+          "call_style": {
+            "type": "string",
+            "enum": [
+              "jdbc_escape",
+              "callable_statement",
+              "ibatis_procedure",
+              "mybatis_callable",
+              "toplink_stored_procedure_call",
+              "eclipselink_stored_procedure_call",
+              "other"
+            ]
+          },
+          "resolved_procedure": { "type": ["string", "null"] },
+          "confidence_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "https://csa.local/schemas/csa7-evidence-citation.json" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "scan_summary": {
+      "type": "object",
+      "required": ["sql_files_scanned", "unresolved_callees", "missing_sql_for_call_sites"],
+      "properties": {
+        "sql_files_scanned": { "type": "integer", "minimum": 0 },
+        "map_files_scanned": { "type": "integer", "minimum": 0 },
+        "unresolved_callees": { "type": "array", "items": { "type": "string" } },
+        "missing_sql_for_call_sites": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

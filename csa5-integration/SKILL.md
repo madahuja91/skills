@@ -1,8 +1,8 @@
 ---
-name: csa6-integration
-description: DEPRECATED — use csa6-integration.
+name: csa7-integration
+description: DEPRECATED — use csa7-integration.
 ---
 
 # Deprecated
 
-Use **`csa6-integration`** instead (cache bust).
+Use **`csa7-integration`** instead (cache bust).

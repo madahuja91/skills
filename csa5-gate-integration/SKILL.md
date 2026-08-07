@@ -1,8 +1,8 @@
 ---
-name: csa6-gate-integration
-description: DEPRECATED — use csa6-gate-integration.
+name: csa7-gate-integration
+description: DEPRECATED — use csa7-gate-integration.
 ---
 
 # Deprecated
 
-Use **`csa6-gate-integration`** instead (cache bust).
+Use **`csa7-gate-integration`** instead (cache bust).

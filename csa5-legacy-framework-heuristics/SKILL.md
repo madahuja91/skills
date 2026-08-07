@@ -1,8 +1,8 @@
 ---
-name: csa6-legacy-framework-heuristics
-description: DEPRECATED — use csa6-legacy-framework-heuristics.
+name: csa7-legacy-framework-heuristics
+description: DEPRECATED — use csa7-legacy-framework-heuristics.
 ---
 
 # Deprecated
 
-Use **`csa6-legacy-framework-heuristics`** instead (cache bust).
+Use **`csa7-legacy-framework-heuristics`** instead (cache bust).

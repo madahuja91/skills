@@ -1,8 +1,8 @@
 ---
-name: csa6-ddd-domain-pack
-description: DEPRECATED — use csa6-ddd-domain-pack.
+name: csa7-ddd-domain-pack
+description: DEPRECATED — use csa7-ddd-domain-pack.
 ---
 
 # Deprecated
 
-Use **`csa6-ddd-domain-pack`** instead (cache bust).
+Use **`csa7-ddd-domain-pack`** instead (cache bust).

@@ -1,8 +1,8 @@
 ---
-name: csa6-active-root-hygiene
-description: DEPRECATED — use csa6-active-root-hygiene.
+name: csa7-active-root-hygiene
+description: DEPRECATED — use csa7-active-root-hygiene.
 ---
 
 # Deprecated
 
-Use **`csa6-active-root-hygiene`** instead (cache bust).
+Use **`csa7-active-root-hygiene`** instead (cache bust).

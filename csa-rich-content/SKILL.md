@@ -1,8 +1,8 @@
 ---
 name: csa-rich-content
-description: DEPRECATED — use csa6-rich-content. Renamed to bust platform skill cache.
+description: DEPRECATED — use csa7-rich-content. Renamed to bust platform skill cache.
 ---
 
 # Deprecated
 
-Use **`csa6-rich-content`** instead.
+Use **`csa7-rich-content`** instead.

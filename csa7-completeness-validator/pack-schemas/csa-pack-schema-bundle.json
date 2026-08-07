@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-pack-schema-bundle.json",
+  "title": "CsaPackSchemaBundle",
+  "type": "object",
+  "required": ["version", "schemas", "client_deliverables", "documentation_style"],
+  "properties": {
+    "version": { "type": "string", "const": "4.0.0-knowledge-first" },
+    "documentation_style": {
+      "type": "object",
+      "required": ["narrative_first", "evidence_appendix_last", "forbid_evidence_led_sections"],
+      "properties": {
+        "narrative_first": { "type": "boolean", "const": true },
+        "evidence_appendix_last": { "type": "boolean", "const": true },
+        "forbid_evidence_led_sections": { "type": "boolean", "const": true },
+        "required_narrative_order": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "What → Why → How → Rules → AC → DDD → Persist → Flow → Decisions → Risks → Modernize → Evidence Appendix"
+        }
+      },
+      "additionalProperties": false
+    },
+    "client_deliverables": {
+      "type": "object",
+      "required": ["markdown", "html"],
+      "properties": {
+        "markdown": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 6,
+          "items": {
+            "type": "string",
+            "enum": [
+              "Executive_Summary.md",
+              "Business_Architecture.md",
+              "Application_Architecture.md",
+              "Data_and_Integration.md",
+              "Risks_Gaps_and_Traceability.md",
+              "README.md"
+            ]
+          }
+        },
+        "html": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "arc42-c4/index.html",
+              "arc42-c4/context.html",
+              "arc42-c4/containers.html",
+              "arc42-c4/components.html"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "schemas": {
+      "type": "object",
+      "required": [
+        "Executive_Summary",
+        "Business_Architecture",
+        "Application_Architecture",
+        "Data_and_Integration",
+        "Risks_Gaps_and_Traceability"
+      ],
+      "properties": {
+        "Executive_Summary": { "const": "Executive_Summary.schema.json" },
+        "Business_Architecture": { "const": "Business_Architecture.schema.json" },
+        "Application_Architecture": { "const": "Application_Architecture.schema.json" },
+        "Data_and_Integration": { "const": "Data_and_Integration.schema.json" },
+        "Risks_Gaps_and_Traceability": { "const": "Risks_Gaps_and_Traceability.schema.json" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

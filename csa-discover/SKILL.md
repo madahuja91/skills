@@ -1,8 +1,8 @@
 ---
 name: csa-discover
-description: DEPRECATED — use csa6-discover. Renamed to bust platform skill cache.
+description: DEPRECATED — use csa7-discover. Renamed to bust platform skill cache.
 ---
 
 # Deprecated
 
-Use **`csa6-discover`** instead.
+Use **`csa7-discover`** instead.

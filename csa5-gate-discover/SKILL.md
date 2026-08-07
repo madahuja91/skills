@@ -1,8 +1,8 @@
 ---
-name: csa6-gate-discover
-description: DEPRECATED — use csa6-gate-discover.
+name: csa7-gate-discover
+description: DEPRECATED — use csa7-gate-discover.
 ---
 
 # Deprecated
 
-Use **`csa6-gate-discover`** instead (cache bust).
+Use **`csa7-gate-discover`** instead (cache bust).

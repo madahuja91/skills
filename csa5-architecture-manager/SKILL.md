@@ -1,8 +1,8 @@
 ---
-name: csa6-architecture-manager
-description: DEPRECATED — use csa6-architecture-manager.
+name: csa7-architecture-manager
+description: DEPRECATED — use csa7-architecture-manager.
 ---
 
 # Deprecated
 
-Use **`csa6-architecture-manager`** instead (cache bust).
+Use **`csa7-architecture-manager`** instead (cache bust).
