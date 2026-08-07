@@ -102,6 +102,11 @@
     "relative_links_only": { "type": "boolean", "const": true },
     "markdown_c4_forbidden": { "type": "boolean", "const": true },
     "mermaid_required": { "type": "boolean", "const": true },
+    "mermaid_runtime": {
+      "type": "string",
+      "const": "classic_mermaid_min_js_plus_run",
+      "description": "Use mermaid.min.js + mermaid.run; forbid ESM-only init as sole runtime"
+    },
     "mermaid_diagram_ids": {
       "type": "array",
       "minItems": 3,
@@ -113,7 +118,8 @@
           "diag-c4-components"
         ]
       }
-    }
+    },
+    "incomplete_index_is_fail": { "type": "boolean", "const": true }
   },
   "additionalProperties": false
 }

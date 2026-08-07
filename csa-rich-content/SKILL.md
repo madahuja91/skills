@@ -25,10 +25,11 @@ Rendered by **Completeness** from `artifacts/*.json`.
 
 1. Specialist schema completeness first (`artifacts/*.json` required fields + evidence).
 2. Completeness builds **pack substance** that validates against each `output-schemas/*.schema.json`, then renders five Markdown owners (`csa-section-boundaries`).
-3. **Thin Markdown = FAIL.** A short overview that omits required schema sections does not pass even if the five filenames exist.
+3. **Thin Markdown = FAIL.** A short overview that omits required schema sections or **required Mermaid diagrams** does not pass even if the five filenames exist.
 4. Fail if forbidden duplicate trees exist.
 5. Prefer substance gaps over cosmetic HTML/Jaccard-only fails.
 6. **Client pack = legacy only:** no workflow/swarm/gate/process meta in any `csa_pack/**` file.
+7. **arc42 `index.html` must be a full hub** (12 anchors + ≥2 Mermaid + classic runtime). Stub index = FAIL.
 
 ## Specialist floors
 

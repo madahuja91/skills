@@ -55,11 +55,15 @@ Trigger when Manager says `mode=FINAL` **or** all five specialist artifacts alre
 5. Validate:
    - pack substance JSON vs output-schemas (blocking)
    - Markdown section coverage of those same required fields (blocking)
+   - **≥200 lines** per client MD (more OK; no max)
+   - **All required Mermaid diagram IDs present** (`mermaid-diagrams`) — blocking
+   - **`arc42-c4/index.html` full hub**: all 12 anchors + ≥2 Mermaid blocks + classic runtime — stub index = FAIL
+   - C4 detail pages each have their diag-* + classic runtime
    - `gate-csa-document` + `csa-rich-content` / `csa-section-boundaries`
-   - `mermaid-diagrams` + `arc42-c4-views`
 6. Write `artifacts/quality_gate_reports/gate-csa-document-csa_pack.json`.
-7. Missing any required pack file → **FAIL** (no soft pass).
+7. Missing any required pack file / diagram / index section → **FAIL** (no soft pass).
 8. If pack fails because specialist substance is thin → name the **owner agent(s)** below so Manager re-runs them.
+9. If artifacts are rich but diagrams/index were not rendered → `target_agent_id: completeness_validator`, `rerun_recommended: true` (Manager re-invokes FINAL).
 
 ### HARD — what “schema-complete document” means
 
@@ -76,28 +80,31 @@ Example blockers (missing sections / floors — not “too many lines”):
 
 | Doc | Incomplete if missing |
 |-----|------------------------|
-| Executive_Summary | readiness scorecard, ≥5 RISK-*, migration effort/strategy, success metrics |
-| Business_Architecture | ≥8 CAP-* taxonomy, dictionary, ≥5 dispatch rules, flags, provider rules |
-| Application_Architecture | 5 layers, ≥8 CMP-*, debt register, runtime evidence, ops gaps |
-| Data_and_Integration | ≥10 LIN-*, ≥5 DB business rules, ≥6 INT-*, contracts, exceptions, resilience |
+| Executive_Summary | readiness scorecard, ≥5 RISK-*, migration effort/strategy, success metrics, **`diag-exec-overview`** |
+| Business_Architecture | ≥8 CAP-* taxonomy, dictionary, ≥5 dispatch rules, flags, provider rules, **`diag-domain-context-map`** |
+| Application_Architecture | 5 layers, ≥8 CMP-*, debt register, runtime evidence, ops gaps, **`diag-runtime`** |
+| Data_and_Integration | ≥10 LIN-*, ≥5 DB business rules, ≥6 INT-*, contracts, exceptions, resilience, **`diag-lineage-critical` + `diag-integration-landscape`** |
 | Risks_Gaps_and_Traceability | ≥5 GAP-*/RISK-*, remediations, ≥3 REG-*, ≥10 traceability links |
+| arc42-c4/index.html | all 12 anchors, ≥2 Mermaid blocks, classic runtime — **not a stub** |
+| arc42-c4 detail pages | `diag-c4-context` / `diag-c4-containers` / `diag-c4-components` each |
 
-Do **not** mark FINAL PASS after only validating `artifacts/*.json`.
+Do **not** mark FINAL PASS after only validating `artifacts/*.json`.  
+Do **not** PASS if diagrams are missing (CDN 401 is not an excuse to omit Mermaid source).
 
 ## Pack Render Map (exactly 5 client MD + README + arc42 HTML)
 
 | File | Primary artifact owner(s) | Must include |
 |------|---------------------------|--------------|
-| `Executive_Summary.md` | discovery + rollups | overview, metrics, readiness, top risks, `diag-exec-overview` |
-| `Business_Architecture.md` | domain | domains, capabilities, flows, rules; `diag-domain-context-map` |
-| `Application_Architecture.md` | architecture | layers, CMP-*, deploy/security/debt; feeds C4 |
-| `Data_and_Integration.md` | lineage + integration | stores, entity_catalog, lineage, integrations, contracts; `diag-lineage-critical` + `diag-integration-landscape` |
+| `Executive_Summary.md` | discovery + rollups | full schema sections + **`diag-exec-overview`** |
+| `Business_Architecture.md` | domain | full schema sections + **`diag-domain-context-map`** |
+| `Application_Architecture.md` | architecture | full schema sections + **`diag-runtime`** + feeds C4 |
+| `Data_and_Integration.md` | lineage + integration | full schema sections + **`diag-lineage-critical`** + **`diag-integration-landscape`** |
 | `Risks_Gaps_and_Traceability.md` | all specialists + gate uncertainty | ranked risks, gaps, traceability matrices |
 | `README.md` | index | links to 5 MD + `arc42-c4/index.html` |
-| `arc42-c4/index.html` | all | hub summary + nav |
-| `arc42-c4/context.html` | `architecture.c4_views.context` (+ domain/integration) | `diag-c4-context` |
-| `arc42-c4/containers.html` | `architecture.c4_views.containers` | `diag-c4-containers` |
-| `arc42-c4/components.html` | `architecture.c4_views.components_critical` | `diag-c4-components` |
+| `arc42-c4/index.html` | all | **full 12-anchor hub** + **≥2 Mermaid** + classic runtime |
+| `arc42-c4/context.html` | `architecture.c4_views.context` | **`diag-c4-context`** |
+| `arc42-c4/containers.html` | `architecture.c4_views.containers` | **`diag-c4-containers`** |
+| `arc42-c4/components.html` | `architecture.c4_views.components_critical` | **`diag-c4-components`** |
 
 **Nothing else is required.** Forbidden: numbered `00_`/`04_`–`10_` client packs, `epic_story_seeds/`, `deliverables/`, `csa_pack/machine/`, Document Assembler.
 
@@ -105,13 +112,13 @@ Do **not** mark FINAL PASS after only validating `artifacts/*.json`.
 
 | Gap / missing substance | `target_agent_id` | Re-run agent |
 |-------------------------|-------------------|--------------|
-| discovery schema / inventory | `discover` | CSA-Discover-Agent |
-| Business_Architecture / domain floors | `business_domain` | CSA-BusinessDomain-Agent |
-| Application_Architecture / `c4_views` / layers | `tech_architecture` | TechnologyArchitecture-Agent |
-| Lineage half of Data_and_Integration | `data_lineage` | Data-Lineage-Agent |
-| Integration half of Data_and_Integration | `integration` | Integration-Analysis-Agent |
+| discovery schema / inventory / exec diagram substance | `discover` | CSA-Discover-Agent |
+| Business_Architecture / domain floors / domain diagram | `business_domain` | CSA-BusinessDomain-Agent |
+| Application_Architecture / `c4_views` / layers / runtime+C4 diagrams | `tech_architecture` | TechnologyArchitecture-Agent |
+| Lineage half / `diag-lineage-critical` | `data_lineage` | Data-Lineage-Agent |
+| Integration half / `diag-integration-landscape` | `integration` | Integration-Analysis-Agent |
 | Thin Risks / traceability from one lane | owning lane above | that specialist |
-| Pack file missing after rich artifacts | Completeness itself | Manager re-invokes Completeness FINAL |
+| Artifacts rich but pack/diagrams/index not rendered | `completeness_validator` | Manager re-invokes Completeness FINAL |
 
 Every fail report **MUST** set:
 

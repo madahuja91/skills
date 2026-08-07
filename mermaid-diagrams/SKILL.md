@@ -1,23 +1,21 @@
 ---
 name: mermaid-diagrams
-description: Author and render Mermaid diagrams correctly in CSA Markdown and arc42-C4 HTML. Use whenever Completeness FINAL, arc42-c4-views, DDD, lineage, or integration docs need architecture/domain/lineage/integration diagrams.
+description: Author and render Mermaid diagrams in CSA Markdown and arc42-C4 HTML. Required diagrams are blocking for Completeness FINAL.
 ---
 
 # Mermaid Diagrams (CSA)
 
 ## Schema
 
-Diagram inventory + render contract: [`schema.json`](schema.json)
+[`schema.json`](schema.json)
 
 ## Purpose
 
-Diagrams improve understanding of current-state architecture. Every required diagram must be **valid Mermaid** and use the correct fence/container so it renders in Markdown viewers and in the HTML C4 pack.
+Diagrams are **required deliverables**, not optional decoration. Missing a required diagram ID = Completeness FINAL **FAIL** with `target_agent_id` so Manager re-runs the owner (or Completeness FINAL again if artifacts are rich but render omitted the diagram).
 
 ## Rendering rules (mandatory)
 
 ### Markdown (`.md`)
-
-Use a fenced code block with language `mermaid` only — no indentation inside the fence that breaks parsers:
 
 ````markdown
 ```mermaid
@@ -27,68 +25,65 @@ flowchart LR
 ````
 
 Rules:
+- Opening fence exactly `` ```mermaid `` on its own line; closing `` ``` `` alone.
+- Prefer `flowchart` / `sequenceDiagram` / `C4Context` / `C4Container` / `C4Component`.
+- Node IDs: alphanumeric + underscore only.
+- Content from accepted artifacts only — no invented systems/queues.
 
-- Opening fence must be exactly `` ```mermaid `` on its own line.
-- Closing fence `` ``` `` on its own line.
-- No HTML comments wrapping the fence.
-- Prefer `flowchart` / `sequenceDiagram` / `C4Context` / `C4Container` / `C4Component` over exotic types.
-- Node IDs: alphanumeric + underscore only (no spaces in IDs). Labels go in quotes or brackets.
-- Do not invent systems, queues, packages, or externals not present in accepted CSA artifacts.
+### HTML (`csa_pack/arc42-c4/*.html`) — reliable runtime (HARD)
 
-### HTML (`csa_pack/arc42-c4/*.html`)
+ESM `import` from CDN often fails (401/CORS/`file://`). **Do not rely on ESM-only init.**
 
-1. Put diagram source in:
+Use classic script + explicit run:
 
 ```html
 <pre class="mermaid">
 flowchart TB
-  ...
+  A[Actor] --> B[System]
 </pre>
-```
-
-2. Include Mermaid runtime once per page (before `</body>`):
-
-```html
-<script type="module">
-  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-  mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose" });
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: false, theme: "neutral", securityLevel: "loose" });
+  mermaid.run({ querySelector: "pre.mermaid" });
 </script>
 ```
 
-3. Escape rule: inside `<pre class="mermaid">`, do **not** HTML-escape arrows (`-->`); keep raw Mermaid text. Avoid `</pre>` inside diagram labels.
+Fallback CDN if primary blocked: `https://unpkg.com/mermaid@11/dist/mermaid.min.js`.
 
-4. Prefer relative page chrome; Mermaid CDN is allowed solely for browser rendering of diagrams.
+Rules:
+- Diagram source in `<pre class="mermaid">` (raw `-->`, no HTML-escaped arrows).
+- Every HTML page with diagrams includes the runtime scripts before `</body>`.
+- Still **write** the Mermaid source even if CDN is unreachable — source presence is the gate; browser CDN 401 must not omit diagrams from the files.
 
-## Required CSA diagrams
+## Required CSA diagrams (ALL blocking)
 
-| ID | Location | Type | Source artifacts |
-|----|----------|------|------------------|
-| `diag-c4-context` | `arc42-c4/context.html` | `C4Context` or `flowchart` | domain + integration + architecture |
-| `diag-c4-containers` | `arc42-c4/containers.html` | `C4Container` or `flowchart` | architecture + discovery |
-| `diag-c4-components` | `arc42-c4/components.html` | `C4Component` or `flowchart` | architecture (critical CMP-* only) |
-| `diag-domain-context-map` | `Business_Architecture.md` | `flowchart` | domain (`business_domains`, cross-deps) |
-| `diag-lineage-critical` | `Data_and_Integration.md` | `flowchart LR` | lineage (critical entity/system flows) |
-| `diag-integration-landscape` | `Data_and_Integration.md` | `flowchart` or `sequenceDiagram` | integration |
-| `diag-exec-overview` | `Executive_Summary.md` | `flowchart TB` | discovery + architecture (coarse overview) |
+| ID | Location | Type | Owner if substance missing |
+|----|----------|------|----------------------------|
+| `diag-exec-overview` | `Executive_Summary.md` | flowchart TB | discover / tech_architecture |
+| `diag-domain-context-map` | `Business_Architecture.md` | flowchart | business_domain |
+| `diag-runtime` | `Application_Architecture.md` | flowchart or sequenceDiagram | tech_architecture |
+| `diag-lineage-critical` | `Data_and_Integration.md` | flowchart LR | data_lineage |
+| `diag-integration-landscape` | `Data_and_Integration.md` | flowchart or sequenceDiagram | integration |
+| `diag-c4-context` | `arc42-c4/context.html` | C4Context or flowchart | tech_architecture (`c4_views`) |
+| `diag-c4-containers` | `arc42-c4/containers.html` | C4Container or flowchart | tech_architecture |
+| `diag-c4-components` | `arc42-c4/components.html` | C4Component or flowchart | tech_architecture |
 
-Optional when evidence exists:
+**Also on `arc42-c4/index.html` (hub):** ≥2 `<pre class="mermaid">` blocks (exec overview + C4 context at minimum) + classic Mermaid runtime. Missing hub diagrams = FAIL (`completeness_validator` if artifacts rich; else `tech_architecture` for empty `c4_views`).
 
-| ID | Location | Type |
-|----|----------|------|
-| `diag-runtime` | `Application_Architecture.md` | `flowchart` or `sequenceDiagram` |
-| `diag-capability-map` | `Business_Architecture.md` | `flowchart` |
+Optional extras (not blocking): `diag-capability-map` on Business_Architecture.
 
-## Quality bar
+## Completeness checks (blocking)
 
-- Every required diagram present and parseable as Mermaid.
-- Diagram nodes/edges must trace to accepted machine IDs or evidence — no decorative fiction.
-- If evidence is thin, draw a smaller diagram and state gaps in prose next to it; do not invent missing externals.
-- Keep diagrams readable: ≤ ~25 nodes per diagram; split rather than clutter.
+1. Each required ID present in the correct file.
+2. Markdown fences use language `mermaid`.
+3. HTML uses `<pre class="mermaid">` + classic `mermaid.min.js` init + `mermaid.run`.
+4. `index.html` has ≥2 Mermaid blocks.
+5. On fail: set `target_agent_id`, `rerun_recommended`, `schema_fields_missing` / diagram id in `blocking_gaps`.
 
 ## Anti-patterns
 
 - ASCII-only boxes when Mermaid is required
-- Mermaid in Markdown without the `mermaid` language tag
-- HTML diagrams without `<pre class="mermaid">` + init script
-- Hardcoded customer package/queue/system names not found in artifacts
-- Mixing PlantUML or Graphviz in place of Mermaid for required IDs
+- Markdown Mermaid without `mermaid` language tag
+- HTML with ESM-only CDN and no classic script fallback
+- Omitting diagrams because CDN returned 401
+- Invented nodes not in artifacts

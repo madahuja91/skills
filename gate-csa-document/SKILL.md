@@ -1,21 +1,13 @@
 ---
 name: gate-csa-document
-description: Quality gate for lean 5-doc csa_pack + arc42-c4 HTML. Completeness renders and self-gates in FINAL mode. No machine/, no epic-story, no numbered 00/04-10 packs.
+description: Quality gate for lean 5-doc csa_pack + full arc42-c4 hub with required Mermaid diagrams. Missing diagrams or stub index = FAIL with owner for Manager re-run.
 ---
 
 # Gate: CSA Document
 
 ## Schema
 
-[`schema.json`](schema.json) · policy `csa-rich-content` · ownership `csa-section-boundaries`
-
-Substance contracts (validate content; do not require writing machine JSON):
-
-- `csa-rich-content`
-- `csa-section-boundaries`
-- `arc42-c4-views`
-- `mermaid-diagrams`
-- Pack output schemas: `Executive_Summary`, `Business_Architecture`, `Application_Architecture`, `Data_and_Integration`, `Risks_Gaps_and_Traceability`
+[`schema.json`](schema.json) · `csa-rich-content` · `csa-section-boundaries` · `mermaid-diagrams` · `arc42-c4-views` · pack `output-schemas`
 
 ## Who renders
 
@@ -23,33 +15,33 @@ Substance contracts (validate content; do not require writing machine JSON):
 
 ## Pass requires
 
-- `ACTIVE_ROOT=src` preferred; `active-root-hygiene` pass
-- Shared memory under `_internal/swarm/`
-- Accepted specialist artifacts (schema-complete enough to feed pack)
+- `ACTIVE_ROOT=src` preferred; shared memory present
+- Accepted specialist artifacts schema-complete enough to feed pack
 - On disk under **`src/csa_pack/`**:
-  - `Executive_Summary.md`
-  - `Business_Architecture.md`
-  - `Application_Architecture.md`
-  - `Data_and_Integration.md`
-  - `Risks_Gaps_and_Traceability.md`
-  - `README.md`
+  - five named MD docs + `README.md`
   - `arc42-c4/{index,context,containers,components}.html`
-- **`pack_output_schema_conformance`:** each of the five MD docs covers every `required` field of its matching `output-schemas/*.schema.json` (section coverage is the gate; stub/overview-only MD = FAIL).
-- **Min lines ≥ 200** per client MD doc; more than 200 is fine/preferred. **Never** a max line/word/size ceiling.
-- Required Mermaid IDs present
-- Pack = legacy codebase evidence only (no workflow meta)
+- **`pack_output_schema_conformance`:** every required field of each output-schema covered in MD
+- **Min lines ≥ 200** per client MD; more OK; never a max
+- **Mermaid (blocking):**
+  - `diag-exec-overview` in Executive_Summary.md
+  - `diag-domain-context-map` in Business_Architecture.md
+  - `diag-runtime` in Application_Architecture.md
+  - `diag-lineage-critical` + `diag-integration-landscape` in Data_and_Integration.md
+  - `diag-c4-context|containers|components` on detail HTML pages
+  - `index.html` ≥2 Mermaid blocks + classic `mermaid.min.js` + `mermaid.run` (not ESM-only)
+- **`index.html` hub:** all 12 required anchors — stub/nav-only index = FAIL
+- Pack = legacy evidence only (no workflow meta)
 
 ## HARD fail
 
 - Any required pack file missing
-- Chat-only / gate-report-only final
-- Numbered `00_`/`04_`–`10_` client docs present as primary pack
-- `epic_story_seeds/` required or blocking
-- `deliverables/` or `csa_pack/machine/` required
-- Gate id other than `gate-csa-document`
+- Any required diagram ID missing
+- Stub `index.html` / missing anchors / no Mermaid runtime
+- Chat-only final
+- Numbered `00_`/`04_`–`10_` primary pack, epic-story, deliverables/, machine/
 
-## Remediation
+## Remediation → Manager
 
-On fail caused by thin specialist substance, set `target_agent_id` to the owner specialist so Manager re-runs that agent.
+On fail set `target_agent_id` + `rerun_recommended` + `blocking_gaps` so Manager re-runs that specialist (or Completeness FINAL if render-only gap).
 
 Emit `gate_id: gate-csa-document`.
