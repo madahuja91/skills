@@ -48,11 +48,20 @@ Transcribing accepted facts into Markdown/HTML is not inventing architecture. Le
 
 Trigger when Manager says `mode=FINAL` **or** all five specialist artifacts already exist.
 
+**HARD — pack_substance is mandatory (blocking):**
+
 1. Confirm five lane artifacts exist (discovery, domain, architecture, lineage, integration). Prefer lane gates `pass` / `pass_with_warnings`.
 2. Re-check each artifact against its agent schema. If a required schema field is missing/empty → **FAIL** with that lane’s `target_agent_id` — do not render a partial pack.
-3. **Build pack substance first** (in working memory or `_internal/completeness_validation/pack_substance/`): one JSON object per client doc that validates **100%** against the matching `output-schemas/*.schema.json` using every required field and floor (`minItems`, enums, ID patterns). Specialist JSON alone is **not** enough.
-4. Render Markdown under `ACTIVE_ROOT/csa_pack/` from that substance — **every required schema field must appear as an explicit heading/table/list**. Thin stubs / rollup-only docs = **FAIL** (`pack_output_schema_conformance`).
-5. Validate:
+3. **Write pack substance JSON to disk** under `_internal/completeness_validation/pack_substance/`:
+   - `Executive_Summary.json`
+   - `Business_Architecture.json`
+   - `Application_Architecture.json`
+   - `Data_and_Integration.json`
+   - `Risks_Gaps_and_Traceability.json`
+4. Validate each file **100%** against the matching `csa5-pack-schemas/output-schemas/*.schema.json` (`required[]`, `minItems`, ID patterns). If any schema fails → **FAIL** (`pack_output_schema_conformance`) with `schema_fields_missing` — **do not** write/overwrite client MD yet.
+5. Only after all five pack_substance JSON files validate: render Markdown/HTML from that substance — every required field as an explicit heading/table/list with required IDs (`CAP-*`, `RISK-*`, `LIN-*`, `CMP-*`, `DEBT-*`, `GAP-*`, `ASM-*`, `ACT-*`, `REG-*`, etc.).
+6. **Never** paste Completeness gate reports, swarm/Manager process notes, or numbered specialist dump filenames into client MD (especially `Risks_Gaps_and_Traceability.md`).
+7. Validate:
    - pack substance JSON vs output-schemas (blocking)
    - Markdown section coverage of those same required fields (blocking)
    - **≥200 lines** per client MD (more OK; no max)
@@ -60,15 +69,15 @@ Trigger when Manager says `mode=FINAL` **or** all five specialist artifacts alre
    - **`arc42-c4/index.html` full hub**: all 12 anchors + ≥2 Mermaid blocks + classic runtime — stub index = FAIL
    - C4 detail pages each have their diag-* + classic runtime
    - `csa5-gate-document` + `csa5-rich-content` / `csa5-section-boundaries`
-6. Write `artifacts/quality_gate_reports/gate-csa-document-csa_pack.json`.
-7. Missing any required pack file / diagram / index section → **FAIL** (no soft pass).
-8. If pack fails because specialist substance is thin → name the **owner agent(s)** below so Manager re-runs them.
-9. If artifacts are rich but diagrams/index were not rendered → `target_agent_id: completeness_validator`, `rerun_recommended: true` (Manager re-invokes FINAL).
+8. Write `artifacts/quality_gate_reports/gate-csa-document-csa_pack.json` with `pack_output_schema_conformance` results citing the pack_substance paths.
+9. Missing any required pack file / diagram / index section / schema field → **FAIL** (no soft pass on “filenames exist + ≥200 lines”).
+10. If pack fails because specialist substance is thin → name the **owner agent(s)** below so Manager re-runs them.
+11. If artifacts are rich but diagrams/index/pack_substance were not rendered → `target_agent_id: completeness_validator`, `rerun_recommended: true` (Manager re-invokes FINAL).
 
 ### HARD — what “schema-complete document” means
 
 **Primary gate = individual document section coverage** against that doc’s output-schema `required[]` (counts, IDs, evidence, tables/sections).  
-File presence alone is **not** a pass.
+File presence + line count alone is **not** a pass.
 
 **Lines policy (HARD):**
 - Enforce a **minimum of 200 lines** per client Markdown doc (Executive_Summary, Business_Architecture, Application_Architecture, Data_and_Integration, Risks_Gaps_and_Traceability).

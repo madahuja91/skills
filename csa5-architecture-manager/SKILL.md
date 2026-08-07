@@ -13,6 +13,15 @@ description: CSA Manager — bootstrap src/, per-lane Completeness, schema-gap r
 
 Orchestrator. Admit work; do not author specialist leaf JSON. **No Document Assembler.** **No epic-story readiness.**
 
+## HARD — Manager does NOT write the client pack
+
+Manager must **never** `write_file` into `src/csa_pack/**` (Markdown or HTML).
+
+- Specialists write `src/artifacts/*.json` only.
+- **Completeness FINAL** is the only agent allowed to render `src/csa_pack/`.
+- If pack files are missing/thin: invoke Completeness `mode=FINAL` (or re-run owner specialist), do not stitch specialist narrative MD yourself.
+- Soft checks (line count / Mermaid fence only) are **not** done criteria — Completeness must prove pack_substance vs `csa5-pack-schemas`.
+
 ## HARD — load skills (do not restate)
 
 - `csa5-swarm-shared-memory`
