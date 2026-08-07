@@ -14,11 +14,11 @@
     "specialist_list_floors",
     "ssot_rules",
     "blocking_checks",
-    "min_markdown_words_per_client_doc",
-    "forbid_max_markdown_words"
+    "min_markdown_lines_per_client_doc",
+    "forbid_max_markdown_size"
   ],
   "properties": {
-    "contract_version": { "type": "string", "const": "4.1.0" },
+    "contract_version": { "type": "string", "const": "4.2.0" },
     "quality_mode": {
       "type": "string",
       "const": "artifacts_ssot_completeness_renders_lean_pack"
@@ -47,15 +47,15 @@
     },
     "forbid_machine_sections": { "type": "boolean", "const": true },
     "forbid_deliverables_folder": { "type": "boolean", "const": true },
-    "min_markdown_words_per_client_doc": {
+    "min_markdown_lines_per_client_doc": {
       "type": "integer",
-      "const": 1000,
-      "description": "Minimum words for each of the 5 client Markdown docs. Over 1000 is fine/preferred. Never pair with a max."
+      "const": 200,
+      "description": "Minimum line count for each of the 5 client Markdown docs. Over 200 is fine/preferred. Never pair with a max."
     },
-    "forbid_max_markdown_words": {
+    "forbid_max_markdown_size": {
       "type": "boolean",
       "const": true,
-      "description": "HARD: never enforce a maximum word/size ceiling on pack Markdown or explanation fields."
+      "description": "HARD: never enforce a maximum line/word/size ceiling on pack Markdown or explanation fields."
     },
     "specialist_list_floors": {
       "type": "object",
@@ -92,7 +92,7 @@
           "required_files_present",
           "artifact_schema_conformance",
           "pack_output_schema_conformance",
-          "markdown_min_word_count",
+          "markdown_min_line_count",
           "specialist_list_depth",
           "forbidden_duplicate_trees",
           "section_anti_redundancy",

@@ -52,11 +52,11 @@ Each client MD must cover **all** `required` fields of its output-schema (explic
 | Data_and_Integration | stores≥3 + entities≥5 + LIN-*≥10 + SP rules≥5 + INT-*≥6 + contracts + exceptions + resilience |
 | Risks_Gaps_and_Traceability | GAP-*≥5 + RISK-*≥5 + ASM-*≥3 + ACT-*≥3 + REG-*≥3 + trace links≥10 |
 
-**Words:** each client Markdown doc must meet a **minimum of 1000 words** (section coverage still comes first). Crossing 1000 is good — richer explanation is allowed and preferred. **Never** enforce a maximum word/size limit on pack Markdown or schema string fields.
+**Lines:** each client Markdown doc must meet a **minimum of 200 lines** (section coverage still comes first). Crossing 200 is good — richer explanation is allowed and preferred. **Never** enforce a maximum line/word/size limit on pack Markdown or schema string fields.
 
 ## Blocking checks
 
-required_files_present, artifact_schema_conformance, **pack_output_schema_conformance**, **markdown_min_word_count** (≥1000; more is fine), specialist_list_depth, forbidden_duplicate_trees, section_anti_redundancy, pack_shape_valid, shared_memory_present, no_workflow_meta_in_csa_pack
+required_files_present, artifact_schema_conformance, **pack_output_schema_conformance**, **markdown_min_line_count** (≥200 lines; more is fine), specialist_list_depth, forbidden_duplicate_trees, section_anti_redundancy, pack_shape_valid, shared_memory_present, no_workflow_meta_in_csa_pack
 
 Do **not** require writing `csa_pack/machine/sections/*.json` as a client deliverable. Temporary pack-substance JSON under `_internal/completeness_validation/` for schema checks is allowed.  
-Do **not** put `maxLength` / max word ceilings on pack docs or explanation fields.
+Do **not** put `maxLength` / max line/word ceilings on pack docs or explanation fields.

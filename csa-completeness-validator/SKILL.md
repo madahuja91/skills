@@ -66,13 +66,13 @@ Trigger when Manager says `mode=FINAL` **or** all five specialist artifacts alre
 **Primary gate = individual document section coverage** against that doc’s output-schema `required[]` (counts, IDs, evidence, tables/sections).  
 File presence alone is **not** a pass.
 
-**Words policy (HARD):**
-- Enforce a **minimum of ~1000 words** per client Markdown doc (Executive_Summary, Business_Architecture, Application_Architecture, Data_and_Integration, Risks_Gaps_and_Traceability).
-- If a doc is **over** 1000 words, that is fine and preferred when it adds real explanation/evidence.
-- **Never** use `maxLength` / max word ceilings on pack docs or explanation fields — max caps truncate useful content.
+**Lines policy (HARD):**
+- Enforce a **minimum of 200 lines** per client Markdown doc (Executive_Summary, Business_Architecture, Application_Architecture, Data_and_Integration, Risks_Gaps_and_Traceability).
+- If a doc is **over** 200 lines, that is fine and preferred when it adds real explanation/evidence.
+- **Never** use `maxLength` / max line/word ceilings on pack docs or explanation fields — max caps truncate useful content.
 - Field-level schema strings use `minLength` only (never `maxLength`).
 
-Example blockers (missing sections / floors — not “too many words”):
+Example blockers (missing sections / floors — not “too many lines”):
 
 | Doc | Incomplete if missing |
 |-----|------------------------|

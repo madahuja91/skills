@@ -35,7 +35,7 @@ Substance contracts (validate content; do not require writing machine JSON):
   - `README.md`
   - `arc42-c4/{index,context,containers,components}.html`
 - **`pack_output_schema_conformance`:** each of the five MD docs covers every `required` field of its matching `output-schemas/*.schema.json` (section coverage is the gate; stub/overview-only MD = FAIL).
-- **Min words ≥ 1000** per client MD doc; more than 1000 is fine/preferred. **Never** a max word/size ceiling.
+- **Min lines ≥ 200** per client MD doc; more than 200 is fine/preferred. **Never** a max line/word/size ceiling.
 - Required Mermaid IDs present
 - Pack = legacy codebase evidence only (no workflow meta)
 
