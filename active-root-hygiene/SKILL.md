@@ -3,7 +3,9 @@ name: active-root-hygiene
 description: >-
   Enforces a single workspace-disk ACTIVE_ROOT (prefer src/) with no invented
   absolute trees, no nested src/src, and all epic/story deliverables written only
-  under that root. Use on every Manager/Orchestrator bootstrap and Quality run.
+  under that root. Use on every Manager/Orchestrator bootstrap and 
+  
+  Quality run.
 ---
 
 # Active Root Hygiene
