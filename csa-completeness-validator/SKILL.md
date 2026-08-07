@@ -64,11 +64,13 @@ Trigger when Manager says `mode=FINAL` **or** all five specialist artifacts alre
 ### HARD — what “schema-complete document” means
 
 **Primary gate = individual document section coverage** against that doc’s output-schema `required[]` (counts, IDs, evidence, tables/sections).  
-File presence alone is **not** a pass. Word count is **not** the pass criteria.
+File presence alone is **not** a pass.
 
-- Optional **min** words only — to reject empty stubs.
-- Longer explanations are fine; **never** apply a max word/size ceiling.
-- Do not trim evidence or rationale to fit a length budget.
+**Words policy (HARD):**
+- Enforce a **minimum of ~1000 words** per client Markdown doc (Executive_Summary, Business_Architecture, Application_Architecture, Data_and_Integration, Risks_Gaps_and_Traceability).
+- If a doc is **over** 1000 words, that is fine and preferred when it adds real explanation/evidence.
+- **Never** use `maxLength` / max word ceilings on pack docs or explanation fields — max caps truncate useful content.
+- Field-level schema strings use `minLength` only (never `maxLength`).
 
 Example blockers (missing sections / floors — not “too many words”):
 

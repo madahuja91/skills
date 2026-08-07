@@ -13,10 +13,12 @@
     "forbid_deliverables_folder",
     "specialist_list_floors",
     "ssot_rules",
-    "blocking_checks"
+    "blocking_checks",
+    "min_markdown_words_per_client_doc",
+    "forbid_max_markdown_words"
   ],
   "properties": {
-    "contract_version": { "type": "string", "const": "4.0.0" },
+    "contract_version": { "type": "string", "const": "4.1.0" },
     "quality_mode": {
       "type": "string",
       "const": "artifacts_ssot_completeness_renders_lean_pack"
@@ -45,6 +47,16 @@
     },
     "forbid_machine_sections": { "type": "boolean", "const": true },
     "forbid_deliverables_folder": { "type": "boolean", "const": true },
+    "min_markdown_words_per_client_doc": {
+      "type": "integer",
+      "const": 1000,
+      "description": "Minimum words for each of the 5 client Markdown docs. Over 1000 is fine/preferred. Never pair with a max."
+    },
+    "forbid_max_markdown_words": {
+      "type": "boolean",
+      "const": true,
+      "description": "HARD: never enforce a maximum word/size ceiling on pack Markdown or explanation fields."
+    },
     "specialist_list_floors": {
       "type": "object",
       "properties": {
@@ -80,6 +92,7 @@
           "required_files_present",
           "artifact_schema_conformance",
           "pack_output_schema_conformance",
+          "markdown_min_word_count",
           "specialist_list_depth",
           "forbidden_duplicate_trees",
           "section_anti_redundancy",
