@@ -1,4 +1,5 @@
 ---
+# OUT OF SCOPE for CSA Orchestrator Swarm (lean 5-doc). Do not invoke from CSA Manager.
 name: gate-epic-story-readiness
 description: Final gate ensuring functions/epics/stories Markdown seeds are CSA-traceable before epic generation. Use after epic_story_seeds Markdown files are written.
 ---

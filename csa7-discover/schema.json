@@ -1,0 +1,993 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa7-discover.json",
+  "title": "CSADiscoverArtifact",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "agent_id",
+    "agent_version",
+    "timestamp",
+    "schema_version",
+    "scope",
+    "overall_confidence_score",
+    "artifact_inventory",
+    "technology_stack",
+    "dependency_analysis",
+    "risk_assessment",
+    "pack_substance"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string"
+    },
+    "agent_id": {
+      "const": "discover"
+    },
+    "agent_version": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "3.0.0-knowledge-first"
+    },
+    "scope": {
+      "type": "object"
+    },
+    "overall_confidence_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "processing_time_ms": {
+      "type": "integer"
+    },
+    "artifact_inventory": {
+      "type": "object",
+      "required": [
+        "total_artifacts",
+        "classified_artifacts",
+        "unclassified_artifacts",
+        "missing_artifacts"
+      ],
+      "properties": {
+        "total_artifacts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "classified_artifacts": {
+          "type": "object",
+          "required": [
+            "code",
+            "data",
+            "config",
+            "runtime",
+            "documentation"
+          ],
+          "properties": {
+            "code": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/classifiedArtifact"
+              }
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/classifiedArtifact"
+              }
+            },
+            "config": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/classifiedArtifact"
+              }
+            },
+            "runtime": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/classifiedArtifact"
+              }
+            },
+            "documentation": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/classifiedArtifact"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "unclassified_artifacts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "missing_artifacts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "technology_stack": {
+      "type": "object",
+      "required": [
+        "programming_languages",
+        "frameworks",
+        "databases",
+        "infrastructure"
+      ],
+      "properties": {
+        "programming_languages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "language",
+              "version",
+              "file_count",
+              "confidence_score",
+              "evidence"
+            ],
+            "properties": {
+              "language": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "usage_percentage": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "file_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "confidence_score": {
+                "$ref": "#/$defs/confidenceScore"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/evidence"
+                },
+                "minItems": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "frameworks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "framework_name",
+              "version",
+              "category",
+              "confidence_score",
+              "evidence"
+            ],
+            "properties": {
+              "framework_name": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "web",
+                  "data",
+                  "testing",
+                  "build",
+                  "enterprise",
+                  "ui",
+                  "messaging",
+                  "unknown"
+                ]
+              },
+              "usage_pattern": {
+                "type": "string"
+              },
+              "confidence_score": {
+                "$ref": "#/$defs/confidenceScore"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/evidence"
+                },
+                "minItems": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "databases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "database_type",
+              "version",
+              "confidence_score",
+              "evidence"
+            ],
+            "properties": {
+              "database_type": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "connection_pattern": {
+                "type": "string"
+              },
+              "usage_context": {
+                "type": "string"
+              },
+              "confidence_score": {
+                "$ref": "#/$defs/confidenceScore"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/evidence"
+                },
+                "minItems": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "infrastructure": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "component_type",
+              "technology",
+              "version",
+              "confidence_score",
+              "evidence"
+            ],
+            "properties": {
+              "component_type": {
+                "type": "string",
+                "enum": [
+                  "server",
+                  "container",
+                  "cloud_service",
+                  "app_server",
+                  "batch",
+                  "unknown"
+                ]
+              },
+              "technology": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "configuration": {
+                "type": "object"
+              },
+              "confidence_score": {
+                "$ref": "#/$defs/confidenceScore"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/evidence"
+                },
+                "minItems": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "dependency_analysis": {
+      "type": "object",
+      "required": [
+        "internal_dependencies",
+        "external_dependencies",
+        "dependency_graph"
+      ],
+      "properties": {
+        "internal_dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "source_module",
+              "target_module",
+              "dependency_type",
+              "confidence_score"
+            ],
+            "properties": {
+              "source_module": {
+                "type": "string"
+              },
+              "target_module": {
+                "type": "string"
+              },
+              "dependency_type": {
+                "type": "string",
+                "enum": [
+                  "compile",
+                  "runtime",
+                  "test"
+                ]
+              },
+              "relationship_strength": {
+                "type": "string",
+                "enum": [
+                  "strong",
+                  "medium",
+                  "weak"
+                ]
+              },
+              "confidence_score": {
+                "$ref": "#/$defs/confidenceScore"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/evidence"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "external_dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "dependency_name",
+              "version",
+              "risk_level",
+              "confidence_score"
+            ],
+            "properties": {
+              "dependency_name": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "vendor": {
+                "type": "string"
+              },
+              "license": {
+                "type": "string"
+              },
+              "risk_level": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "security_vulnerabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "confidence_score": {
+                "$ref": "#/$defs/confidenceScore"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/evidence"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "dependency_graph": {
+          "type": "object",
+          "required": [
+            "nodes",
+            "edges"
+          ],
+          "properties": {
+            "nodes": {
+              "type": "array"
+            },
+            "edges": {
+              "type": "array"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "risk_assessment": {
+      "type": "object",
+      "required": [
+        "deprecated_technologies",
+        "security_vulnerabilities",
+        "compatibility_issues",
+        "missing_critical_artifacts",
+        "overall_risk_score"
+      ],
+      "properties": {
+        "deprecated_technologies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "security_vulnerabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "compatibility_issues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "missing_critical_artifacts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "overall_risk_score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": false
+    },
+    "module_map": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "module_id",
+          "module_name",
+          "root_path"
+        ],
+        "properties": {
+          "module_id": {
+            "type": "string"
+          },
+          "module_name": {
+            "type": "string"
+          },
+          "root_path": {
+            "type": "string"
+          },
+          "primary_languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "estimated_size_files": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "recommendations": {
+      "type": "array"
+    },
+    "pack_substance": {
+      "type": "object",
+      "required": [
+        "purpose",
+        "business_context",
+        "business_value",
+        "key_responsibilities",
+        "capability_synopsis",
+        "major_business_rules_summary",
+        "system_overview",
+        "key_metrics_table",
+        "modernization_readiness_scorecard",
+        "key_architectural_findings",
+        "top_technical_risks",
+        "migration_effort_estimate",
+        "recommended_migration_strategy",
+        "key_success_metrics",
+        "modernization_outlook",
+        "evidence_appendix"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string",
+          "minLength": 80,
+          "description": "What this system is for in plain language (not a file inventory)."
+        },
+        "business_context": {
+          "type": "string",
+          "minLength": 80,
+          "description": "Why the system exists in the business landscape."
+        },
+        "business_value": {
+          "type": "string",
+          "minLength": 60,
+          "description": "Business value delivered to stakeholders."
+        },
+        "key_responsibilities": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "string",
+            "minLength": 20
+          }
+        },
+        "capability_synopsis": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "capability_id",
+              "name",
+              "what",
+              "why"
+            ],
+            "properties": {
+              "capability_id": {
+                "type": "string",
+                "pattern": "^CAP-"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 3
+              },
+              "what": {
+                "type": "string",
+                "minLength": 30
+              },
+              "why": {
+                "type": "string",
+                "minLength": 20
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "major_business_rules_summary": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "rule",
+              "business_intent"
+            ],
+            "properties": {
+              "rule": {
+                "type": "string",
+                "minLength": 20
+              },
+              "business_intent": {
+                "type": "string",
+                "minLength": 15
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "system_overview": {
+          "type": "object",
+          "required": [
+            "system_name",
+            "primary_business_purpose",
+            "architecture_pattern",
+            "scope_summary"
+          ],
+          "properties": {
+            "system_name": {
+              "type": "string",
+              "minLength": 2
+            },
+            "primary_business_purpose": {
+              "type": "string",
+              "minLength": 40
+            },
+            "architecture_pattern": {
+              "type": "string",
+              "enum": [
+                "Monolith",
+                "Distributed Stored Procedures",
+                "Layered N-Tier",
+                "Microservices",
+                "Hybrid"
+              ]
+            },
+            "scope_summary": {
+              "type": "string",
+              "minLength": 40
+            }
+          },
+          "additionalProperties": false
+        },
+        "key_metrics_table": {
+          "type": "array",
+          "minItems": 5,
+          "description": "Readiness-oriented metrics, not raw evidence dumps.",
+          "items": {
+            "type": "object",
+            "required": [
+              "category",
+              "count",
+              "tech_stack",
+              "health_status"
+            ],
+            "properties": {
+              "category": {
+                "type": "string",
+                "minLength": 2
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "tech_stack": {
+                "type": "string",
+                "minLength": 2
+              },
+              "health_status": {
+                "type": "string",
+                "enum": [
+                  "Healthy",
+                  "Legacy - Action Needed",
+                  "Critical Risk"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "modernization_readiness_scorecard": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "required": [
+              "dimension",
+              "score",
+              "rationale"
+            ],
+            "properties": {
+              "dimension": {
+                "type": "string",
+                "minLength": 3
+              },
+              "score": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 20
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "key_architectural_findings": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "string",
+            "minLength": 30
+          }
+        },
+        "top_technical_risks": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "risk_id",
+              "risk_title",
+              "impact_area",
+              "severity",
+              "impact",
+              "recommendation"
+            ],
+            "properties": {
+              "risk_id": {
+                "type": "string",
+                "pattern": "^RISK-"
+              },
+              "risk_title": {
+                "type": "string",
+                "minLength": 5
+              },
+              "impact_area": {
+                "type": "string",
+                "minLength": 3
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH",
+                  "CRITICAL"
+                ]
+              },
+              "impact": {
+                "type": "string",
+                "minLength": 20
+              },
+              "recommendation": {
+                "type": "string",
+                "minLength": 20
+              },
+              "brief_mitigation": {
+                "type": "string",
+                "minLength": 10
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "migration_effort_estimate": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "approach",
+              "effort_band",
+              "summary"
+            ],
+            "properties": {
+              "approach": {
+                "type": "string",
+                "minLength": 3
+              },
+              "effort_band": {
+                "type": "string",
+                "minLength": 2
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 20
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "recommended_migration_strategy": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "phase",
+              "intent"
+            ],
+            "properties": {
+              "phase": {
+                "type": "string",
+                "minLength": 3
+              },
+              "intent": {
+                "type": "string",
+                "minLength": 20
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "key_success_metrics": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "metric",
+              "target_or_signal"
+            ],
+            "properties": {
+              "metric": {
+                "type": "string",
+                "minLength": 3
+              },
+              "target_or_signal": {
+                "type": "string",
+                "minLength": 5
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "modernization_outlook": {
+          "type": "object",
+          "required": [
+            "current_state",
+            "future_state",
+            "cloud_readiness",
+            "microservice_candidates",
+            "estimated_effort"
+          ],
+          "properties": {
+            "current_state": {
+              "type": "string",
+              "minLength": 40
+            },
+            "future_state": {
+              "type": "string",
+              "minLength": 40
+            },
+            "cloud_readiness": {
+              "type": "string",
+              "minLength": 20
+            },
+            "microservice_candidates": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "string",
+                "minLength": 10
+              }
+            },
+            "estimated_effort": {
+              "type": "string",
+              "minLength": 5
+            }
+          },
+          "additionalProperties": false
+        },
+        "evidence_appendix": {
+          "type": "array",
+          "minItems": 8,
+          "description": "Traceability only — rendered last in Markdown under Evidence Mapping (Appendix).",
+          "items": {
+            "type": "object",
+            "required": [
+              "claim_ref",
+              "path_or_artifact",
+              "note"
+            ],
+            "properties": {
+              "claim_ref": {
+                "type": "string",
+                "minLength": 3
+              },
+              "path_or_artifact": {
+                "type": "string",
+                "minLength": 3
+              },
+              "note": {
+                "type": "string",
+                "minLength": 10
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false,
+      "description": "Knowledge-first pack substance. Narrative sections required; evidence_appendix last. Validates against https://csa.local/schemas/Executive_Summary.schema.json."
+    }
+  },
+  "$defs": {
+    "classifiedArtifact": {
+      "type": "object",
+      "required": [
+        "path",
+        "category"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "subtype": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "path",
+        "kind"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "code",
+            "config",
+            "ddl",
+            "descriptor",
+            "doc",
+            "log",
+            "inferred"
+          ]
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "confidenceScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    }
+  },
+  "additionalProperties": false
+}

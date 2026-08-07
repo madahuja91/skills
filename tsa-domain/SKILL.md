@@ -1,9 +1,9 @@
 ---
 name: tsa-domain
-description: Map CSA domains/capabilities to target bounded contexts using ADR constraints. Use when Manager invokes TSA Domain.
+description: Produce enterprise ADR blueprint for TSA decisions and trade-offs.
 ---
 
-# TSA Domain
+# TSA ADR Blueprint
 
 ## Schema
 
@@ -12,11 +12,11 @@ Authoritative contract: [`schema.json`](schema.json)
 
 ## Goal
 
-Write `artifacts/target_domain.json` and contribute to `04_target_domain_model.md` content via Assembler.
+Write `artifacts/adr_blueprint.json` using enterprise ADR schema.
 
 ## Procedure
 
-1. Read accepted intake + CSA domain.
-2. Propose target bounded contexts / capabilities aligned to ADR.
-3. Map CSA `DOM-*` / capabilities → target IDs with traceability.
-4. Required Mermaid later in Assembler: `diag-tsa-domain-context-map`.
+1. Read accepted `tsa_specification.json` and CSA risk/debt evidence.
+2. Produce ADR decisions with context, drivers, options, chosen rationale.
+3. Include governance metadata, compliance/enforcement, and ADR relationships.
+4. Ensure each ADR traces to CSA baseline concerns and target-service outcomes.

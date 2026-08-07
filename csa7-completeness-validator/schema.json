@@ -1,0 +1,2861 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/completeness-validator-invocation.json",
+  "title": "CompletenessValidatorInvocation",
+  "type": "object",
+  "required": [
+    "mode",
+    "gate_id",
+    "attempt",
+    "max_reruns"
+  ],
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": [
+        "lane",
+        "final"
+      ]
+    },
+    "artifact_path": {
+      "type": "string",
+      "description": "Required for lane mode — single specialist artifact path"
+    },
+    "artifact_paths": {
+      "type": "array",
+      "description": "Required for final mode — all five specialist artifacts",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "string"
+      }
+    },
+    "gate_id": {
+      "type": "string",
+      "enum": [
+        "csa7-gate-discover",
+        "csa7-gate-business-domain",
+        "csa7-gate-tech-architecture",
+        "csa7-gate-data-lineage",
+        "csa7-gate-integration",
+        "gate-csa-document"
+      ]
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "max_reruns": {
+      "type": "integer",
+      "const": 2
+    },
+    "prior_context": {
+      "type": "string"
+    },
+    "pack_substance_bundle": {
+      "type": "object",
+      "description": "FINAL: all five knowledge-first pack docs.",
+      "required": [
+        "Executive_Summary",
+        "Business_Architecture",
+        "Application_Architecture",
+        "Data_and_Integration",
+        "Risks_Gaps_and_Traceability"
+      ],
+      "properties": {
+        "Executive_Summary": {
+          "type": "object",
+          "required": [
+            "purpose",
+            "business_context",
+            "business_value",
+            "key_responsibilities",
+            "capability_synopsis",
+            "major_business_rules_summary",
+            "system_overview",
+            "key_metrics_table",
+            "modernization_readiness_scorecard",
+            "key_architectural_findings",
+            "top_technical_risks",
+            "migration_effort_estimate",
+            "recommended_migration_strategy",
+            "key_success_metrics",
+            "modernization_outlook",
+            "evidence_appendix"
+          ],
+          "properties": {
+            "purpose": {
+              "type": "string",
+              "minLength": 80,
+              "description": "What this system is for in plain language (not a file inventory)."
+            },
+            "business_context": {
+              "type": "string",
+              "minLength": 80,
+              "description": "Why the system exists in the business landscape."
+            },
+            "business_value": {
+              "type": "string",
+              "minLength": 60,
+              "description": "Business value delivered to stakeholders."
+            },
+            "key_responsibilities": {
+              "type": "array",
+              "minItems": 4,
+              "items": {
+                "type": "string",
+                "minLength": 20
+              }
+            },
+            "capability_synopsis": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": [
+                  "capability_id",
+                  "name",
+                  "what",
+                  "why"
+                ],
+                "properties": {
+                  "capability_id": {
+                    "type": "string",
+                    "pattern": "^CAP-"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "what": {
+                    "type": "string",
+                    "minLength": 30
+                  },
+                  "why": {
+                    "type": "string",
+                    "minLength": 20
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "major_business_rules_summary": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": [
+                  "rule",
+                  "business_intent"
+                ],
+                "properties": {
+                  "rule": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "business_intent": {
+                    "type": "string",
+                    "minLength": 15
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "system_overview": {
+              "type": "object",
+              "required": [
+                "system_name",
+                "primary_business_purpose",
+                "architecture_pattern",
+                "scope_summary"
+              ],
+              "properties": {
+                "system_name": {
+                  "type": "string",
+                  "minLength": 2
+                },
+                "primary_business_purpose": {
+                  "type": "string",
+                  "minLength": 40
+                },
+                "architecture_pattern": {
+                  "type": "string",
+                  "enum": [
+                    "Monolith",
+                    "Distributed Stored Procedures",
+                    "Layered N-Tier",
+                    "Microservices",
+                    "Hybrid"
+                  ]
+                },
+                "scope_summary": {
+                  "type": "string",
+                  "minLength": 40
+                }
+              },
+              "additionalProperties": false
+            },
+            "key_metrics_table": {
+              "type": "array",
+              "minItems": 5,
+              "description": "Readiness-oriented metrics, not raw evidence dumps.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "category",
+                  "count",
+                  "tech_stack",
+                  "health_status"
+                ],
+                "properties": {
+                  "category": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "count": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "tech_stack": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "health_status": {
+                    "type": "string",
+                    "enum": [
+                      "Healthy",
+                      "Legacy - Action Needed",
+                      "Critical Risk"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "modernization_readiness_scorecard": {
+              "type": "array",
+              "minItems": 4,
+              "items": {
+                "type": "object",
+                "required": [
+                  "dimension",
+                  "score",
+                  "rationale"
+                ],
+                "properties": {
+                  "dimension": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "score": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "rationale": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "key_architectural_findings": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "string",
+                "minLength": 30
+              }
+            },
+            "top_technical_risks": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": [
+                  "risk_id",
+                  "risk_title",
+                  "impact_area",
+                  "severity",
+                  "impact",
+                  "recommendation"
+                ],
+                "properties": {
+                  "risk_id": {
+                    "type": "string",
+                    "pattern": "^RISK-"
+                  },
+                  "risk_title": {
+                    "type": "string",
+                    "minLength": 5
+                  },
+                  "impact_area": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "severity": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MEDIUM",
+                      "HIGH",
+                      "CRITICAL"
+                    ]
+                  },
+                  "impact": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "recommendation": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "brief_mitigation": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "migration_effort_estimate": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": [
+                  "approach",
+                  "effort_band",
+                  "summary"
+                ],
+                "properties": {
+                  "approach": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "effort_band": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "summary": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "recommended_migration_strategy": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": [
+                  "phase",
+                  "intent"
+                ],
+                "properties": {
+                  "phase": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "intent": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "key_success_metrics": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "metric",
+                  "target_or_signal"
+                ],
+                "properties": {
+                  "metric": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "target_or_signal": {
+                    "type": "string",
+                    "minLength": 5
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "modernization_outlook": {
+              "type": "object",
+              "required": [
+                "current_state",
+                "future_state",
+                "cloud_readiness",
+                "microservice_candidates",
+                "estimated_effort"
+              ],
+              "properties": {
+                "current_state": {
+                  "type": "string",
+                  "minLength": 40
+                },
+                "future_state": {
+                  "type": "string",
+                  "minLength": 40
+                },
+                "cloud_readiness": {
+                  "type": "string",
+                  "minLength": 20
+                },
+                "microservice_candidates": {
+                  "type": "array",
+                  "minItems": 2,
+                  "items": {
+                    "type": "string",
+                    "minLength": 10
+                  }
+                },
+                "estimated_effort": {
+                  "type": "string",
+                  "minLength": 5
+                }
+              },
+              "additionalProperties": false
+            },
+            "evidence_appendix": {
+              "type": "array",
+              "minItems": 8,
+              "description": "Traceability only — rendered last in Markdown under Evidence Mapping (Appendix).",
+              "items": {
+                "type": "object",
+                "required": [
+                  "claim_ref",
+                  "path_or_artifact",
+                  "note"
+                ],
+                "properties": {
+                  "claim_ref": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "path_or_artifact": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "note": {
+                    "type": "string",
+                    "minLength": 10
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false,
+          "description": "Knowledge-first pack substance. Narrative sections required; evidence_appendix last. Validates against https://csa.local/schemas/Executive_Summary.schema.json."
+        },
+        "Business_Architecture": {
+          "type": "object",
+          "required": [
+            "overview",
+            "bounded_contexts",
+            "capability_taxonomy",
+            "business_rules",
+            "acceptance_criteria",
+            "domain_model",
+            "ubiquitous_dictionary",
+            "capability_flows",
+            "operation_dispatch_rules",
+            "feature_flag_catalogue",
+            "provider_selection_rules",
+            "gap_analysis_bullets",
+            "evidence_appendix"
+          ],
+          "properties": {
+            "overview": {
+              "type": "object",
+              "required": [
+                "what",
+                "why",
+                "how_summary"
+              ],
+              "properties": {
+                "what": {
+                  "type": "string",
+                  "minLength": 60
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 40
+                },
+                "how_summary": {
+                  "type": "string",
+                  "minLength": 60,
+                  "description": "High-level business flow: Request → Validation → Rules → Persist → Integration → Notification."
+                }
+              },
+              "additionalProperties": false
+            },
+            "bounded_contexts": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "context_name",
+                  "domain_type",
+                  "description",
+                  "what",
+                  "why",
+                  "aggregates"
+                ],
+                "properties": {
+                  "context_name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "domain_type": {
+                    "type": "string",
+                    "enum": [
+                      "Core",
+                      "Supporting",
+                      "Generic"
+                    ]
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 40
+                  },
+                  "what": {
+                    "type": "string",
+                    "minLength": 30
+                  },
+                  "why": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "aggregates": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "aggregate_root",
+                        "entities"
+                      ],
+                      "properties": {
+                        "aggregate_root": {
+                          "type": "string",
+                          "minLength": 2
+                        },
+                        "entities": {
+                          "type": "array",
+                          "minItems": 1,
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "value_objects": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "capability_taxonomy": {
+              "type": "array",
+              "minItems": 8,
+              "items": {
+                "type": "object",
+                "required": [
+                  "capability_id",
+                  "l1_capability",
+                  "l2_capability",
+                  "what",
+                  "why",
+                  "how",
+                  "criticality",
+                  "realizing_components"
+                ],
+                "properties": {
+                  "capability_id": {
+                    "type": "string",
+                    "pattern": "^CAP-"
+                  },
+                  "l1_capability": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "l2_capability": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "what": {
+                    "type": "string",
+                    "minLength": 40
+                  },
+                  "why": {
+                    "type": "string",
+                    "minLength": 25
+                  },
+                  "how": {
+                    "type": "string",
+                    "minLength": 40,
+                    "description": "Architecture behaviour in business steps, not class lists."
+                  },
+                  "criticality": {
+                    "type": "string",
+                    "enum": [
+                      "Mission-Critical",
+                      "Business-Operational",
+                      "Administrative"
+                    ]
+                  },
+                  "realizing_components": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 2
+                    }
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "business_rules": {
+              "type": "array",
+              "minItems": 8,
+              "description": "Prose business rules (e.g. Customer cannot be deleted when active orders exist) — not file:line citations.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "rule_id",
+                  "rule",
+                  "business_intent",
+                  "capability_id"
+                ],
+                "properties": {
+                  "rule_id": {
+                    "type": "string",
+                    "pattern": "^BR-"
+                  },
+                  "rule": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "business_intent": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "capability_id": {
+                    "type": "string",
+                    "pattern": "^CAP-"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "acceptance_criteria": {
+              "type": "array",
+              "minItems": 8,
+              "description": "Per-capability acceptance criteria for migration teams.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "capability_id",
+                  "criteria"
+                ],
+                "properties": {
+                  "capability_id": {
+                    "type": "string",
+                    "pattern": "^CAP-"
+                  },
+                  "criteria": {
+                    "type": "array",
+                    "minItems": 3,
+                    "items": {
+                      "type": "string",
+                      "minLength": 10
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "domain_model": {
+              "type": "array",
+              "minItems": 3,
+              "description": "Full DDD shapes with explanation — Aggregate Root, Entities, VOs, Domain Services, Repositories, Domain Events.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "bounded_context",
+                  "aggregate_name",
+                  "aggregate_root",
+                  "entities",
+                  "value_objects",
+                  "repository",
+                  "explanation"
+                ],
+                "properties": {
+                  "bounded_context": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "aggregate_name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "aggregate_root": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "entities": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "value_objects": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "domain_services": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "repository": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "domain_events": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "explanation": {
+                    "type": "string",
+                    "minLength": 40
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "ubiquitous_dictionary": {
+              "type": "array",
+              "minItems": 8,
+              "items": {
+                "type": "object",
+                "required": [
+                  "term",
+                  "definition"
+                ],
+                "properties": {
+                  "term": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "definition": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "legacy_mapping": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "capability_flows": {
+              "type": "array",
+              "minItems": 3,
+              "description": "Business workflows (Receive → Validate → Rules → Persist → Notify), not DAO chains.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "flow_id",
+                  "flow_name",
+                  "steps",
+                  "capabilities"
+                ],
+                "properties": {
+                  "flow_id": {
+                    "type": "string",
+                    "pattern": "^WF-"
+                  },
+                  "flow_name": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "steps": {
+                    "type": "array",
+                    "minItems": 5,
+                    "items": {
+                      "type": "string",
+                      "minLength": 3
+                    }
+                  },
+                  "capabilities": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "operation_dispatch_rules": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": [
+                  "dispatch_key",
+                  "condition",
+                  "handler"
+                ],
+                "properties": {
+                  "dispatch_key": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "condition": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "handler": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "fallback": {
+                    "type": "string"
+                  },
+                  "auth_context": {
+                    "type": "string"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "feature_flag_catalogue": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "flag_name",
+                  "behavior_gated",
+                  "default_state"
+                ],
+                "properties": {
+                  "flag_name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "behavior_gated": {
+                    "type": "string",
+                    "minLength": 5
+                  },
+                  "default_state": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "source": {
+                    "type": "string"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "provider_selection_rules": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "rule_name",
+                  "selector",
+                  "selected_provider_or_path"
+                ],
+                "properties": {
+                  "rule_name": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "selector": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "selected_provider_or_path": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "default_fallback": {
+                    "type": "string"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "gap_analysis_bullets": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "string",
+                "minLength": 20
+              }
+            },
+            "evidence_appendix": {
+              "type": "array",
+              "minItems": 8,
+              "items": {
+                "type": "object",
+                "required": [
+                  "claim_ref",
+                  "path_or_artifact",
+                  "note"
+                ],
+                "properties": {
+                  "claim_ref": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "path_or_artifact": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "note": {
+                    "type": "string",
+                    "minLength": 10
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false,
+          "description": "Knowledge-first pack substance. Narrative sections required; evidence_appendix last. Validates against https://csa.local/schemas/Business_Architecture.schema.json."
+        },
+        "Application_Architecture": {
+          "type": "object",
+          "required": [
+            "overview",
+            "architecture_layers",
+            "key_components",
+            "runtime_behaviour",
+            "security_behaviour",
+            "failure_behaviour",
+            "build_and_runtime",
+            "deployment_topology",
+            "security_controls",
+            "cross_cutting_concerns",
+            "runtime_evidence",
+            "decision_log",
+            "tech_debt_register",
+            "modernization_by_area",
+            "ops_gaps",
+            "evidence_appendix"
+          ],
+          "properties": {
+            "overview": {
+              "type": "object",
+              "required": [
+                "what",
+                "why",
+                "how_summary"
+              ],
+              "properties": {
+                "what": {
+                  "type": "string",
+                  "minLength": 60
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 40
+                },
+                "how_summary": {
+                  "type": "string",
+                  "minLength": 60,
+                  "description": "Request → Validation → Business Rules → Persistence → Integration → Notification."
+                }
+              },
+              "additionalProperties": false
+            },
+            "architecture_layers": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": [
+                  "layer_name",
+                  "description",
+                  "responsibilities",
+                  "key_technologies"
+                ],
+                "properties": {
+                  "layer_name": {
+                    "type": "string",
+                    "enum": [
+                      "presentation",
+                      "business",
+                      "data",
+                      "integration",
+                      "infrastructure"
+                    ]
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 30
+                  },
+                  "responsibilities": {
+                    "type": "array",
+                    "minItems": 2,
+                    "items": {
+                      "type": "string",
+                      "minLength": 15
+                    }
+                  },
+                  "key_technologies": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "key_components": {
+              "type": "array",
+              "minItems": 8,
+              "items": {
+                "type": "object",
+                "required": [
+                  "component_id",
+                  "component_name",
+                  "layer",
+                  "responsibility",
+                  "what_it_does"
+                ],
+                "properties": {
+                  "component_id": {
+                    "type": "string",
+                    "pattern": "^CMP-"
+                  },
+                  "component_name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "layer": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "responsibility": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "what_it_does": {
+                    "type": "string",
+                    "minLength": 40,
+                    "description": "Narrative of behaviour — not a file listing."
+                  },
+                  "interfaces": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "direction"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "direction": {
+                          "type": "string",
+                          "enum": [
+                            "in",
+                            "out",
+                            "both"
+                          ]
+                        },
+                        "protocol": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "runtime_behaviour": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "scenario",
+                  "flow_steps",
+                  "outcome"
+                ],
+                "properties": {
+                  "scenario": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "flow_steps": {
+                    "type": "array",
+                    "minItems": 4,
+                    "items": {
+                      "type": "string",
+                      "minLength": 5
+                    }
+                  },
+                  "outcome": {
+                    "type": "string",
+                    "minLength": 15
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "security_behaviour": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "concern",
+                  "behaviour"
+                ],
+                "properties": {
+                  "concern": {
+                    "type": "string",
+                    "minLength": 5
+                  },
+                  "behaviour": {
+                    "type": "string",
+                    "minLength": 25
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "failure_behaviour": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "failure_mode",
+                  "observed_handling",
+                  "business_impact"
+                ],
+                "properties": {
+                  "failure_mode": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "observed_handling": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "business_impact": {
+                    "type": "string",
+                    "minLength": 15
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "build_and_runtime": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "area",
+                  "technology",
+                  "notes"
+                ],
+                "properties": {
+                  "area": {
+                    "type": "string",
+                    "enum": [
+                      "build",
+                      "runtime",
+                      "framework",
+                      "serialization",
+                      "logging",
+                      "other"
+                    ]
+                  },
+                  "technology": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "notes": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "deployment_topology": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": [
+                  "node_id",
+                  "node_name",
+                  "node_type"
+                ],
+                "properties": {
+                  "node_id": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "node_name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "node_type": {
+                    "type": "string",
+                    "enum": [
+                      "app_server",
+                      "web",
+                      "db",
+                      "queue",
+                      "batch",
+                      "external",
+                      "unknown"
+                    ]
+                  },
+                  "hosts_or_modules": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "security_controls": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "control_id",
+                  "control_type",
+                  "description"
+                ],
+                "properties": {
+                  "control_id": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "control_type": {
+                    "type": "string",
+                    "enum": [
+                      "authentication",
+                      "authorization",
+                      "secrets",
+                      "transport",
+                      "audit",
+                      "other"
+                    ]
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "cross_cutting_concerns": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "concern",
+                  "implementation"
+                ],
+                "properties": {
+                  "concern": {
+                    "type": "string",
+                    "enum": [
+                      "caching",
+                      "logging",
+                      "serialization",
+                      "i18n",
+                      "config",
+                      "other"
+                    ]
+                  },
+                  "implementation": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "runtime_evidence": {
+              "type": "array",
+              "minItems": 3,
+              "description": "Observed runtime behaviour notes — optional evidence paths; narrative first.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "artifact",
+                  "observed_behavior",
+                  "confidence"
+                ],
+                "properties": {
+                  "artifact": {
+                    "type": "string"
+                  },
+                  "observed_behavior": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "confidence": {
+                    "type": "string",
+                    "enum": [
+                      "HIGH",
+                      "MEDIUM",
+                      "LOW",
+                      "UNKNOWN"
+                    ]
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "decision_log": {
+              "type": "array",
+              "minItems": 5,
+              "description": "Why SP / MQ / batch / scheduler / cache / sync / async — client always asks.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "decision_id",
+                  "topic",
+                  "current_choice",
+                  "rationale",
+                  "tradeoffs"
+                ],
+                "properties": {
+                  "decision_id": {
+                    "type": "string",
+                    "pattern": "^DEC-"
+                  },
+                  "topic": {
+                    "type": "string",
+                    "enum": [
+                      "stored_procedure",
+                      "mq",
+                      "batch",
+                      "scheduler",
+                      "cache",
+                      "sync",
+                      "async",
+                      "other"
+                    ]
+                  },
+                  "current_choice": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "rationale": {
+                    "type": "string",
+                    "minLength": 30
+                  },
+                  "tradeoffs": {
+                    "type": "string",
+                    "minLength": 20
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "tech_debt_register": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": [
+                  "debt_id",
+                  "title",
+                  "category",
+                  "severity",
+                  "impact"
+                ],
+                "properties": {
+                  "debt_id": {
+                    "type": "string",
+                    "pattern": "^DEBT-"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 5
+                  },
+                  "category": {
+                    "type": "string",
+                    "enum": [
+                      "Architecture",
+                      "Code",
+                      "Data",
+                      "Integration",
+                      "Ops",
+                      "Security",
+                      "Testing"
+                    ]
+                  },
+                  "severity": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MEDIUM",
+                      "HIGH",
+                      "CRITICAL"
+                    ]
+                  },
+                  "impact": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "modernization_by_area": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "area",
+                  "current_state",
+                  "future_state",
+                  "migration_complexity",
+                  "cloud_readiness",
+                  "microservice_candidate",
+                  "ddd_readiness",
+                  "risk",
+                  "estimated_effort"
+                ],
+                "properties": {
+                  "area": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "current_state": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "future_state": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "migration_complexity": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MEDIUM",
+                      "HIGH",
+                      "CRITICAL"
+                    ]
+                  },
+                  "cloud_readiness": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "microservice_candidate": {
+                    "type": "boolean"
+                  },
+                  "ddd_readiness": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "risk": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "estimated_effort": {
+                    "type": "string",
+                    "minLength": 3
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "ops_gaps": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "string",
+                "minLength": 15
+              }
+            },
+            "evidence_appendix": {
+              "type": "array",
+              "minItems": 8,
+              "items": {
+                "type": "object",
+                "required": [
+                  "claim_ref",
+                  "path_or_artifact",
+                  "note"
+                ],
+                "properties": {
+                  "claim_ref": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "path_or_artifact": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "note": {
+                    "type": "string",
+                    "minLength": 10
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false,
+          "description": "Knowledge-first pack substance. Narrative sections required; evidence_appendix last. Validates against https://csa.local/schemas/Application_Architecture.schema.json."
+        },
+        "Data_and_Integration": {
+          "type": "object",
+          "required": [
+            "overview",
+            "persistence_strategy",
+            "data_ownership",
+            "data_stores",
+            "entity_catalog",
+            "data_lineage_matrix",
+            "business_logic_in_db",
+            "integration_inventory",
+            "interface_contracts",
+            "integration_behaviour",
+            "exception_mappings",
+            "resilience_posture",
+            "integration_risks",
+            "evidence_appendix"
+          ],
+          "properties": {
+            "overview": {
+              "type": "object",
+              "required": [
+                "what",
+                "why",
+                "how_summary"
+              ],
+              "properties": {
+                "what": {
+                  "type": "string",
+                  "minLength": 60
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 40
+                },
+                "how_summary": {
+                  "type": "string",
+                  "minLength": 60
+                }
+              },
+              "additionalProperties": false
+            },
+            "persistence_strategy": {
+              "type": "object",
+              "required": [
+                "summary",
+                "master_tables",
+                "transactional_tables",
+                "reference_tables",
+                "history_tables",
+                "audit_tables",
+                "soft_delete",
+                "versioning",
+                "optimistic_locking",
+                "relationships_summary",
+                "read_write_pattern"
+              ],
+              "properties": {
+                "summary": {
+                  "type": "string",
+                  "minLength": 60,
+                  "description": "Explain why tables exist and how persistence is organized."
+                },
+                "master_tables": {
+                  "type": "array",
+                  "minItems": 2,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "purpose"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 2
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "minLength": 15
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "transactional_tables": {
+                  "type": "array",
+                  "minItems": 2,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "purpose"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 2
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "minLength": 15
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "reference_tables": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "purpose"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 2
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "minLength": 15
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "history_tables": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "purpose"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 2
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "minLength": 15
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "audit_tables": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "purpose"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 2
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "minLength": 15
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "soft_delete": {
+                  "type": "string",
+                  "minLength": 15
+                },
+                "versioning": {
+                  "type": "string",
+                  "minLength": 15
+                },
+                "optimistic_locking": {
+                  "type": "string",
+                  "minLength": 15
+                },
+                "relationships_summary": {
+                  "type": "string",
+                  "minLength": 40
+                },
+                "read_write_pattern": {
+                  "type": "string",
+                  "minLength": 30
+                }
+              },
+              "additionalProperties": false
+            },
+            "data_ownership": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "entity_or_store",
+                  "owner_capability_or_context",
+                  "notes"
+                ],
+                "properties": {
+                  "entity_or_store": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "owner_capability_or_context": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "notes": {
+                    "type": "string",
+                    "minLength": 15
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "data_stores": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "store_id",
+                  "engine",
+                  "schema_name",
+                  "primary_purpose"
+                ],
+                "properties": {
+                  "store_id": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "engine": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "schema_name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "primary_purpose": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "entity_catalog": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": [
+                  "entity_id",
+                  "entity_name",
+                  "store_id",
+                  "why_exists",
+                  "key_attributes"
+                ],
+                "properties": {
+                  "entity_id": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "entity_name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "store_id": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "why_exists": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "key_attributes": {
+                    "type": "array",
+                    "minItems": 2,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "name",
+                        "role"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "role": {
+                          "type": "string",
+                          "enum": [
+                            "pk",
+                            "fk",
+                            "business_key",
+                            "payload",
+                            "audit",
+                            "status",
+                            "other"
+                          ]
+                        },
+                        "type_hint": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "data_lineage_matrix": {
+              "type": "array",
+              "minItems": 10,
+              "description": "Business-oriented lineage (source → transform → target), not only table dumps.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "lineage_id",
+                  "source_entity",
+                  "transformation_logic",
+                  "target_entity",
+                  "execution_trigger",
+                  "business_meaning"
+                ],
+                "properties": {
+                  "lineage_id": {
+                    "type": "string",
+                    "pattern": "^LIN-"
+                  },
+                  "source_entity": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "transformation_logic": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "target_entity": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "execution_trigger": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "business_meaning": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "business_logic_in_db": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": [
+                  "sp_name",
+                  "extracted_business_rule",
+                  "complexity",
+                  "why_in_db"
+                ],
+                "properties": {
+                  "sp_name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "extracted_business_rule": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "complexity": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MEDIUM",
+                      "HIGH"
+                    ]
+                  },
+                  "why_in_db": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "io_signature": {
+                    "type": "string"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "integration_inventory": {
+              "type": "array",
+              "minItems": 6,
+              "items": {
+                "type": "object",
+                "required": [
+                  "interface_id",
+                  "source_system",
+                  "target_system",
+                  "protocol",
+                  "data_format",
+                  "communication_pattern",
+                  "criticality",
+                  "business_purpose"
+                ],
+                "properties": {
+                  "interface_id": {
+                    "type": "string",
+                    "pattern": "^INT-"
+                  },
+                  "source_system": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "target_system": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "protocol": {
+                    "type": "string",
+                    "enum": [
+                      "IBM MQ",
+                      "JMS",
+                      "REST",
+                      "SOAP",
+                      "FTP/SFTP",
+                      "DB Link",
+                      "CORBA",
+                      "File Share",
+                      "Other"
+                    ]
+                  },
+                  "endpoint_queue_name": {
+                    "type": "string"
+                  },
+                  "data_format": {
+                    "type": "string",
+                    "enum": [
+                      "XML",
+                      "JSON",
+                      "Fixed-Length",
+                      "CSV",
+                      "Binary",
+                      "Other"
+                    ]
+                  },
+                  "communication_pattern": {
+                    "type": "string",
+                    "enum": [
+                      "Sync",
+                      "Async Fire-and-Forget",
+                      "Async Request-Reply"
+                    ]
+                  },
+                  "criticality": {
+                    "type": "string",
+                    "enum": [
+                      "Mission-Critical",
+                      "Business-Operational",
+                      "Administrative"
+                    ]
+                  },
+                  "business_purpose": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "interface_contracts": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "contract_id",
+                  "interface_id",
+                  "operation",
+                  "direction",
+                  "business_meaning"
+                ],
+                "properties": {
+                  "contract_id": {
+                    "type": "string",
+                    "pattern": "^CTR-"
+                  },
+                  "interface_id": {
+                    "type": "string",
+                    "pattern": "^INT-"
+                  },
+                  "operation": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "inbound",
+                      "outbound",
+                      "bidirectional"
+                    ]
+                  },
+                  "business_meaning": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "request_shape": {
+                    "type": "string"
+                  },
+                  "response_shape": {
+                    "type": "string"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "integration_behaviour": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "scenario",
+                  "flow_steps",
+                  "failure_handling"
+                ],
+                "properties": {
+                  "scenario": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "flow_steps": {
+                    "type": "array",
+                    "minItems": 3,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "failure_handling": {
+                    "type": "string",
+                    "minLength": 20
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "exception_mappings": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "exception_or_code",
+                  "mapped_status_or_behavior",
+                  "business_impact"
+                ],
+                "properties": {
+                  "exception_or_code": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "mapped_status_or_behavior": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "business_impact": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "interface_id": {
+                    "type": "string"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "resilience_posture": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "interface_id",
+                  "mechanism",
+                  "status"
+                ],
+                "properties": {
+                  "interface_id": {
+                    "type": "string",
+                    "pattern": "^INT-"
+                  },
+                  "mechanism": {
+                    "type": "string",
+                    "enum": [
+                      "circuit_breaker",
+                      "retry",
+                      "timeout",
+                      "fallback",
+                      "idempotency",
+                      "other"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "present",
+                      "partial",
+                      "absent",
+                      "unknown"
+                    ]
+                  },
+                  "notes": {
+                    "type": "string"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "integration_risks": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "risk",
+                  "impact",
+                  "recommendation"
+                ],
+                "properties": {
+                  "risk": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "impact": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "recommendation": {
+                    "type": "string",
+                    "minLength": 20
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "evidence_appendix": {
+              "type": "array",
+              "minItems": 8,
+              "items": {
+                "type": "object",
+                "required": [
+                  "claim_ref",
+                  "path_or_artifact",
+                  "note"
+                ],
+                "properties": {
+                  "claim_ref": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "path_or_artifact": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "note": {
+                    "type": "string",
+                    "minLength": 10
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false,
+          "description": "Knowledge-first pack substance. Narrative sections required; evidence_appendix last. Validates against https://csa.local/schemas/Data_and_Integration.schema.json."
+        },
+        "Risks_Gaps_and_Traceability": {
+          "type": "object",
+          "required": [
+            "overview",
+            "gaps",
+            "risks",
+            "assumptions",
+            "remediation_actions",
+            "regression_risk_flags",
+            "decision_log",
+            "modernization_recommendations",
+            "traceability_links",
+            "evidence_appendix"
+          ],
+          "properties": {
+            "overview": {
+              "type": "object",
+              "required": [
+                "what",
+                "why"
+              ],
+              "properties": {
+                "what": {
+                  "type": "string",
+                  "minLength": 40
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 40
+                }
+              },
+              "additionalProperties": false
+            },
+            "gaps": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": [
+                  "gap_id",
+                  "description",
+                  "impact",
+                  "needed_evidence"
+                ],
+                "properties": {
+                  "gap_id": {
+                    "type": "string",
+                    "pattern": "^GAP-"
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "impact": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "needed_evidence": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "category": {
+                    "type": "string",
+                    "enum": [
+                      "evidence",
+                      "resilience",
+                      "contract",
+                      "data",
+                      "security",
+                      "ops",
+                      "other"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "risks": {
+              "type": "array",
+              "minItems": 5,
+              "description": "Risk + Impact + Recommendation — not 'technology X exists'.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "risk_id",
+                  "title",
+                  "severity",
+                  "impact_area",
+                  "impact",
+                  "recommendation"
+                ],
+                "properties": {
+                  "risk_id": {
+                    "type": "string",
+                    "pattern": "^RISK-"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 5
+                  },
+                  "severity": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MEDIUM",
+                      "HIGH",
+                      "CRITICAL"
+                    ]
+                  },
+                  "impact_area": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "impact": {
+                    "type": "string",
+                    "minLength": 25
+                  },
+                  "recommendation": {
+                    "type": "string",
+                    "minLength": 25
+                  },
+                  "mitigation": {
+                    "type": "string",
+                    "minLength": 10
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "assumptions": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "assumption_id",
+                  "statement",
+                  "confidence"
+                ],
+                "properties": {
+                  "assumption_id": {
+                    "type": "string",
+                    "pattern": "^ASM-"
+                  },
+                  "statement": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "confidence": {
+                    "type": "string",
+                    "enum": [
+                      "HIGH",
+                      "MEDIUM",
+                      "LOW"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "remediation_actions": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "action_id",
+                  "related_gap_or_risk",
+                  "action",
+                  "priority"
+                ],
+                "properties": {
+                  "action_id": {
+                    "type": "string",
+                    "pattern": "^ACT-"
+                  },
+                  "related_gap_or_risk": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "action": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MEDIUM",
+                      "HIGH",
+                      "CRITICAL"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "regression_risk_flags": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "flag_id",
+                  "area",
+                  "risk_if_missed"
+                ],
+                "properties": {
+                  "flag_id": {
+                    "type": "string",
+                    "pattern": "^REG-"
+                  },
+                  "area": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "risk_if_missed": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "decision_log": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": [
+                  "decision_id",
+                  "topic",
+                  "current_choice",
+                  "rationale",
+                  "tradeoffs"
+                ],
+                "properties": {
+                  "decision_id": {
+                    "type": "string",
+                    "pattern": "^DEC-"
+                  },
+                  "topic": {
+                    "type": "string",
+                    "enum": [
+                      "stored_procedure",
+                      "mq",
+                      "batch",
+                      "scheduler",
+                      "cache",
+                      "sync",
+                      "async",
+                      "other"
+                    ]
+                  },
+                  "current_choice": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "rationale": {
+                    "type": "string",
+                    "minLength": 30
+                  },
+                  "tradeoffs": {
+                    "type": "string",
+                    "minLength": 20
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "modernization_recommendations": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": [
+                  "area",
+                  "current_state",
+                  "future_state",
+                  "migration_complexity",
+                  "cloud_readiness",
+                  "risk",
+                  "estimated_effort"
+                ],
+                "properties": {
+                  "area": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "current_state": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "future_state": {
+                    "type": "string",
+                    "minLength": 20
+                  },
+                  "migration_complexity": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MEDIUM",
+                      "HIGH",
+                      "CRITICAL"
+                    ]
+                  },
+                  "cloud_readiness": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "microservice_candidate": {
+                    "type": "boolean"
+                  },
+                  "ddd_readiness": {
+                    "type": "string"
+                  },
+                  "risk": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "estimated_effort": {
+                    "type": "string",
+                    "minLength": 3
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "traceability_links": {
+              "type": "array",
+              "minItems": 10,
+              "items": {
+                "type": "object",
+                "required": [
+                  "capability_id",
+                  "component_id",
+                  "integration_id",
+                  "lineage_id"
+                ],
+                "properties": {
+                  "capability_id": {
+                    "type": "string"
+                  },
+                  "component_id": {
+                    "type": "string"
+                  },
+                  "integration_id": {
+                    "type": "string"
+                  },
+                  "lineage_id": {
+                    "type": "string"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "evidence_appendix": {
+              "type": "array",
+              "minItems": 8,
+              "items": {
+                "type": "object",
+                "required": [
+                  "claim_ref",
+                  "path_or_artifact",
+                  "note"
+                ],
+                "properties": {
+                  "claim_ref": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "path_or_artifact": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "note": {
+                    "type": "string",
+                    "minLength": 10
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false,
+          "description": "Knowledge-first pack substance. Narrative sections required; evidence_appendix last. Validates against https://csa.local/schemas/Risks_Gaps_and_Traceability.schema.json."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "lane"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "artifact_path"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "final"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "artifact_paths"
+        ],
+        "properties": {
+          "gate_id": {
+            "const": "gate-csa-document"
+          }
+        }
+      }
+    }
+  ],
+  "$comment": "Lane: validate specialist pack_substance knowledge-first. FINAL: pack_substance_bundle; render MD narrative-first, Evidence appendix last."
+}

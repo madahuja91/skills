@@ -1,6 +1,6 @@
 ---
 name: tsa-document-assembler
-description: Assembles TSA pack Markdown + arc42-C4 HTML with Mermaid, migration roadmap, and epic/story seeds from accepted TSA artifacts. Use when Manager invokes TSA Assembler.
+description: Assembles TSA outputs deterministically from JSON artifacts into ADR and Migration Markdown deliverables.
 ---
 
 # TSA Document Assembler
@@ -14,11 +14,11 @@ Authoritative contract: [`schema.json`](schema.json)
 
 | Deliverable | Format |
 |-------------|--------|
-| Sections `00`, `01`, `04`–`10`, README, epic/story seeds | **Markdown** (`.md`) |
-| arc42 / C4 views | **HTML only** under `tsa_pack/arc42-c4/` (`index.html` + pages) |
+| `ADR_Blueprint.md` | **Markdown** (`.md`) |
+| `Migration_Strategy.md` | **Markdown** (`.md`) |
 | Specialist copies | `machine/*.json` (internal) |
 
-Do **not** write C4 as `.md`. Do **not** write narrative sections as `.html` except under `arc42-c4/`.
+Do not generate extra narrative packs in this workflow mode.
 
 Write everything under the single `swarm_state.active_root` on disk (no `src/src`). Never invent `/app/temp/csa-run` or a sibling `outputs/` tree outside ACTIVE_ROOT.
 
@@ -26,22 +26,15 @@ Write everything under the single `swarm_state.active_root` on disk (no `src/src
 
 ```text
 ACTIVE_ROOT/tsa_pack/
-  00_executive_summary.md
-  01_target_stack_decisions.md
-  04_target_domain_model.md
-  05_target_capabilities.md
-  06_target_data_architecture.md
-  07_target_integration.md
-  08_migration_strategy_roadmap.md
-  09_traceability_csa_to_tsa.md
-  10_risks_assumptions.md
-  README.md
-  arc42-c4/index.html (+ context/containers/components)
-  epic_story_seeds/*.md
-  machine/*.json
-  machine/mermaid_diagrams.json
+  ADR_Blueprint.md
+  Migration_Strategy.md
+  machine/
+    adr_blueprint.json
+    migration_strategy.json
 ```
 
-## Required Mermaid
+## Rendering rules
 
-exec overview, domain map, data flow, integration, migration waves, plus C4 HTML diagrams (`mermaid-diagrams`).
+1. Render from JSON deterministically (template-style).
+2. Do not re-invent facts beyond `artifacts/adr_blueprint.json` and `artifacts/migration_strategy.json`.
+3. Keep concise tables, decision bullets, and explicit traceability.

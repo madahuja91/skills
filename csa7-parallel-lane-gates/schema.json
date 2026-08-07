@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-parallel-lane-gates.json",
+  "title": "CsaParallelLaneGates",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "completeness_mode",
+    "forbidden_patterns",
+    "lane_gates",
+    "join_policy",
+    "packager",
+    "client_pack_paths",
+    "forbidden_output_paths",
+    "client_doc_count",
+    "final_gate_id",
+    "pack_missing_is_fail"
+  ],
+  "properties": {
+    "contract_version": {
+      "type": "string",
+      "const": "2.3.0"
+    },
+    "completeness_mode": {
+      "type": "string",
+      "const": "per_lane_then_completeness_renders_pack"
+    },
+    "forbidden_patterns": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "string",
+        "enum": [
+          "completeness_only_after_join",
+          "invoke_document_assembler",
+          "write_deliverables_folder",
+          "write_csa_pack_machine_sections",
+          "duplicate_analysis_and_client_pack",
+          "cosmetic_only_hard_fail_when_substance_pass",
+          "final_validate_without_rendering_csa_pack",
+          "invented_final_gate_id",
+          "manager_success_without_csa_pack_on_disk"
+        ]
+      }
+    },
+    "final_gate_id": {
+      "type": "string",
+      "const": "gate-csa-document"
+    },
+    "pack_missing_is_fail": {
+      "type": "boolean",
+      "const": true
+    },
+    "lane_gates": {
+      "type": "object",
+      "required": [
+        "discover",
+        "business_domain",
+        "tech_architecture",
+        "data_lineage",
+        "integration"
+      ],
+      "properties": {
+        "discover": {
+          "type": "object",
+          "required": [
+            "gate_id",
+            "artifact_path"
+          ],
+          "properties": {
+            "gate_id": {
+              "const": "gate-discover"
+            },
+            "artifact_path": {
+              "const": "artifacts/discovery.json"
+            }
+          },
+          "additionalProperties": false
+        },
+        "business_domain": {
+          "type": "object",
+          "required": [
+            "gate_id",
+            "artifact_path"
+          ],
+          "properties": {
+            "gate_id": {
+              "const": "gate-business-domain"
+            },
+            "artifact_path": {
+              "const": "artifacts/domain.json"
+            }
+          },
+          "additionalProperties": false
+        },
+        "tech_architecture": {
+          "type": "object",
+          "required": [
+            "gate_id",
+            "artifact_path"
+          ],
+          "properties": {
+            "gate_id": {
+              "const": "gate-tech-architecture"
+            },
+            "artifact_path": {
+              "const": "artifacts/architecture.json"
+            }
+          },
+          "additionalProperties": false
+        },
+        "data_lineage": {
+          "type": "object",
+          "required": [
+            "gate_id",
+            "artifact_path"
+          ],
+          "properties": {
+            "gate_id": {
+              "const": "gate-data-lineage"
+            },
+            "artifact_path": {
+              "const": "artifacts/lineage.json"
+            }
+          },
+          "additionalProperties": false
+        },
+        "integration": {
+          "type": "object",
+          "required": [
+            "gate_id",
+            "artifact_path"
+          ],
+          "properties": {
+            "gate_id": {
+              "const": "gate-integration"
+            },
+            "artifact_path": {
+              "const": "artifacts/integration.json"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "join_policy": {
+      "type": "object",
+      "required": [
+        "wait_for",
+        "post_join_action"
+      ],
+      "properties": {
+        "wait_for": {
+          "type": "string",
+          "const": "all_parallel_lanes_accepted_or_escalated"
+        },
+        "post_join_action": {
+          "type": "string",
+          "const": "completeness_final_render_and_validate_pack"
+        }
+      },
+      "additionalProperties": false
+    },
+    "packager": {
+      "type": "string",
+      "const": "Completeness-Validation-Agent"
+    },
+    "client_pack_paths": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "string",
+        "enum": [
+          "src/csa_pack/Executive_Summary.md",
+          "src/csa_pack/Business_Architecture.md",
+          "src/csa_pack/Application_Architecture.md",
+          "src/csa_pack/Data_and_Integration.md",
+          "src/csa_pack/Risks_Gaps_and_Traceability.md",
+          "src/csa_pack/README.md",
+          "src/csa_pack/arc42-c4/index.html",
+          "src/csa_pack/arc42-c4/context.html",
+          "src/csa_pack/arc42-c4/containers.html",
+          "src/csa_pack/arc42-c4/components.html"
+        ]
+      }
+    },
+    "forbidden_output_paths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "deliverables/",
+          "csa_pack/machine/",
+          "csa_pack/machine/sections/",
+          "epic_story_seeds/"
+        ]
+      }
+    },
+    "client_doc_count": {
+      "type": "object",
+      "required": [
+        "markdown_named_docs",
+        "allow_extra_client_markdown",
+        "allow_assembler"
+      ],
+      "properties": {
+        "markdown_named_docs": {
+          "type": "integer",
+          "const": 5
+        },
+        "allow_extra_client_markdown": {
+          "type": "boolean",
+          "const": false
+        },
+        "allow_assembler": {
+          "type": "boolean",
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "contract_version": "2.3.0"
+}

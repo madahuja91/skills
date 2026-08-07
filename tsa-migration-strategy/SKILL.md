@@ -12,11 +12,12 @@ Authoritative contract: [`schema.json`](schema.json)
 
 ## Goal
 
-Write `artifacts/migration_strategy.json` and feed `migration-strategy-pack`.
+Write `artifacts/migration_strategy.json` aligned to enterprise migration standards.
 
 ## Procedure
 
-1. Choose pattern with justification (CSA risk + ADR constraints).
-2. Define waves tied to capabilities/components/data units.
-3. Cutover, rollback, exit criteria.
-4. Required Mermaid: `diag-migration-waves`.
+1. Build 6Rs application disposition matrix for CSA legacy components.
+2. Define wave planning with dependencies and estimated durations.
+3. Specify coexistence and data sync mechanics (CDC/dual-write/reconciliation).
+4. Define testing/verification strategy (shadow/dark/canary/load) and rollback triggers.
+5. Build cutover and fallback playbook with go/no-go criteria.

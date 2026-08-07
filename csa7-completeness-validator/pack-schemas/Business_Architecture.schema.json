@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/Business_Architecture.schema.json",
+  "title": "CSA_Business_Architecture",
+  "description": "Knowledge-first business architecture: What/Why/How, rules, AC, DDD, workflows. Evidence appendix last.",
+  "type": "object",
+  "required": [
+    "overview",
+    "bounded_contexts",
+    "capability_taxonomy",
+    "business_rules",
+    "acceptance_criteria",
+    "domain_model",
+    "ubiquitous_dictionary",
+    "capability_flows",
+    "operation_dispatch_rules",
+    "feature_flag_catalogue",
+    "provider_selection_rules",
+    "gap_analysis_bullets",
+    "evidence_appendix"
+  ],
+  "properties": {
+    "overview": {
+      "type": "object",
+      "required": ["what", "why", "how_summary"],
+      "properties": {
+        "what": { "type": "string", "minLength": 60 },
+        "why": { "type": "string", "minLength": 40 },
+        "how_summary": {
+          "type": "string",
+          "minLength": 60,
+          "description": "High-level business flow: Request → Validation → Rules → Persist → Integration → Notification."
+        }
+      },
+      "additionalProperties": false
+    },
+    "bounded_contexts": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["context_name", "domain_type", "description", "what", "why", "aggregates"],
+        "properties": {
+          "context_name": { "type": "string", "minLength": 2 },
+          "domain_type": { "type": "string", "enum": ["Core", "Supporting", "Generic"] },
+          "description": { "type": "string", "minLength": 40 },
+          "what": { "type": "string", "minLength": 30 },
+          "why": { "type": "string", "minLength": 20 },
+          "aggregates": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["aggregate_root", "entities"],
+              "properties": {
+                "aggregate_root": { "type": "string", "minLength": 2 },
+                "entities": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+                "value_objects": { "type": "array", "items": { "type": "string" } }
+              },
+              "additionalProperties": false
+            }
+          },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "capability_taxonomy": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "required": [
+          "capability_id",
+          "l1_capability",
+          "l2_capability",
+          "what",
+          "why",
+          "how",
+          "criticality",
+          "realizing_components"
+        ],
+        "properties": {
+          "capability_id": { "type": "string", "pattern": "^CAP-" },
+          "l1_capability": { "type": "string", "minLength": 2 },
+          "l2_capability": { "type": "string", "minLength": 2 },
+          "what": { "type": "string", "minLength": 40 },
+          "why": { "type": "string", "minLength": 25 },
+          "how": {
+            "type": "string",
+            "minLength": 40,
+            "description": "Architecture behaviour in business steps, not class lists."
+          },
+          "criticality": {
+            "type": "string",
+            "enum": ["Mission-Critical", "Business-Operational", "Administrative"]
+          },
+          "realizing_components": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 2 }
+          },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "business_rules": {
+      "type": "array",
+      "minItems": 8,
+      "description": "Prose business rules (e.g. Customer cannot be deleted when active orders exist) — not file:line citations.",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "rule", "business_intent", "capability_id"],
+        "properties": {
+          "rule_id": { "type": "string", "pattern": "^BR-" },
+          "rule": { "type": "string", "minLength": 20 },
+          "business_intent": { "type": "string", "minLength": 15 },
+          "capability_id": { "type": "string", "pattern": "^CAP-" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 8,
+      "description": "Per-capability acceptance criteria for migration teams.",
+      "items": {
+        "type": "object",
+        "required": ["capability_id", "criteria"],
+        "properties": {
+          "capability_id": { "type": "string", "pattern": "^CAP-" },
+          "criteria": {
+            "type": "array",
+            "minItems": 3,
+            "items": { "type": "string", "minLength": 10 }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "domain_model": {
+      "type": "array",
+      "minItems": 3,
+      "description": "Full DDD shapes with explanation — Aggregate Root, Entities, VOs, Domain Services, Repositories, Domain Events.",
+      "items": {
+        "type": "object",
+        "required": [
+          "bounded_context",
+          "aggregate_name",
+          "aggregate_root",
+          "entities",
+          "value_objects",
+          "repository",
+          "explanation"
+        ],
+        "properties": {
+          "bounded_context": { "type": "string", "minLength": 2 },
+          "aggregate_name": { "type": "string", "minLength": 2 },
+          "aggregate_root": { "type": "string", "minLength": 2 },
+          "entities": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "value_objects": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "domain_services": { "type": "array", "items": { "type": "string" } },
+          "repository": { "type": "string", "minLength": 2 },
+          "domain_events": { "type": "array", "items": { "type": "string" } },
+          "explanation": { "type": "string", "minLength": 40 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ubiquitous_dictionary": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["term", "definition"],
+        "properties": {
+          "term": { "type": "string", "minLength": 2 },
+          "definition": { "type": "string", "minLength": 15 },
+          "legacy_mapping": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "capability_flows": {
+      "type": "array",
+      "minItems": 3,
+      "description": "Business workflows (Receive → Validate → Rules → Persist → Notify), not DAO chains.",
+      "items": {
+        "type": "object",
+        "required": ["flow_id", "flow_name", "steps", "capabilities"],
+        "properties": {
+          "flow_id": { "type": "string", "pattern": "^WF-" },
+          "flow_name": { "type": "string", "minLength": 3 },
+          "steps": { "type": "array", "minItems": 5, "items": { "type": "string", "minLength": 3 } },
+          "capabilities": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "operation_dispatch_rules": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["dispatch_key", "condition", "handler"],
+        "properties": {
+          "dispatch_key": { "type": "string", "minLength": 2 },
+          "condition": { "type": "string", "minLength": 3 },
+          "handler": { "type": "string", "minLength": 3 },
+          "fallback": { "type": "string" },
+          "auth_context": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "feature_flag_catalogue": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["flag_name", "behavior_gated", "default_state"],
+        "properties": {
+          "flag_name": { "type": "string", "minLength": 2 },
+          "behavior_gated": { "type": "string", "minLength": 5 },
+          "default_state": { "type": "string", "minLength": 2 },
+          "source": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "provider_selection_rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["rule_name", "selector", "selected_provider_or_path"],
+        "properties": {
+          "rule_name": { "type": "string", "minLength": 3 },
+          "selector": { "type": "string", "minLength": 2 },
+          "selected_provider_or_path": { "type": "string", "minLength": 2 },
+          "default_fallback": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "gap_analysis_bullets": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "type": "string", "minLength": 20 }
+    },
+    "evidence_appendix": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["claim_ref", "path_or_artifact", "note"],
+        "properties": {
+          "claim_ref": { "type": "string", "minLength": 3 },
+          "path_or_artifact": { "type": "string", "minLength": 3 },
+          "note": { "type": "string", "minLength": 10 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,9 +1,9 @@
 ---
 name: tsa-tech-architecture
-description: Design target technical architecture and C4 views using ADR stack decisions and CSA baseline. Use when Manager invokes TSA Tech Architecture.
+description: Synthesize target-state architecture specification from CSA baseline.
 ---
 
-# TSA Tech Architecture
+# TSA Synthesizer
 
 ## Schema
 
@@ -12,8 +12,8 @@ Authoritative contract: [`schema.json`](schema.json)
 
 ## Goal
 
-Write `artifacts/target_architecture.json` with C4 views for Assembler + `arc42-c4-views` / `mermaid-diagrams`.
+Write `artifacts/tsa_specification.json` with target architecture pattern, target services, and integration patterns.
 
 ## HARD
 
-Use only stack from `stack_decisions.json`. One container topology consistent with ADR (e.g. services vs modular monolith).
+Use CSA evidence for current-state mappings and do not invent unsupported target services.

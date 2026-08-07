@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-rich-content.json",
+  "title": "CsaRichContentContract",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "quality_mode",
+    "json_ssot_root",
+    "required_markdown_files",
+    "required_html_files",
+    "forbid_machine_sections",
+    "forbid_deliverables_folder",
+    "specialist_list_floors",
+    "ssot_rules",
+    "blocking_checks",
+    "min_markdown_lines_per_client_doc",
+    "forbid_max_markdown_size"
+  ],
+  "properties": {
+    "contract_version": { "type": "string", "const": "4.2.0" },
+    "quality_mode": {
+      "type": "string",
+      "const": "artifacts_ssot_completeness_renders_lean_pack"
+    },
+    "json_ssot_root": { "type": "string", "const": "artifacts/" },
+    "required_markdown_files": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "string",
+        "enum": [
+          "Executive_Summary.md",
+          "Business_Architecture.md",
+          "Application_Architecture.md",
+          "Data_and_Integration.md",
+          "Risks_Gaps_and_Traceability.md",
+          "README.md"
+        ]
+      }
+    },
+    "required_html_files": {
+      "type": "array",
+      "minItems": 4,
+      "items": { "type": "string" }
+    },
+    "forbid_machine_sections": { "type": "boolean", "const": true },
+    "forbid_deliverables_folder": { "type": "boolean", "const": true },
+    "min_markdown_lines_per_client_doc": {
+      "type": "integer",
+      "const": 200,
+      "description": "Minimum line count for each of the 5 client Markdown docs. Over 200 is fine/preferred. Never pair with a max."
+    },
+    "forbid_max_markdown_size": {
+      "type": "boolean",
+      "const": true,
+      "description": "HARD: never enforce a maximum line/word/size ceiling on pack Markdown or explanation fields."
+    },
+    "specialist_list_floors": {
+      "type": "object",
+      "properties": {
+        "domain.business_domains": { "type": "integer", "minimum": 3 },
+        "domain.business_capabilities": { "type": "integer", "minimum": 8 },
+        "architecture.architecture_layers": { "type": "integer", "minimum": 5 },
+        "lineage.field_lineage": { "type": "integer", "minimum": 10 },
+        "integration.integrations": { "type": "integer", "minimum": 6 }
+      },
+      "additionalProperties": false
+    },
+    "ssot_rules": {
+      "type": "object",
+      "required": [
+        "artifacts_are_json_ssot",
+        "table_data_single_owner",
+        "section_cross_links_instead_of_copy_paste",
+        "client_pack_legacy_content_only"
+      ],
+      "properties": {
+        "artifacts_are_json_ssot": { "type": "boolean", "const": true },
+        "table_data_single_owner": { "type": "boolean", "const": true },
+        "section_cross_links_instead_of_copy_paste": { "type": "boolean", "const": true },
+        "client_pack_legacy_content_only": { "type": "boolean", "const": true }
+      },
+      "additionalProperties": false
+    },
+    "blocking_checks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "required_files_present",
+          "artifact_schema_conformance",
+          "pack_output_schema_conformance",
+          "markdown_min_line_count",
+          "specialist_list_depth",
+          "forbidden_duplicate_trees",
+          "section_anti_redundancy",
+          "pack_shape_valid",
+          "shared_memory_present",
+          "index_html_hub_richness",
+          "no_workflow_meta_in_csa_pack"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

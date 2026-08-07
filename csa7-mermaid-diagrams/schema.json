@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/mermaid-diagrams.json",
+  "title": "CsaMermaidDiagramPack",
+  "description": "Inventory of Mermaid diagrams required in the CSA pack with render targets",
+  "type": "object",
+  "required": ["schema_version", "renderer", "diagrams", "blocking_missing_diagram"],
+  "properties": {
+    "schema_version": { "const": "1.1.0" },
+    "blocking_missing_diagram": {
+      "type": "boolean",
+      "const": true,
+      "description": "Any missing required diagram fails Completeness FINAL"
+    },
+    "renderer": {
+      "type": "object",
+      "required": ["markdown_fence", "html_container", "html_runtime_preferred", "html_runtime_fallback", "forbid_esm_only"],
+      "properties": {
+        "markdown_fence": { "const": "```mermaid" },
+        "html_container": { "const": "pre.mermaid" },
+        "html_runtime_preferred": {
+          "const": "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"
+        },
+        "html_runtime_fallback": {
+          "const": "https://unpkg.com/mermaid@11/dist/mermaid.min.js"
+        },
+        "forbid_esm_only": {
+          "type": "boolean",
+          "const": true,
+          "description": "Do not use ESM-only mermaid.esm.min.mjs as the sole runtime — classic mermaid.min.js + mermaid.run required"
+        }
+      },
+      "additionalProperties": false
+    },
+    "diagrams": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "diagram_type", "required", "render_target", "owner_agent_id"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "diag-c4-context",
+              "diag-c4-containers",
+              "diag-c4-components",
+              "diag-domain-context-map",
+              "diag-lineage-critical",
+              "diag-integration-landscape",
+              "diag-exec-overview",
+              "diag-runtime",
+              "diag-capability-map"
+            ]
+          },
+          "path": { "type": "string", "minLength": 1 },
+          "diagram_type": {
+            "type": "string",
+            "enum": [
+              "flowchart",
+              "sequenceDiagram",
+              "C4Context",
+              "C4Container",
+              "C4Component"
+            ]
+          },
+          "required": { "type": "boolean" },
+          "render_target": {
+            "type": "string",
+            "enum": ["markdown", "html"]
+          },
+          "owner_agent_id": {
+            "type": "string",
+            "enum": [
+              "discover",
+              "business_domain",
+              "tech_architecture",
+              "data_lineage",
+              "integration",
+              "completeness_validator"
+            ]
+          },
+          "source_artifacts": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "discovery",
+                "domain",
+                "architecture",
+                "lineage",
+                "integration"
+              ]
+            }
+          },
+          "node_count": { "type": "integer", "minimum": 1, "maximum": 40 },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "index_hub_min_mermaid_blocks": {
+      "type": "integer",
+      "const": 2
+    }
+  },
+  "additionalProperties": false
+}

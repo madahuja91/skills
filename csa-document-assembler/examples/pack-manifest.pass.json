@@ -1,15 +1,37 @@
 {
-  "pack_version": "1.0.0",
-  "generated_at": "2026-08-04T12:10:00Z",
+  "pack_version": "3.1.0",
+  "generated_at": "2026-08-06T12:00:00Z",
   "sections": [
-    { "id": "00", "path": "csa_pack/00_executive_summary.md", "title": "Executive Summary", "format": "markdown" },
-    { "id": "04", "path": "csa_pack/04_domain_model_ddd.md", "title": "Domain Model (DDD)", "format": "markdown" },
-    { "id": "05", "path": "csa_pack/05_business_capabilities.md", "title": "Business Capabilities", "format": "markdown" },
-    { "id": "06", "path": "csa_pack/06_data_architecture_lineage.md", "title": "Data Architecture & Lineage", "format": "markdown" },
-    { "id": "07", "path": "csa_pack/07_integration_landscape.md", "title": "Integration Landscape", "format": "markdown" },
-    { "id": "08", "path": "csa_pack/08_runtime_ops_tech_debt.md", "title": "Runtime Ops & Tech Debt", "format": "markdown" },
-    { "id": "09", "path": "csa_pack/09_traceability_matrix.md", "title": "Traceability Matrix", "format": "markdown" },
-    { "id": "10", "path": "csa_pack/10_gaps_risks_assumptions.md", "title": "Gaps Risks Assumptions", "format": "markdown" }
+    {
+      "id": "Executive_Summary",
+      "path": "csa_pack/Executive_Summary.md",
+      "title": "Executive Summary",
+      "format": "markdown"
+    },
+    {
+      "id": "Business_Architecture",
+      "path": "csa_pack/Business_Architecture.md",
+      "title": "Business Architecture",
+      "format": "markdown"
+    },
+    {
+      "id": "Application_Architecture",
+      "path": "csa_pack/Application_Architecture.md",
+      "title": "Application Architecture",
+      "format": "markdown"
+    },
+    {
+      "id": "Data_and_Integration",
+      "path": "csa_pack/Data_and_Integration.md",
+      "title": "Data and Integration",
+      "format": "markdown"
+    },
+    {
+      "id": "Risks_Gaps_and_Traceability",
+      "path": "csa_pack/Risks_Gaps_and_Traceability.md",
+      "title": "Risks Gaps and Traceability",
+      "format": "markdown"
+    }
   ],
   "arc42_c4_html": {
     "index": "csa_pack/arc42-c4/index.html",
@@ -27,12 +49,42 @@
     "csa_pack/machine/lineage.json",
     "csa_pack/machine/integration.json",
     "csa_pack/machine/traceability_graph.json",
-    "csa_pack/machine/quality_gate_summary.json"
+    "csa_pack/machine/quality_gate_summary.json",
+    "csa_pack/machine/mermaid_diagrams.json"
   ],
-  "epic_story_seeds": [
-    "csa_pack/epic_story_seeds/functions.md",
-    "csa_pack/epic_story_seeds/epics.md",
-    "csa_pack/epic_story_seeds/stories.md"
+  "section_machine_json": [
+    {
+      "id": "Executive_Summary",
+      "path": "csa_pack/machine/sections/Executive_Summary.json",
+      "schema": "Executive_Summary.schema.json",
+      "markdown_path": "csa_pack/Executive_Summary.md"
+    },
+    {
+      "id": "Business_Architecture",
+      "path": "csa_pack/machine/sections/Business_Architecture.json",
+      "schema": "Business_Architecture.schema.json",
+      "markdown_path": "csa_pack/Business_Architecture.md"
+    },
+    {
+      "id": "Application_Architecture",
+      "path": "csa_pack/machine/sections/Application_Architecture.json",
+      "schema": "Application_Architecture.schema.json",
+      "markdown_path": "csa_pack/Application_Architecture.md"
+    },
+    {
+      "id": "Data_and_Integration",
+      "path": "csa_pack/machine/sections/Data_and_Integration.json",
+      "schema": "Data_and_Integration.schema.json",
+      "markdown_path": "csa_pack/Data_and_Integration.md"
+    },
+    {
+      "id": "Risks_Gaps_and_Traceability",
+      "path": "csa_pack/machine/sections/Risks_Gaps_and_Traceability.json",
+      "schema": "Risks_Gaps_and_Traceability.schema.json",
+      "markdown_path": "csa_pack/Risks_Gaps_and_Traceability.md"
+    }
   ],
-  "traceability_graph_path": "csa_pack/machine/traceability_graph.json"
+  "traceability_graph_path": "csa_pack/machine/traceability_graph.json",
+  "schema_bundle_path": "skills/agents/csa-document-assembler/output-schemas/csa-pack-schema-bundle.json",
+  "mermaid_diagrams_path": "csa_pack/machine/mermaid_diagrams.json"
 }

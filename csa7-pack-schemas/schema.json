@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-pack-schemas.json",
+  "title": "CsaPackSchemasSkill",
+  "type": "object",
+  "description": "Skill marker — pack contracts live under output-schemas/",
+  "required": ["pack_version", "allowed_markdown"],
+  "properties": {
+    "pack_version": { "type": "string", "const": "lean-5doc" },
+    "allowed_markdown": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "string",
+        "enum": [
+          "Executive_Summary.md",
+          "Business_Architecture.md",
+          "Application_Architecture.md",
+          "Data_and_Integration.md",
+          "Risks_Gaps_and_Traceability.md",
+          "README.md"
+        ]
+      }
+    },
+    "allowed_html": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [
+        "arc42-c4/index.html",
+        "arc42-c4/context.html",
+        "arc42-c4/containers.html",
+        "arc42-c4/components.html"
+      ]
+    },
+    "forbidden_trees": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [
+        "deliverables/",
+        "csa_pack/machine/",
+        "epic_story_seeds/"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

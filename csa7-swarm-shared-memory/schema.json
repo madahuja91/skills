@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/swarm-state.json",
+  "title": "CSASwarmState",
+  "type": "object",
+  "required": [
+    "swarm_id",
+    "pattern",
+    "manager",
+    "active_root",
+    "phase",
+    "roster",
+    "artifacts_index",
+    "shared_context",
+    "loop",
+    "checkpoint"
+  ],
+  "properties": {
+    "swarm_id": {
+      "type": "string"
+    },
+    "pattern": {
+      "const": "orchestrator-swarm"
+    },
+    "manager": {
+      "type": "string"
+    },
+    "active_root": {
+      "type": "string"
+    },
+    "run_plan_path": {
+      "type": "string"
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "bootstrap",
+        "discover",
+        "swarm_parallel",
+        "final_pack",
+        "done"
+      ]
+    },
+    "roster": {
+      "type": "object"
+    },
+    "artifacts_index": {
+      "type": "object"
+    },
+    "shared_context": {
+      "type": "object"
+    },
+    "loop": {
+      "type": "object"
+    },
+    "checkpoint": {
+      "type": "object",
+      "required": [
+        "seq",
+        "updated_by",
+        "updated_at"
+      ],
+      "properties": {
+        "seq": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "updated_by": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

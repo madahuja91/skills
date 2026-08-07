@@ -1,4 +1,5 @@
 ---
+# OUT OF SCOPE for CSA Orchestrator Swarm (lean 5-doc). Do not invoke from CSA Manager.
 name: epic-story-mapping
 description: Maps CSA capabilities and traceability into Function, Epic, and Story seeds as Markdown for modernization backlog generation. Use during Document Assembler and epic-story readiness gate.
 ---

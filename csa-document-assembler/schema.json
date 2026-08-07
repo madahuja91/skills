@@ -8,24 +8,36 @@
     "sections",
     "arc42_c4_html",
     "machine_artifacts",
-    "epic_story_seeds",
-    "traceability_graph_path"
+    "section_machine_json",
+    "traceability_graph_path",
+    "schema_bundle_path"
   ],
   "properties": {
-    "pack_version": { "type": "string", "const": "1.0.0" },
+    "pack_version": { "type": "string", "const": "3.1.0" },
     "generated_at": { "type": "string" },
     "sections": {
       "type": "array",
-      "minItems": 8,
+      "minItems": 5,
+      "maxItems": 5,
       "items": {
         "type": "object",
         "required": ["id", "path", "format"],
         "properties": {
-          "id": { "type": "string" },
-          "path": { "type": "string" },
+          "id": {
+            "type": "string",
+            "enum": [
+              "Executive_Summary",
+              "Business_Architecture",
+              "Application_Architecture",
+              "Data_and_Integration",
+              "Risks_Gaps_and_Traceability"
+            ]
+          },
+          "path": { "type": "string", "pattern": "^csa_pack/[A-Za-z_]+\\.md$" },
           "title": { "type": "string" },
           "format": { "type": "string", "const": "markdown" }
-        }
+        },
+        "additionalProperties": false
       }
     },
     "arc42_c4_html": {
@@ -46,12 +58,27 @@
       "type": "array",
       "items": { "type": "string" }
     },
-    "epic_story_seeds": {
+    "section_machine_json": {
       "type": "array",
-      "minItems": 3,
-      "items": { "type": "string", "pattern": ".*\\.md$" }
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "schema"],
+        "properties": {
+          "id": { "type": "string" },
+          "path": { "type": "string", "pattern": "^csa_pack/machine/sections/.*\\.json$" },
+          "schema": { "type": "string", "pattern": ".*\\.schema\\.json$" },
+          "markdown_path": { "type": "string", "pattern": "^csa_pack/.*\\.md$" }
+        },
+        "additionalProperties": false
+      }
     },
     "traceability_graph_path": { "type": "string" },
+    "schema_bundle_path": {
+      "type": "string",
+      "const": "skills/agents/csa-document-assembler/output-schemas/csa-pack-schema-bundle.json"
+    },
     "mermaid_diagrams_path": {
       "type": "string",
       "const": "csa_pack/machine/mermaid_diagrams.json"

@@ -1,0 +1,255 @@
+{
+  "artifact_id": "integ-20260804120400",
+  "agent_id": "integration",
+  "agent_version": "1.0.0",
+  "timestamp": "2026-08-04T12:04:00Z",
+  "schema_version": "1.0.0",
+  "scope": {
+    "codebase_root": "files/legacy-app",
+    "modules": [
+      "claims"
+    ]
+  },
+  "overall_confidence_score": 74,
+  "analysis_scope": "all_integrations",
+  "integrations": [
+    {
+      "integration_id": "INT-policy-soap",
+      "integration_name": "PolicySystemSOAP",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "integration_id": "INT-002",
+      "integration_name": "Integration 2",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "integration_id": "INT-003",
+      "integration_name": "Integration 3",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "integration_id": "INT-004",
+      "integration_name": "Integration 4",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "integration_id": "INT-005",
+      "integration_name": "Integration 5",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "integration_id": "INT-006",
+      "integration_name": "Integration 6",
+      "pattern_type": "legacy",
+      "sync_async": "synchronous",
+      "integration_direction": "outbound",
+      "technology_stack": {
+        "protocol": "HTTP",
+        "message_format": "XML",
+        "authentication": "Basic",
+        "transport_security": "TLS"
+      },
+      "endpoints": [],
+      "confidence_score": 80,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/PolicyClient.java",
+          "kind": "code"
+        }
+      ]
+    }
+  ],
+  "integration_patterns_summary": {
+    "total_integrations": 1,
+    "pattern_distribution": {
+      "synchronous": 1,
+      "asynchronous": 0,
+      "data": 0,
+      "enterprise": 0,
+      "security": 0,
+      "legacy": 1
+    },
+    "async_candidates": {
+      "total_candidates": 0,
+      "high_priority_candidates": 0
+    }
+  },
+  "validation_results": {
+    "integration_completeness": {
+      "total_integrations_discovered": 1,
+      "integrations_fully_analyzed": 1,
+      "integrations_missing_details": [],
+      "completeness_percentage": 100
+    }
+  },
+  "interface_contracts": [
+    {
+      "contract_id": "CTR-001",
+      "interface_id": "INT-policy-soap",
+      "operation": "submit",
+      "direction": "outbound",
+      "request_shape": "XML",
+      "response_shape": "XML",
+      "evidence": [
+        "Client.java:10"
+      ]
+    },
+    {
+      "contract_id": "CTR-002",
+      "interface_id": "INT-002",
+      "operation": "callback",
+      "direction": "inbound",
+      "evidence": [
+        "Listener.java:5"
+      ]
+    },
+    {
+      "contract_id": "CTR-003",
+      "interface_id": "INT-003",
+      "operation": "query",
+      "direction": "outbound",
+      "evidence": [
+        "QueryClient.java:3"
+      ]
+    }
+  ],
+  "exception_mappings": [
+    {
+      "exception_or_code": "TimeoutException",
+      "mapped_status_or_behavior": "retry then fail",
+      "interface_id": "INT-policy-soap",
+      "evidence": [
+        "Client.java:40"
+      ]
+    },
+    {
+      "exception_or_code": "ValidationError",
+      "mapped_status_or_behavior": "400-equivalent reject",
+      "evidence": [
+        "Validator.java:12"
+      ]
+    },
+    {
+      "exception_or_code": "MQRC_NO_MSG_AVAILABLE",
+      "mapped_status_or_behavior": "idle poll continue",
+      "interface_id": "INT-002",
+      "evidence": [
+        "MqPoller.java:22"
+      ]
+    }
+  ],
+  "resilience_posture": [
+    {
+      "interface_id": "INT-policy-soap",
+      "mechanism": "retry",
+      "status": "partial",
+      "notes": "simple loop",
+      "evidence": [
+        "Client.java:40"
+      ]
+    },
+    {
+      "interface_id": "INT-002",
+      "mechanism": "timeout",
+      "status": "present",
+      "evidence": [
+        "MqPoller.java:8"
+      ]
+    },
+    {
+      "interface_id": "INT-003",
+      "mechanism": "circuit_breaker",
+      "status": "absent",
+      "evidence": [
+        "README:1"
+      ]
+    }
+  ]
+}

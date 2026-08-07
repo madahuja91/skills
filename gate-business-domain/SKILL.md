@@ -1,22 +1,8 @@
 ---
 name: gate-business-domain
-description: Quality gate for CSA domain.json. Use when validating Business Domain specialist output.
+description: DEPRECATED — use csa7-gate-business-domain. Renamed to bust platform skill cache.
 ---
 
-# Gate: Business Domain
+# Deprecated
 
-## Schema
-
-Authoritative evaluation contract: [`schema.json`](schema.json)
-
-## Target
-
-- Artifact: `artifacts/domain.json`
-- Artifact schema: `skills/agents/csa-business-domain/schema.json`
-- Rubric: `skills/agents/csa-business-domain/quality-rubric.md`
-
-## Blocking fails
-
-- No domains; critical/high rules missing `implementation_location` without missing-logic flag; schema invalid.
-
-Emit report with `gate_id: gate-business-domain`.
+Use **`csa7-gate-business-domain`** instead.

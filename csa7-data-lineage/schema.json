@@ -1,0 +1,993 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa7-data-lineage.json",
+  "title": "CSADataLineageArtifact",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "agent_id",
+    "agent_version",
+    "timestamp",
+    "schema_version",
+    "scope",
+    "overall_confidence_score",
+    "data_sources",
+    "field_lineage",
+    "entity_catalog",
+    "validation_results",
+    "pack_substance"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string"
+    },
+    "agent_id": {
+      "const": "data_lineage"
+    },
+    "agent_version": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "3.0.0-knowledge-first"
+    },
+    "scope": {
+      "type": "object"
+    },
+    "overall_confidence_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "lineage_scope": {
+      "type": "string",
+      "enum": [
+        "field_level",
+        "table_level",
+        "system_level"
+      ]
+    },
+    "processing_time_ms": {
+      "type": "integer"
+    },
+    "data_sources": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "source_id",
+          "source_name",
+          "source_type",
+          "confidence_score"
+        ],
+        "properties": {
+          "source_id": {
+            "type": "string"
+          },
+          "source_name": {
+            "type": "string"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "database",
+              "file",
+              "api",
+              "stream",
+              "external"
+            ]
+          },
+          "technology": {
+            "type": "string"
+          },
+          "connection_details": {
+            "type": "object"
+          },
+          "data_entities": {
+            "type": "array"
+          },
+          "access_patterns": {
+            "type": "array"
+          },
+          "confidence_score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "evidence": {
+            "type": "array"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "field_lineage": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": [
+          "lineage_id",
+          "source_field",
+          "target_field",
+          "lineage_confidence_score"
+        ],
+        "properties": {
+          "lineage_id": {
+            "type": "string",
+            "pattern": "^LIN-"
+          },
+          "source_field": {
+            "type": "object"
+          },
+          "target_field": {
+            "type": "object"
+          },
+          "transformation_logic": {
+            "type": "object"
+          },
+          "validation_points": {
+            "type": "array"
+          },
+          "data_flow_path": {
+            "type": "array"
+          },
+          "lineage_confidence_score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "extraction_source": {
+            "type": "string",
+            "enum": [
+              "code",
+              "configuration",
+              "documentation",
+              "inferred"
+            ]
+          },
+          "uncertainty_reason": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "data_transformations": {
+      "type": "array"
+    },
+    "entity_catalog": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "entity_id",
+          "entity_name",
+          "store_id",
+          "key_attributes",
+          "evidence"
+        ],
+        "properties": {
+          "entity_id": {
+            "type": "string"
+          },
+          "entity_name": {
+            "type": "string"
+          },
+          "store_id": {
+            "type": "string"
+          },
+          "key_attributes": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "role"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "pk",
+                    "fk",
+                    "business_key",
+                    "payload",
+                    "audit",
+                    "status",
+                    "other"
+                  ]
+                },
+                "type_hint": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "data_quality_assessment": {
+      "type": "object"
+    },
+    "integration_patterns": {
+      "type": "array"
+    },
+    "validation_results": {
+      "type": "object",
+      "required": [
+        "lineage_completeness"
+      ],
+      "properties": {
+        "lineage_completeness": {
+          "type": "object"
+        },
+        "transformation_coverage": {
+          "type": "object"
+        },
+        "validation_coverage": {
+          "type": "object"
+        }
+      }
+    },
+    "recommendations": {
+      "type": "array"
+    },
+    "pack_substance": {
+      "type": "object",
+      "required": [
+        "overview",
+        "persistence_strategy",
+        "data_ownership",
+        "data_stores",
+        "entity_catalog",
+        "data_lineage_matrix",
+        "business_logic_in_db",
+        "integration_inventory",
+        "interface_contracts",
+        "integration_behaviour",
+        "exception_mappings",
+        "resilience_posture",
+        "integration_risks",
+        "evidence_appendix"
+      ],
+      "properties": {
+        "overview": {
+          "type": "object",
+          "required": [
+            "what",
+            "why",
+            "how_summary"
+          ],
+          "properties": {
+            "what": {
+              "type": "string",
+              "minLength": 60
+            },
+            "why": {
+              "type": "string",
+              "minLength": 40
+            },
+            "how_summary": {
+              "type": "string",
+              "minLength": 60
+            }
+          },
+          "additionalProperties": false
+        },
+        "persistence_strategy": {
+          "type": "object",
+          "required": [
+            "summary",
+            "master_tables",
+            "transactional_tables",
+            "reference_tables",
+            "history_tables",
+            "audit_tables",
+            "soft_delete",
+            "versioning",
+            "optimistic_locking",
+            "relationships_summary",
+            "read_write_pattern"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string",
+              "minLength": 60,
+              "description": "Explain why tables exist and how persistence is organized."
+            },
+            "master_tables": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "purpose"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "minLength": 15
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "transactional_tables": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "purpose"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "minLength": 15
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "reference_tables": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "purpose"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "minLength": 15
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "history_tables": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "purpose"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "minLength": 15
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "audit_tables": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "purpose"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "minLength": 15
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "soft_delete": {
+              "type": "string",
+              "minLength": 15
+            },
+            "versioning": {
+              "type": "string",
+              "minLength": 15
+            },
+            "optimistic_locking": {
+              "type": "string",
+              "minLength": 15
+            },
+            "relationships_summary": {
+              "type": "string",
+              "minLength": 40
+            },
+            "read_write_pattern": {
+              "type": "string",
+              "minLength": 30
+            }
+          },
+          "additionalProperties": false
+        },
+        "data_ownership": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "entity_or_store",
+              "owner_capability_or_context",
+              "notes"
+            ],
+            "properties": {
+              "entity_or_store": {
+                "type": "string",
+                "minLength": 2
+              },
+              "owner_capability_or_context": {
+                "type": "string",
+                "minLength": 3
+              },
+              "notes": {
+                "type": "string",
+                "minLength": 15
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "data_stores": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "store_id",
+              "engine",
+              "schema_name",
+              "primary_purpose"
+            ],
+            "properties": {
+              "store_id": {
+                "type": "string",
+                "minLength": 2
+              },
+              "engine": {
+                "type": "string",
+                "minLength": 2
+              },
+              "schema_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "primary_purpose": {
+                "type": "string",
+                "minLength": 15
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "entity_catalog": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "entity_id",
+              "entity_name",
+              "store_id",
+              "why_exists",
+              "key_attributes"
+            ],
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "minLength": 2
+              },
+              "entity_name": {
+                "type": "string",
+                "minLength": 2
+              },
+              "store_id": {
+                "type": "string",
+                "minLength": 2
+              },
+              "why_exists": {
+                "type": "string",
+                "minLength": 20
+              },
+              "key_attributes": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "role"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "role": {
+                      "type": "string",
+                      "enum": [
+                        "pk",
+                        "fk",
+                        "business_key",
+                        "payload",
+                        "audit",
+                        "status",
+                        "other"
+                      ]
+                    },
+                    "type_hint": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "data_lineage_matrix": {
+          "type": "array",
+          "minItems": 10,
+          "description": "Business-oriented lineage (source → transform → target), not only table dumps.",
+          "items": {
+            "type": "object",
+            "required": [
+              "lineage_id",
+              "source_entity",
+              "transformation_logic",
+              "target_entity",
+              "execution_trigger",
+              "business_meaning"
+            ],
+            "properties": {
+              "lineage_id": {
+                "type": "string",
+                "pattern": "^LIN-"
+              },
+              "source_entity": {
+                "type": "string",
+                "minLength": 2
+              },
+              "transformation_logic": {
+                "type": "string",
+                "minLength": 15
+              },
+              "target_entity": {
+                "type": "string",
+                "minLength": 2
+              },
+              "execution_trigger": {
+                "type": "string",
+                "minLength": 3
+              },
+              "business_meaning": {
+                "type": "string",
+                "minLength": 20
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "business_logic_in_db": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "sp_name",
+              "extracted_business_rule",
+              "complexity",
+              "why_in_db"
+            ],
+            "properties": {
+              "sp_name": {
+                "type": "string",
+                "minLength": 2
+              },
+              "extracted_business_rule": {
+                "type": "string",
+                "minLength": 20
+              },
+              "complexity": {
+                "type": "string",
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH"
+                ]
+              },
+              "why_in_db": {
+                "type": "string",
+                "minLength": 20
+              },
+              "io_signature": {
+                "type": "string"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "integration_inventory": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "type": "object",
+            "required": [
+              "interface_id",
+              "source_system",
+              "target_system",
+              "protocol",
+              "data_format",
+              "communication_pattern",
+              "criticality",
+              "business_purpose"
+            ],
+            "properties": {
+              "interface_id": {
+                "type": "string",
+                "pattern": "^INT-"
+              },
+              "source_system": {
+                "type": "string",
+                "minLength": 2
+              },
+              "target_system": {
+                "type": "string",
+                "minLength": 2
+              },
+              "protocol": {
+                "type": "string",
+                "enum": [
+                  "IBM MQ",
+                  "JMS",
+                  "REST",
+                  "SOAP",
+                  "FTP/SFTP",
+                  "DB Link",
+                  "CORBA",
+                  "File Share",
+                  "Other"
+                ]
+              },
+              "endpoint_queue_name": {
+                "type": "string"
+              },
+              "data_format": {
+                "type": "string",
+                "enum": [
+                  "XML",
+                  "JSON",
+                  "Fixed-Length",
+                  "CSV",
+                  "Binary",
+                  "Other"
+                ]
+              },
+              "communication_pattern": {
+                "type": "string",
+                "enum": [
+                  "Sync",
+                  "Async Fire-and-Forget",
+                  "Async Request-Reply"
+                ]
+              },
+              "criticality": {
+                "type": "string",
+                "enum": [
+                  "Mission-Critical",
+                  "Business-Operational",
+                  "Administrative"
+                ]
+              },
+              "business_purpose": {
+                "type": "string",
+                "minLength": 20
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "interface_contracts": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "contract_id",
+              "interface_id",
+              "operation",
+              "direction",
+              "business_meaning"
+            ],
+            "properties": {
+              "contract_id": {
+                "type": "string",
+                "pattern": "^CTR-"
+              },
+              "interface_id": {
+                "type": "string",
+                "pattern": "^INT-"
+              },
+              "operation": {
+                "type": "string",
+                "minLength": 2
+              },
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "inbound",
+                  "outbound",
+                  "bidirectional"
+                ]
+              },
+              "business_meaning": {
+                "type": "string",
+                "minLength": 20
+              },
+              "request_shape": {
+                "type": "string"
+              },
+              "response_shape": {
+                "type": "string"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "integration_behaviour": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "scenario",
+              "flow_steps",
+              "failure_handling"
+            ],
+            "properties": {
+              "scenario": {
+                "type": "string",
+                "minLength": 10
+              },
+              "flow_steps": {
+                "type": "array",
+                "minItems": 3,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "failure_handling": {
+                "type": "string",
+                "minLength": 20
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "exception_mappings": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "exception_or_code",
+              "mapped_status_or_behavior",
+              "business_impact"
+            ],
+            "properties": {
+              "exception_or_code": {
+                "type": "string",
+                "minLength": 2
+              },
+              "mapped_status_or_behavior": {
+                "type": "string",
+                "minLength": 2
+              },
+              "business_impact": {
+                "type": "string",
+                "minLength": 15
+              },
+              "interface_id": {
+                "type": "string"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "resilience_posture": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "interface_id",
+              "mechanism",
+              "status"
+            ],
+            "properties": {
+              "interface_id": {
+                "type": "string",
+                "pattern": "^INT-"
+              },
+              "mechanism": {
+                "type": "string",
+                "enum": [
+                  "circuit_breaker",
+                  "retry",
+                  "timeout",
+                  "fallback",
+                  "idempotency",
+                  "other"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "partial",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "notes": {
+                "type": "string"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "integration_risks": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "risk",
+              "impact",
+              "recommendation"
+            ],
+            "properties": {
+              "risk": {
+                "type": "string",
+                "minLength": 20
+              },
+              "impact": {
+                "type": "string",
+                "minLength": 15
+              },
+              "recommendation": {
+                "type": "string",
+                "minLength": 20
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "evidence_appendix": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "type": "object",
+            "required": [
+              "claim_ref",
+              "path_or_artifact",
+              "note"
+            ],
+            "properties": {
+              "claim_ref": {
+                "type": "string",
+                "minLength": 3
+              },
+              "path_or_artifact": {
+                "type": "string",
+                "minLength": 3
+              },
+              "note": {
+                "type": "string",
+                "minLength": 10
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false,
+      "description": "Knowledge-first pack substance. Narrative sections required; evidence_appendix last. Validates against https://csa.local/schemas/Data_and_Integration.schema.json."
+    }
+  },
+  "additionalProperties": false
+}

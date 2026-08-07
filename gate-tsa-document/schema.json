@@ -3,10 +3,7 @@
   "$id": "https://tsa.local/schemas/gate-tsa-document.json",
   "title": "gate-tsa-document",
   "type": "object",
-  "required": [
-    "gate_id",
-    "result"
-  ],
+  "required": ["gate_id", "result", "findings"],
   "properties": {
     "gate_id": {
       "const": "gate-tsa-document"
@@ -22,9 +19,27 @@
     "findings": {
       "type": "array",
       "items": {
-        "type": "object"
+        "type": "object",
+        "required": ["check_id", "passed", "blocking", "description"],
+        "properties": {
+          "check_id": {
+            "type": "string",
+            "enum": [
+              "required_docs_present",
+              "schema_conformance",
+              "deterministic_rendering",
+              "traceability_present",
+              "active_root_hygiene"
+            ]
+          },
+          "passed": { "type": "boolean" },
+          "blocking": { "type": "boolean" },
+          "description": { "type": "string" },
+          "observed": { "type": "string" }
+        },
+        "additionalProperties": false
       }
     }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

@@ -1,0 +1,521 @@
+{
+  "artifact_id": "lineage-20260804120300",
+  "agent_id": "data_lineage",
+  "agent_version": "1.0.0",
+  "timestamp": "2026-08-04T12:03:00Z",
+  "schema_version": "1.0.0",
+  "scope": {
+    "codebase_root": "files/legacy-app",
+    "modules": [
+      "claims"
+    ]
+  },
+  "overall_confidence_score": 72,
+  "lineage_scope": "field_level",
+  "data_sources": [
+    {
+      "source_id": "DS-oracle-claims",
+      "source_name": "CLAIMS_DB",
+      "source_type": "database",
+      "technology": "Oracle",
+      "data_entities": [
+        {
+          "entity_name": "CLAIM",
+          "entity_type": "table",
+          "fields": [
+            {
+              "field_name": "CLAIM_ID",
+              "data_type": "NUMBER",
+              "is_primary_key": true
+            }
+          ]
+        }
+      ],
+      "access_patterns": [],
+      "confidence_score": 85,
+      "evidence": [
+        {
+          "path": "db/claims.sql",
+          "kind": "ddl"
+        }
+      ]
+    },
+    {
+      "source_id": "SRC-2",
+      "source_name": "Source 2",
+      "source_type": "database",
+      "technology": "Oracle",
+      "data_entities": [
+        {
+          "entity_name": "CLAIM",
+          "entity_type": "table",
+          "fields": [
+            {
+              "field_name": "CLAIM_ID",
+              "data_type": "NUMBER",
+              "is_primary_key": true
+            }
+          ]
+        }
+      ],
+      "access_patterns": [],
+      "confidence_score": 85,
+      "evidence": [
+        {
+          "path": "db/claims.sql",
+          "kind": "ddl"
+        }
+      ]
+    },
+    {
+      "source_id": "SRC-3",
+      "source_name": "Source 3",
+      "source_type": "database",
+      "technology": "Oracle",
+      "data_entities": [
+        {
+          "entity_name": "CLAIM",
+          "entity_type": "table",
+          "fields": [
+            {
+              "field_name": "CLAIM_ID",
+              "data_type": "NUMBER",
+              "is_primary_key": true
+            }
+          ]
+        }
+      ],
+      "access_patterns": [],
+      "confidence_score": 85,
+      "evidence": [
+        {
+          "path": "db/claims.sql",
+          "kind": "ddl"
+        }
+      ]
+    }
+  ],
+  "field_lineage": [
+    {
+      "lineage_id": "LIN-claim-id-ui-to-db",
+      "source_field": {
+        "source_name": "ClaimServlet",
+        "entity_name": "ClaimForm",
+        "field_name": "claimId",
+        "data_type": "String"
+      },
+      "target_field": {
+        "target_name": "CLAIMS_DB",
+        "entity_name": "CLAIM",
+        "field_name": "CLAIM_ID",
+        "data_type": "NUMBER"
+      },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/ClaimDao.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "lineage_id": "LIN-002",
+      "source_field": {
+        "source_name": "ClaimServlet",
+        "entity_name": "ClaimForm",
+        "field_name": "claimId",
+        "data_type": "String"
+      },
+      "target_field": {
+        "target_name": "CLAIMS_DB",
+        "entity_name": "CLAIM",
+        "field_name": "CLAIM_ID",
+        "data_type": "NUMBER"
+      },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/ClaimDao.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "lineage_id": "LIN-003",
+      "source_field": {
+        "source_name": "ClaimServlet",
+        "entity_name": "ClaimForm",
+        "field_name": "claimId",
+        "data_type": "String"
+      },
+      "target_field": {
+        "target_name": "CLAIMS_DB",
+        "entity_name": "CLAIM",
+        "field_name": "CLAIM_ID",
+        "data_type": "NUMBER"
+      },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/ClaimDao.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "lineage_id": "LIN-004",
+      "source_field": {
+        "source_name": "ClaimServlet",
+        "entity_name": "ClaimForm",
+        "field_name": "claimId",
+        "data_type": "String"
+      },
+      "target_field": {
+        "target_name": "CLAIMS_DB",
+        "entity_name": "CLAIM",
+        "field_name": "CLAIM_ID",
+        "data_type": "NUMBER"
+      },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/ClaimDao.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "lineage_id": "LIN-005",
+      "source_field": {
+        "source_name": "ClaimServlet",
+        "entity_name": "ClaimForm",
+        "field_name": "claimId",
+        "data_type": "String"
+      },
+      "target_field": {
+        "target_name": "CLAIMS_DB",
+        "entity_name": "CLAIM",
+        "field_name": "CLAIM_ID",
+        "data_type": "NUMBER"
+      },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/ClaimDao.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "lineage_id": "LIN-006",
+      "source_field": {
+        "source_name": "ClaimServlet",
+        "entity_name": "ClaimForm",
+        "field_name": "claimId",
+        "data_type": "String"
+      },
+      "target_field": {
+        "target_name": "CLAIMS_DB",
+        "entity_name": "CLAIM",
+        "field_name": "CLAIM_ID",
+        "data_type": "NUMBER"
+      },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/ClaimDao.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "lineage_id": "LIN-007",
+      "source_field": {
+        "source_name": "ClaimServlet",
+        "entity_name": "ClaimForm",
+        "field_name": "claimId",
+        "data_type": "String"
+      },
+      "target_field": {
+        "target_name": "CLAIMS_DB",
+        "entity_name": "CLAIM",
+        "field_name": "CLAIM_ID",
+        "data_type": "NUMBER"
+      },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/ClaimDao.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "lineage_id": "LIN-008",
+      "source_field": {
+        "source_name": "ClaimServlet",
+        "entity_name": "ClaimForm",
+        "field_name": "claimId",
+        "data_type": "String"
+      },
+      "target_field": {
+        "target_name": "CLAIMS_DB",
+        "entity_name": "CLAIM",
+        "field_name": "CLAIM_ID",
+        "data_type": "NUMBER"
+      },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/ClaimDao.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "lineage_id": "LIN-009",
+      "source_field": {
+        "source_name": "ClaimServlet",
+        "entity_name": "ClaimForm",
+        "field_name": "claimId",
+        "data_type": "String"
+      },
+      "target_field": {
+        "target_name": "CLAIMS_DB",
+        "entity_name": "CLAIM",
+        "field_name": "CLAIM_ID",
+        "data_type": "NUMBER"
+      },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/ClaimDao.java",
+          "kind": "code"
+        }
+      ]
+    },
+    {
+      "lineage_id": "LIN-010",
+      "source_field": {
+        "source_name": "ClaimServlet",
+        "entity_name": "ClaimForm",
+        "field_name": "claimId",
+        "data_type": "String"
+      },
+      "target_field": {
+        "target_name": "CLAIMS_DB",
+        "entity_name": "CLAIM",
+        "field_name": "CLAIM_ID",
+        "data_type": "NUMBER"
+      },
+      "transformation_logic": {
+        "transformation_type": "direct_copy",
+        "transformation_description": "Parse string to number",
+        "business_rules_applied": [],
+        "data_quality_rules": []
+      },
+      "validation_points": [],
+      "data_flow_path": [],
+      "lineage_confidence_score": 75,
+      "extraction_source": "code",
+      "evidence": [
+        {
+          "path": "claims/src/ClaimDao.java",
+          "kind": "code"
+        }
+      ]
+    }
+  ],
+  "validation_results": {
+    "lineage_completeness": {
+      "total_fields_analyzed": 1,
+      "fields_with_complete_lineage": 1,
+      "fields_missing_lineage": [],
+      "completeness_percentage": 100
+    }
+  },
+  "recommendations": [],
+  "entity_catalog": [
+    {
+      "entity_id": "ENT-001",
+      "entity_name": "Entity1",
+      "store_id": "DS-1",
+      "key_attributes": [
+        {
+          "name": "ID",
+          "role": "pk",
+          "type_hint": "NUMBER"
+        },
+        {
+          "name": "NAME",
+          "role": "business_key",
+          "type_hint": "VARCHAR2"
+        }
+      ],
+      "evidence": [
+        "ddl/entity1.sql:1"
+      ]
+    },
+    {
+      "entity_id": "ENT-002",
+      "entity_name": "Entity2",
+      "store_id": "DS-1",
+      "key_attributes": [
+        {
+          "name": "ID",
+          "role": "pk",
+          "type_hint": "NUMBER"
+        },
+        {
+          "name": "NAME",
+          "role": "business_key",
+          "type_hint": "VARCHAR2"
+        }
+      ],
+      "evidence": [
+        "ddl/entity2.sql:1"
+      ]
+    },
+    {
+      "entity_id": "ENT-003",
+      "entity_name": "Entity3",
+      "store_id": "DS-1",
+      "key_attributes": [
+        {
+          "name": "ID",
+          "role": "pk",
+          "type_hint": "NUMBER"
+        },
+        {
+          "name": "NAME",
+          "role": "business_key",
+          "type_hint": "VARCHAR2"
+        }
+      ],
+      "evidence": [
+        "ddl/entity3.sql:1"
+      ]
+    },
+    {
+      "entity_id": "ENT-004",
+      "entity_name": "Entity4",
+      "store_id": "DS-1",
+      "key_attributes": [
+        {
+          "name": "ID",
+          "role": "pk",
+          "type_hint": "NUMBER"
+        },
+        {
+          "name": "NAME",
+          "role": "business_key",
+          "type_hint": "VARCHAR2"
+        }
+      ],
+      "evidence": [
+        "ddl/entity4.sql:1"
+      ]
+    },
+    {
+      "entity_id": "ENT-005",
+      "entity_name": "Entity5",
+      "store_id": "DS-1",
+      "key_attributes": [
+        {
+          "name": "ID",
+          "role": "pk",
+          "type_hint": "NUMBER"
+        },
+        {
+          "name": "NAME",
+          "role": "business_key",
+          "type_hint": "VARCHAR2"
+        }
+      ],
+      "evidence": [
+        "ddl/entity5.sql:1"
+      ]
+    }
+  ]
+}

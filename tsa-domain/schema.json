@@ -1,85 +1,101 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://tsa.local/schemas/tsa-domain.json",
-  "title": "tsa-domain",
+  "$id": "https://tsa.local/schemas/adr-blueprint.json",
+  "title": "Enterprise_ADR_Blueprint_Schema",
   "type": "object",
-  "required": [
-    "artifact_id",
-    "agent_id",
-    "agent_version",
-    "timestamp",
-    "schema_version",
-    "overall_confidence_score",
-    "csa_refs",
-    "adr_refs",
-    "target_domains"
-  ],
+  "required": ["decisions"],
   "properties": {
-    "artifact_id": {
-      "type": "string"
+    "adr_metadata": {
+      "type": "object",
+      "properties": {
+        "repository_url": { "type": "string" },
+        "architecture_domain": {
+          "type": "string",
+          "enum": ["Application", "Data", "Infrastructure", "Security", "Integration"]
+        }
+      },
+      "additionalProperties": false
     },
-    "agent_id": {
-      "const": "domain"
-    },
-    "agent_version": {
-      "type": "string"
-    },
-    "timestamp": {
-      "type": "string"
-    },
-    "schema_version": {
-      "const": "1.0.0"
-    },
-    "overall_confidence_score": {
-      "type": "integer",
-      "minimum": 0,
-      "maximum": 100
-    },
-    "csa_refs": {
+    "decisions": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "required": [
+          "adr_id",
+          "title",
+          "status",
+          "date",
+          "deciders",
+          "scope",
+          "context_problem_statement",
+          "decision_drivers",
+          "considered_options",
+          "decision_outcome",
+          "compliance_and_enforcement"
+        ],
+        "properties": {
+          "adr_id": { "type": "string", "pattern": "^ADR-[0-9]{3}$" },
+          "title": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["Proposed", "Accepted", "Rejected", "Deprecated", "Superseded"]
+          },
+          "date": { "type": "string", "format": "date" },
+          "authors": { "type": "array", "items": { "type": "string" } },
+          "deciders": { "type": "array", "items": { "type": "string" } },
+          "scope": { "type": "string" },
+          "context_problem_statement": { "type": "string" },
+          "decision_drivers": { "type": "array", "items": { "type": "string" } },
+          "considered_options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["option_id", "option_name", "pros", "cons"],
+              "properties": {
+                "option_id": { "type": "string" },
+                "option_name": { "type": "string" },
+                "pros": { "type": "array", "items": { "type": "string" } },
+                "cons": { "type": "array", "items": { "type": "string" } },
+                "estimated_cost_impact": { "type": "string", "enum": ["Low", "Medium", "High"] },
+                "technical_complexity": { "type": "string", "enum": ["Low", "Medium", "High"] }
+              },
+              "additionalProperties": false
+            }
+          },
+          "decision_outcome": {
+            "type": "object",
+            "required": ["chosen_option_id", "rationale"],
+            "properties": {
+              "chosen_option_id": { "type": "string" },
+              "rationale": { "type": "string" },
+              "positive_consequences": { "type": "array", "items": { "type": "string" } },
+              "negative_consequences_risks": { "type": "array", "items": { "type": "string" } }
+            },
+            "additionalProperties": false
+          },
+          "compliance_and_enforcement": {
+            "type": "object",
+            "required": ["verification_method"],
+            "properties": {
+              "verification_method": { "type": "string" },
+              "enforcement_tooling": { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "related_adrs": {
+            "type": "object",
+            "properties": {
+              "supersedes": { "type": "string" },
+              "superseded_by": { "type": "string" },
+              "amends": { "type": "string" },
+              "related_to": { "type": "array", "items": { "type": "string" } }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
       }
-    },
-    "adr_refs": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "validation_results": {
-      "type": "object"
-    },
-    "target_domains": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "capability_map": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
-    },
-    "csa_to_target_trace": {
-      "type": [
-        "object",
-        "array",
-        "string",
-        "number",
-        "boolean",
-        "null"
-      ]
     }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

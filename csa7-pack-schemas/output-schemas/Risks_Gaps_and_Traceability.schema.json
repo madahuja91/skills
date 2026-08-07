@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/Risks_Gaps_and_Traceability.schema.json",
+  "title": "CSA_Risks_Gaps_and_Traceability",
+  "description": "Knowledge-first risks: Risk/Impact/Recommendation, decision log, modernization. Evidence appendix last. Never a Completeness gate report.",
+  "type": "object",
+  "required": [
+    "overview",
+    "gaps",
+    "risks",
+    "assumptions",
+    "remediation_actions",
+    "regression_risk_flags",
+    "decision_log",
+    "modernization_recommendations",
+    "traceability_links",
+    "evidence_appendix"
+  ],
+  "properties": {
+    "overview": {
+      "type": "object",
+      "required": ["what", "why"],
+      "properties": {
+        "what": { "type": "string", "minLength": 40 },
+        "why": { "type": "string", "minLength": 40 }
+      },
+      "additionalProperties": false
+    },
+    "gaps": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["gap_id", "description", "impact", "needed_evidence"],
+        "properties": {
+          "gap_id": { "type": "string", "pattern": "^GAP-" },
+          "description": { "type": "string", "minLength": 20 },
+          "impact": { "type": "string", "minLength": 10 },
+          "needed_evidence": { "type": "string", "minLength": 10 },
+          "category": {
+            "type": "string",
+            "enum": ["evidence", "resilience", "contract", "data", "security", "ops", "other"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "risks": {
+      "type": "array",
+      "minItems": 5,
+      "description": "Risk + Impact + Recommendation — not 'technology X exists'.",
+      "items": {
+        "type": "object",
+        "required": ["risk_id", "title", "severity", "impact_area", "impact", "recommendation"],
+        "properties": {
+          "risk_id": { "type": "string", "pattern": "^RISK-" },
+          "title": { "type": "string", "minLength": 5 },
+          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+          "impact_area": { "type": "string", "minLength": 3 },
+          "impact": { "type": "string", "minLength": 25 },
+          "recommendation": { "type": "string", "minLength": 25 },
+          "mitigation": { "type": "string", "minLength": 10 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["assumption_id", "statement", "confidence"],
+        "properties": {
+          "assumption_id": { "type": "string", "pattern": "^ASM-" },
+          "statement": { "type": "string", "minLength": 15 },
+          "confidence": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "remediation_actions": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["action_id", "related_gap_or_risk", "action", "priority"],
+        "properties": {
+          "action_id": { "type": "string", "pattern": "^ACT-" },
+          "related_gap_or_risk": { "type": "string", "minLength": 3 },
+          "action": { "type": "string", "minLength": 15 },
+          "priority": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "regression_risk_flags": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["flag_id", "area", "risk_if_missed"],
+        "properties": {
+          "flag_id": { "type": "string", "pattern": "^REG-" },
+          "area": { "type": "string", "minLength": 3 },
+          "risk_if_missed": { "type": "string", "minLength": 15 },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "decision_log": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["decision_id", "topic", "current_choice", "rationale", "tradeoffs"],
+        "properties": {
+          "decision_id": { "type": "string", "pattern": "^DEC-" },
+          "topic": {
+            "type": "string",
+            "enum": [
+              "stored_procedure",
+              "mq",
+              "batch",
+              "scheduler",
+              "cache",
+              "sync",
+              "async",
+              "other"
+            ]
+          },
+          "current_choice": { "type": "string", "minLength": 10 },
+          "rationale": { "type": "string", "minLength": 30 },
+          "tradeoffs": { "type": "string", "minLength": 20 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "modernization_recommendations": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "area",
+          "current_state",
+          "future_state",
+          "migration_complexity",
+          "cloud_readiness",
+          "risk",
+          "estimated_effort"
+        ],
+        "properties": {
+          "area": { "type": "string", "minLength": 3 },
+          "current_state": { "type": "string", "minLength": 20 },
+          "future_state": { "type": "string", "minLength": 20 },
+          "migration_complexity": {
+            "type": "string",
+            "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+          },
+          "cloud_readiness": { "type": "string", "minLength": 10 },
+          "microservice_candidate": { "type": "boolean" },
+          "ddd_readiness": { "type": "string" },
+          "risk": { "type": "string", "minLength": 15 },
+          "estimated_effort": { "type": "string", "minLength": 3 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "traceability_links": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["capability_id", "component_id", "integration_id", "lineage_id"],
+        "properties": {
+          "capability_id": { "type": "string" },
+          "component_id": { "type": "string" },
+          "integration_id": { "type": "string" },
+          "lineage_id": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence_appendix": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["claim_ref", "path_or_artifact", "note"],
+        "properties": {
+          "claim_ref": { "type": "string", "minLength": 3 },
+          "path_or_artifact": { "type": "string", "minLength": 3 },
+          "note": { "type": "string", "minLength": 10 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
