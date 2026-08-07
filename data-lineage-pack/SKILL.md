@@ -1,6 +1,6 @@
 ---
 name: data-lineage-pack
-description: Standard structure for CSA data architecture and lineage documentation. Use during Data Lineage analysis and Assembler section 06.
+description: Standard structure for CSA data architecture and lineage documentation. Use during Data Lineage analysis and Completeness FINAL render of Data_and_Integration.md.
 ---
 
 # Data Lineage Pack
@@ -9,7 +9,7 @@ description: Standard structure for CSA data architecture and lineage documentat
 
 Markdown section contract: [schema.json](schema.json)
 
-## Section 06 outline
+## `Data_and_Integration.md` lineage half
 
 1. Data stores inventory
 2. System-level flows
@@ -17,6 +17,8 @@ Markdown section contract: [schema.json](schema.json)
 4. Transformation & validation points
 5. Data quality risks
 6. Gaps (missing DDL, undocumented ETL)
+
+Integration catalog/contracts live in the same file (owned jointly with integration.json).
 
 ### Required Mermaid (`mermaid-diagrams`)
 

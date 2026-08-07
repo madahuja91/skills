@@ -1,6 +1,6 @@
 ---
 name: ddd-domain-pack
-description: DDD structuring for CSA domain model — bounded contexts, aggregates, entities, and business rules as Markdown. Use during Business Domain analysis and Assembler domain docs.
+description: DDD structuring for CSA domain model — bounded contexts, aggregates, entities, and business rules as Markdown. Use during Business Domain analysis and Completeness FINAL render of Business_Architecture.md.
 ---
 
 # DDD Domain Pack
@@ -19,9 +19,9 @@ Markdown section contract: [schema.json](schema.json)
 | Invariant / policy | `business_rules[]` (`BR-*`) |
 | Context map | `cross_domain_dependencies` |
 
-## Writing `04_domain_model_ddd.md` (Markdown)
+## Writing `Business_Architecture.md` (Markdown)
 
-For each domain: purpose, ubiquitous language (canonical names), entities, key rules with evidence links, upstream/downstream contexts.
+For each domain: purpose, ubiquitous language (canonical names), entities, key rules with evidence links, upstream/downstream contexts. Capabilities and flows belong in this same owner doc.
 
 ### Required Mermaid (`mermaid-diagrams`)
 

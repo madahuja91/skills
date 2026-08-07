@@ -7,9 +7,30 @@
   "properties": {
     "gate_id": { "const": "gate-csa-document" },
     "target_root": { "type": "string", "pattern": ".*csa_pack.*" },
-    "target_schema": { "const": "skills/agents/csa-document-assembler/schema.json" },
+    "rendered_by": {
+      "const": "Completeness-Validation-Agent",
+      "description": "No Document-Assembler; Completeness renders and gates in FINAL mode."
+    },
+    "substance_schemas": {
+      "type": "array",
+      "description": "Contracts the rendered lean pack must satisfy",
+      "default": [
+        "csa-rich-content/schema.json",
+        "csa-section-boundaries/schema.json",
+        "arc42-c4-views/schema.json",
+        "mermaid-diagrams/schema.json",
+        "csa-document-assembler/output-schemas/Executive_Summary.schema.json",
+        "csa-document-assembler/output-schemas/Business_Architecture.schema.json",
+        "csa-document-assembler/output-schemas/Application_Architecture.schema.json",
+        "csa-document-assembler/output-schemas/Data_and_Integration.schema.json",
+        "csa-document-assembler/output-schemas/Risks_Gaps_and_Traceability.schema.json"
+      ],
+      "items": { "type": "string" }
+    },
     "required_markdown_sections": {
       "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
       "items": { "type": "string" },
       "default": [
         "Executive_Summary.md",
@@ -18,17 +39,6 @@
         "Data_and_Integration.md",
         "Risks_Gaps_and_Traceability.md",
         "README.md"
-      ]
-    },
-    "required_section_machine_json": {
-      "type": "array",
-      "items": { "type": "string" },
-      "default": [
-        "machine/sections/Executive_Summary.json",
-        "machine/sections/Business_Architecture.json",
-        "machine/sections/Application_Architecture.json",
-        "machine/sections/Data_and_Integration.json",
-        "machine/sections/Risks_Gaps_and_Traceability.json"
       ]
     },
     "required_html_pages": {
@@ -55,7 +65,10 @@
         "10_gaps_risks_assumptions.md",
         "01_system_context_c4.md",
         "02_containers_c4.md",
-        "03_components_c4.md"
+        "03_components_c4.md",
+        "epic_story_seeds/",
+        "deliverables/",
+        "csa_pack/machine/"
       ]
     },
     "rubric_checks": {
@@ -69,32 +82,31 @@
             "enum": [
               "shared_memory_present",
               "markdown_sections_present",
-              "section_machine_json_present",
               "html_c4_index_present",
               "readme_links_html_index",
               "no_numbered_legacy_sections",
               "no_c4_markdown",
-              "machine_artifacts_synced",
-              "traceability_graph_present",
+              "no_epic_story_seeds",
+              "no_machine_sections_required",
               "gaps_documented",
               "mermaid_required_diagrams_present",
               "mermaid_html_runtime_present",
-              "mermaid_inventory_present",
               "required_files_present",
               "schema_conformance",
-              "section_min_rows",
+              "pack_output_schema_conformance",
               "specialist_list_depth",
               "section_ownership_violation",
-              "index_html_hub_richness",
-              "table_prose_duplication",
               "section_anti_redundancy",
-              "pack_shape_valid"
+              "pack_shape_valid",
+              "no_workflow_meta_in_csa_pack",
+              "owner_agent_named_on_fail"
             ]
           },
           "description": { "type": "string" },
           "passed": { "type": "boolean" },
           "blocking": { "type": "boolean" },
-          "observed": { "type": "string" }
+          "observed": { "type": "string" },
+          "target_agent_id": { "type": "string" }
         },
         "additionalProperties": false
       }

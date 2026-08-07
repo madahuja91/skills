@@ -45,7 +45,7 @@ Anchor IDs required (nav must link to these):
 | `#runtime` | Runtime / ops / debt | Packaging, runtime evidence or unknowns, tech-debt register |
 | `#risks` | Gaps / risks / assumptions | Ranked risks, missing evidence, assumptions |
 | `#traceability` | Traceability | Capability↔component↔integration↔lineage matrix (HTML table) |
-| `#pack` | Pack links | Links to Markdown sections `../00_…` … `../10_…` and `./context.html` etc. |
+| `#pack` | Pack links | Links to `../Executive_Summary.md`, `../Business_Architecture.md`, `../Application_Architecture.md`, `../Data_and_Integration.md`, `../Risks_Gaps_and_Traceability.md`, and `./context.html` etc. |
 
 ### Do NOT copy TSA/migration content into CSA index
 

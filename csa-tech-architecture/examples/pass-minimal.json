@@ -171,7 +171,8 @@
       {
         "name": "claims-war",
         "technology": "Java EE WAR",
-        "description": "Monolith web app"
+        "description": "Monolith web app",
+        "container_id": "CTR-claims-war"
       }
     ],
     "components_critical": [

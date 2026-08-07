@@ -24,45 +24,40 @@ Manager MUST create these files **before** Discover or any specialist runs. Comp
 3. `ACTIVE_ROOT/_internal/swarm/context_memory.md` (seed digest)
 4. `ACTIVE_ROOT/_internal/run_plan.json`
 
-If agents “run in parallel” without these files, they are **not** a swarm — they are isolated chats. That causes rediscovery, ID collisions, and hour+ runtimes.
-
 ## HARD: Fast parallel control loop
 
 1. Bootstrap shared memory (above).
-2. Discover → Completeness (Discover only).
-3. **Fan-out** Domain + Tech + Lineage + Integration **in parallel** (no Completeness between peers).
-4. On **join_complete**, Completeness validates each accepted specialist artifact (batch allowed; max 1 rework each).
-5. Assembler once → gate-csa-document (max 1 Assembler rework).
+2. Discover → Completeness (Discover only). On fail → Manager re-runs Discover (≤2).
+3. **Fan-out** Domain + Tech + Lineage + Integration **in parallel**.
+4. Completeness per lane as each finishes. On fail → Manager re-runs **that owner** (≤2) using `target_agent_id` + `schema_fields_missing`.
+5. On **join_complete**, Completeness FINAL renders lean `csa_pack/` (5 MD + README + arc42 HTML) and self-gates `gate-csa-document`.
+6. On FINAL fail naming an owner → Manager re-runs that specialist, then FINAL again.
 
-Do **not** serialize the parallel wave by waiting for Completeness after each peer before starting the next.
+Do **not** invoke Document Assembler. Do **not** run epic-story readiness.
 
 ## ACTIVE_ROOT layout
 
-Manager bootstraps **exactly one** ACTIVE_ROOT — prefer workspace-relative **`src/`**. **Never** invent `/app/temp/csa-run` or a second root. Set `swarm_state.active_root` once. All sequential/parallel subagents write **only** under that path (see `active-root-hygiene`).
-
-**HARD — disk persistence:** Every client deliverable and machine artifact MUST exist as real files under ACTIVE_ROOT (`artifacts/`, `csa_pack/`, `_internal/`). Do not write packs to a parallel absolute `outputs/` tree outside ACTIVE_ROOT.
+Manager bootstraps **exactly one** ACTIVE_ROOT — prefer workspace-relative **`src/`**. Set `swarm_state.active_root` once. All agents write **only** under that path.
 
 ```text
-ACTIVE_ROOT/                          # e.g. src/ — single root for the whole swarm
-  artifacts/                          # accepted specialist JSON (public machine)
+ACTIVE_ROOT/                          # e.g. src/
+  artifacts/                          # specialist JSON SSOT
     discovery.json
     domain.json
     architecture.json
     lineage.json
     integration.json
     quality_gate_reports/
-  csa_pack/                           # Assembler output (MD + arc42-c4 HTML) ON DISK
+  csa_pack/                           # Completeness FINAL lean pack (5 MD + README + arc42-c4)
   _internal/
     run_plan.json
     swarm/
-      swarm_state.json                # MUST include active_root
-      handoffs.jsonl                  # append-only handoff log
-      context_memory.md               # short rolling digest
-    completeness_validation/          # Completeness Validator only
+      swarm_state.json
+      handoffs.jsonl
+      context_memory.md
+    completeness_validation/
     agent_execution_log.json
 ```
-
-Write `active_root.txt` (one relative line, e.g. `src`) at workspace root when platform expects it.
 
 ## swarm_state.json minimum shape
 
@@ -73,7 +68,7 @@ Write `active_root.txt` (one relative line, e.g. `src`) at workspace root when p
   "manager": "CSA-Architecture-Manager",
   "active_root": "<ACTIVE_ROOT>",
   "run_plan_path": "_internal/run_plan.json",
-  "phase": "discover|swarm_parallel|assemble|done",
+  "phase": "discover|swarm_parallel|final_pack|done",
   "roster": {
     "running": [],
     "accepted": [],
@@ -99,7 +94,7 @@ Write `active_root.txt` (one relative line, e.g. `src`) at workspace root when p
     "last_design_agent": "",
     "completeness": "PASS_COMPLETE|FAIL_INCOMPLETE|PENDING",
     "attempt": 1,
-    "max_reruns": 1
+    "max_reruns": 2
   },
   "checkpoint": { "seq": 0, "updated_by": "", "updated_at": "" }
 }
@@ -107,42 +102,12 @@ Write `active_root.txt` (one relative line, e.g. `src`) at workspace root when p
 
 ## Every agent turn (mandatory)
 
-1. **Before work:** `read_file` `swarm_state.json`, tail of `handoffs.jsonl`, `context_memory.md`, and `run_plan.json`.
-2. **During work:** read peer artifacts listed as `accepted` in `artifacts_index` (never invent IDs that conflict with `shared_context.id_registry`).
-3. **After work:** write your artifact path; update `artifacts_index`, `roster`, `shared_context`, bump `checkpoint.seq`, append `handoffs.jsonl`, refresh `context_memory.md`.
-4. Emit `swarm_handoff` in the handoff log:
-
-```json
-{
-  "at": "ISO-8601",
-  "from": "<agent>",
-  "type": "handoff|fan_out|join_complete|rework",
-  "to": ["<next-agent-or-agents>"],
-  "proposed_next": "<optional>",
-  "artifact_paths": [],
-  "notes": ""
-}
-```
-
-## Parallel swarm sync rules
-
-- After Discover is `accepted`, Manager may **fan_out** BusinessDomain, TechArchitecture, DataLineage, Integration in parallel.
-- Parallel peers must:
-  - load the same Discover artifact from shared memory
-  - register new IDs into `shared_context.id_registry` (DOM-/ENT-/BR-/CMP-/INT-/LIN-)
-  - never overwrite another peer’s artifact path
-- Manager waits for **join_complete** (all parallel agents accepted or escalated) before Assembler.
+1. **Before work:** read `swarm_state.json`, tail of `handoffs.jsonl`, `context_memory.md`, and `run_plan.json`.
+2. **During work:** read peer artifacts listed as `accepted` in `artifacts_index`.
+3. **After work:** write your artifact; update `artifacts_index`, `roster`, `shared_context`, bump `checkpoint.seq`, append `handoffs.jsonl`, refresh `context_memory.md`.
 
 ## Completeness + shared memory
 
-- Completeness Validator writes only under `_internal/completeness_validation/` and updates `loop.completeness`.
-- On `FAIL_INCOMPLETE`: Manager re-invokes **same** owning agent (not a different specialty); do not honor `to[]` until `PASS_COMPLETE`.
-
-## Anti-patterns
-
-- Passing large artifact bodies only in chat
-- Private unsynced copies of discovery/domain
-- Declaring phase done while `artifacts_index` still pending
-- Skipping checkpoint.seq bump
-- Writing to invented absolute paths (`/app/temp/csa-run/...`) instead of ACTIVE_ROOT-relative disk paths
-- Putting `csa_pack` only under a sibling `outputs/` folder outside ACTIVE_ROOT
+- Completeness writes under `_internal/completeness_validation/` and updates `loop.completeness`.
+- On `FAIL_INCOMPLETE`: Manager re-invokes the **same** owning agent named in `target_agent_id` (not a different specialty).
+- Phase `final_pack` = Completeness FINAL render + gate. Phase `done` only after required pack files exist on disk.

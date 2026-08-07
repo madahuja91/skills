@@ -44,26 +44,32 @@ Bootstrap src/ + shared memory
   -> Completeness(FINAL): RENDER src/csa_pack + gate-csa-document
 ```
 
-## Final Completeness = packager first
+## Final Completeness = packager + schema judge
 
 If all five specialist artifacts exist, Completeness runs **FINAL** even if Manager brief is vague.
 
 FINAL MUST:
 
-1. Render all required `src/csa_pack/` files (map from artifacts; no invention)
-2. Emit **`gate_id: gate-csa-document`**
-3. **FAIL** if any required pack file is missing (no pass_with_warnings)
+1. Validate each artifact against its agent schema; on gap → FAIL with `target_agent_id`
+2. Render all required `src/csa_pack/` files (5 named MD + README + arc42 HTML; no invention)
+3. Validate pack against `gate-csa-document` + pack output-schemas
+4. Emit **`gate_id: gate-csa-document`**
+5. **FAIL** if any required pack file is missing (no soft pass)
+6. On substance gaps → name owner agent so Manager re-runs that specialist (≤2)
+
+No epic-story. No Document Assembler. No numbered `00_`/`04_`–`10_` client pack.
 
 ## Manager FINAL brief (copy this)
 
 ```text
 mode=FINAL
 ACTIVE_ROOT=src
-1) Validate src/artifacts/{discovery,domain,architecture,lineage,integration}.json
-2) RENDER all required files under src/csa_pack/ (5 MD + README + arc42-c4 HTML)
-3) Validate with gate-csa-document
-4) FAIL if any required pack file missing
-Do not return chat-only executive summary.
+1) Validate src/artifacts/{discovery,domain,architecture,lineage,integration}.json against agent schemas
+2) RENDER lean pack under src/csa_pack/ (5 MD + README + arc42-c4 HTML)
+3) Validate with gate-csa-document + pack output-schemas
+4) On schema gaps: FAIL with target_agent_id for Manager re-run
+5) FAIL if any required pack file missing
+Do not return chat-only executive summary. No epic-story. No Assembler.
 ```
 
 ## Per-lane gates

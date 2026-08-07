@@ -4,15 +4,30 @@
   "title": "DataLineagePackMarkdown",
   "description": "Contract for Markdown data architecture/lineage section",
   "type": "object",
-  "required": ["format", "path", "required_headings", "source_artifact"],
+  "required": [
+    "format",
+    "path",
+    "required_headings",
+    "source_artifact"
+  ],
   "properties": {
-    "format": { "const": "markdown" },
-    "path": { "const": "csa_pack/06_data_architecture_lineage.md" },
-    "source_artifact": { "const": "artifacts/lineage.json" },
-    "source_schema": { "const": "skills/agents/csa-data-lineage/schema.json" },
+    "format": {
+      "const": "markdown"
+    },
+    "path": {
+      "const": "csa_pack/Data_and_Integration.md"
+    },
+    "source_artifact": {
+      "const": "artifacts/lineage.json"
+    },
+    "source_schema": {
+      "const": "skills/agents/csa-data-lineage/schema.json"
+    },
     "required_headings": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "default": [
         "# Data Architecture and Lineage",
         "## Data Stores",
@@ -23,11 +38,16 @@
         "## Gaps"
       ]
     },
-    "must_state_lineage_scope": { "type": "boolean", "const": true },
+    "must_state_lineage_scope": {
+      "type": "boolean",
+      "const": true
+    },
     "required_mermaid_diagram_ids": {
       "type": "array",
       "minItems": 1,
-      "items": { "const": "diag-lineage-critical" }
+      "items": {
+        "const": "diag-lineage-critical"
+      }
     }
   },
   "additionalProperties": false

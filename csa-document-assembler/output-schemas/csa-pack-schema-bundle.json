@@ -3,13 +3,23 @@
   "$id": "https://csa.local/schemas/csa-pack-schema-bundle.json",
   "title": "CsaPackSchemaBundle",
   "type": "object",
-  "required": ["version", "schemas", "markdown_section_machine_json", "client_deliverables"],
+  "required": [
+    "version",
+    "schemas",
+    "client_deliverables"
+  ],
   "properties": {
-    "version": { "type": "string", "const": "3.1.0" },
+    "version": {
+      "type": "string",
+      "const": "3.2.0"
+    },
     "client_deliverables": {
       "type": "object",
-      "description": "Lean CSA pack clients actually need — 5 Markdown docs + C4 HTML hub",
-      "required": ["markdown", "html"],
+      "description": "Lean CSA pack clients actually need \u2014 5 Markdown docs + C4 HTML hub",
+      "required": [
+        "markdown",
+        "html"
+      ],
       "properties": {
         "markdown": {
           "type": "array",
@@ -52,13 +62,24 @@
         "Risks_Gaps_and_Traceability"
       ],
       "properties": {
-        "Executive_Summary": { "const": "csa_pack/machine/sections/Executive_Summary.json" },
-        "Business_Architecture": { "const": "csa_pack/machine/sections/Business_Architecture.json" },
-        "Application_Architecture": { "const": "csa_pack/machine/sections/Application_Architecture.json" },
-        "Data_and_Integration": { "const": "csa_pack/machine/sections/Data_and_Integration.json" },
-        "Risks_Gaps_and_Traceability": { "const": "csa_pack/machine/sections/Risks_Gaps_and_Traceability.json" }
+        "Executive_Summary": {
+          "const": "csa_pack/machine/sections/Executive_Summary.json"
+        },
+        "Business_Architecture": {
+          "const": "csa_pack/machine/sections/Business_Architecture.json"
+        },
+        "Application_Architecture": {
+          "const": "csa_pack/machine/sections/Application_Architecture.json"
+        },
+        "Data_and_Integration": {
+          "const": "csa_pack/machine/sections/Data_and_Integration.json"
+        },
+        "Risks_Gaps_and_Traceability": {
+          "const": "csa_pack/machine/sections/Risks_Gaps_and_Traceability.json"
+        }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "DEPRECATED \u2014 do not write machine/sections; Completeness validates Markdown against schemas only"
     },
     "schemas": {
       "type": "object",
@@ -70,11 +91,21 @@
         "Risks_Gaps_and_Traceability"
       ],
       "properties": {
-        "Executive_Summary": { "const": "Executive_Summary.schema.json" },
-        "Business_Architecture": { "const": "Business_Architecture.schema.json" },
-        "Application_Architecture": { "const": "Application_Architecture.schema.json" },
-        "Data_and_Integration": { "const": "Data_and_Integration.schema.json" },
-        "Risks_Gaps_and_Traceability": { "const": "Risks_Gaps_and_Traceability.schema.json" }
+        "Executive_Summary": {
+          "const": "Executive_Summary.schema.json"
+        },
+        "Business_Architecture": {
+          "const": "Business_Architecture.schema.json"
+        },
+        "Application_Architecture": {
+          "const": "Application_Architecture.schema.json"
+        },
+        "Data_and_Integration": {
+          "const": "Data_and_Integration.schema.json"
+        },
+        "Risks_Gaps_and_Traceability": {
+          "const": "Risks_Gaps_and_Traceability.schema.json"
+        }
       },
       "additionalProperties": false
     }

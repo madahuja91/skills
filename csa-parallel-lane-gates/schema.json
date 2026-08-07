@@ -19,7 +19,7 @@
   "properties": {
     "contract_version": {
       "type": "string",
-      "const": "2.1.0"
+      "const": "2.3.0"
     },
     "completeness_mode": {
       "type": "string",
@@ -198,7 +198,13 @@
           "02_*.md",
           "03_*.md",
           "04_*.md",
-          "05_*.md"
+          "05_*.md",
+          "06_*.md",
+          "07_*.md",
+          "08_*.md",
+          "09_*.md",
+          "10_*.md",
+          "epic_story_seeds/"
         ]
       }
     },
@@ -227,5 +233,5 @@
     }
   },
   "additionalProperties": false,
-  "contract_version": "2.2.0"
+  "contract_version": "2.3.0"
 }

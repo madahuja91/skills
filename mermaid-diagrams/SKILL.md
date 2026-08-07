@@ -1,6 +1,6 @@
 ---
 name: mermaid-diagrams
-description: Author and render Mermaid diagrams correctly in CSA Markdown and arc42-C4 HTML. Use whenever Assembler, arc42-c4-views, DDD, lineage, or integration docs need architecture/domain/lineage/integration diagrams.
+description: Author and render Mermaid diagrams correctly in CSA Markdown and arc42-C4 HTML. Use whenever Completeness FINAL, arc42-c4-views, DDD, lineage, or integration docs need architecture/domain/lineage/integration diagrams.
 ---
 
 # Mermaid Diagrams (CSA)
@@ -66,17 +66,17 @@ flowchart TB
 | `diag-c4-context` | `arc42-c4/context.html` | `C4Context` or `flowchart` | domain + integration + architecture |
 | `diag-c4-containers` | `arc42-c4/containers.html` | `C4Container` or `flowchart` | architecture + discovery |
 | `diag-c4-components` | `arc42-c4/components.html` | `C4Component` or `flowchart` | architecture (critical CMP-* only) |
-| `diag-domain-context-map` | `04_domain_model_ddd.md` | `flowchart` | domain (`business_domains`, cross-deps) |
-| `diag-lineage-critical` | `06_data_architecture_lineage.md` | `flowchart LR` | lineage (critical entity/system flows) |
-| `diag-integration-landscape` | `07_integration_landscape.md` | `flowchart` or `sequenceDiagram` | integration |
-| `diag-exec-overview` | `00_executive_summary.md` | `flowchart TB` | discovery + architecture (coarse overview) |
+| `diag-domain-context-map` | `Business_Architecture.md` | `flowchart` | domain (`business_domains`, cross-deps) |
+| `diag-lineage-critical` | `Data_and_Integration.md` | `flowchart LR` | lineage (critical entity/system flows) |
+| `diag-integration-landscape` | `Data_and_Integration.md` | `flowchart` or `sequenceDiagram` | integration |
+| `diag-exec-overview` | `Executive_Summary.md` | `flowchart TB` | discovery + architecture (coarse overview) |
 
 Optional when evidence exists:
 
 | ID | Location | Type |
 |----|----------|------|
-| `diag-runtime` | `08_runtime_ops_tech_debt.md` | `flowchart` or `sequenceDiagram` |
-| `diag-capability-map` | `05_business_capabilities.md` | `flowchart` |
+| `diag-runtime` | `Application_Architecture.md` | `flowchart` or `sequenceDiagram` |
+| `diag-capability-map` | `Business_Architecture.md` | `flowchart` |
 
 ## Quality bar
 
