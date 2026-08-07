@@ -67,25 +67,6 @@
       },
       "additionalProperties": false
     },
-    "arc42_artifacts": {
-      "type": "array",
-      "minItems": 10,
-      "items": {
-        "type": "string",
-        "enum": [
-          "01_goals_and_constraints.json",
-          "03_context_and_scope.json",
-          "05_building_block_view.json",
-          "06_runtime_view.json",
-          "07_deployment_view.json",
-          "08_cross_cutting_concepts.json",
-          "09_architectural_decisions.json",
-          "10_quality_scenarios.json",
-          "11_risks_and_tech_debt.json",
-          "12_glossary.json"
-        ]
-      }
-    },
     "sources": {
       "type": "array",
       "items": {
