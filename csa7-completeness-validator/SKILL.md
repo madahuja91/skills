@@ -180,3 +180,14 @@ Chat summary / invented `gate-final-*` without `src/csa_pack/` files = **FAIL**.
 2. Render MD headings in narrative order; put Evidence Mapping appendix last.
 3. Risks doc must be Risk/Impact/Recommendation + decision_log + modernization — never a gate report.
 4. Reject packs whose body is dominated by evidence tables without What/Why/How prose.
+
+## HARD — never double src
+
+ACTIVE_ROOT = `src` (relative).
+Correct pack path on disk: `src/csa_pack/` and `src/csa_pack/arc42-c4/`.
+When writing files, use paths **relative to ACTIVE_ROOT**:
+- `csa_pack/...`
+- `csa_pack/arc42-c4/...`
+
+Do **not** write `src/csa_pack/...` if cwd/ACTIVE_ROOT is already `src` — that creates `src/src/csa_pack`.
+Detect `src/src/**` → FAIL and rewrite under the single `src/csa_pack/`.

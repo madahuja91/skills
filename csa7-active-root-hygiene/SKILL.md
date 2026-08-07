@@ -37,3 +37,14 @@ Client pack: **`src/csa_pack/`**. Specialist SSOT: prefer **`src/artifacts/`**.
 ### Completeness every run
 
 Detect/remove duplicates; fail if pack/artifacts are missing under ACTIVE_ROOT or written outside it.
+
+## HARD — never double src
+
+ACTIVE_ROOT = `src` (relative).
+Correct pack path on disk: `src/csa_pack/` and `src/csa_pack/arc42-c4/`.
+When writing files, use paths **relative to ACTIVE_ROOT**:
+- `csa_pack/...`
+- `csa_pack/arc42-c4/...`
+
+Do **not** write `src/csa_pack/...` if cwd/ACTIVE_ROOT is already `src` — that creates `src/src/csa_pack`.
+Detect `src/src/**` → FAIL and rewrite under the single `src/csa_pack/`.
