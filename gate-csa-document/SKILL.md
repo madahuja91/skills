@@ -1,8 +1,8 @@
 ---
 name: gate-csa-document
-description: DEPRECATED — use csa5-gate-document. Renamed to bust platform skill cache.
+description: DEPRECATED — use csa6-gate-document. Renamed to bust platform skill cache.
 ---
 
 # Deprecated
 
-Use **`csa5-gate-document`** instead.
+Use **`csa6-gate-document`** instead.

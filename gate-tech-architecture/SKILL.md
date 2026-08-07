@@ -1,8 +1,8 @@
 ---
 name: gate-tech-architecture
-description: DEPRECATED — use csa5-gate-tech-architecture. Renamed to bust platform skill cache.
+description: DEPRECATED — use csa6-gate-tech-architecture. Renamed to bust platform skill cache.
 ---
 
 # Deprecated
 
-Use **`csa5-gate-tech-architecture`** instead.
+Use **`csa6-gate-tech-architecture`** instead.

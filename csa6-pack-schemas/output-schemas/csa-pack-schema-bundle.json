@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa-pack-schema-bundle.json",
+  "title": "CsaPackSchemaBundle",
+  "type": "object",
+  "required": [
+    "version",
+    "schemas",
+    "client_deliverables"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "3.3.0"
+    },
+    "client_deliverables": {
+      "type": "object",
+      "description": "Lean CSA pack — 5 Markdown docs + README + C4 HTML hub",
+      "required": [
+        "markdown",
+        "html"
+      ],
+      "properties": {
+        "markdown": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 6,
+          "items": {
+            "type": "string",
+            "enum": [
+              "Executive_Summary.md",
+              "Business_Architecture.md",
+              "Application_Architecture.md",
+              "Data_and_Integration.md",
+              "Risks_Gaps_and_Traceability.md",
+              "README.md"
+            ]
+          }
+        },
+        "html": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "arc42-c4/index.html",
+              "arc42-c4/context.html",
+              "arc42-c4/containers.html",
+              "arc42-c4/components.html"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "schemas": {
+      "type": "object",
+      "required": [
+        "Executive_Summary",
+        "Business_Architecture",
+        "Application_Architecture",
+        "Data_and_Integration",
+        "Risks_Gaps_and_Traceability"
+      ],
+      "properties": {
+        "Executive_Summary": {
+          "const": "Executive_Summary.schema.json"
+        },
+        "Business_Architecture": {
+          "const": "Business_Architecture.schema.json"
+        },
+        "Application_Architecture": {
+          "const": "Application_Architecture.schema.json"
+        },
+        "Data_and_Integration": {
+          "const": "Data_and_Integration.schema.json"
+        },
+        "Risks_Gaps_and_Traceability": {
+          "const": "Risks_Gaps_and_Traceability.schema.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

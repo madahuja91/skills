@@ -1,8 +1,8 @@
 ---
 name: legacy-framework-heuristics
-description: DEPRECATED — use csa5-legacy-framework-heuristics. Renamed to bust platform skill cache.
+description: DEPRECATED — use csa6-legacy-framework-heuristics. Renamed to bust platform skill cache.
 ---
 
 # Deprecated
 
-Use **`csa5-legacy-framework-heuristics`** instead.
+Use **`csa6-legacy-framework-heuristics`** instead.

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/ddd-domain-pack-markdown.json",
+  "title": "DddDomainPackMarkdown",
+  "description": "Contract for Markdown domain model section generated from domain.json",
+  "type": "object",
+  "required": [
+    "format",
+    "path",
+    "required_headings",
+    "source_artifact"
+  ],
+  "properties": {
+    "format": {
+      "const": "markdown"
+    },
+    "path": {
+      "const": "csa_pack/Business_Architecture.md"
+    },
+    "source_artifact": {
+      "const": "artifacts/domain.json"
+    },
+    "source_schema": {
+      "const": "skills/agents/csa6-business-domain/schema.json"
+    },
+    "required_headings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "# Domain Model",
+        "## Bounded Contexts",
+        "## Entities",
+        "## Business Rules",
+        "## Context Map"
+      ]
+    },
+    "must_reference_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "ID prefixes that must appear when present in source",
+      "default": [
+        "DOM-",
+        "ENT-",
+        "BR-"
+      ]
+    },
+    "c4_html_link": {
+      "type": "string",
+      "const": "csa_pack/arc42-c4/index.html"
+    },
+    "required_mermaid_diagram_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "const": "diag-domain-context-map"
+      }
+    }
+  },
+  "additionalProperties": false
+}

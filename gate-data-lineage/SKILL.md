@@ -1,8 +1,8 @@
 ---
 name: gate-data-lineage
-description: DEPRECATED — use csa5-gate-data-lineage. Renamed to bust platform skill cache.
+description: DEPRECATED — use csa6-gate-data-lineage. Renamed to bust platform skill cache.
 ---
 
 # Deprecated
 
-Use **`csa5-gate-data-lineage`** instead.
+Use **`csa6-gate-data-lineage`** instead.

@@ -1,0 +1,750 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa6-integration.json",
+  "title": "CSAIntegrationArtifact",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "agent_id",
+    "agent_version",
+    "timestamp",
+    "schema_version",
+    "scope",
+    "overall_confidence_score",
+    "integrations",
+    "interface_contracts",
+    "exception_mappings",
+    "resilience_posture",
+    "integration_patterns_summary",
+    "validation_results",
+    "pack_substance"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string"
+    },
+    "agent_id": {
+      "const": "integration"
+    },
+    "agent_version": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "scope": {
+      "type": "object"
+    },
+    "overall_confidence_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "analysis_scope": {
+      "type": "string",
+      "enum": [
+        "all_integrations",
+        "critical_integrations",
+        "external_only"
+      ]
+    },
+    "processing_time_ms": {
+      "type": "integer"
+    },
+    "integrations": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "required": [
+          "integration_id",
+          "integration_name",
+          "pattern_type",
+          "sync_async",
+          "integration_direction",
+          "confidence_score"
+        ],
+        "properties": {
+          "integration_id": {
+            "type": "string",
+            "pattern": "^INT-"
+          },
+          "integration_name": {
+            "type": "string"
+          },
+          "pattern_type": {
+            "type": "string",
+            "enum": [
+              "synchronous",
+              "asynchronous",
+              "data",
+              "enterprise",
+              "security",
+              "legacy"
+            ]
+          },
+          "sync_async": {
+            "type": "string",
+            "enum": [
+              "synchronous",
+              "asynchronous",
+              "hybrid"
+            ]
+          },
+          "integration_direction": {
+            "type": "string",
+            "enum": [
+              "inbound",
+              "outbound",
+              "bidirectional"
+            ]
+          },
+          "technology_stack": {
+            "type": "object"
+          },
+          "endpoints": {
+            "type": "array"
+          },
+          "performance_metrics": {
+            "type": "object"
+          },
+          "scalability_characteristics": {
+            "type": "object"
+          },
+          "error_handling_patterns": {
+            "type": "object"
+          },
+          "async_candidate_analysis": {
+            "type": "object"
+          },
+          "dependencies": {
+            "type": "array"
+          },
+          "business_impact": {
+            "type": "object"
+          },
+          "monitoring_observability": {
+            "type": "object"
+          },
+          "security_analysis": {
+            "type": "object"
+          },
+          "confidence_score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "extraction_source": {
+            "type": "string",
+            "enum": [
+              "code",
+              "configuration",
+              "documentation",
+              "monitoring"
+            ]
+          },
+          "uncertainty_reason": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "integration_patterns_summary": {
+      "type": "object"
+    },
+    "interface_contracts": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "contract_id",
+          "interface_id",
+          "operation",
+          "direction",
+          "evidence"
+        ],
+        "properties": {
+          "contract_id": {
+            "type": "string",
+            "pattern": "^CTR-"
+          },
+          "interface_id": {
+            "type": "string",
+            "pattern": "^INT-"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "inbound",
+              "outbound",
+              "bidirectional"
+            ]
+          },
+          "request_shape": {
+            "type": "string"
+          },
+          "response_shape": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "exception_mappings": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "exception_or_code",
+          "mapped_status_or_behavior",
+          "evidence"
+        ],
+        "properties": {
+          "exception_or_code": {
+            "type": "string"
+          },
+          "mapped_status_or_behavior": {
+            "type": "string"
+          },
+          "interface_id": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "resilience_posture": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "interface_id",
+          "mechanism",
+          "status",
+          "evidence"
+        ],
+        "properties": {
+          "interface_id": {
+            "type": "string",
+            "pattern": "^INT-"
+          },
+          "mechanism": {
+            "type": "string",
+            "enum": [
+              "circuit_breaker",
+              "retry",
+              "timeout",
+              "fallback",
+              "idempotency",
+              "other"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "present",
+              "partial",
+              "absent",
+              "unknown"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "integration_architecture": {
+      "type": "object"
+    },
+    "optimization_recommendations": {
+      "type": "array"
+    },
+    "validation_results": {
+      "type": "object",
+      "required": [
+        "integration_completeness"
+      ],
+      "properties": {
+        "integration_completeness": {
+          "type": "object"
+        },
+        "performance_data_availability": {
+          "type": "object"
+        },
+        "async_analysis_coverage": {
+          "type": "object"
+        }
+      }
+    },
+    "pack_substance": {
+      "type": "object",
+      "required": [
+        "data_stores",
+        "entity_catalog",
+        "data_lineage_matrix",
+        "business_logic_in_db",
+        "integration_inventory",
+        "interface_contracts",
+        "exception_mappings",
+        "resilience_posture",
+        "integration_risks"
+      ],
+      "properties": {
+        "data_stores": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "store_id",
+              "engine",
+              "schema_name",
+              "primary_purpose",
+              "evidence"
+            ],
+            "properties": {
+              "store_id": {
+                "type": "string",
+                "minLength": 2
+              },
+              "engine": {
+                "type": "string",
+                "minLength": 2
+              },
+              "schema_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "primary_purpose": {
+                "type": "string",
+                "minLength": 15
+              },
+              "evidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "entity_catalog": {
+          "type": "array",
+          "minItems": 5,
+          "description": "Entity/table catalog with key attributes (reference Entity Catalog / inferred DB schema). Business Architecture keeps aggregate names only.",
+          "items": {
+            "type": "object",
+            "required": [
+              "entity_id",
+              "entity_name",
+              "store_id",
+              "key_attributes",
+              "evidence"
+            ],
+            "properties": {
+              "entity_id": {
+                "type": "string",
+                "minLength": 2
+              },
+              "entity_name": {
+                "type": "string",
+                "minLength": 2
+              },
+              "store_id": {
+                "type": "string",
+                "minLength": 2
+              },
+              "key_attributes": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "role"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "role": {
+                      "type": "string",
+                      "enum": [
+                        "pk",
+                        "fk",
+                        "business_key",
+                        "payload",
+                        "audit",
+                        "status",
+                        "other"
+                      ]
+                    },
+                    "type_hint": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "evidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "data_lineage_matrix": {
+          "type": "array",
+          "minItems": 10,
+          "items": {
+            "type": "object",
+            "required": [
+              "lineage_id",
+              "source_entity",
+              "transformation_logic",
+              "target_entity",
+              "execution_trigger",
+              "evidence"
+            ],
+            "properties": {
+              "lineage_id": {
+                "type": "string",
+                "pattern": "^LIN-"
+              },
+              "source_entity": {
+                "type": "string",
+                "minLength": 2
+              },
+              "transformation_logic": {
+                "type": "string",
+                "minLength": 15
+              },
+              "target_entity": {
+                "type": "string",
+                "minLength": 2
+              },
+              "execution_trigger": {
+                "type": "string",
+                "minLength": 3
+              },
+              "evidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "business_logic_in_db": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "sp_name",
+              "extracted_business_rule",
+              "complexity",
+              "evidence"
+            ],
+            "properties": {
+              "sp_name": {
+                "type": "string",
+                "minLength": 2
+              },
+              "extracted_business_rule": {
+                "type": "string",
+                "minLength": 20
+              },
+              "complexity": {
+                "type": "string",
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH"
+                ]
+              },
+              "io_signature": {
+                "type": "string"
+              },
+              "evidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "integration_inventory": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "type": "object",
+            "required": [
+              "interface_id",
+              "source_system",
+              "target_system",
+              "protocol",
+              "data_format",
+              "communication_pattern",
+              "criticality",
+              "evidence"
+            ],
+            "properties": {
+              "interface_id": {
+                "type": "string",
+                "pattern": "^INT-"
+              },
+              "source_system": {
+                "type": "string",
+                "minLength": 2
+              },
+              "target_system": {
+                "type": "string",
+                "minLength": 2
+              },
+              "protocol": {
+                "type": "string",
+                "enum": [
+                  "IBM MQ",
+                  "JMS",
+                  "REST",
+                  "SOAP",
+                  "FTP/SFTP",
+                  "DB Link",
+                  "CORBA",
+                  "File Share",
+                  "Other"
+                ]
+              },
+              "endpoint_queue_name": {
+                "type": "string"
+              },
+              "data_format": {
+                "type": "string",
+                "enum": [
+                  "XML",
+                  "JSON",
+                  "Fixed-Length",
+                  "CSV",
+                  "Binary",
+                  "Other"
+                ]
+              },
+              "communication_pattern": {
+                "type": "string",
+                "enum": [
+                  "Sync",
+                  "Async Fire-and-Forget",
+                  "Async Request-Reply"
+                ]
+              },
+              "criticality": {
+                "type": "string",
+                "enum": [
+                  "Mission-Critical",
+                  "Business-Operational",
+                  "Administrative"
+                ]
+              },
+              "evidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "interface_contracts": {
+          "type": "array",
+          "minItems": 3,
+          "description": "Contract summaries (OAS-like operations). Do not emit separate OAS client documents.",
+          "items": {
+            "type": "object",
+            "required": [
+              "contract_id",
+              "interface_id",
+              "operation",
+              "direction",
+              "evidence"
+            ],
+            "properties": {
+              "contract_id": {
+                "type": "string",
+                "pattern": "^CTR-"
+              },
+              "interface_id": {
+                "type": "string",
+                "pattern": "^INT-"
+              },
+              "operation": {
+                "type": "string",
+                "minLength": 2
+              },
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "inbound",
+                  "outbound",
+                  "bidirectional"
+                ]
+              },
+              "request_shape": {
+                "type": "string"
+              },
+              "response_shape": {
+                "type": "string"
+              },
+              "evidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "exception_mappings": {
+          "type": "array",
+          "minItems": 3,
+          "description": "Exception/error to protocol status mapping — not a separate exception document.",
+          "items": {
+            "type": "object",
+            "required": [
+              "exception_or_code",
+              "mapped_status_or_behavior",
+              "evidence"
+            ],
+            "properties": {
+              "exception_or_code": {
+                "type": "string",
+                "minLength": 2
+              },
+              "mapped_status_or_behavior": {
+                "type": "string",
+                "minLength": 2
+              },
+              "interface_id": {
+                "type": "string"
+              },
+              "evidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "resilience_posture": {
+          "type": "array",
+          "minItems": 3,
+          "description": "Observed circuit-breaker/retry/timeout posture per integration — prioritized gaps stay in Risks_Gaps.",
+          "items": {
+            "type": "object",
+            "required": [
+              "interface_id",
+              "mechanism",
+              "status",
+              "evidence"
+            ],
+            "properties": {
+              "interface_id": {
+                "type": "string",
+                "pattern": "^INT-"
+              },
+              "mechanism": {
+                "type": "string",
+                "enum": [
+                  "circuit_breaker",
+                  "retry",
+                  "timeout",
+                  "fallback",
+                  "idempotency",
+                  "other"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "partial",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "notes": {
+                "type": "string"
+              },
+              "evidence": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "integration_risks": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string",
+            "minLength": 20
+          }
+        }
+      },
+      "additionalProperties": false,
+      "description": "Authoritative pack document substance. Must validate against https://csa.local/schemas/Data_and_Integration.schema.json. Every required section and floor must be present."
+    }
+  },
+  "additionalProperties": false
+}

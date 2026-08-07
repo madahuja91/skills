@@ -1,8 +1,8 @@
 ---
 name: csa-section-boundaries
-description: DEPRECATED — use csa5-section-boundaries. Renamed to bust platform skill cache.
+description: DEPRECATED — use csa6-section-boundaries. Renamed to bust platform skill cache.
 ---
 
 # Deprecated
 
-Use **`csa5-section-boundaries`** instead.
+Use **`csa6-section-boundaries`** instead.

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa6-gate-integration.json",
+  "title": "GateIntegrationEvaluation",
+  "type": "object",
+  "required": ["gate_id", "target_artifact", "rubric_checks", "result"],
+  "properties": {
+    "gate_id": { "const": "gate-integration" },
+    "target_artifact": { "type": "string", "pattern": ".*integration\\.json$" },
+    "target_schema": { "const": "skills/agents/csa6-integration/schema.json" },
+    "rubric_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check_id", "description", "passed", "blocking"],
+        "properties": {
+          "check_id": {
+            "type": "string",
+            "enum": [
+              "schema_conformance",
+              "external_io_classified",
+              "pattern_and_sync_async_present",
+              "integration_evidence_coverage",
+              "summary_counts_match",
+              "metrics_honest"
+            ]
+          },
+          "description": { "type": "string" },
+          "passed": { "type": "boolean" },
+          "blocking": { "type": "boolean" },
+          "observed": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "result": {
+      "type": "string",
+      "enum": ["pass", "fail", "pass_with_warnings"]
+    }
+  },
+  "additionalProperties": false
+}
