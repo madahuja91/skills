@@ -40,7 +40,7 @@ Workflow meta stays under `_internal/` and `artifacts/quality_gate_reports/` onl
 
 - `deliverables/`
 - `csa_pack/machine/` (including `sections/`)
-- Numbered `00`/`01`–`05`/`04`–`10` Markdown packs
+- Any Markdown filename not in the allowed six
 - Gate reports inside `csa_pack/`
 - Duplicate catalogs across the five docs (Jaccard > 0.32)
 - Workflow/orchestration meta (see above)

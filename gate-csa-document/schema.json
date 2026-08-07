@@ -19,11 +19,11 @@
         "csa-section-boundaries/schema.json",
         "arc42-c4-views/schema.json",
         "mermaid-diagrams/schema.json",
-        "csa-document-assembler/output-schemas/Executive_Summary.schema.json",
-        "csa-document-assembler/output-schemas/Business_Architecture.schema.json",
-        "csa-document-assembler/output-schemas/Application_Architecture.schema.json",
-        "csa-document-assembler/output-schemas/Data_and_Integration.schema.json",
-        "csa-document-assembler/output-schemas/Risks_Gaps_and_Traceability.schema.json"
+        "csa-pack-schemas/output-schemas/Executive_Summary.schema.json",
+        "csa-pack-schemas/output-schemas/Business_Architecture.schema.json",
+        "csa-pack-schemas/output-schemas/Application_Architecture.schema.json",
+        "csa-pack-schemas/output-schemas/Data_and_Integration.schema.json",
+        "csa-pack-schemas/output-schemas/Risks_Gaps_and_Traceability.schema.json"
       ],
       "items": { "type": "string" }
     },
@@ -53,22 +53,13 @@
     },
     "forbidden_paths": {
       "type": "array",
+      "description": "Fail if any of these trees/files appear; also fail if any .md exists outside required_markdown_sections",
       "items": { "type": "string" },
       "default": [
-        "00_executive_summary.md",
-        "04_domain_model_ddd.md",
-        "05_business_capabilities.md",
-        "06_data_architecture_lineage.md",
-        "07_integration_landscape.md",
-        "08_runtime_ops_tech_debt.md",
-        "09_traceability_matrix.md",
-        "10_gaps_risks_assumptions.md",
-        "01_system_context_c4.md",
-        "02_containers_c4.md",
-        "03_components_c4.md",
         "epic_story_seeds/",
         "deliverables/",
-        "csa_pack/machine/"
+        "csa_pack/machine/",
+        "csa_pack/machine/sections/"
       ]
     },
     "rubric_checks": {

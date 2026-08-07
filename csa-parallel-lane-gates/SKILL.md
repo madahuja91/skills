@@ -13,7 +13,7 @@ Contract: [`schema.json`](schema.json)
 
 1. Completeness only after join when lanes can finish independently.
 2. Invoking **CSA-Document-Assembler**.
-3. Writing `deliverables/`, numbered `01_`–`05_` MD, or `csa_pack/machine/`.
+3. Writing `deliverables/`, alternate Markdown filenames, or `csa_pack/machine/`.
 4. Final that only validates JSON / chats a summary / invents `gate-final-*` without packing.
 5. Manager success when required pack files are missing on disk.
 6. Writing pack outside ACTIVE_ROOT (prefer `src/`).
@@ -57,7 +57,7 @@ FINAL MUST:
 5. **FAIL** if any required pack file is missing (no soft pass)
 6. On substance gaps → name owner agent so Manager re-runs that specialist (≤2)
 
-No epic-story. No Document Assembler. No numbered `00_`/`04_`–`10_` client pack.
+No epic-story. No Document Assembler. Only the five lean MD filenames + README.
 
 ## Manager FINAL brief (copy this)
 

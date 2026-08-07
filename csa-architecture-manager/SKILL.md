@@ -65,7 +65,7 @@ On disk under `src/csa_pack/`:
 
 Plus `src/artifacts/{discovery,domain,architecture,lineage,integration}.json`.
 
-Forbidden: numbered `00_`/`04_`–`10_` packs, `epic_story_seeds/`, `deliverables/`, `csa_pack/machine/`.
+Forbidden: alternate Markdown pack names, `epic_story_seeds/`, `deliverables/`, `csa_pack/machine/`.
 
 ## Manager FINAL brief (copy exactly)
 

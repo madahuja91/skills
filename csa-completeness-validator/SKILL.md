@@ -19,7 +19,7 @@ Pack gate: `gate-csa-document/schema.json`
 - `active-root-hygiene`
 - Lane gates + **`gate-csa-document`**
 - `arc42-c4-views` / `mermaid-diagrams` (FINAL HTML + diagrams)
-- Pack substance schemas under `csa-document-assembler/output-schemas/` (content contracts only — do not write `machine/` or invoke Assembler render)
+- Pack substance schemas under **`csa-pack-schemas/output-schemas/`** (content contracts only — do not write `machine/` or invoke Assembler)
 
 ## Role
 
@@ -106,7 +106,7 @@ Do **not** PASS if diagrams are missing (CDN 401 is not an excuse to omit Mermai
 | `arc42-c4/containers.html` | `architecture.c4_views.containers` | **`diag-c4-containers`** |
 | `arc42-c4/components.html` | `architecture.c4_views.components_critical` | **`diag-c4-components`** |
 
-**Nothing else is required.** Forbidden: numbered `00_`/`04_`–`10_` client packs, `epic_story_seeds/`, `deliverables/`, `csa_pack/machine/`, Document Assembler.
+**Nothing else is required.** Any other Markdown filename under `csa_pack/` = FAIL. Also forbidden: `epic_story_seeds/`, `deliverables/`, `csa_pack/machine/`, Document Assembler.
 
 ## Owner map for Manager re-runs
 
@@ -131,7 +131,7 @@ Every fail report **MUST** set:
 
 - `gate-epic-story-readiness`
 - `epic_story_seeds/*`
-- Document Assembler / numbered 9-doc pack
+- Document Assembler / alternate pack filenames
 
 ## HARD
 

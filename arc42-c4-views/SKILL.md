@@ -77,5 +77,5 @@ Each page: ≥1 Mermaid block + classic runtime.
 - Stub index (overview + links only)
 - Missing required anchors
 - No Mermaid / ESM-only init that never paints
-- Numbered `00_`–`10_` Markdown as C4 substitute
+- Extra Markdown under `csa_pack/` as a C4 substitute (C4 lives in `arc42-c4/*.html` only)
 - TSA migration framing as primary content

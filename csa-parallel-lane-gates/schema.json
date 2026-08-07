@@ -193,17 +193,6 @@
           "deliverables/",
           "csa_pack/machine/",
           "csa_pack/machine/sections/",
-          "00_*.md",
-          "01_*.md",
-          "02_*.md",
-          "03_*.md",
-          "04_*.md",
-          "05_*.md",
-          "06_*.md",
-          "07_*.md",
-          "08_*.md",
-          "09_*.md",
-          "10_*.md",
           "epic_story_seeds/"
         ]
       }

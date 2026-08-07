@@ -38,7 +38,7 @@ description: Quality gate for lean 5-doc csa_pack + full arc42-c4 hub with requi
 - Any required diagram ID missing
 - Stub `index.html` / missing anchors / no Mermaid runtime
 - Chat-only final
-- Numbered `00_`/`04_`–`10_` primary pack, epic-story, deliverables/, machine/
+- Any Markdown under `csa_pack/` outside the allowed six filenames; epic-story; deliverables/; machine/
 
 ## Remediation → Manager
 

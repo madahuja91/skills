@@ -1,20 +1,10 @@
 ---
 name: csa-document-assembler
-description: DEPRECATED — do not use. Completeness-Validation-Agent now renders lean csa_pack from artifacts. Kept only for historical workflow references.
+description: DEPRECATED — removed from CSA workflow. Use csa-pack-schemas with Completeness FINAL instead.
 ---
 
 # CSA Document Assembler — DEPRECATED
 
-## Status
+**Do not load this skill for new CSA runs.** Completeness renders the lean pack using **`csa-pack-schemas`**.
 
-**Removed from the CSA control loop** (`csa-parallel-lane-gates` v2).
-
-Use **Completeness-Validation-Agent** final mode instead:
-
-- Reads `artifacts/*.json`
-- Writes only lean `csa_pack/` (5 MD + README + arc42 HTML)
-- Does **not** write `deliverables/` or `csa_pack/machine/`
-
-## Schema
-
-Historical manifest schema remains at [`schema.json`](schema.json) for old runs only. New runs must not invoke this agent.
+Historical files may remain here for old runs only. New workflows must attach `csa-pack-schemas`, not this skill.

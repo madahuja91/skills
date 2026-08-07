@@ -31,12 +31,7 @@
           "csa_pack/",
           "deliverables/",
           "csa_pack/machine/",
-          "artifacts/quality_gate_reports/",
-          "01_*.md",
-          "02_*.md",
-          "03_*.md",
-          "04_*.md",
-          "05_*.md"
+          "artifacts/quality_gate_reports/"
         ]
       }
     },
