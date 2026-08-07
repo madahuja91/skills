@@ -5,4 +5,4 @@ description: DEPRECATED — use csa5-parallel-lane-gates. Renamed to bust platfo
 
 # Deprecated
 
-Use **`csa5-parallel-lane-gates`** instead. Do not attach `csa-parallel-lane-gates` in CSA workflows.
+Use **`csa5-parallel-lane-gates`** instead.

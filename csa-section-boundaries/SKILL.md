@@ -5,4 +5,4 @@ description: DEPRECATED — use csa5-section-boundaries. Renamed to bust platfor
 
 # Deprecated
 
-Use **`csa5-section-boundaries`** instead. Do not attach `csa-section-boundaries` in CSA workflows.
+Use **`csa5-section-boundaries`** instead.

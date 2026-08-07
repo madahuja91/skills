@@ -5,4 +5,4 @@ description: DEPRECATED — use csa5-mermaid-diagrams. Renamed to bust platform 
 
 # Deprecated
 
-Use **`csa5-mermaid-diagrams`** instead. Do not attach `mermaid-diagrams` in CSA workflows.
+Use **`csa5-mermaid-diagrams`** instead.

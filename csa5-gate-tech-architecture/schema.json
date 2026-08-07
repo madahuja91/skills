@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa5-gate-tech-architecture.json",
+  "title": "GateTechArchitectureEvaluation",
+  "type": "object",
+  "required": ["gate_id", "target_artifact", "rubric_checks", "result"],
+  "properties": {
+    "gate_id": { "const": "gate-tech-architecture" },
+    "target_artifact": { "type": "string", "pattern": ".*architecture\\.json$" },
+    "target_schema": { "const": "skills/agents/csa5-tech-architecture/schema.json" },
+    "rubric_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check_id", "description", "passed", "blocking"],
+        "properties": {
+          "check_id": {
+            "type": "string",
+            "enum": [
+              "schema_conformance",
+              "layers_or_monolith_justification",
+              "component_evidence_coverage",
+              "analysis_scope_honest",
+              "tech_debt_score_present",
+              "c4_views_containers"
+            ]
+          },
+          "description": { "type": "string" },
+          "passed": { "type": "boolean" },
+          "blocking": { "type": "boolean" },
+          "observed": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "result": {
+      "type": "string",
+      "enum": ["pass", "fail", "pass_with_warnings"]
+    }
+  },
+  "additionalProperties": false
+}

@@ -23,11 +23,11 @@
     "gate_id": {
       "type": "string",
       "enum": [
-        "gate-discover",
-        "gate-business-domain",
-        "gate-tech-architecture",
-        "gate-data-lineage",
-        "gate-integration",
+        "csa5-gate-discover",
+        "csa5-gate-business-domain",
+        "csa5-gate-tech-architecture",
+        "csa5-gate-data-lineage",
+        "csa5-gate-integration",
         "gate-csa-document"
       ]
     },

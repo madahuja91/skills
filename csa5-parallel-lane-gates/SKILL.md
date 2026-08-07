@@ -38,7 +38,7 @@ Artifacts SSOT: `src/artifacts/*.json` (or `artifacts/*.json` only if already cr
 
 ```text
 Bootstrap src/ + shared memory
-  -> Discover -> Completeness(gate-discover)
+  -> Discover -> Completeness(csa5-gate-discover)
   -> Fan-out Domain|Tech|Lineage|Integration; Completeness per lane
   -> Join
   -> Completeness(FINAL): RENDER src/csa_pack + csa5-gate-document
@@ -76,8 +76,8 @@ Do not return chat-only executive summary. No epic-story. No Assembler.
 
 | Lane | gate_id | artifact |
 |------|---------|----------|
-| Discover | gate-discover | artifacts/discovery.json |
-| Domain | gate-business-domain | artifacts/domain.json |
-| Tech | gate-tech-architecture | artifacts/architecture.json |
-| Lineage | gate-data-lineage | artifacts/lineage.json |
-| Integration | gate-integration | artifacts/integration.json |
+| Discover | csa5-gate-discover | artifacts/discovery.json |
+| Domain | csa5-gate-business-domain | artifacts/domain.json |
+| Tech | csa5-gate-tech-architecture | artifacts/architecture.json |
+| Lineage | csa5-gate-data-lineage | artifacts/lineage.json |
+| Integration | csa5-gate-integration | artifacts/integration.json |

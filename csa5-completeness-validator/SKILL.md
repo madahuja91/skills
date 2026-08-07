@@ -8,7 +8,7 @@ description: Lane schema/gate checks plus FINAL lean 5-doc pack render. On gaps,
 ## Schema
 
 Invocation: [`schema.json`](schema.json)  
-Lane/final report: `quality-gate-framework/schema.json`  
+Lane/final report: `csa5-quality-gate-framework/schema.json`  
 Pack gate: `csa5-gate-document/schema.json`
 
 ## HARD — load skills (do not restate)
@@ -16,7 +16,7 @@ Pack gate: `csa5-gate-document/schema.json`
 - `csa5-parallel-lane-gates`
 - `csa5-section-boundaries`
 - `csa5-rich-content`
-- `active-root-hygiene`
+- `csa5-active-root-hygiene`
 - Lane gates + **`csa5-gate-document`**
 - `csa5-arc42-c4-views` / `csa5-mermaid-diagrams` (FINAL HTML + diagrams)
 - Pack substance schemas under **`csa5-pack-schemas/output-schemas/`** (content contracts only — do not write `machine/` or invoke Assembler)

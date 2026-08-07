@@ -1,22 +1,8 @@
 ---
 name: gate-data-lineage
-description: Quality gate for CSA lineage.json. Use when validating Data Lineage specialist output.
+description: DEPRECATED — use csa5-gate-data-lineage. Renamed to bust platform skill cache.
 ---
 
-# Gate: Data Lineage
+# Deprecated
 
-## Schema
-
-Authoritative evaluation contract: [`schema.json`](schema.json)
-
-## Target
-
-- Artifact: `artifacts/lineage.json`
-- Artifact schema: `skills/agents/csa-data-lineage/schema.json`
-- Rubric: `skills/agents/csa-data-lineage/quality-rubric.md`
-
-## Blocking fails
-
-- No data sources; &lt;80% primary entities lack path; schema invalid.
-
-Emit report with `gate_id: gate-data-lineage`.
+Use **`csa5-gate-data-lineage`** instead.

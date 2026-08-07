@@ -5,4 +5,4 @@ description: DEPRECATED — use csa5-pack-schemas. Renamed to bust platform skil
 
 # Deprecated
 
-Use **`csa5-pack-schemas`** instead. Do not attach `csa-pack-schemas` in CSA workflows.
+Use **`csa5-pack-schemas`** instead.

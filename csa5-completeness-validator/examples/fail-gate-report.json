@@ -1,5 +1,5 @@
 {
-  "gate_id": "gate-discover",
+  "gate_id": "csa5-gate-discover",
   "target_artifact": "artifacts/discovery.json",
   "target_agent_id": "discover",
   "result": "fail",

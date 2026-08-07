@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/legacy-ibm-mq-findings.json",
+  "title": "LegacyIbmMqFindings",
+  "description": "Schema for IBM MQ detection findings extracted from code/config (no hardcoded queue names)",
+  "type": "object",
+  "required": ["mq_clients", "endpoints", "scan_summary"],
+  "properties": {
+    "mq_clients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["api_style", "confidence_score", "evidence"],
+        "properties": {
+          "api_style": {
+            "type": "string",
+            "enum": ["native_ibm_mq", "ibm_mq_jms", "unknown"]
+          },
+          "class_or_module": { "type": "string" },
+          "confidence_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "https://csa.local/schemas/csa5-evidence-citation.json" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "endpoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["confidence_score", "evidence"],
+        "properties": {
+          "queue_manager": { "type": "string" },
+          "queue_name": { "type": "string" },
+          "channel": { "type": "string" },
+          "host": { "type": "string" },
+          "port": { "type": ["integer", "string"] },
+          "direction": {
+            "type": "string",
+            "enum": ["put", "get", "both", "unknown"]
+          },
+          "confidence_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "https://csa.local/schemas/csa5-evidence-citation.json" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "scan_summary": {
+      "type": "object",
+      "required": ["native_api_detected", "jms_api_detected", "config_files_scanned", "missing_config"],
+      "properties": {
+        "native_api_detected": { "type": "boolean" },
+        "jms_api_detected": { "type": "boolean" },
+        "config_files_scanned": { "type": "array", "items": { "type": "string" } },
+        "missing_config": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -5,4 +5,4 @@ description: DEPRECATED — use csa5-rich-content. Renamed to bust platform skil
 
 # Deprecated
 
-Use **`csa5-rich-content`** instead. Do not attach `csa-rich-content` in CSA workflows.
+Use **`csa5-rich-content`** instead.

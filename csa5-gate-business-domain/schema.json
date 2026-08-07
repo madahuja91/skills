@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/csa5-gate-business-domain.json",
+  "title": "GateBusinessDomainEvaluation",
+  "type": "object",
+  "required": ["gate_id", "target_artifact", "rubric_checks", "result"],
+  "properties": {
+    "gate_id": { "const": "gate-business-domain" },
+    "target_artifact": { "type": "string", "pattern": ".*domain\\.json$" },
+    "target_schema": { "const": "skills/agents/csa5-business-domain/schema.json" },
+    "rubric_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check_id", "description", "passed", "blocking"],
+        "properties": {
+          "check_id": {
+            "type": "string",
+            "enum": [
+              "schema_conformance",
+              "domains_present",
+              "critical_rules_located_or_flagged",
+              "entities_have_extraction_source",
+              "capability_domain_mapping",
+              "code_rule_evidence_coverage"
+            ]
+          },
+          "description": { "type": "string" },
+          "passed": { "type": "boolean" },
+          "blocking": { "type": "boolean" },
+          "observed": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "result": {
+      "type": "string",
+      "enum": ["pass", "fail", "pass_with_warnings"]
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csa.local/schemas/quality-gate-report.json",
+  "title": "CSAQualityGateReport",
+  "type": "object",
+  "required": [
+    "gate_id",
+    "target_artifact",
+    "target_agent_id",
+    "result",
+    "scores",
+    "blocking_gaps",
+    "warnings",
+    "rerun_recommended",
+    "attempt",
+    "max_reruns",
+    "timestamp"
+  ],
+  "properties": {
+    "gate_id": {
+      "type": "string",
+      "enum": [
+        "csa5-gate-discover",
+        "csa5-gate-business-domain",
+        "csa5-gate-tech-architecture",
+        "csa5-gate-data-lineage",
+        "csa5-gate-integration",
+        "gate-csa-document"
+      ]
+    },
+    "target_artifact": {
+      "type": "string"
+    },
+    "target_agent_id": {
+      "type": "string",
+      "description": "Owner specialist Manager must re-run on fail",
+      "enum": [
+        "discover",
+        "business_domain",
+        "tech_architecture",
+        "data_lineage",
+        "integration",
+        "completeness_validator"
+      ]
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "pass_with_warnings"
+      ]
+    },
+    "scores": {
+      "type": "object",
+      "required": [
+        "schema_conformance",
+        "evidence_coverage",
+        "completeness",
+        "confidence_floor"
+      ],
+      "properties": {
+        "schema_conformance": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "evidence_coverage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "completeness": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "confidence_floor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": false
+    },
+    "blocking_gaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/gap"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/gap"
+      }
+    },
+    "remediation_brief": {
+      "type": "object",
+      "required": [
+        "summary",
+        "required_actions",
+        "files_to_revisit"
+      ],
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "required_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "files_to_revisit": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "schema_fields_missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "rerun_recommended": {
+      "type": "boolean"
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "max_reruns": {
+      "type": "integer",
+      "const": 2
+    },
+    "max_reruns_remaining": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "gap": {
+      "type": "object",
+      "required": [
+        "gap_id",
+        "severity",
+        "problem",
+        "required_action"
+      ],
+      "properties": {
+        "gap_id": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "field_path": {
+          "type": "string"
+        },
+        "problem": {
+          "type": "string"
+        },
+        "required_action": {
+          "type": "string"
+        },
+        "suggested_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

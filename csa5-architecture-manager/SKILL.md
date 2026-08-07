@@ -15,9 +15,9 @@ Orchestrator. Admit work; do not author specialist leaf JSON. **No Document Asse
 
 ## HARD — load skills (do not restate)
 
-- `csa-swarm-shared-memory`
+- `csa5-swarm-shared-memory`
 - `csa5-parallel-lane-gates`
-- `active-root-hygiene`
+- `csa5-active-root-hygiene`
 - `csa5-section-boundaries` / `csa5-rich-content`
 
 

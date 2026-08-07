@@ -5,4 +5,4 @@ description: DEPRECATED — use csa5-completeness-validator. Renamed to bust pla
 
 # Deprecated
 
-Use **`csa5-completeness-validator`** instead. Do not attach `csa-completeness-validator` in CSA workflows.
+Use **`csa5-completeness-validator`** instead.
