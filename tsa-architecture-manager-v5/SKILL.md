@@ -37,8 +37,13 @@ Resume Context Assembler → Human Review. Never regenerate upstream TSA.
 ## CHANGE
 Client ADR + impact analysis → re-invoke only affected canonical workers (Intake excluded) → Completeness → Human Review. Never create duplicate change-specific agents.
 
-## APPROVE
-Migration Strategy only after explicit Human Review APPROVE.
+## APPROVE (ReviewDecision=APPROVE)
+HARD — after Human Review APPROVE, the graph returns to this Manager (never wire edges into subagents).
+1. Invoke **TSA-MigrationStrategy-Agent** → `src/artifacts/migration_strategy.json`
+2. Invoke **TSA-Completeness-Validation-Agent** in MIGRATION FINAL mode → update `src/artifacts/tsa_quality_gate.json`
+3. Do **not** reopen Intake/Synthesizer/ADR/Diagram/Document
+4. Do **not** send work back to Human Review
+DONE when migration_strategy.json exists and migration quality gate PASSes.
 
 ## Reuse invariant
 Never create Change Architecture, Change ADR, Change Diagram, Change Document, or Change Quality Gate agents. Reuse canonical workers with updated execution context.
