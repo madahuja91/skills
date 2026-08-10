@@ -1,6 +1,6 @@
 ---
 name: tsa-diagram-v4
-description: TSA Diagram Agent — produces architecture_diagrams.json and Mermaid sources/rendered diagrams under src/tsa_pack/diagrams from accepted TSA and ADR. Use after Synthesizer/ADR and before Document/Completeness.
+description: TSA Diagram Agent - produces architecture_diagrams.json and Mermaid sources/rendered diagrams under src/tsa_pack/diagrams from accepted TSA and ADR. Use after Synthesizer/ADR and before Document/Completeness.
 ---
 
 # TSA Diagram Agent v4
@@ -15,7 +15,7 @@ Canonical diagram specialist for ENTRY and CHANGE. Manager-owned swarm worker. D
 - On CHANGE: `src/artifacts/review_change_request.json` and reconciled ADR
 
 ## Hard outputs (ACTIVE_ROOT=src)
-1. `src/artifacts/architecture_diagrams.json` — catalog of required views with ids, titles, mermaid source paths, rendered paths, and TSA/ADR references
+1. `src/artifacts/architecture_diagrams.json` - catalog of required views with ids, titles, mermaid source paths, rendered paths, and TSA/ADR references
 2. Under `src/tsa_pack/diagrams/`:
    - `*.mmd` Mermaid sources
    - rendered diagram artifacts referenced by the catalog

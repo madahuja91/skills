@@ -1,3 +1,8 @@
+---
+name: tsa-domain-v3
+description: Canonical TSA ADR/domain specialist v3 - write adr_blueprint.json from accepted TSA.
+---
+
 # TSA Domain and ADR v2
 
 ## Role

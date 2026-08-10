@@ -1,6 +1,6 @@
 ---
 name: tsa-completeness-validator-v4
-description: TSA Completeness/Quality Agent — validates ENTRY package and writes tsa_quality_gate.json. Does not author diagrams or pack Markdown (Diagram/Document agents own those).
+description: TSA Completeness/Quality Agent - validates ENTRY package and writes tsa_quality_gate.json. Does not author diagrams or pack Markdown (Diagram/Document agents own those).
 ---
 
 # TSA Completeness Validator v4

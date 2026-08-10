@@ -1,4 +1,9 @@
-# TSA Intake v2
+---
+name: tsa-intake-v3
+description: TSA Intake specialist - convert CSA pack into src/artifacts/intake.json evidence baseline. JSON only; no target design; no client Markdown.
+---
+
+# TSA Intake v3
 
 ## Role
 Convert the CSA pack into a machine-readable TSA intake baseline.
@@ -32,4 +37,4 @@ Capture:
 - Do not design target architecture.
 - Every material fact must be traceable to CSA evidence.
 - Never invent missing information.
-- Use ACTIVE_ROOT only.
+- Use ACTIVE_ROOT=src only; never src/src.

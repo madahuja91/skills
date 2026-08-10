@@ -1,17 +1,23 @@
 ---
 name: active-root-hygiene
-<<<<<<< HEAD
-description: >-
-  Enforces a single workspace-disk ACTIVE_ROOT (prefer src/) with no invented
-  absolute trees, no nested src/src, and all epic/story deliverables written only
-  under that root. Use on every Manager/Orchestrator bootstrap and 
-  
-  Quality run.
-=======
-description: DEPRECATED — use csa7-active-root-hygiene. Renamed to bust platform skill cache.
->>>>>>> 6b0c43d1bf95b937aa3f768edb99c5f0d0ffd0e1
+description: Enforces a single workspace-disk ACTIVE_ROOT (prefer src/) with no invented absolute trees, no nested src/src, and all deliverables written only under that root. Use on every Manager/Orchestrator bootstrap and Quality run.
 ---
 
-# Deprecated
+# Active Root Hygiene
 
-Use **`csa7-active-root-hygiene`** instead.
+## HARD - one ACTIVE_ROOT on disk
+
+Prefer workspace-relative **src/**.
+Record **src** (relative) in swarm shared memory / active_root.txt.
+Do not set ACTIVE_ROOT to an absolute `/app/temp/...` path.
+Never create or write under nested **src/src**.
+
+## TSA writes
+- Specialist SSOT: `src/artifacts/`
+- Client pack: `src/tsa_pack/`
+- Diagrams: `src/tsa_pack/diagrams/`
+
+## Rules
+- All new files must be under ACTIVE_ROOT
+- Delete accidental `src/src` duplicates immediately
+- Do not invent absolute trees outside the workspace root

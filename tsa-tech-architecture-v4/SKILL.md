@@ -1,6 +1,6 @@
 ---
 name: tsa-tech-architecture-v4
-description: Canonical TSA technical architecture specialist for ENTRY and CHANGE — writes tsa_specification.json only; diagrams and Markdown pack are owned by Diagram/Document agents.
+description: Canonical TSA technical architecture specialist for ENTRY and CHANGE - writes tsa_specification.json only; diagrams and Markdown pack are owned by Diagram/Document agents.
 ---
 
 # TSA Technical Architecture v4

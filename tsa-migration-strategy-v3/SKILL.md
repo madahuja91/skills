@@ -1,4 +1,9 @@
-# TSA Migration Strategy v2
+---
+name: tsa-migration-strategy-v3
+description: TSA Migration Strategy specialist - write src/artifacts/migration_strategy.json only after Human Review APPROVE. Never modify approved TSA.
+---
+
+# TSA Migration Strategy v3
 
 ## Role
 Generate the migration strategy only after explicit Human Review approval of the TSA.
@@ -40,4 +45,4 @@ Produce:
 - Never invent ADR decisions.
 - Reference accepted architecture and ADR artifacts.
 - JSON is authoritative.
-- Use ACTIVE_ROOT only.
+- Use ACTIVE_ROOT=src only; never src/src.

@@ -1,7 +1,12 @@
-# TSA Document Gate v2
+---
+name: gate-tsa-document-v3
+description: Quality gate for TSA human-readable pack and diagrams - validates Target_State_Architecture, Architecture_Views, ADR_Blueprint, diagram catalog consistency.
+---
+
+# TSA Document Gate v3
 
 ## Role
-Validate the client-readable TSA document and architecture views.
+Validate the client-readable TSA document, architecture views, and diagram pack.
 
 ## Validate
 - required sections exist
@@ -13,11 +18,13 @@ Validate the client-readable TSA document and architecture views.
 - no placeholders or unsupported claims
 - Markdown is readable for a client reviewer
 - JSON-to-Markdown consistency
+- architecture_diagrams.json and tsa_document.json agree with pack files
 
 ## Required document set
-- Target_State_Architecture.md
-- Architecture_Views.md
-- ADR_Blueprint.md
+- src/tsa_pack/Target_State_Architecture.md
+- src/tsa_pack/Architecture_Views.md
+- src/tsa_pack/ADR_Blueprint.md
+- src/tsa_pack/diagrams/ (sources + rendered)
 - Migration_Strategy.md when migration has been generated
 
 ## Hard Rules
@@ -26,8 +33,7 @@ Validate the client-readable TSA document and architecture views.
 - Fail if a diagram contains invented architecture.
 - Report exact artifact/section causing failure.
 
-
-## CHANGE-cycle Validation (v8+)
+## CHANGE-cycle Validation
 Validate that the client-provided ADR and reconciled ADR are reflected in:
 - ADR_Blueprint.md
 - Target_State_Architecture.md

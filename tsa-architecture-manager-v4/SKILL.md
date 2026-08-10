@@ -1,6 +1,6 @@
 ---
 name: tsa-architecture-manager-v4
-description: Canonical TSA Orchestrator/Strategy Manager for ENTRY, REVIEW_GATE, CHANGE and APPROVE — invokes Intake, Synthesizer, ADR, Diagram, Document, then Completeness before Human Review.
+description: Canonical TSA Orchestrator/Strategy Manager for ENTRY, REVIEW_GATE, CHANGE and APPROVE - invokes Intake, Synthesizer, ADR, Diagram, Document, then Completeness before Human Review.
 ---
 
 # TSA Architecture Manager v4

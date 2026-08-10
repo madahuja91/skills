@@ -1,6 +1,6 @@
 ---
 name: tsa-domain-v4
-description: Canonical TSA ADR/domain specialist for ENTRY and CHANGE — writes adr_blueprint.json; updates only impacted decisions from client ADR on CHANGE.
+description: Canonical TSA ADR/domain specialist for ENTRY and CHANGE - writes adr_blueprint.json; updates only impacted decisions from client ADR on CHANGE.
 ---
 
 # TSA Domain / ADR v4

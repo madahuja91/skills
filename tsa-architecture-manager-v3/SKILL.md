@@ -1,7 +1,12 @@
+---
+name: tsa-architecture-manager-v3
+description: TSA Architecture Manager v3 - orchestrator for ENTRY/REVIEW/CHANGE/APPROVE lifecycle.
+---
+
 # TSA Architecture Manager v2
 
 ## Role
-Orchestrator for the Target State Architecture (TSA) Orchestrator–Swarm workflow.
+Orchestrator for the Target State Architecture (TSA) Orchestrator-Swarm workflow.
 
 ## Lifecycle
 ENTRY_MODE:

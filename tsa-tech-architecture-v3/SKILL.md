@@ -1,3 +1,8 @@
+---
+name: tsa-tech-architecture-v3
+description: Canonical TSA tech architecture v3 - write tsa_specification.json and diagram sources.
+---
+
 # TSA Technical Architecture v2
 
 ## Role

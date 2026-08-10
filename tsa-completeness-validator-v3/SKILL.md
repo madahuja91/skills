@@ -1,3 +1,8 @@
+---
+name: tsa-completeness-validator-v3
+description: TSA Completeness validator v3 - lane gates and FINAL tsa_pack rendering.
+---
+
 # TSA Completeness Validator v2
 
 ## Role
