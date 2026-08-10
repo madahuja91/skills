@@ -24,7 +24,7 @@ Validate the client-readable TSA document, architecture views, and diagram pack.
 - src/tsa_pack/Target_State_Architecture.md
 - src/tsa_pack/Architecture_Views.md
 - src/tsa_pack/ADR_Blueprint.md
-- src/tsa_pack/diagrams/ (sources + rendered)
+- src/tsa_pack/diagrams/*.mmd (sources only; no HTML required)
 - Migration_Strategy.md when migration has been generated
 
 ## Hard Rules
