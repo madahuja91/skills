@@ -1,3 +1,8 @@
+---
+name: tsa-tech-architecture-v4
+description: Canonical TSA technical architecture specialist for ENTRY and CHANGE — updates only impacted architecture and diagrams, never creates a duplicate change agent.
+---
+
 # TSA Technical Architecture v4
 Canonical target-architecture specialist for ENTRY and CHANGE.
 

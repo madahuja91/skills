@@ -1,3 +1,8 @@
+---
+name: tsa-domain-v4
+description: Canonical TSA ADR/domain specialist for ENTRY and CHANGE — updates only impacted decisions from client ADR, never creates a duplicate change ADR agent.
+---
+
 # TSA Domain / ADR v4
 Canonical ADR/domain specialist for ENTRY and CHANGE.
 

@@ -1,3 +1,8 @@
+---
+name: tsa-completeness-validator-v4
+description: Canonical TSA completeness, document rendering and quality-gate specialist for ENTRY, CHANGE and migration final — never creates duplicate change document/QG agents.
+---
+
 # TSA Completeness Validator v4
 Canonical completeness, document rendering and quality-gate specialist for ENTRY, CHANGE and migration final mode.
 

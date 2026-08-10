@@ -1,3 +1,8 @@
+---
+name: tsa-architecture-manager-v4
+description: Canonical TSA Orchestrator/Strategy Manager for ENTRY, REVIEW_GATE, CHANGE and APPROVE — reuses specialist workers, never creates duplicate change agents.
+---
+
 # TSA Architecture Manager v4
 Canonical TSA Orchestrator/Strategy Manager.
 
