@@ -18,7 +18,7 @@ Validate presence and consistency of:
 - `src/tsa_pack/Target_State_Architecture.md`
 - `src/tsa_pack/Architecture_Views.md`
 - `src/tsa_pack/ADR_Blueprint.md`
-- `src/tsa_pack/diagrams/` sources + rendered outputs referenced by the catalog
+- `src/tsa_pack/diagrams/*.mmd` only (no HTML required) referenced by the catalog
 
 ## Hard output
 - `src/artifacts/tsa_quality_gate.json` with pass/fail, failed gates, `target_agent_id`, and `schema_fields_missing`

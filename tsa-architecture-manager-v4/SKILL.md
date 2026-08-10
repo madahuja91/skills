@@ -29,7 +29,7 @@ All of these must exist and Completeness must PASS:
 - `src/tsa_pack/Target_State_Architecture.md`
 - `src/tsa_pack/Architecture_Views.md`
 - `src/tsa_pack/ADR_Blueprint.md`
-- `src/tsa_pack/diagrams/` (`.mmd` + rendered)
+- `src/tsa_pack/diagrams/*.mmd` only (no HTML)
 
 ## REVIEW_GATE_MODE
 Resume Context Assembler → Human Review. Never regenerate upstream TSA.
