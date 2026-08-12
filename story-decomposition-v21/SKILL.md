@@ -43,18 +43,17 @@ required:
 
 ## Decomposition rules
 
-- Default-select ALL six areas for every Feature: UI, BFF/API, Domain, Persistence, Messaging, Testing.
-- Skip an area ONLY when architecture + feature evidence shows zero work in that area; record strong rationale.
-- Prefer full six-area coverage; do not skip merely for convenience.
+- **MANDATORY:** For every Feature, `selected_areas` MUST be exactly:
+  `[UI, BFF/API, Domain, Persistence, Messaging, Testing]`.
+- `skipped_areas` MUST be `[]`. Do not skip Messaging or any other area.
+- Create one Technical Story + SAC per area under `Technical-Stories/<Area>/`.
+- Folder name for BFF/API is `BFF-API`; JSON `area` field remains `BFF/API`.
 - Do not create separate Features for UI and backend concerns.
 - Keep all technical slices under the same Feature.
-- Every selected area must have a clear technical responsibility.
-- Testing is selected by default; individual Stories must still include their own testing strategy.
+- Every area Story must satisfy `technical-story-core` + the area skill schema required fields.
 - Identify dependencies and ordering between Stories.
-- Detect whether a single Story would become too broad and split only by approved area.
-- Write selected_areas and skipped_areas so the Technical Story manager can RUN selected agents and SKIP the rest.
-- Do not generate Story LLD.
-- Write Stories under `Technical-Stories/<Area>/ST-###.json` (folder `BFF-API` for area `BFF/API`).
+- Write selected_areas/skipped_areas for the Technical Story manager.
+- Do not generate Story LLD in the decomposer (area agents own LLD).
 
 ## Dispatch contract
 

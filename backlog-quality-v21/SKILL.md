@@ -114,8 +114,6 @@ Rules:
 
 ## Exact Story area enum (only these)
 
-Technical Stories are selected **only** from this closed set:
-
 1. UI
 2. BFF/API
 3. Domain
@@ -123,8 +121,12 @@ Technical Stories are selected **only** from this closed set:
 5. Messaging
 6. Testing
 
-Rules:
-- Story Decomposer decides required vs skipped per Feature (not all six are mandatory every time).
-- Selected areas → generate one Story each under Technical-Stories/.
-- Skipped areas → status=skipped, no Story file, no SAC.
-- Area names in Story JSON/MD must match the enum exactly (including `BFF/API`).
+**Coverage rule:** Every Feature must include all six. No skips.
+
+## Schema compliance gate
+
+FAIL when:
+- Epic/Feature/FAC/AAC/ST/SAC JSON is missing any skill-schema required field
+- Any Feature lacks any of the six Story areas
+- Markdown twin omits fields present in the JSON twin
+- Epic titles do not match provided `epic_names` when set

@@ -61,7 +61,12 @@ Write only under the single workspace ACTIVE_ROOT (`src`). See `active-root-hygi
 - Use Story area names other than UI, BFF/API, Domain, Persistence, Messaging, Testing.
 - Regenerate an entire swarm for a single failed agent.
 
-## JSON / Markdown parity (mandatory)
+## Schema field rendering
+
+For each artifact type, Markdown MUST include every skill-schema required field
+(Epic, Feature, FAC, AAC, Technical Story, SAC). Do not summarize away required LLD sections.
+Every Feature Markdown tree must include all six Story areas.
+
 
 `src/artifacts/canonical/backlog/` (JSON) and `src/artifacts/projections/backlog/` (Markdown)
 MUST convey the **same information**.

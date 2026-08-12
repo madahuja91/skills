@@ -208,7 +208,8 @@ Technical Stories are selected **only** from this closed set:
 6. Testing
 
 Rules:
-- Story Decomposer decides required vs skipped per Feature (not all six are mandatory every time).
-- Selected areas → generate one Story each under Technical-Stories/.
-- Skipped areas → status=skipped, no Story file, no SAC.
+- Story Decomposer MUST select all six areas for every Feature; skipped_areas=[].
+- Selected areas → generate one Story each under Technical-Stories/<Area>/.
 - Area names in Story JSON/MD must match the enum exactly (including `BFF/API`).
+- Each Story JSON must include all technical-story-core + area-skill required fields.
+- Markdown must mirror every required field.
