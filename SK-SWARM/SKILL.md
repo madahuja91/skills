@@ -76,7 +76,18 @@ swarm_handoff:
 6. Emit `swarm_handoff`
 
 ## Tone
-Enterprise artifacts only.
+Enterprise **client-facing** artifacts.
 - **JSON** = system of record
 - **Markdown** = required human projection (epics/stories must emit both)
 - Prefer tables, ID-linked refs, Given/When/Then, checklists — no narrative filler
+- Prefer developable multi-story epics; never hand off a capability→1 mega-story dump when ≥3 FRs exist
+- After Trace PASS, handoff **Package Assembler** so `00_BACKLOG_INDEX.md` exists before `join_complete`
+
+## Swarm vs quality (critical)
+Swarm coordinates **who runs next**. It must **not**:
+- Compress story narrative to speed handoffs
+- Prefer gate PASS over client-readable backlog
+- Let Trace/Quality “PASS” a mega-story pack
+- Rewrite leaf epics/stories from the orchestrator
+
+Leaf peers (Story / Epic / AC / Test) own **client showability**. If sizing or narrative fails the client bar, hand back to the owning peer — do not paper over it.

@@ -10,7 +10,7 @@ description: >-
 
 Authoritative contract: [`schema.json`](schema.json)
 
-# SK-AC — Acceptance Criteria (Jira-quality)
+# SK-AC — Acceptance Criteria (client / Jira-quality)
 
 ## Inputs
 - story (or story set)
@@ -24,6 +24,12 @@ Authoritative contract: [`schema.json`](schema.json)
 - Also update story JSON `acceptance_criteria` arrays when present
 
 AC Markdown columns: ID | Given | When | Then | Covers FR | Covers BR
+
+## CLIENT DELIVERY STANDARD
+AC must be paste-ready into a Jira Acceptance Criteria field:
+- A BA/tester can execute without opening FR text
+- Each Then names **what is seen/stored/returned** (message, field, status, record state)
+- Prefer 3–7 AC per story (happy + key negatives); do not dump 15 vague criteria
 
 ## HARD quality bar (mandatory)
 

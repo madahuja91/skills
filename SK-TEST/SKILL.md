@@ -9,7 +9,7 @@ description: >-
 
 Authoritative contract: [`schema.json`](schema.json)
 
-# SK-TEST — Test Scenario Generation (Jira-quality)
+# SK-TEST — Test Scenario Generation (client / QA-ready)
 
 ## Inputs
 - stories + acceptance_criteria
@@ -24,6 +24,13 @@ Authoritative contract: [`schema.json`](schema.json)
 
 Use separate tables: Positive / Negative / Integration  
 Columns: ID | Preconditions/Systems | Steps | Expected | Covers AC
+
+## CLIENT DELIVERY STANDARD
+Scenarios must look like a QA engineer wrote them for a client UAT pack:
+- Example data in steps (ids, roles, dates, sizes)
+- Expected results filled (never empty)
+- Positive / Negative correctly classified (do not put happy-path under Negative)
+- Integration rows only when a real cross-system hop exists — not empty “—” placeholders pretending coverage
 
 ## HARD quality bar (mandatory)
 

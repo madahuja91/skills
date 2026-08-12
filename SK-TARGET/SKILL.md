@@ -9,7 +9,7 @@ description: >-
 
 Authoritative contract: [`schema.json`](schema.json)
 
-# SK-TARGET — Target Story Mapping (Jira-quality)
+# SK-TARGET — Target Story Mapping (client-showable)
 
 ## Inputs
 - gap_register, tsa_analysis, adr_decisions
@@ -24,6 +24,10 @@ Authoritative contract: [`schema.json`](schema.json)
 ## Dual surface (mandatory)
 JSON + Markdown for every story.
 
+## CLIENT DELIVERY STANDARD
+Same bar as SK-STORY: sprint-sized journeys, Jira-ready titles, As a / What / How / Scope,
+full statements, appendix-only IDs. Plus clear migration impact a client migration lead can act on.
+
 ## Required TS-only fields
 Legacy Mapping, ADR References, TSA Component, Gap Analysis Summary,
 Migration Impact (`New|Modified|Reused|Deprecated`) — plus all shared story fields.
@@ -35,12 +39,16 @@ Migration Impact (`New|Modified|Reused|Deprecated`) — plus all shared story fi
 - Migration impact and legacy mapping in dedicated tables (not only IDs in the title)
 - AC/tests left for SK-AC/SK-TEST must not be circular stubs
 
+## Sizing (same as SK-STORY)
+- Do **not** dump one mega-story per capability/gap cluster when ≥3 separable build slices exist
+- Prefer 1–3 gaps/FRs per story; split by actor, TSA component, or migration wave when demos differ
+
 ## Procedure
-1. Create/update TS stories from gap items (or coherent groups)
+1. Create/update TS stories from gap items (or coherent groups) — developable slices, not mega dumps
 2. Assign `TS-STORY-###`; link GAP/ADR/TSA/CS refs
 3. Write Jira-quality narrative for build teams
 4. Keep statements compliant with accepted ADRs and TSA contracts
 5. Leave concrete AC/tests to SK-AC / SK-TEST
 
 ## Must not
-Ignore gap register; invent ADR conflicts; ship boilerplate “implement target capability” text.
+Ignore gap register; invent ADR conflicts; ship boilerplate “implement target capability” text; ship one mega-story per domain.
