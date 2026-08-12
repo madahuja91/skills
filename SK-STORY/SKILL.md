@@ -2,15 +2,20 @@
 name: SK-STORY
 description: >-
   Generate Current State functional stories from capabilities, FRs, and rules
-  using the enterprise CS template.
+  using Jira-quality clarity: actionable titles, user-value description,
+  concrete what/how, and industry-standard detail (not circular FR echoes).
 ---
 
 ## Schema
 
 Authoritative contract: [`schema.json`](schema.json)
 
+# SK-STORY — Current State Story Generation (Jira-quality)
 
-# SK-STORY — Current State Story Generation
+## Purpose
+Produce stories a BA, developer, or tester can execute without reading the whole legacy dump.
+Stories document **current-state functional behavior** with the same clarity as a well-written Jira story:
+**what** the user/system must achieve, **how** the flow works, and **how done is verified**.
 
 ## Inputs
 - capabilities, requirements, rules
@@ -18,34 +23,62 @@ Authoritative contract: [`schema.json`](schema.json)
 
 ## Outputs
 - `artifacts/cs/cs_stories.json` (array of stories per story.schema) — **required**
-- Nested Markdown under parent epic (industry hierarchy) — **required**:
+- Nested Markdown under parent epic — **required**:
   - `artifacts/cs/epics/<EPIC-ID>/stories/<STORY-ID>.md`
 - Do **not** write a flat `artifacts/cs/stories/` folder as the primary layout
 
 ## Dual surface (mandatory)
-Every story MUST be written as:
-1. JSON entry in `cs_stories.json` (system of record) including **`epic_id`**
-2. Matching Markdown under its parent epic folder
+1. JSON entry in `cs_stories.json` including **`epic_id`**
+2. Matching Markdown under the parent epic folder
 
-Do not finish with JSON-only or MD-only.
+## HARD quality bar (block shipping if violated)
 
-## Required story fields
-ID, Title, Business Objective, Description, Functional Requirements, Business Rules,
-Assumptions/Dependencies, Acceptance Criteria (may be filled later by SK-AC),
-Data & Integration, Edge Cases, Testing Scenarios (may be filled by SK-TEST),
-Traceability, Definition of Done.
+### Titles
+- **Good:** verb + business outcome — e.g. `Authenticate CCDS users and establish session context`
+- **Forbidden patterns:** `Operate <Capability>`, `Support the observed…`, `Handle <capability> capability`
+- Max ~80 characters; no ID soup in the title
+
+### Description (must be human-readable)
+Use this structure in both JSON `description` and Markdown:
+
+1. **User story line:** `As a <role>, I want <capability/action>, so that <business value>.`
+2. **What happens (What):** 3–6 plain sentences of the business flow (screens/services/batches as observed).
+3. **How it works (How):** numbered steps a developer/tester can follow (entry point → validations → persistence/integration → outcome).
+4. **In scope / Out of scope:** short bullets.
+5. **Do not** write only “support the observed capability through existing web/service/PLSQL…”.
+
+### Business objective
+One clear outcome sentence (value + actors), not a capability paraphrase.
+
+### Functional requirements & rules
+- Keep FR/BR IDs and statements, but statements must be **testable English**, not “the system shall perform FR-00x”.
+- Put heavy legacy path refs in **Traceability / Source Refs**, not in the title/description hero text.
+
+### Acceptance criteria & tests
+- Prefer concrete stubs or leave empty for SK-AC / SK-TEST.
+- **Never** invent circular AC like “Then the system performs FR-001”.
+
+### Edge cases
+- Real conditions + expected handling (message, reject, retry), not “Apply current-state validation as extracted.”
 
 ## Procedure
-1. Map must-priority FRs into cohesive stories based on evidence — **1 story is fine** when the flow is atomic
-2. Split into multiple stories only when there are clear boundaries (different actors, flows, or FR clusters)
-3. Assign `CS-STORY-###` IDs; keep one capability primary per story when possible; always set `epic_id` when epic is known
-4. Embed FR/BR refs; leave AC/tests stubs only if SK-AC/SK-TEST will run next
-5. Write nested MD under `epics/<EPIC-ID>/stories/` using tabular template
-6. No target-state redesign
+1. Map must-priority FRs into cohesive stories — **1 story is fine** when atomic.
+2. Split when different actors, entry points, or independently valuable flows exist.
+3. Assign `CS-STORY-###`; set `epic_id`; keep one primary capability.
+4. Write Jira-quality title + description (As a / What / How / Scope).
+5. Embed FR/BR tables with clear statements; keep source IDs in Traceability.
+6. Write nested MD using `templates/current-state-story.md` structure (tables OK; description may use short paragraphs + numbered list for How).
+7. No target-state redesign / ADR / TSA / migration content.
 
-## Markdown formatting (required)
-Use **tables** for: header attributes, FRs, BRs, assumptions/deps, AC (Given/When/Then columns), data/integration, edge cases, test scenarios, traceability, DoD.
-Prefer enterprise templates under `templates/`. Avoid long prose bullets where a table fits.
+## Self-check before finish
+- [ ] Title is actionable (no “Operate …”)
+- [ ] Description has As a / What / How / Scope
+- [ ] A new reader can explain what to verify without opening legacy code
+- [ ] FR/BR linked; epic_id set; nested MD + JSON both exist
+- [ ] Trace IDs are present but not drowning the narrative
 
 ## Must not
-Add ADR/TSA/migration fields (those are Target State only). Force artificial story splits to meet a count quota.
+- Boilerplate capability wrappers
+- Circular AC/test language
+- Force artificial splits for count quotas
+- Target-state redesign fields

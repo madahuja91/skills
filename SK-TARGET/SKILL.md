@@ -1,16 +1,15 @@
 ---
 name: SK-TARGET
 description: >-
-  Map gap register items to Target State epics/stories with legacy mapping,
-  ADR refs, TSA components, and migration impact.
+  Map gap register items to Target State epics/stories with Jira-quality clarity,
+  legacy mapping, ADR refs, TSA components, and migration impact.
 ---
 
 ## Schema
 
 Authoritative contract: [`schema.json`](schema.json)
 
-
-# SK-TARGET — Target Story Mapping
+# SK-TARGET — Target Story Mapping (Jira-quality)
 
 ## Inputs
 - gap_register, tsa_analysis, adr_decisions
@@ -21,20 +20,27 @@ Authoritative contract: [`schema.json`](schema.json)
 - Nested Markdown — **required**:
   - `artifacts/ts/epics/<EPIC-ID>/stories/<STORY-ID>.md`
 - Use with SK-EPIC for `ts_epics.json` + `artifacts/ts/epics/<EPIC-ID>/epic.md`
-- Do not use a flat `artifacts/ts/stories/` primary layout
 
 ## Dual surface (mandatory)
-JSON + Markdown for every epic/story. Do not finish with only one format.
+JSON + Markdown for every story.
 
 ## Required TS-only fields
 Legacy Mapping, ADR References, TSA Component, Gap Analysis Summary,
 Migration Impact (`New|Modified|Reused|Deprecated`) — plus all shared story fields.
 
+## HARD quality bar (same as SK-STORY, plus TS)
+- Actionable title (no “Operate …”, no “Implement gap GAP-00x” alone)
+- Description: `As a … I want … so that …` + What + How + Scope
+- How must reference target components/APIs from TSA when known
+- Migration impact and legacy mapping in dedicated tables (not only IDs in the title)
+- AC/tests left for SK-AC/SK-TEST must not be circular stubs
+
 ## Procedure
-1. Create/update one TS story per gap item (or coherent group)
+1. Create/update TS stories from gap items (or coherent groups)
 2. Assign `TS-STORY-###`; link GAP/ADR/TSA/CS refs
-3. Keep statements compliant with accepted ADRs and TSA contracts
-4. Leave AC/tests for SK-AC / SK-TEST if next
+3. Write Jira-quality narrative for build teams
+4. Keep statements compliant with accepted ADRs and TSA contracts
+5. Leave concrete AC/tests to SK-AC / SK-TEST
 
 ## Must not
-Ignore gap register or invent ADR conflicts.
+Ignore gap register; invent ADR conflicts; ship boilerplate “implement target capability” text.

@@ -1,16 +1,16 @@
 ---
 name: SK-AC
 description: >-
-  Generate Given/When/Then acceptance criteria covering functional
-  requirements and business rules. mode=cs|ts.
+  Generate Given/When/Then acceptance criteria with Jira-quality clarity:
+  concrete actors, inputs, actions, and observable outcomes — never circular FR echoes.
+  mode=cs|ts.
 ---
 
 ## Schema
 
 Authoritative contract: [`schema.json`](schema.json)
 
-
-# SK-AC — Acceptance Criteria
+# SK-AC — Acceptance Criteria (Jira-quality)
 
 ## Inputs
 - story (or story set)
@@ -18,31 +18,43 @@ Authoritative contract: [`schema.json`](schema.json)
 - `mode`: cs | ts
 
 ## Outputs
-- Update stories and write:
-  - CS: `artifacts/cs/acceptance_criteria.json` **and** update AC **table** in each nested story MD under `epics/<EPIC-ID>/stories/`
-  - TS: `artifacts/ts/acceptance_criteria.json` **and** update AC **table** in each nested story MD
+- CS: `artifacts/cs/acceptance_criteria.json` **and** update AC **table** in each nested story MD
+- TS: `artifacts/ts/acceptance_criteria.json` **and** update AC **table** in each nested story MD
+- Keep JSON + Markdown in sync
+- Also update story JSON `acceptance_criteria` arrays when present
 
-Dual surface required: JSON pack + Markdown story files kept in sync.
-AC Markdown section must be a table with columns: ID | Given | When | Then | Covers FR | Covers BR.
+AC Markdown columns: ID | Given | When | Then | Covers FR | Covers BR
 
-```json
-{
-  "acceptance_criteria": [{
-    "id": "AC-###",
-    "story_id": "",
-    "given": "",
-    "when": "",
-    "then": "",
-    "covers_fr": [],
-    "covers_br": []
-  }]
-}
-```
+## HARD quality bar (mandatory)
+
+### Format
+- Atomic Given / When / Then
+- **Given** = concrete preconditions (role, data state, config)
+- **When** = single user/system action with specific inputs where known
+- **Then** = **observable outcome** (UI message, persisted fields, status code, rejected record, MQ message, etc.)
+
+### Forbidden Then clauses (block)
+- “the system performs the current-state behavior described by FR-00x”
+- “behavior remains within linked acceptance-criteria scope”
+- “Apply current-state validation as extracted”
+- Restating the FR statement verbatim without an observable result
+
+### Good Then examples
+- “login succeeds and session contains GUID, roles, and post-login route”
+- “create user is rejected with validation error when email is empty”
+- “file > 52,428,800 bytes is rejected and is not sent to data transfer”
+
+### Coverage
+- Every must FR → ≥1 AC
+- Every critical BR → ≥1 AC (often negative/edge)
+- Prefer separate ACs for happy path vs validation failures
 
 ## Procedure
-1. Ensure every must FR and critical BR has AC coverage
-2. Use Given/When/Then; keep atomic
-3. Link covers_fr / covers_br
+1. Read story What/How + FR/BR statements
+2. Write concrete AC from observed behavior (use numbers/fields from BRs when present)
+3. Link `covers_fr` / `covers_br`
+4. Sync JSON pack + each story MD table + story JSON if applicable
+5. Self-check: a tester can execute AC without opening FR text
 
 ## Must not
-Change story scope or invent new FRs.
+Change story scope; invent new FRs; ship circular AC.
