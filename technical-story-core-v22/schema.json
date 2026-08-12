@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://epic-story.local/schemas/technical-story-core.json",
+  "title": "Technical Story Core",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "skill_id",
+    "active_root",
+    "artifact_paths",
+    "items"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "skill_id": {
+      "const": "technical-story-core"
+    },
+    "active_root": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Workspace-relative ACTIVE_ROOT (prefer src). Never src/src."
+    },
+    "artifact_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "area",
+          "title",
+          "technical_objective",
+          "technical_scope",
+          "target_components",
+          "component_responsibilities",
+          "interfaces_and_contracts",
+          "data_flow",
+          "dependencies",
+          "implementation_changes",
+          "validation_and_error_handling",
+          "migration_considerations",
+          "testing_strategy",
+          "sac",
+          "traceability"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "area": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "technical_objective": {
+            "type": "string"
+          },
+          "technical_scope": {
+            "type": "string"
+          },
+          "target_components": {
+            "type": [
+              "array",
+              "string",
+              "object"
+            ]
+          },
+          "component_responsibilities": {
+            "type": [
+              "object",
+              "array",
+              "string"
+            ]
+          },
+          "interfaces_and_contracts": {
+            "type": "string"
+          },
+          "data_flow": {
+            "type": "string"
+          },
+          "dependencies": {
+            "type": [
+              "array",
+              "string",
+              "object"
+            ]
+          },
+          "implementation_changes": {
+            "type": [
+              "array",
+              "string",
+              "object"
+            ]
+          },
+          "validation_and_error_handling": {
+            "type": "string"
+          },
+          "migration_considerations": {
+            "type": "string"
+          },
+          "testing_strategy": {
+            "type": "string"
+          },
+          "sac": {
+            "type": "string"
+          },
+          "traceability": {
+            "type": [
+              "object",
+              "array",
+              "string"
+            ]
+          },
+          "configuration_changes": {
+            "type": "string"
+          },
+          "security": {
+            "type": "string"
+          },
+          "observability": {
+            "type": "string"
+          },
+          "transaction_and_consistency": {
+            "type": "string"
+          },
+          "backward_compatibility": {
+            "type": "string"
+          },
+          "persistence_model": {
+            "type": "string"
+          },
+          "messaging_contract": {
+            "type": "string"
+          },
+          "state_management": {
+            "type": "string"
+          },
+          "deployment_configuration": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

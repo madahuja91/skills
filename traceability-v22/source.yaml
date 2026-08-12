@@ -1,0 +1,42 @@
+skill:
+  id: traceability
+  name: End-to-End Traceability
+  version: 2.0.0
+  purpose: Maintain stable IDs and complete lineage from source requirement through
+    technical implementation.
+  id_prefixes:
+  - REQ
+  - EPIC
+  - FEAT
+  - FAC
+  - AAC
+  - ST
+  - SAC
+  hierarchy:
+  - Requirement -> Epic
+  - Epic -> Feature
+  - Feature -> FAC
+  - Feature -> AAC
+  - Feature -> Story
+  - Story -> SAC
+  source_lineage:
+  - codebase
+  - csa_output
+  - architecture_blueprint
+  - migration_strategy
+  story_lineage:
+    every_story_must_reference:
+    - feature_id
+    - fac_ids
+    - aac_ids
+    - architecture_blueprint references
+    - migration_strategy references
+    - current_state evidence
+    - sibling dependencies where applicable
+  rules:
+  - IDs remain stable across reruns when artifact identity is unchanged.
+  - IDs must never be reused for a different artifact.
+  - No orphan Stories.
+  - No duplicate IDs.
+  - Every SAC resolves to a Story.
+  canonical_output: src/artifacts/canonical/traceability.json
