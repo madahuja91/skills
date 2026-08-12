@@ -54,7 +54,22 @@ sac:
 
 ## Epic names validation
 
-When `epic_names` was provided and non-empty, every Epic title under `canonical/backlog/Epic/**/EPIC-###.json` must match a user-supplied name **verbatim** (exact string match). FAIL if any Epic title was renamed, rephrased, abbreviated, or casing-normalized.
+When `epic_names` was provided and non-empty:
+- Epic count must equal the provided name count.
+- Every Epic title under `canonical/backlog/Epic/**/EPIC-###.json` must match a user-supplied name **verbatim**.
+- FAIL if any Epic title was renamed, rephrased, abbreviated, consolidated, or casing-normalized.
+
+## Story path validation
+
+Accept Area-folder layout:
+`Technical-Stories/<Area>/ST-###.json` and `Technical-Stories/<Area>/SAC/SAC-###.json`
+where `<Area>` folder is one of UI, BFF-API, Domain, Persistence, Messaging, Testing.
+JSON `area` field must use the exact enum including `BFF/API`.
+
+## Projections safety
+
+On FAIL: do **not** delete or wipe `projections/backlog/` Markdown or `jira-import.json`.
+Only set `published_projections=false`.
 
 ## Blocking conditions
 

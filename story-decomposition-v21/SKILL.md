@@ -43,16 +43,18 @@ required:
 
 ## Decomposition rules
 
-- Create only areas required by the target design.
-- Do not create a Story merely because an area exists in the enum.
+- Default-select ALL six areas for every Feature: UI, BFF/API, Domain, Persistence, Messaging, Testing.
+- Skip an area ONLY when architecture + feature evidence shows zero work in that area; record strong rationale.
+- Prefer full six-area coverage; do not skip merely for convenience.
 - Do not create separate Features for UI and backend concerns.
 - Keep all technical slices under the same Feature.
 - Every selected area must have a clear technical responsibility.
-- Testing is selected when dedicated technical validation is required; individual Stories must still include their own testing strategy.
+- Testing is selected by default; individual Stories must still include their own testing strategy.
 - Identify dependencies and ordering between Stories.
 - Detect whether a single Story would become too broad and split only by approved area.
 - Write selected_areas and skipped_areas so the Technical Story manager can RUN selected agents and SKIP the rest.
 - Do not generate Story LLD.
+- Write Stories under `Technical-Stories/<Area>/ST-###.json` (folder `BFF-API` for area `BFF/API`).
 
 ## Dispatch contract
 

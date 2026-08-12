@@ -44,9 +44,11 @@ src/artifacts/projections/backlog/
 - Display SAC at Story level.
 - Preserve exact Story area names.
 - Do not add content not present in JSON.
-- Run only after Governance PASS. Otherwise status=skipped.
+- Run only after Governance PASS. Otherwise status=skipped and leave existing MD untouched.
+- NEVER delete Markdown under `projections/backlog/`.
 - Write `src/artifacts/projections/backlog/` (folder tree), not a single `backlog.md`.
 - After PASS, JSON and MD trees must be informationally identical.
+- Mirror Area-folder Story paths: `Technical-Stories/<Area>/...`.
 
 ## ACTIVE_ROOT
 
