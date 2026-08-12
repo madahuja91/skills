@@ -1,0 +1,19 @@
+{
+  "skill": {
+    "id": "markdown-rendering",
+    "name": "Markdown Rendering",
+    "version": "2.0.0",
+    "purpose": "Render human-readable Markdown from the validated technical backlog JSON.",
+    "rules": [
+      "JSON is authoritative.",
+      "Preserve Epic -> Feature -> Story hierarchy.",
+      "Display FAC/AAC at Feature level.",
+      "Display full technical LLD sections at Story level.",
+      "Display SAC at Story level.",
+      "Preserve exact Story area names.",
+      "Do not add content not present in JSON.",
+      "Run only after Governance PASS. Otherwise status=skipped.",
+      "Write src/artifacts/projections/backlog.md."
+    ]
+  }
+}

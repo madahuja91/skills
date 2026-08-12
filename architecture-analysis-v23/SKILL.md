@@ -1,0 +1,45 @@
+---
+name: architecture-analysis-v23
+description: >-
+  Extract target architecture, boundaries, contracts and constraints from architecture_blueprint, and migration sequencing/coexistence/compatibility/cutover/rollback from migration_strategy.
+---
+
+# Architecture Analysis
+
+Authoritative skill definition (identical to `skill.yaml` / `schema.json`):
+
+```yaml
+skill:
+  id: architecture-analysis
+  name: Architecture Analysis
+  version: 2.0.0
+  purpose: Extract target architecture, boundaries, contracts and constraints from architecture_blueprint, and migration sequencing/coexistence/compatibility/cutover/rollback from migration_strategy.
+  responsibility:
+    owns:
+    - target architecture extraction
+    - component/API/domain/persistence/messaging boundaries
+    - migration constraint extraction
+    does_not_own:
+    - current-state invention
+    - Epic/Feature business scope
+    - technical Story LLD
+  inputs:
+    required:
+    - architecture_blueprint
+    - migration_strategy
+    optional:
+    - current_state_evidence
+  output:
+    schema: architecture-context
+    required_fields:
+    - id
+    - boundaries
+    - contracts
+    - constraints
+    - sequencing
+    - coexistence
+    - compatibility
+    - cutover
+    - rollback
+    - traceability
+```
