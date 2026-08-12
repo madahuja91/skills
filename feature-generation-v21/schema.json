@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://epic-story.local/schemas/feature-generation.json",
+  "title": "Feature Generation",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "skill_id",
+    "active_root",
+    "artifact_paths",
+    "items"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "skill_id": {
+      "const": "feature-generation"
+    },
+    "active_root": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Workspace-relative ACTIVE_ROOT (prefer src). Never src/src."
+    },
+    "artifact_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "epic_id",
+          "title",
+          "description",
+          "functional_objective",
+          "functional_scope",
+          "actors",
+          "functional_flow",
+          "business_rules",
+          "functional_validations",
+          "dependencies",
+          "current_state",
+          "target_state_intent",
+          "migration_considerations",
+          "traceability"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "epic_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "functional_objective": {
+            "type": "string"
+          },
+          "functional_scope": {
+            "type": "string"
+          },
+          "actors": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "object"
+              ]
+            }
+          },
+          "functional_flow": {
+            "type": "string"
+          },
+          "business_rules": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "object"
+              ]
+            }
+          },
+          "functional_validations": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "object"
+              ]
+            }
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "object"
+              ]
+            }
+          },
+          "current_state": {
+            "type": "string"
+          },
+          "target_state_intent": {
+            "type": "string"
+          },
+          "migration_considerations": {
+            "type": "string"
+          },
+          "traceability": {
+            "type": [
+              "object",
+              "array",
+              "string"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
