@@ -16,12 +16,6 @@ Version `2.0.0`.
 
 Maintain stable IDs and complete lineage from source requirement through technical implementation.
 
-## Workflow binding
-
-- Workflow Orchestrator (ID / lineage control)
-- Traceability Agent
-- Governance Orchestrator
-
 ## ID prefixes
 
 - REQ
@@ -69,6 +63,10 @@ every_story_must_reference:
 - No duplicate IDs.
 - Every SAC resolves to a Story.
 
+## Canonical output
+
+`src/artifacts/canonical/traceability.json`
+
 ## ACTIVE_ROOT
 
 Write only under the single workspace ACTIVE_ROOT (`src`). See `active-root-hygiene`.
@@ -78,3 +76,4 @@ Write only under the single workspace ACTIVE_ROOT (`src`). See `active-root-hygi
 - Invent architecture decisions unsupported by `architecture_blueprint`.
 - Change Feature business boundaries from a technical Story.
 - Use Story area names other than UI, BFF/API, Domain, Persistence, Messaging, Testing.
+- Regenerate an entire swarm for a single failed agent.

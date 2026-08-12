@@ -82,25 +82,13 @@
             }
           },
           "component_responsibilities": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "interfaces_and_contracts": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "data_flow": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "dependencies": {
             "type": "array",
@@ -121,60 +109,28 @@
             }
           },
           "validation_and_error_handling": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "security": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "observability": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "transaction_and_consistency": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "migration_considerations": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "backward_compatibility": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "testing_strategy": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "sac": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "traceability": {
             "type": [

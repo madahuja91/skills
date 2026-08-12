@@ -16,10 +16,6 @@ Version `2.0.0`.
 
 Render human-readable Markdown from the validated technical backlog JSON.
 
-## Workflow binding
-
-- Markdown Renderer
-
 ## Rules
 
 - JSON is authoritative.
@@ -29,6 +25,8 @@ Render human-readable Markdown from the validated technical backlog JSON.
 - Display SAC at Story level.
 - Preserve exact Story area names.
 - Do not add content not present in JSON.
+- Run only after Governance PASS. Otherwise status=skipped.
+- Write src/artifacts/projections/backlog.md.
 
 ## ACTIVE_ROOT
 
@@ -39,3 +37,4 @@ Write only under the single workspace ACTIVE_ROOT (`src`). See `active-root-hygi
 - Invent architecture decisions unsupported by `architecture_blueprint`.
 - Change Feature business boundaries from a technical Story.
 - Use Story area names other than UI, BFF/API, Domain, Persistence, Messaging, Testing.
+- Regenerate an entire swarm for a single failed agent.

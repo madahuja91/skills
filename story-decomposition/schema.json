@@ -36,6 +36,7 @@
         "type": "object",
         "required": [
           "selected_areas",
+          "skipped_areas",
           "rationale_per_area",
           "dependency_graph",
           "contract_boundaries",
@@ -51,26 +52,23 @@
               ]
             }
           },
+          "skipped_areas": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "object"
+              ]
+            }
+          },
           "rationale_per_area": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "dependency_graph": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "contract_boundaries": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "traceability": {
             "type": [

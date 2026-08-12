@@ -16,11 +16,6 @@ Version `2.0.0`.
 
 Generate high-level business Epics from functional current-state evidence and target transformation intent.
 
-## Workflow binding
-
-- Capability Agent
-- Epic Agent
-
 ## Responsibility
 
 ```yaml
@@ -128,3 +123,4 @@ Write only under the single workspace ACTIVE_ROOT (`src`). See `active-root-hygi
 - Invent architecture decisions unsupported by `architecture_blueprint`.
 - Change Feature business boundaries from a technical Story.
 - Use Story area names other than UI, BFF/API, Domain, Persistence, Messaging, Testing.
+- Regenerate an entire swarm for a single failed agent.

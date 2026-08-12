@@ -49,11 +49,7 @@
             "type": "string"
           },
           "capabilities": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "actors": {
             "type": "array",
@@ -75,18 +71,10 @@
             ]
           },
           "exceptions": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "evidence": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "traceability": {
             "type": [

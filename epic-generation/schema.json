@@ -60,11 +60,7 @@
             "type": "string"
           },
           "scope": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "traceability": {
             "type": [

@@ -16,21 +16,29 @@ Version `2.0.0`.
 
 Shared LLD contract for all technical Story area skills. Stories must be completely technical, implementation-oriented, and must not redefine Feature business scope.
 
-## Workflow binding
-
-- UI Agent
-- BFF/API Agent
-- Domain Agent
-- Persistence Agent
-- Messaging Agent
-- Testing Agent
-- Technical Story Orchestrator
-
 ## Responsibility
 
 ```yaml
 owns: []
 does_not_own: []
+```
+
+## Specialist output contract
+
+```yaml
+path: src/artifacts/specialists/<area>/<id>.json
+required_fields:
+- artifactType
+- id
+- parentId
+- area
+- status
+- sourceReferences
+- content
+- acceptanceCriteria
+- confidence
+- validation
+- outputPath
 ```
 
 ## Inputs
@@ -168,7 +176,13 @@ must_not:
 - use Backend instead of BFF/API.
 - create additional Story area names.
 - turn Story into a task checklist.
+- generate a Story when the area is not in shared memory selected_areas.
 ```
+
+## Skip rule
+
+- Read src/_internal/swarm/shared_memory.json selected_areas first.
+- If this agent's area is not selected, return status=skipped and write no Story.
 
 ## ACTIVE_ROOT
 
@@ -179,3 +193,4 @@ Write only under the single workspace ACTIVE_ROOT (`src`). See `active-root-hygi
 - Invent architecture decisions unsupported by `architecture_blueprint`.
 - Change Feature business boundaries from a technical Story.
 - Use Story area names other than UI, BFF/API, Domain, Persistence, Messaging, Testing.
+- Regenerate an entire swarm for a single failed agent.

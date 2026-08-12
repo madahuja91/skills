@@ -16,22 +16,23 @@ Version `2.0.0`.
 
 Coordinate Epic, Feature, FAC and AAC generation before technical Story decomposition.
 
-## Workflow binding
-
-- Workflow Orchestrator (coordination semantics)
-- Epic/Feature Orchestrator
-
 ## Execution
 
-- analyze requirement and sources
-- generate candidate Epics
-- validate Epic abstraction level
-- decompose Epic into Features
-- validate Feature functional boundaries
-- generate FAC
-- generate AAC
-- perform cross-artifact quality validation
-- publish canonical Epic/Feature context for Story Swarm
+- bootstrap shared memory
+- swarm Capability, Requirement, Rule, Epic, Feature, FAC, AAC in parallel
+- enforce Epic -> Feature -> FAC -> AAC through shared memory even when agents run together
+- retry only the incomplete/failed agent, max 2 cycles
+- publish canonical Epic/Feature package for Story Swarm
+
+## Swarm
+
+```yaml
+shared_memory: src/_internal/swarm/shared_memory.json
+sync_rules:
+- Feature Agent must not finalize until Epic IDs exist in shared memory.
+- FAC and AAC must not finalize until Feature IDs exist in shared memory.
+- Do not regenerate the whole swarm for one failed agent.
+```
 
 ## Dependency order
 
@@ -59,6 +60,10 @@ required_context:
 - Never ask Story agents to redefine Epic or Feature scope.
 - Never let technical Story decomposition change Feature business boundaries without governance review.
 
+## Canonical output
+
+`src/artifacts/packages/epic-feature-package.json`
+
 ## ACTIVE_ROOT
 
 Write only under the single workspace ACTIVE_ROOT (`src`). See `active-root-hygiene`.
@@ -68,3 +73,4 @@ Write only under the single workspace ACTIVE_ROOT (`src`). See `active-root-hygi
 - Invent architecture decisions unsupported by `architecture_blueprint`.
 - Change Feature business boundaries from a technical Story.
 - Use Story area names other than UI, BFF/API, Domain, Persistence, Messaging, Testing.
+- Regenerate an entire swarm for a single failed agent.

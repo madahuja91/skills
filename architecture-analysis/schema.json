@@ -51,60 +51,28 @@
             "type": "string"
           },
           "boundaries": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "contracts": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "constraints": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "sequencing": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "coexistence": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "compatibility": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "cutover": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "rollback": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "traceability": {
             "type": [

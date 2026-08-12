@@ -68,11 +68,7 @@
             "type": "string"
           },
           "functional_scope": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "actors": {
             "type": "array",
@@ -84,11 +80,7 @@
             }
           },
           "functional_flow": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "business_rules": {
             "type": "array",
@@ -118,25 +110,13 @@
             }
           },
           "current_state": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "target_state_intent": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "migration_considerations": {
-            "type": [
-              "object",
-              "array",
-              "string"
-            ]
+            "type": "string"
           },
           "traceability": {
             "type": [
