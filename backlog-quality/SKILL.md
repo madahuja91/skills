@@ -1,0 +1,78 @@
+---
+name: backlog-quality
+description: >-
+  Validate the backlog for architectural correctness and LLD readiness.
+---
+
+## Schema
+
+Authoritative contract: [`schema.json`](schema.json)
+
+# Backlog Quality
+
+Version `2.0.0`.
+
+## Purpose
+
+Validate the backlog for architectural correctness and LLD readiness.
+
+## Workflow binding
+
+- Quality Agent
+- Governance Orchestrator
+
+## Exact Story area enum
+
+- UI
+- BFF/API
+- Domain
+- Persistence
+- Messaging
+- Testing
+
+## Gates
+
+```yaml
+epic:
+- business capability/outcome only
+- no implementation detail
+feature:
+- functional boundary
+- implementation-neutral
+fac:
+- Feature-level
+- business/functional and testable
+aac:
+- Feature-level
+- architecture/design and traceable to architecture_blueprint or migration_strategy
+story:
+- completely technical
+- LLD-level
+- implementation-ready
+- correct Story area
+- all applicable LLD sections covered
+sac:
+- Story-level
+- technically verifiable
+```
+
+## Blocking conditions
+
+- Story is generic rather than technical.
+- Story lacks target components or interfaces where applicable.
+- Story lacks data flow where applicable.
+- Story lacks migration consideration where applicable.
+- Story has unresolved architecture assumptions.
+- Story uses an invalid area name.
+- SAC only repeats FAC.
+- Story conflicts with sibling Story contracts.
+
+## ACTIVE_ROOT
+
+Write only under the single workspace ACTIVE_ROOT (`src`). See `active-root-hygiene`.
+
+## Must not
+
+- Invent architecture decisions unsupported by `architecture_blueprint`.
+- Change Feature business boundaries from a technical Story.
+- Use Story area names other than UI, BFF/API, Domain, Persistence, Messaging, Testing.

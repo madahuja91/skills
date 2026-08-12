@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://epic-story.local/schemas/aac-generation.json",
+  "title": "Feature Architecture Acceptance Criteria",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "skill_id",
+    "active_root",
+    "artifact_paths",
+    "items"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "skill_id": {
+      "const": "aac-generation"
+    },
+    "active_root": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Workspace-relative ACTIVE_ROOT (prefer src). Never src/src."
+    },
+    "artifact_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "feature_id",
+          "architecture_constraints",
+          "migration_constraints",
+          "acceptance_criteria",
+          "traceability"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "feature_id": {
+            "type": "string"
+          },
+          "architecture_constraints": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "object"
+              ]
+            }
+          },
+          "migration_constraints": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "object"
+              ]
+            }
+          },
+          "acceptance_criteria": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "object"
+              ]
+            }
+          },
+          "traceability": {
+            "type": [
+              "object",
+              "array",
+              "string"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
