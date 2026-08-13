@@ -1,0 +1,60 @@
+skill:
+  id: backlog-quality
+  name: Backlog Quality
+  version: 2.0.0
+  purpose: Validate the backlog for architectural correctness and LLD readiness.
+  gates:
+    epic:
+    - business capability/outcome only
+    - no implementation detail
+    feature:
+    - functional boundary
+    - implementation-neutral
+    fac:
+    - Feature-level
+    - business/functional and testable
+    aac:
+    - Feature-level
+    - architecture/design and traceable to architecture_blueprint or migration_strategy
+    story:
+    - completely technical
+    - LLD-level
+    - implementation-ready
+    - correct Story area
+    - all applicable LLD sections covered
+    sac:
+    - Story-level
+    - technically verifiable
+  exact_story_area_enum:
+  - UI
+  - BFF/API
+  - Domain
+  - Persistence
+  - Messaging
+  - Testing
+  blocking_conditions:
+  - Story is generic rather than technical.
+  - Story lacks target components or interfaces where applicable.
+  - Story lacks data flow where applicable.
+  - Story lacks migration consideration where applicable.
+  - Story has unresolved architecture assumptions.
+  - Story uses an invalid area name.
+  - SAC only repeats FAC.
+  - Story conflicts with sibling Story contracts.
+  - A skipped area still has a Story.
+  - A selected area has no Story.
+  canonical_output: src/artifacts/canonical/validation.json
+
+  dual_write:
+    json_root: src/artifacts/canonical/backlog/
+    markdown_root: src/artifacts/projections/backlog/
+    when: markdown_renderer_only
+    governance_pass_required: false
+  schema_completeness_gate:
+    rule: STRICT schema compliance — All output.required_fields must be present and non-empty before status=complete; never rename/drop/stub required fields
+  # dual-write rule: JSON agents write schema-complete JSON under src/artifacts/canonical/backlog/ only. Markdown Renderer (Claude Sonnet 4.5) writes matching .md twins under src/artifacts/projections/backlog/. Do not dual-write Markdown from JSON agents.
+  # dual-write rule: JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.
+  # dual-write rule: All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.
+  # dual-write rule: Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic.
+
+  # content rule: Never write BR/ADR/migration references; inline full details in every artifact.

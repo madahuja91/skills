@@ -1,0 +1,58 @@
+skill:
+  id: fac-generation
+  name: Feature Functional Acceptance Criteria
+  version: 2.0.0
+  purpose: Generate Feature-level business and functional acceptance criteria.
+  responsibility:
+    owns:
+    - functional acceptance
+    - business scenario coverage
+    - Feature-level Given/When/Then criteria
+    does_not_own:
+    - technical Story acceptance
+    - LLD verification
+  inputs:
+    required:
+    - feature
+    - csa_output
+    - architecture_blueprint
+    - migration_strategy
+  coverage:
+  - happy path
+  - mandatory business rules
+  - validation
+  - negative scenarios
+  - boundary conditions
+  - functional error behavior
+  - downstream functional outcome
+  - migration/coexistence behavior where functionally visible
+  output:
+    schema: fac
+    required_fields:
+    - id
+    - feature_id
+    - acceptance_criteria
+    - traceability
+  rules:
+  - Criteria must validate the Feature's functional outcome.
+  - Criteria must not specify implementation classes or infrastructure.
+  - Criteria must be understandable by business and QA stakeholders.
+  - Do not duplicate Story-level technical acceptance.
+  format:
+  - Given
+  - When
+  - Then
+
+  dual_write:
+    json_root: src/artifacts/canonical/backlog/
+    markdown_root: src/artifacts/projections/backlog/
+    when: markdown_renderer_only
+    governance_pass_required: false
+  schema_completeness_gate:
+    rule: STRICT schema compliance — All output.required_fields must be present and non-empty before status=complete; never rename/drop/stub required fields
+  # dual-write rule: JSON agents write schema-complete JSON under src/artifacts/canonical/backlog/ only. Markdown Renderer (Claude Sonnet 4.5) writes matching .md twins under src/artifacts/projections/backlog/. Do not dual-write Markdown from JSON agents.
+  # dual-write rule: JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.
+  # dual-write rule: All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.
+  # dual-write rule: Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic.
+
+  # content rule: Never write BR/ADR/migration references; inline full details in every artifact.

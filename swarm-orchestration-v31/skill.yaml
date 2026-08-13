@@ -1,0 +1,212 @@
+skill:
+  id: swarm-orchestration
+  name: Swarm Orchestration
+  version: 2.0.0
+  purpose: Manager rules for parallel specialist swarms, shared-memory sync, selective dispatch, completeness-driven retry (no max cap), and canonical JSON placeholders.
+  manager_responsibility:
+    owns:
+    - specialist selection (run vs skip)
+    - fan-out / fan-in
+    - shared-memory bootstrap and sync
+    - completeness-driven retry of owning subagents (no max cap)
+    - bounded package publication
+    - correction routing to the failed agent, not the whole swarm
+    does_not_own:
+    - generating specialist content itself
+    - inventing skipped-area Stories
+    - publishing Jira before Governance PASS (Markdown is schema-projected by Markdown Renderer from JSON)
+  retry:
+    max_cycles_per_agent: none
+    rules:
+    - If a specialist output is missing, incomplete, invalid, or status is failed/incomplete, the owning orchestrator retries THAT agent only.
+    - Do not regenerate the entire swarm on a single agent failure.
+    - Keep rerunning the owning subagent from Completeness Validator retry_directives until complete.
+    - Governance FAIL routes correction to the owning orchestrator; that orchestrator retries only the failed agent(s); then return to Governance. Workflow Orchestrator allows Governance cycles continue until Completeness Validator and Quality pass.
+    - Never retry a skipped agent.
+  swarm_pattern:
+  - Dispatch independent specialists in parallel.
+  - Create and maintain shared memory so parallel agents stay in sync.
+  - Fan-in only complete (or explicitly skipped) specialist outputs.
+  - Logical dependency order is enforced through shared memory even when agents are dispatched in parallel.
+  shared_memory:
+    path: src/_internal/swarm/shared_memory.json
+    required_slots:
+    - agent_status
+    - retry_count
+    - requirements
+    - epic_names
+    - epics
+    - features
+    - fac
+    - aac
+    - selected_areas
+    - skipped_areas
+    - stories
+    - contracts
+    - correction
+    rules:
+    - Orchestrator creates the file before dispatch if missing.
+    - Every specialist reads shared memory before writing.
+    - Every specialist writes its slot and agent_status after finishing.
+    - Epic -> Feature -> FAC -> AAC: Feature Agent must not finalize until Epic IDs exist in shared memory; FAC and AAC must not finalize until Feature IDs exist.
+    - Story area agents must not generate unless their area is in selected_areas.
+  selective_dispatch:
+    story_areas:
+    - UI
+    - BFF/API
+    - Domain
+    - Persistence
+    - Messaging
+    - Testing
+    rules:
+    - Story Decomposer runs first and writes selected_areas and skipped_areas with rationale.
+    - Technical Story Orchestrator runs only selected area agents.
+    - Unselected area agents must immediately return status=skipped, write no Story, and not consume retry budget.
+    - Do not create a Story merely because an area agent exists on the graph.
+  specialist_output_contract:
+    required_fields:
+    - artifactType
+    - id
+    - parentId
+    - area
+    - status
+    - sourceReferences
+    - content
+    - acceptanceCriteria
+    - confidence
+    - validation
+    - outputPath
+    status_enum:
+    - candidate
+    - complete
+    - incomplete
+    - failed
+    - skipped
+    placeholder:
+      artifactType: <requirement|epic|feature|fac|aac|current_state_evidence|architecture_context|story_decomposition|technical_story|quality|traceability|jira_projection|markdown>
+      id: <REQ-###|EPIC-###|FEAT-###|FAC-###|AAC-###|ST-###|SAC-###|PKG-###>
+      parentId: <parent id or null>
+      area: <UI|BFF/API|Domain|Persistence|Messaging|Testing|null>
+      status: complete
+      sourceReferences: []
+      content: {}
+      acceptanceCriteria: []
+      confidence: {}
+      validation: {}
+      outputPath: src/artifacts/specialists/<agent>/<id>.json
+  canonical_placeholders:
+    active_root: src
+    packages:
+      current_state_evidence: src/artifacts/packages/current-state-evidence.json
+      architecture_context: src/artifacts/packages/architecture-context.json
+      epic_feature_package: src/artifacts/packages/epic-feature-package.json
+      story_decomposition: src/artifacts/packages/story-decomposition.json
+      technical_story_package: src/artifacts/packages/technical-story-package.json
+    canonical:
+      requirements: src/artifacts/canonical/requirements.json
+      backlog: src/artifacts/canonical/backlog.json
+      traceability: src/artifacts/canonical/traceability.json
+      validation: src/artifacts/canonical/validation.json
+    projections:
+      jira_import: src/artifacts/projections/jira-import.json
+      backlog_markdown: src/artifacts/projections/backlog.md
+    swarm:
+      shared_memory: src/_internal/swarm/shared_memory.json
+    rules:
+    - Create each placeholder file even if empty so downstream agents have a stable path.
+    - Non-backlog placeholders use {"schema_version":"2.0.0","status":"pending","items":[]}.
+    - backlog.json uses the hierarchy skeleton (requirements/epics/features/fac/aac/stories/sac).
+    - Canonical JSON is the source of truth. Markdown and Jira are projections only.
+    - Jira projection only after Governance PASS. Markdown projection is owned by Markdown Renderer and must follow schema; JSON is source of truth.
+    - Do not create random specialist JSON trees; merge into the hierarchy.
+  backlog_hierarchy:
+    governing_rule: Epic/Feature = WHAT. Technical Story = HOW. FAC/AAC = Feature-level. SAC = Story-level.
+    shape:
+    - Requirement REQ-###
+    - Epic EPIC-###
+    - Feature FEAT-###
+    - FAC FAC-### under Feature
+    - AAC AAC-### under Feature
+    - Technical Story ST-### under Feature with area in [UI, BFF/API, Domain, Persistence, Messaging, Testing]
+    - SAC SAC-### under Story
+    inputs:
+    - codebase
+    - csa_output
+    - architecture_blueprint
+    - migration_strategy
+    input_rules:
+    - Never claim uploaded Modernization Inputs are missing without searching the workspace.
+    - Prefer uploaded inputs over invention.
+
+  dispatch_map:
+    note: >
+      subagenttool only works for workers wired to the CURRENT orchestrator via
+      parent/subagent edges. Stage orchestrators are sequential graph nodes — never
+      call them via subagenttool.
+    Workflow Orchestrator:
+      subagents: []
+      rule: Sequential only. Finish handoff; graph advances to Current-State Orchestrator.
+    Current-State Orchestrator:
+      subagents:
+      - Codebase Agent
+      - CSA Agent
+      - Business Rules Agent
+      - Stored Procedure Agent
+      - Markdown Renderer
+      - Completeness Validator
+    Architecture Orchestrator:
+      subagents:
+      - Blueprint Agent
+      - Migration Agent
+      - Completeness Validator
+    Epic-Feature Orchestrator:
+      subagents:
+      - Capability Agent
+      - Requirement Agent
+      - Rule Agent
+      - Epic Agent
+      - Feature Agent
+      - FAC Agent
+      - AAC Agent
+      - Markdown Renderer
+      - Completeness Validator
+    Technical Story Orchestrator:
+      subagents:
+      - Story Decomposer
+      - UI Agent
+      - BFF-API Agent
+      - Domain Agent
+      - Persistence Agent
+      - Messaging Agent
+      - Testing Agent
+      - Markdown Renderer
+      - Completeness Validator
+    Governance Orchestrator:
+      subagents:
+      - Quality Agent
+      - Traceability Agent
+      - Jira Projection Agent
+      - Markdown Renderer
+      - Completeness Validator
+  id_prefixes:
+  - REQ
+  - EPIC
+  - FEAT
+  - FAC
+  - AAC
+  - ST
+  - SAC
+
+  dual_write:
+    json_root: src/artifacts/canonical/backlog/
+    markdown_root: src/artifacts/projections/backlog/
+    when: parallel_same_stage_via_markdown_renderer
+    governance_pass_required: false
+  schema_completeness_gate:
+    rule: STRICT schema compliance — All output.required_fields must be present and non-empty before status=complete; never rename/drop/stub required fields
+  # dual-write rule: JSON agents (gpt-5.5) write schema-complete JSON only. Each stage orchestrator dispatches Markdown Renderer (Claude Sonnet 4.5) in the SAME stage so .md twins are created as JSON lands (Epic.json+Epic.md, Feature.json+Feature.md, etc.). Governance Markdown Renderer reconciles gaps.
+  # dual-write rule: JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.
+  # dual-write rule: All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.
+  # dual-write rule: Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic.
+
+  # content rule: Never write BR/ADR/migration references; inline full details in every artifact.
