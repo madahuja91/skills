@@ -1,0 +1,27 @@
+skill:
+  id: markdown-rendering
+  name: Markdown Rendering
+  version: 2.0.0
+  purpose: Sole Markdown writer (Claude Sonnet 4.5). Render schema-complete human-readable Markdown from backlog JSON. Do not author JSON.
+  rules:
+  - JSON is authoritative.
+  - Preserve Epic -> Feature -> Story hierarchy.
+  - Display FAC/AAC at Feature level.
+  - Display full technical LLD sections at Story level.
+  - Display SAC at Story level.
+  - Preserve exact Story area names.
+  - Do not add content not present in JSON.
+  - Markdown Renderer owns all Markdown twins and must strictly mirror skill schema fields from JSON; do not wait only for Governance PASS once JSON exists.
+  - Write src/artifacts/projections/backlog/ folder tree mirroring canonical.
+
+  dual_write:
+    json_root: src/artifacts/canonical/backlog/
+    markdown_root: src/artifacts/projections/backlog/
+    when: markdown_renderer_only
+    governance_pass_required: false
+  schema_completeness_gate:
+    rule: STRICT schema compliance — All output.required_fields must be present and non-empty before status=complete; never rename/drop/stub required fields
+  # dual-write rule: JSON agents write schema-complete JSON under src/artifacts/canonical/backlog/ only. Markdown Renderer (Claude Sonnet 4.5) writes matching .md twins under src/artifacts/projections/backlog/. Do not dual-write Markdown from JSON agents.
+  # dual-write rule: JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.
+  # dual-write rule: All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.
+  # dual-write rule: Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic.
