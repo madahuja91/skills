@@ -1,0 +1,98 @@
+---
+name: epic-generation-v25
+description: >-
+  Generate high-level business Epics from functional current-state evidence and target transformation intent.
+---
+
+# Epic Generation
+
+Authoritative skill definition (identical to `skill.yaml` / `schema.json`):
+
+```yaml
+skill:
+  id: epic-generation
+  name: Epic Generation
+  version: 2.0.0
+  purpose: Generate high-level business Epics from functional current-state evidence and target transformation intent.
+  responsibility:
+    owns:
+    - business capability framing
+    - business outcome framing
+    - Epic boundary
+    does_not_own:
+    - Feature decomposition
+    - FAC
+    - AAC
+    - technical Stories
+    - LLD
+  inputs:
+    required:
+    - requirement
+    - codebase
+    - csa_output
+    - architecture_blueprint
+    - migration_strategy
+    optional:
+    - epic_names
+  epic_names:
+    when_empty: LLM derives Epic titles from evidence using business capability/outcome naming.
+    when_provided: Use user Epic names verbatim as epic title; do not rename or rephrase; one Epic per name; still assign EPIC-### IDs.
+  source_usage:
+    codebase:
+      purpose: Validate actual legacy/current capability where necessary.
+    csa_output:
+      purpose: Primary source for functional current-state understanding.
+    architecture_blueprint:
+      purpose: Understand target capability direction and architectural boundaries without introducing implementation detail.
+    migration_strategy:
+      purpose: Understand transformation scope and sequencing constraints.
+  analysis:
+    mandatory_areas:
+    - business capability
+    - business outcome
+    - functional scope
+    - actors/personas where supported
+    - capability boundaries
+    - current-to-target transformation intent
+    rules:
+    - Consolidate related functionality into a meaningful business capability.
+    - Keep Epic broad enough to contain multiple Features.
+    - Use business terminology from the source material.
+    - Describe outcome rather than implementation.
+  output:
+    schema: epic
+    required_fields:
+    - id
+    - title
+    - description
+    - business_capability
+    - business_outcome
+    - scope
+    - traceability
+  naming:
+    pattern: <Business Capability>
+    examples:
+    - Data Management and Submission
+    - Customer Order Management
+    - Product Catalog Management
+  constraints:
+    must:
+    - remain high level
+    - represent a business capability and outcome
+    - be understandable without technical knowledge
+    must_not:
+    - mention API endpoints
+    - mention database tables
+    - mention classes/services
+    - mention Kafka/topics
+    - mention UI components
+    - describe implementation steps
+    - split Epic by UI/backend
+```
+
+
+## Dual-write + schema gate
+- When writing a backlog JSON artifact, immediately write the matching Markdown twin under src/artifacts/projections/backlog/ with the same nested folders and ID (do not wait for Governance PASS).
+- JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.
+- All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.
+- Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic.
