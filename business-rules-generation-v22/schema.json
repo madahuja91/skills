@@ -1,0 +1,76 @@
+{
+  "skill": {
+    "id": "business-rules-generation",
+    "name": "Business Rules Generation",
+    "version": "2.0.0",
+    "purpose": "Extract and write fully explained business rules into backlog JSON/Markdown. Never emit a reference, ID pointer, ADR cite, or migration-doc cite in place of the actual rule.",
+    "responsibility": {
+      "owns": [
+        "complete business-rule statements (trigger, condition, action, exceptions)",
+        "inlined current-state and target-state rule behavior",
+        "validations, calculations, eligibility, and enforcement details"
+      ],
+      "does_not_own": [
+        "LLD / class design",
+        "Epic/Feature title invention"
+      ]
+    },
+    "inputs": {
+      "required": [
+        "codebase",
+        "csa_output",
+        "stored_procedure_evidence"
+      ],
+      "optional": [
+        "architecture_blueprint",
+        "migration_strategy",
+        "epic_names"
+      ]
+    },
+    "epic_names": {
+      "when_empty": "Extract business rules from the complete uploaded inputs. No domain filter.",
+      "when_provided": "Extract only rules that belong to the provided domain/capability names plus direct dependencies those domains actually use."
+    },
+    "output": {
+      "schema": "business_rule",
+      "required_fields": [
+        "id",
+        "title",
+        "description",
+        "trigger",
+        "condition",
+        "action",
+        "exceptions",
+        "actors",
+        "data_impact",
+        "validations",
+        "current_state_behavior",
+        "target_state_behavior",
+        "enforcement",
+        "traceability"
+      ]
+    },
+    "content_rules": {
+      "must": [
+        "Write the full rule in plain language so a reader needs no other document.",
+        "Expand every condition, threshold, calculation, status, and exception inline.",
+        "Copy the actual current-state behavior from evidence (code, CSA, stored procedures) into the artifact.",
+        "Copy the actual target-state behavior and migration impact into the artifact as concrete steps, not pointers."
+      ],
+      "must_not": [
+        "Write references such as see BR-001, refer ADR-3, per migration_strategy, as documented in, see section, see appendix.",
+        "Leave business_rules as IDs, filenames, or links.",
+        "Use placeholders like TBD, see source, same as current."
+      ]
+    },
+    "schema_completeness_gate": {
+      "rule": "STRICT schema compliance — All output.required_fields must be present and non-empty prose (not references) before status=complete"
+    },
+    "dual_write": {
+      "json_root": "src/artifacts/canonical/backlog/",
+      "markdown_root": "src/artifacts/projections/backlog/",
+      "when": "parallel_same_stage_via_markdown_renderer",
+      "governance_pass_required": false
+    }
+  }
+}
