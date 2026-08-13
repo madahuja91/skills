@@ -1,3 +1,14 @@
+---
+name: swarm-orchestration-v30
+description: >-
+  Manager rules for parallel specialist swarms, shared-memory sync, selective dispatch, 2-cycle retry, and canonical JSON placeholders.
+---
+
+# Swarm Orchestration
+
+Authoritative skill definition (identical to `skill.yaml` / `schema.json`):
+
+```yaml
 skill:
   id: swarm-orchestration
   name: Swarm Orchestration
@@ -138,6 +149,7 @@ skill:
     - Never claim uploaded Modernization Inputs are missing without searching the workspace.
     - Prefer uploaded inputs over invention.
 
+
   dispatch_map:
     note: >
       subagenttool only works for workers wired to the CURRENT orchestrator via
@@ -182,6 +194,29 @@ skill:
       - Traceability Agent
       - Jira Projection Agent
       - Markdown Renderer
+  success_gate:
+    rule: Orchestrators must not mark SUCCESS if any required layer file is missing on disk.
+    hierarchy: REQ → EPIC → FEAT → FAC → AAC → ST → SAC
+    on_missing: retry owning exact-named agent only (max 2); then escalate failed; never fake PASS.
+    forbid_false_success:
+    - package JSON without folder-tree files
+    - monolithic backlog.json as sole ST/SAC store
+    - inline feature_acceptance_criteria without FAC-###.json / AAC-###.json files
+  projection_epic_preserve:
+    rules:
+    - Projections must never remove, merge, rename, or omit any Epic from canonical backlog.
+    - Projection Epic count must equal canonical Epic count.
+    - On Governance FAIL do not delete existing projections/backlog/Epic content.
+
+  output_tree_lock:
+    json_root: src/artifacts/canonical/backlog/
+    markdown_root: src/artifacts/projections/backlog/
+    forbid:
+    - src/canonical/
+    - flat backlog/Feature
+    - flat backlog/FAC
+    - flat backlog/AAC
+    nested_shape: Requirement → Epic → Feature → FAC/AAC → Technical-Stories/ST-### → SAC
   id_prefixes:
   - REQ
   - EPIC
@@ -190,15 +225,11 @@ skill:
   - AAC
   - ST
   - SAC
+```
 
-  dual_write:
-    json_root: src/artifacts/canonical/backlog/
-    markdown_root: src/artifacts/projections/backlog/
-    when: parallel_same_stage_via_markdown_renderer
-    governance_pass_required: false
-  schema_completeness_gate:
-    rule: STRICT schema compliance — All output.required_fields must be present and non-empty before status=complete; never rename/drop/stub required fields
-  # dual-write rule: JSON agents (gpt-5.5) write schema-complete JSON only. Each stage orchestrator dispatches Markdown Renderer (Claude Sonnet 4.5) in the SAME stage so .md twins are created as JSON lands (Epic.json+Epic.md, Feature.json+Feature.md, etc.). Governance Markdown Renderer reconciles gaps.
-  # dual-write rule: JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.
-  # dual-write rule: All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.
-  # dual-write rule: Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic.
+
+## Dual-write + schema gate
+- JSON agents (gpt-5.5) write schema-complete JSON only. Each stage orchestrator dispatches Markdown Renderer (Claude Sonnet 4.5) in the SAME stage so .md twins are created as JSON lands (Epic.json+Epic.md, Feature.json+Feature.md, etc.). Governance Markdown Renderer reconciles gaps.
+- JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.
+- All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.
+- Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic.

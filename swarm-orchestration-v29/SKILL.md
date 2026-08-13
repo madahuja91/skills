@@ -163,6 +163,7 @@ skill:
       - Codebase Agent
       - CSA Agent
       - Business Rules Agent
+      - Markdown Renderer
     Architecture Orchestrator:
       subagents:
       - Blueprint Agent
@@ -176,6 +177,7 @@ skill:
       - Feature Agent
       - FAC Agent
       - AAC Agent
+      - Markdown Renderer
     Technical Story Orchestrator:
       subagents:
       - Story Decomposer
@@ -185,6 +187,7 @@ skill:
       - Persistence Agent
       - Messaging Agent
       - Testing Agent
+      - Markdown Renderer
     Governance Orchestrator:
       subagents:
       - Quality Agent
@@ -226,7 +229,7 @@ skill:
 
 
 ## Dual-write + schema gate
-- JSON agents write schema-complete JSON under src/artifacts/canonical/backlog/ only. Markdown Renderer (Claude Sonnet 4.5) writes matching .md twins under src/artifacts/projections/backlog/. Do not dual-write Markdown from JSON agents.
+- JSON agents (gpt-5.5) write schema-complete JSON only. Each stage orchestrator dispatches Markdown Renderer (Claude Sonnet 4.5) in the SAME stage so .md twins are created as JSON lands (Epic.json+Epic.md, Feature.json+Feature.md, etc.). Governance Markdown Renderer reconciles gaps.
 - JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.
 - All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.
 - Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic.
