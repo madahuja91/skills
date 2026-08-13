@@ -80,7 +80,7 @@ skill:
   active_root:
     resolve:
     - read workspace active_root.txt when present
-    - if cwd basename is src → ACTIVE_ROOT = cwd
+    - if cwd basename is src -> ACTIVE_ROOT = cwd
     - else ACTIVE_ROOT = <workspace>/src (existing)
     write_paths:
     - <ACTIVE_ROOT>/artifacts/packages/stored-procedure-evidence.json
