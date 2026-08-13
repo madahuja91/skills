@@ -1,0 +1,235 @@
+{
+  "skill": {
+    "id": "swarm-orchestration",
+    "name": "Swarm Orchestration",
+    "version": "2.0.0",
+    "purpose": "Manager rules for parallel specialist swarms, shared-memory sync, selective dispatch, 2-cycle retry, and canonical JSON placeholders.",
+    "manager_responsibility": {
+      "owns": [
+        "specialist selection (run vs skip)",
+        "fan-out / fan-in",
+        "shared-memory bootstrap and sync",
+        "incomplete/failed agent retry (max 2 cycles per agent)",
+        "bounded package publication",
+        "correction routing to the failed agent, not the whole swarm"
+      ],
+      "does_not_own": [
+        "generating specialist content itself",
+        "inventing skipped-area Stories",
+        "publishing Jira/Markdown before Governance PASS"
+      ]
+    },
+    "retry": {
+      "max_cycles_per_agent": 2,
+      "rules": [
+        "If a specialist output is missing, incomplete, invalid, or status is failed/incomplete, the owning orchestrator retries THAT agent only.",
+        "Do not regenerate the entire swarm on a single agent failure.",
+        "After 2 failed retries, mark the agent failed, record owner + reason in shared memory, and escalate to Workflow Orchestrator / Governance.",
+        "Governance FAIL routes correction to the owning orchestrator; that orchestrator retries only the failed agent(s); then return to Governance. Workflow Orchestrator allows max 2 Governance cycles.",
+        "Never retry a skipped agent.",
+        "If subagenttool returns not found, retry with the exact workflow node label from exact_subagent_names — never invent snake_case aliases.",
+        "Orchestrator must not mark SUCCESS while any required hierarchy file is missing; retry the owning agent instead."
+      ]
+    },
+    "swarm_pattern": [
+      "Dispatch independent specialists in parallel.",
+      "Create and maintain shared memory so parallel agents stay in sync.",
+      "Fan-in only complete (or explicitly skipped) specialist outputs.",
+      "Logical dependency order is enforced through shared memory even when agents are dispatched in parallel."
+    ],
+    "shared_memory": {
+      "path": "src/_internal/swarm/shared_memory.json",
+      "required_slots": [
+        "agent_status",
+        "retry_count",
+        "requirements",
+        "epic_names",
+        "epics",
+        "features",
+        "fac",
+        "aac",
+        "selected_areas",
+        "skipped_areas",
+        "stories",
+        "contracts",
+        "correction"
+      ],
+      "rules": [
+        "Orchestrator creates the file before dispatch if missing.",
+        "Every specialist reads shared memory before writing.",
+        "Every specialist writes its slot and agent_status after finishing.",
+        {
+          "Epic -> Feature -> FAC -> AAC": "Feature Agent must not finalize until Epic IDs exist in shared memory; FAC and AAC must not finalize until Feature IDs exist."
+        },
+        "Story area agents must not generate unless their area is in selected_areas."
+      ]
+    },
+    "selective_dispatch": {
+      "story_areas": [
+        "UI",
+        "BFF/API",
+        "Domain",
+        "Persistence",
+        "Messaging",
+        "Testing"
+      ],
+      "rules": [
+        "Story Decomposer runs first and writes selected_areas and skipped_areas with rationale.",
+        "Technical Story Orchestrator runs only selected area agents.",
+        "Unselected area agents must immediately return status=skipped, write no Story, and not consume retry budget.",
+        "Do not create a Story merely because an area agent exists on the graph."
+      ]
+    },
+    "specialist_output_contract": {
+      "required_fields": [
+        "artifactType",
+        "id",
+        "parentId",
+        "area",
+        "status",
+        "sourceReferences",
+        "content",
+        "acceptanceCriteria",
+        "confidence",
+        "validation",
+        "outputPath"
+      ],
+      "status_enum": [
+        "candidate",
+        "complete",
+        "incomplete",
+        "failed",
+        "skipped"
+      ],
+      "placeholder": {
+        "artifactType": "<requirement|epic|feature|fac|aac|current_state_evidence|architecture_context|story_decomposition|technical_story|quality|traceability|jira_projection|markdown>",
+        "id": "<REQ-###|EPIC-###|FEAT-###|FAC-###|AAC-###|ST-###|SAC-###|PKG-###>",
+        "parentId": "<parent id or null>",
+        "area": "<UI|BFF/API|Domain|Persistence|Messaging|Testing|null>",
+        "status": "complete",
+        "sourceReferences": [],
+        "content": {},
+        "acceptanceCriteria": [],
+        "confidence": {},
+        "validation": {},
+        "outputPath": "src/artifacts/specialists/<agent>/<id>.json"
+      }
+    },
+    "canonical_placeholders": {
+      "active_root": "src",
+      "packages": {
+        "current_state_evidence": "src/artifacts/packages/current-state-evidence.json",
+        "architecture_context": "src/artifacts/packages/architecture-context.json",
+        "epic_feature_package": "src/artifacts/packages/epic-feature-package.json",
+        "story_decomposition": "src/artifacts/packages/story-decomposition.json",
+        "technical_story_package": "src/artifacts/packages/technical-story-package.json"
+      },
+      "canonical": {
+        "requirements": "src/artifacts/canonical/requirements.json",
+        "backlog": "src/artifacts/canonical/backlog.json",
+        "traceability": "src/artifacts/canonical/traceability.json",
+        "validation": "src/artifacts/canonical/validation.json"
+      },
+      "projections": {
+        "jira_import": "src/artifacts/projections/jira-import.json",
+        "backlog_markdown": "src/artifacts/projections/backlog.md"
+      },
+      "swarm": {
+        "shared_memory": "src/_internal/swarm/shared_memory.json"
+      },
+      "rules": [
+        "Create each placeholder file even if empty so downstream agents have a stable path.",
+        "Non-backlog placeholders use {\"schema_version\":\"2.0.0\",\"status\":\"pending\",\"items\":[]}.",
+        "backlog.json uses the hierarchy skeleton (requirements/epics/features/fac/aac/stories/sac).",
+        "Canonical JSON is the source of truth. Markdown and Jira are projections only.",
+        "Write projections only after Governance PASS.",
+        "Do not create random specialist JSON trees; merge into the hierarchy.",
+        "Canonical source of truth is the backlog FOLDER TREE under src/artifacts/canonical/backlog/ (not a single backlog.json).",
+        "Projections must never remove Epics; Epic counts must match canonical."
+      ]
+    },
+    "backlog_hierarchy": {
+      "governing_rule": "REQ → EPIC → FEAT → FAC → AAC → ST → SAC. Epic/Feature=WHAT; Technical Story=HOW; FAC/AAC=Feature-level; SAC=Story-level.",
+      "shape": [
+        "Requirement REQ-###",
+        "Epic EPIC-###",
+        "Feature FEAT-###",
+        "FAC FAC-### under Feature",
+        "AAC AAC-### under Feature",
+        "Technical Story ST-### under Feature with area in [UI, BFF/API, Domain, Persistence, Messaging, Testing]",
+        "SAC SAC-### under Story"
+      ],
+      "inputs": [
+        "codebase",
+        "csa_output",
+        "architecture_blueprint",
+        "migration_strategy"
+      ],
+      "input_rules": [
+        "Never claim uploaded Modernization Inputs are missing without searching the workspace.",
+        "Prefer uploaded inputs over invention."
+      ]
+    },
+    "id_prefixes": [
+      "REQ",
+      "EPIC",
+      "FEAT",
+      "FAC",
+      "AAC",
+      "ST",
+      "SAC"
+    ],
+    "exact_subagent_names": {
+      "note": "subagenttool subagent_name must match workflow node labels exactly. Never invent snake_case aliases.",
+      "orchestrators": [
+        "Current-State Orchestrator",
+        "Architecture Orchestrator",
+        "Epic-Feature Orchestrator",
+        "Technical Story Orchestrator",
+        "Governance Orchestrator"
+      ],
+      "workers": [
+        "Codebase Agent",
+        "CSA Agent",
+        "Business Rules Agent",
+        "Blueprint Agent",
+        "Migration Agent",
+        "Capability Agent",
+        "Requirement Agent",
+        "Rule Agent",
+        "Epic Agent",
+        "Feature Agent",
+        "FAC Agent",
+        "AAC Agent",
+        "Story Decomposer",
+        "UI Agent",
+        "BFF-API Agent",
+        "Domain Agent",
+        "Persistence Agent",
+        "Messaging Agent",
+        "Testing Agent",
+        "Quality Agent",
+        "Traceability Agent",
+        "Jira Projection Agent",
+        "Markdown Renderer"
+      ]
+    },
+    "success_gate": {
+      "rule": "Orchestrators must not mark SUCCESS if any required layer file is missing on disk.",
+      "hierarchy": "REQ → EPIC → FEAT → FAC → AAC → ST → SAC",
+      "on_missing": "retry owning exact-named agent only (max 2); then escalate failed; never fake PASS.",
+      "forbid_false_success": [
+        "package JSON without folder-tree files",
+        "monolithic backlog.json as sole ST/SAC store",
+        "inline feature_acceptance_criteria without FAC-###.json / AAC-###.json files"
+      ]
+    },
+    "projection_epic_preserve": {
+      "rules": [
+        "Projections must never remove, merge, rename, or omit any Epic from canonical backlog.",
+        "Projection Epic count must equal canonical Epic count.",
+        "On Governance FAIL do not delete existing projections/backlog/Epic content."
+      ]
+    }
+  }
+}
