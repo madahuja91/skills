@@ -1,0 +1,86 @@
+{
+  "skill": {
+    "id": "epic-feature-orchestrator",
+    "name": "Epic Feature Orchestration",
+    "version": "2.0.0",
+    "purpose": "Coordinate Epic, Feature, FAC and AAC generation before technical Story decomposition.",
+    "execution": [
+      "bootstrap shared memory",
+      "swarm Capability, Requirement, Rule, Epic, Feature, FAC, AAC in parallel",
+      "enforce Epic -> Feature -> FAC -> AAC through shared memory even when agents run together",
+      "retry only the incomplete/failed agent, max 2 cycles",
+      "publish canonical Epic/Feature package for Story Swarm"
+    ],
+    "swarm": {
+      "shared_memory": "src/_internal/swarm/shared_memory.json",
+      "sync_rules": [
+        "Feature Agent must not finalize until Epic IDs exist in shared memory.",
+        "FAC and AAC must not finalize until Feature IDs exist in shared memory.",
+        "Do not regenerate the whole swarm for one failed agent."
+      ]
+    },
+    "canonical_output": "src/artifacts/packages/epic-feature-package.json",
+    "dependency_order": [
+      "Epic",
+      "Feature",
+      "FAC",
+      "AAC",
+      "Technical Story Decomposition"
+    ],
+    "handoff_to_story_swarm": {
+      "required_context": [
+        "epic",
+        "feature",
+        "fac",
+        "aac",
+        "architecture_blueprint",
+        "migration_strategy",
+        "current_state_evidence",
+        "epic_names"
+      ]
+    },
+    "epic_names_handoff": {
+      "when_empty": "Epic Agent may propose titles.",
+      "when_provided": "Epic titles must match epic_names verbatim."
+    },
+    "rules": [
+      "Never ask Story agents to redefine Epic or Feature scope.",
+      "Never let technical Story decomposition change Feature business boundaries without governance review.",
+      "Feature count per Epic comes from UI feature_selection (epic-N-feature-M). Empty feature_selection → LLM decides how many Features that Epic needs. Never force a global 1:1 Epic:Feature ratio.",
+      "FAC and AAC files are mandatory under every Feature before handoff to Technical Story.",
+      "Use exact subagent labels only; never snake_case aliases.",
+      "JSON agents write schema-complete JSON under src/artifacts/canonical/backlog/ only. Markdown Renderer (Claude Sonnet 4.5) writes matching .md twins under src/artifacts/projections/backlog/. Do not dual-write Markdown from JSON agents.",
+      "JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.",
+      "All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.",
+      "Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic."
+    ],
+    "success_gate": [
+      "FAC and AAC are mandatory for every Feature before SUCCESS.",
+      "Materialize FAC/FAC-###.json and AAC/AAC-###.json under each Feature folder.",
+      "Retry FAC Agent / AAC Agent (exact names) max 2 if missing; never mark SUCCESS with FAC=0 or AAC=0.",
+      "Dispatch only exact labels: Capability Agent, Requirement Agent, Rule Agent, Epic Agent, Feature Agent, FAC Agent, AAC Agent."
+    ],
+    "dual_write": {
+      "json_root": "src/artifacts/canonical/backlog/",
+      "markdown_root": "src/artifacts/projections/backlog/",
+      "when": "markdown_renderer_only",
+      "governance_pass_required": false
+    },
+    "schema_completeness_gate": {
+      "rule": "STRICT schema compliance — All output.required_fields must be present and non-empty before status=complete; never rename/drop/stub required fields"
+    },
+    "feature_selection": {
+      "input": "feature_selection",
+      "epic_names_unchanged": true,
+      "when_empty": "LLM decides how many Features each Epic needs from evidence.",
+      "when_provided": "Tokens epic-N-feature-M. N=1-based Epic order; M=exact Feature count."
+    },
+    "story_layer_selection": {
+      "input": "story_layer_selection",
+      "when_empty": "LLM decides selected_areas per Feature.",
+      "when_provided": "Tokens epic-N-feature-M-story-<layers>. Only those layers get Stories."
+    },
+    "human_readable_refs": "Never refer to Epic/Feature/FAC/AAC/Story/SAC by ID alone; always include the human title/name with the id.",
+    "markdown_no_json_dump": "Never paste full JSON into Markdown. JSON already exists in canonical files."
+  }
+}

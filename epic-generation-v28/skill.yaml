@@ -1,0 +1,113 @@
+skill:
+  id: epic-generation
+  name: Epic Generation
+  version: 2.0.0
+  purpose: Generate high-level business Epics from functional current-state evidence and target transformation intent.
+  responsibility:
+    owns:
+    - business capability framing
+    - business outcome framing
+    - Epic boundary
+    does_not_own:
+    - Feature decomposition
+    - FAC
+    - AAC
+    - technical Stories
+    - LLD
+  inputs:
+    required:
+    - requirement
+    - codebase
+    - csa_output
+    - architecture_blueprint
+    - migration_strategy
+    optional:
+    - epic_names
+  epic_names:
+    when_empty: LLM derives Epic titles from evidence using business capability/outcome naming.
+    when_provided: Use user Epic names verbatim as epic title; do not rename or rephrase; one Epic per name; still assign EPIC-### IDs.
+  source_usage:
+    codebase:
+      purpose: Validate actual legacy/current capability where necessary.
+    csa_output:
+      purpose: Primary source for functional current-state understanding.
+    architecture_blueprint:
+      purpose: Understand target capability direction and architectural boundaries without introducing implementation detail.
+    migration_strategy:
+      purpose: Understand transformation scope and sequencing constraints.
+  analysis:
+    mandatory_areas:
+    - business capability
+    - business outcome
+    - functional scope
+    - actors/personas where supported
+    - capability boundaries
+    - current-to-target transformation intent
+    rules:
+    - Consolidate related functionality into a meaningful business capability.
+    - Keep Epic as one business capability. Feature count underneath is NOT fixed at 1: use feature_selection (epic-N-feature-M) or LLM decision when that input is empty.
+    - Use business terminology from the source material.
+    - Describe outcome rather than implementation.
+  output:
+    schema: epic
+    required_fields:
+    - id
+    - title
+    - description
+    - business_capability
+    - business_outcome
+    - scope
+    - traceability
+  naming:
+    pattern: <Business Capability>
+    examples:
+    - Data Management and Submission
+    - Customer Order Management
+    - Product Catalog Management
+  constraints:
+    must:
+    - remain high level
+    - represent a business capability and outcome
+    - be understandable without technical knowledge
+    must_not:
+    - mention API endpoints
+    - mention database tables
+    - mention classes/services
+    - mention Kafka/topics
+    - mention UI components
+    - describe implementation steps
+    - split Epic by UI/backend
+
+  dual_write:
+    json_root: src/artifacts/canonical/backlog/
+    markdown_root: src/artifacts/projections/backlog/
+    when: markdown_renderer_only
+    governance_pass_required: false
+  schema_completeness_gate:
+    rule: STRICT schema compliance — All output.required_fields must be present and non-empty before status=complete; never rename/drop/stub required fields
+  # dual-write rule: JSON agents write schema-complete JSON under src/artifacts/canonical/backlog/ only. Markdown Renderer (Claude Sonnet 4.5) writes matching .md twins under src/artifacts/projections/backlog/. Do not dual-write Markdown from JSON agents.
+  # dual-write rule: JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.
+  # dual-write rule: All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.
+  # dual-write rule: Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic.
+
+  feature_selection:
+    input: feature_selection
+    epic_names_unchanged: true
+    when_empty: LLM decides how many Features each Epic needs from evidence.
+    when_provided: >
+      Tokens epic-N-feature-M (comma/newline separated). N is 1-based Epic order
+      matching epic_names / created Epics. M is exact Feature count for that Epic.
+      Example: epic-1-feature-1, epic-2-feature-2 → Epic 1 gets 1 Feature, Epic 2 gets 2.
+      Epics omitted from the list → LLM decides for those Epics.
+  story_layer_selection:
+    input: story_layer_selection
+    when_empty: LLM/Story Decomposer decides selected_areas per Feature (not forced to six).
+    when_provided: >
+      Tokens epic-N-feature-M-story-<layer>[, <layer>...]. Layers: UI, BFF/API, Domain,
+      Persistence, Messaging, Testing (aliases ui, bff, bff/api, api, domain, persistence,
+      messaging, testing). Example: epic-1-feature-1-story-ui, bff/api → only UI and BFF/API
+      Stories for Epic 1 Feature 1. Separate Feature scopes with semicolon or newline.
+  human_readable_refs:
+    rule: Never refer to Epic/Feature/FAC/AAC/Story/SAC by ID number alone. Always write the human title/name together with the id (e.g. "Order Capture (FEAT-001)", never just "FEAT-001").
+  markdown_no_json_dump:
+    rule: Markdown must be human-readable prose/headings/lists/tables. Never paste a full JSON object or JSON code fence of the source artifact into .md — that JSON already exists under canonical.

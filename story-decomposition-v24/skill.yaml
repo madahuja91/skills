@@ -1,0 +1,75 @@
+skill:
+  id: story-decomposition
+  name: Technical Story Decomposition
+  version: 2.0.0
+  purpose: Determine the minimum set of completely technical LLD Stories required to implement a Feature.
+  responsibility:
+    owns:
+    - technical slicing
+    - area selection
+    - cross-story dependency identification
+    does_not_own:
+    - Epic or Feature business scope
+    - detailed implementation design of specialist Stories
+  inputs:
+    required:
+    - feature
+    - fac
+    - aac
+    - architecture_blueprint
+    - migration_strategy
+    - current_state_evidence
+  exact_story_area_enum:
+  - UI
+  - BFF/API
+  - Domain
+  - Persistence
+  - Messaging
+  - Testing
+  decomposition_rules:
+  - Story layers are NOT always all six. If UI story_layer_selection includes epic-N-feature-M-story-<layers>, selected_areas for that Feature are only those layers. If story_layer_selection is empty, LLM/Story Decomposer decides selected_areas from evidence (may be a subset).
+  - skipped_areas = exact_story_area_enum minus selected_areas. Skipped layers write no Story.
+  - Create exactly one Story per selected layer. Do not create Stories for skipped layers.
+  - Do not create separate Features for UI and backend concerns.
+  - Keep all technical slices for a Feature under that Feature. Multiple Features per Epic are allowed when feature_selection or LLM decision says so.
+  - Every selected area must have a clear technical responsibility.
+  - Testing layer is included only when selected (via story_layer_selection or LLM decision). Every created Story still includes its own testing_strategy.
+  - Identify dependencies and ordering between Stories (typical: Persistence/Domain before BFF/API/UI; Messaging with Domain/BFF; Testing last or parallel).
+  - Write selected_areas and skipped_areas so the Technical Story manager can RUN selected agents and SKIP the rest.
+  - Do not generate Story LLD.
+  dispatch_contract:
+    run: selected_areas
+    skip: skipped_areas
+    skipped_agent_status: skipped
+  output:
+    schema: technical-story-decomposition
+    path: src/artifacts/packages/story-decomposition.json
+    required_fields:
+    - selected_areas
+    - skipped_areas
+    - rationale_per_area
+    - dependency_graph
+    - contract_boundaries
+    - traceability
+
+  feature_selection:
+    input: feature_selection
+    epic_names_unchanged: true
+    when_empty: LLM decides how many Features each Epic needs from evidence.
+    when_provided: >
+      Tokens epic-N-feature-M (comma/newline separated). N is 1-based Epic order
+      matching epic_names / created Epics. M is exact Feature count for that Epic.
+      Example: epic-1-feature-1, epic-2-feature-2 → Epic 1 gets 1 Feature, Epic 2 gets 2.
+      Epics omitted from the list → LLM decides for those Epics.
+  story_layer_selection:
+    input: story_layer_selection
+    when_empty: LLM/Story Decomposer decides selected_areas per Feature (not forced to six).
+    when_provided: >
+      Tokens epic-N-feature-M-story-<layer>[, <layer>...]. Layers: UI, BFF/API, Domain,
+      Persistence, Messaging, Testing (aliases ui, bff, bff/api, api, domain, persistence,
+      messaging, testing). Example: epic-1-feature-1-story-ui, bff/api → only UI and BFF/API
+      Stories for Epic 1 Feature 1. Separate Feature scopes with semicolon or newline.
+  human_readable_refs:
+    rule: Never refer to Epic/Feature/FAC/AAC/Story/SAC by ID number alone. Always write the human title/name together with the id (e.g. "Order Capture (FEAT-001)", never just "FEAT-001").
+  markdown_no_json_dump:
+    rule: Markdown must be human-readable prose/headings/lists/tables. Never paste a full JSON object or JSON code fence of the source artifact into .md — that JSON already exists under canonical.
