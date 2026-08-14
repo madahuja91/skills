@@ -1,0 +1,56 @@
+{
+  "skill": {
+    "id": "backlog-prompt-contract",
+    "name": "Backlog Prompt Contract",
+    "version": "2.1.0",
+    "purpose": "Shared execution contract for every backlog agent. Prompts must not copy these rules; they load this skill and state only their unique duty.",
+    "output_tree": {
+      "json_root": "src/artifacts/canonical/backlog/",
+      "markdown_root": "src/artifacts/projections/backlog/",
+      "jira": "src/artifacts/projections/jira-import.json",
+      "packages": "src/artifacts/packages/",
+      "shared_memory": "src/_internal/swarm/shared_memory.json",
+      "nested": "Requirement → Epic → Feature → FAC/AAC → Technical-Stories/ST-### → SAC",
+      "forbid": [
+        "src/canonical/",
+        "flat backlog/Feature, backlog/FAC, backlog/AAC",
+        "filenames epic.json / feature.json / requirement.json",
+        "writing Markdown from JSON agents (Markdown Renderer only)",
+        "pasting full JSON into Markdown"
+      ]
+    },
+    "schema": {
+      "rule": "Every JSON artifact must include all skill required_fields, non-empty."
+    },
+    "naming_refs": {
+      "rule": "Always write human title/name plus id. Never refer to artifacts by id/number alone."
+    },
+    "inline_details": {
+      "rule": "Write full business-rule, ADR, and migration details inline. Never see-BR/ADR/migration pointers."
+    },
+    "epic_names": {
+      "when_empty": "LLM decides Epic titles.",
+      "when_provided": "Use verbatim titles. One Epic per name. Does not control Feature count."
+    },
+    "feature_selection": {
+      "when_empty": "LLM decides how many Features each Epic needs.",
+      "when_provided": "Tokens epic-N-feature-M. N=1-based Epic order. M=exact Feature count.",
+      "example": "epic-1-feature-1, epic-2-feature-2"
+    },
+    "story_layer_selection": {
+      "areas": ["UI", "BFF/API", "Domain", "Persistence", "Messaging", "Testing"],
+      "when_empty": "LLM/Story Decomposer decides selected_areas (not forced to six).",
+      "when_provided": "Tokens epic-N-feature-M-story-<layers>. Only those layers get Stories.",
+      "example": "epic-1-feature-1-story-ui, bff/api"
+    },
+    "markdown": {
+      "rule": "Human-readable headings/lists/tables only. No full JSON dump."
+    },
+    "retry": {
+      "rule": "Rerun only the named incomplete agent. No max cap until complete."
+    },
+    "active_root": {
+      "rule": "Never mkdir a second src or src/src. Write under the existing ACTIVE_ROOT artifacts tree."
+    }
+  }
+}
