@@ -1,0 +1,74 @@
+{
+  "skill": {
+    "id": "completeness-validation",
+    "name": "Completeness Validation",
+    "version": "2.0.0",
+    "purpose": "Stage-level completeness gate for JSON and Markdown. Report gaps to the owning orchestrator so it can rerun the owning subagent. No max-retry cap.",
+    "responsibility": {
+      "owns": [
+        "schema field completeness for JSON in this stage",
+        "Markdown twin completeness (same nested path, same required fields)",
+        "content completeness (business rules, ADR decisions, and migration behavior must be inlined, not referenced)",
+        "naming the owning subagent for each gap",
+        "enforcing a single ACTIVE_ROOT; FAIL if src/src exists (do not treat nested src as success)"
+      ],
+      "does_not_own": [
+        "generating backlog content",
+        "publishing Jira"
+      ]
+    },
+    "inputs": {
+      "required": [
+        "stage_artifacts",
+        "bound_skill_schemas"
+      ]
+    },
+    "output": {
+      "schema": "completeness",
+      "required_fields": [
+        "id",
+        "stage",
+        "status",
+        "json_gaps",
+        "markdown_gaps",
+        "schema_gaps",
+        "content_gaps",
+        "forbidden_reference_hits",
+        "owning_agents",
+        "retry_directives"
+      ]
+    },
+    "gates": {
+      "json": [
+        "Every required_field present and non-empty",
+        "Nested path matches OUTPUT_TREE"
+      ],
+      "active_root": [
+        "Exactly one src root (ACTIVE_ROOT)",
+        "If src/src or a second src tree exists: status=incomplete, name the owning write agent in retry_directives, delete the nested tree only after the owning agent rewrites under ACTIVE_ROOT",
+        "When cwd is src, artifacts live at artifacts/... not src/artifacts/.... write_file(src/artifacts/...) from cwd src is a FAIL"
+      ],
+      "markdown": [
+        "Matching .md twin exists for every JSON in this stage",
+        "Markdown exposes the same required fields (no drops)"
+      ],
+      "content": [
+        "business_rules / ADR / migration sections contain full details, not references",
+        "Forbidden phrases absent (see BR, refer ADR, per migration_strategy, as documented in, see section)"
+      ]
+    },
+    "retry_contract": {
+      "max_cycles": "none",
+      "rule": "If incomplete, write retry_directives naming exact subagent_name + artifact IDs + missing fields. Manager reruns that subagent until Completeness Validator status=complete."
+    },
+    "schema_completeness_gate": {
+      "rule": "STRICT schema compliance — Completeness report itself must include all required_fields"
+    },
+    "dual_write": {
+      "json_root": "artifacts/canonical/backlog/",
+      "markdown_root": "artifacts/projections/backlog/",
+      "when": "parallel_same_stage_via_markdown_renderer",
+      "governance_pass_required": false
+    }
+  }
+}

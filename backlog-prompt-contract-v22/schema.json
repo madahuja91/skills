@@ -1,0 +1,57 @@
+{
+  "skill": {
+    "id": "backlog-prompt-contract",
+    "name": "Backlog Prompt Contract",
+    "version": "2.2.0",
+    "purpose": "Shared execution contract. Load this skill. Do not copy it into prompts.",
+    "write_path_resolution": {
+      "first_rule": "Path strings that start with src/ are LOGICAL (workspace-root) paths. Resolve them before any mkdir or write_file.",
+      "resolve": [
+        "If cwd basename is src, OR cwd already contains artifacts/: ACTIVE_ROOT = cwd. Strip a leading src/ from every write/mkdir path.",
+        "Else if ./src exists: ACTIVE_ROOT = ./src. Write ACTIVE_ROOT/artifacts/... (do not mkdir another src).",
+        "Else: do not invent src. Write artifacts/... under cwd."
+      ],
+      "forbid": [
+        "mkdir src when src already exists or cwd is src",
+        "any path containing src/src",
+        "write_file(src/artifacts/...) when cwd is src"
+      ]
+    },
+    "output_tree": {
+      "json_root": "artifacts/canonical/backlog/",
+      "markdown_root": "artifacts/projections/backlog/",
+      "jira": "artifacts/projections/jira-import.json",
+      "packages": "artifacts/packages/",
+      "shared_memory": "_internal/swarm/shared_memory.json",
+      "nested": "Requirement → Epic → Feature → FAC/AAC → Technical-Stories/ST-### → SAC",
+      "note": "Prefix src/ only after resolve says cwd is workspace root."
+    },
+    "schema": {
+      "rule": "Every JSON artifact must include all skill required_fields, non-empty."
+    },
+    "naming_refs": {
+      "rule": "Always write human title/name plus id. Never id/number alone."
+    },
+    "inline_details": {
+      "rule": "Write full business-rule, ADR, and migration details inline."
+    },
+    "epic_names": {
+      "when_empty": "LLM decides Epic titles.",
+      "when_provided": "Use verbatim titles. One Epic per name."
+    },
+    "feature_selection": {
+      "when_empty": "LLM decides Feature count per Epic.",
+      "when_provided": "Tokens epic-N-feature-M."
+    },
+    "story_layer_selection": {
+      "when_empty": "LLM decides selected_areas.",
+      "when_provided": "Tokens epic-N-feature-M-story-<layers>."
+    },
+    "markdown": {
+      "rule": "Human-readable only. No full JSON dump."
+    },
+    "retry": {
+      "rule": "Rerun only the named incomplete agent."
+    }
+  }
+}

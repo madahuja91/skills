@@ -1,0 +1,61 @@
+skill:
+  id: backlog-prompt-contract
+  name: Backlog Prompt Contract
+  version: 2.2.0
+  purpose: >
+    Shared execution contract. Load this skill. Do not copy it into prompts.
+  write_path_resolution:
+    first_rule: Path strings that start with src/ are LOGICAL (workspace-root) paths. Resolve them before any mkdir or write_file.
+    resolve:
+      - If cwd basename is src, OR cwd already contains artifacts/: ACTIVE_ROOT = cwd. Strip a leading src/ from every write/mkdir path.
+      - Else if ./src exists: ACTIVE_ROOT = ./src. Write ACTIVE_ROOT/artifacts/... (do not mkdir another src).
+      - Else: do not invent src. Write artifacts/... under cwd.
+    examples:
+      cwd_is_src:
+        logical: src/artifacts/canonical/backlog/Epic/EPIC-001/EPIC-001.json
+        write: artifacts/canonical/backlog/Epic/EPIC-001/EPIC-001.json
+      cwd_is_workspace:
+        logical: src/artifacts/packages/current-state-evidence.json
+        write: src/artifacts/packages/current-state-evidence.json
+    forbid:
+      - mkdir src when src already exists or cwd is src
+      - any path containing src/src
+      - write_file("src/artifacts/...") when cwd is src
+  output_tree:
+    json_root: artifacts/canonical/backlog/
+    markdown_root: artifacts/projections/backlog/
+    jira: artifacts/projections/jira-import.json
+    packages: artifacts/packages/
+    shared_memory: _internal/swarm/shared_memory.json
+    nested: Requirement → Epic → Feature → FAC/AAC → Technical-Stories/ST-### → SAC
+    note: Prefix src/ only after resolve says cwd is workspace root.
+    forbid:
+    - src/canonical/
+    - src/src/
+    - flat backlog/Feature, backlog/FAC, backlog/AAC
+    - filenames epic.json / feature.json / requirement.json
+    - writing Markdown from JSON agents
+    - pasting full JSON into Markdown
+  schema:
+    rule: Every JSON artifact must include all skill required_fields, non-empty.
+  naming_refs:
+    rule: Always write human title/name plus id. Never id/number alone.
+    example: Order Capture (FEAT-001)
+  inline_details:
+    rule: Write full business-rule, ADR, and migration details inline. Never "see BR/ADR/migration_strategy".
+  epic_names:
+    when_empty: LLM decides Epic titles.
+    when_provided: Use verbatim titles. One Epic per name. Does not control Feature count.
+  feature_selection:
+    when_empty: LLM decides how many Features each Epic needs.
+    when_provided: Tokens epic-N-feature-M. N=1-based Epic order. M=exact Feature count.
+    example: epic-1-feature-1, epic-2-feature-2
+  story_layer_selection:
+    areas: [UI, BFF/API, Domain, Persistence, Messaging, Testing]
+    when_empty: LLM/Story Decomposer decides selected_areas (not forced to six).
+    when_provided: Tokens epic-N-feature-M-story-<layers>. Only those layers get Stories.
+    example: epic-1-feature-1-story-ui, bff/api
+  markdown:
+    rule: Human-readable headings/lists/tables only. No full JSON dump.
+  retry:
+    rule: Rerun only the named incomplete agent. No max cap until complete.
