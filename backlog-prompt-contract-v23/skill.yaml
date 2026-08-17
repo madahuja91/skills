@@ -1,0 +1,60 @@
+skill:
+  id: backlog-prompt-contract
+  name: Backlog Prompt Contract
+  version: 2.3.0
+  purpose: >
+    Shared execution contract. Load this skill. Do not copy it into prompts.
+  write_path_resolution:
+    first_rule: Path strings that start with src/ are LOGICAL. Resolve before mkdir/write_file.
+    resolve:
+      - If cwd basename is src, OR cwd already contains artifacts/: ACTIVE_ROOT = cwd. Strip leading src/.
+      - Else if ./src exists: ACTIVE_ROOT = ./src.
+      - Else: write artifacts/... under cwd. Never mkdir src. Never src/src.
+  artifact_naming:
+    rule: IDs and folder names are title-based, not EPIC-001 / FEAT-001.
+    pattern:
+      epic: "epic-<verbatim title>"
+      feature: "feature-<verbatim title>"
+      fac: "fac-<feature title>"
+      aac: "aac-<feature title>"
+      story: "story-<story title>"
+      sac: "sac-<criteria title>"
+      requirement: "req-<requirement title>"
+    examples:
+      - epic-System Data Management
+      - feature-Contract pricing
+    folder_file: Folder name equals id. File is <id>.json and matching <id>.md.
+    sanitize: Replace characters \/:*?"<>| with a space. Keep spaces in the title.
+    forbid: [EPIC-001, FEAT-001, FAC-001, AAC-001, ST-001, SAC-001, REQ-001]
+  output_tree:
+    json_root: artifacts/canonical/backlog/
+    markdown_root: artifacts/projections/backlog/
+    nested: >
+      Requirement/req-<title>/req-<title>.json →
+      Epic/epic-<title>/epic-<title>.json →
+      Feature/feature-<title>/feature-<title>.json →
+      FAC/fac-<title>.json, AAC/aac-<title>.json →
+      Technical-Stories/story-<title>/story-<title>.json →
+      SAC/sac-<title>.json
+    markdown_writer: Markdown Renderer only. JSON agents must not skip Markdown Renderer.
+  completeness_after_markdown:
+    rule: After Markdown Renderer returns, Completeness Validator MUST run. Missing or incomplete .md => status=incomplete, owning_agents includes Markdown Renderer, retry_directives to the manager. Never skip Completeness.
+  naming_refs:
+    rule: Refer to artifacts by their title-based id (epic-System Data Management), never EPIC-001.
+  schema:
+    rule: Every JSON artifact must include all skill required_fields, non-empty. id equals the folder name.
+  inline_details:
+    rule: Write full BR/ADR/migration details inline.
+  epic_names:
+    when_empty: LLM decides Epic titles. id = epic-<that title>.
+    when_provided: Use verbatim titles. id = epic-<verbatim title>.
+  feature_selection:
+    when_empty: LLM decides Feature count. Each Feature id = feature-<title>.
+    when_provided: Tokens epic-N-feature-M still mean count only, not folder names.
+  story_layer_selection:
+    when_empty: LLM decides layers.
+    when_provided: Tokens epic-N-feature-M-story-<layers> select layers only.
+  markdown:
+    rule: Human-readable headings/lists/tables. No JSON dump. json_only_no_markdown_writes is forbidden for Markdown Renderer.
+  retry:
+    rule: Rerun only the named incomplete agent.

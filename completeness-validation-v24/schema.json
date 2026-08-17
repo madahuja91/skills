@@ -1,0 +1,43 @@
+{
+  "skill": {
+    "id": "completeness-validation",
+    "name": "Completeness Validation",
+    "version": "2.4.0",
+    "purpose": "Stage-level completeness gate. Never report complete/success when any gap remains.",
+    "output": {
+      "schema": "completeness",
+      "required_fields": [
+        "id",
+        "stage",
+        "status",
+        "json_gaps",
+        "markdown_gaps",
+        "schema_gaps",
+        "content_gaps",
+        "forbidden_reference_hits",
+        "owning_agents",
+        "retry_directives"
+      ]
+    },
+    "status_values": {
+      "allowed": ["complete", "incomplete"],
+      "forbid": ["success", "SUCCESS", "pass", "PASS", "ok"]
+    },
+    "no_false_complete": {
+      "rule": "status=complete only after filesystem verification of every gate. Any gap or skipped inspection => status=incomplete. Never success.",
+      "must_fail_when": [
+        "any skill required_field missing or empty",
+        "any JSON in this stage lacks a same-path Markdown twin",
+        "Technical Story stage and a Feature folder has no Technical-Stories/story-*.json",
+        "Epic-Feature stage and a Feature lacks FAC or AAC JSON",
+        "src/src exists"
+      ]
+    },
+    "after_markdown": {
+      "rule": "Completeness Validator must run after Markdown Renderer. Missing or incomplete Markdown => status=incomplete, owning_agents includes Markdown Renderer, retry_directives tell the stage orchestrator (manager) to retry Markdown Renderer."
+    },
+    "artifact_naming": {
+      "rule": "Folders are epic-<title>, feature-<title>, story-<title>. Never EPIC-001 / FEAT-001 / ST-001."
+    }
+  }
+}

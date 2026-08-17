@@ -1,0 +1,73 @@
+skill:
+  id: completeness-validation
+  name: Completeness Validation
+  version: 2.4.0
+  purpose: Stage-level completeness gate. Never report complete/success when any gap remains.
+  responsibility:
+    owns:
+    - schema field completeness for JSON in this stage
+    - Markdown twin completeness (same nested path, same required fields)
+    - content completeness (business rules, ADR, migration inlined)
+    - naming the owning subagent for each gap
+    - forbidding false complete/success
+    - FAIL if src/src exists
+    does_not_own:
+    - generating backlog content
+    - publishing Jira
+  inputs:
+    required:
+    - stage_artifacts
+    - bound_skill_schemas
+  output:
+    schema: completeness
+    required_fields:
+    - id
+    - stage
+    - status
+    - json_gaps
+    - markdown_gaps
+    - schema_gaps
+    - content_gaps
+    - forbidden_reference_hits
+    - owning_agents
+    - retry_directives
+  status_values:
+    allowed: [complete, incomplete]
+    forbid: [success, SUCCESS, pass, PASS, ok]
+  no_false_complete:
+    rule: status=complete is allowed ONLY after a filesystem pass of every gate below. If any gate fails, or you did not open the files, status MUST be incomplete. Empty gap arrays are not proof of completeness.
+    must_fail_when:
+    - any skill required_field missing or empty
+    - any JSON in this stage lacks a same-path Markdown twin
+    - Markdown does not expose the same required fields
+    - Technical Story stage and a Feature folder has no Technical-Stories/story-*.json
+    - Epic-Feature stage and a Feature lacks FAC or AAC JSON
+    - src/src exists
+    - you guessed without listing the artifact directories
+    retry: Write retry_directives with exact subagent_name + artifact ids + missing fields. Orchestrator (manager) reruns those agents. Do not mark complete to end the stage.
+  after_markdown:
+    rule: Completeness Validator must run after Markdown Renderer. Missing or incomplete Markdown => status=incomplete, owning_agents includes Markdown Renderer, retry_directives tell the stage orchestrator (manager) to retry Markdown Renderer.
+  artifact_naming:
+    rule: Folders are epic-<title>, feature-<title>, story-<title>. Never EPIC-001 / FEAT-001 / ST-001.
+  gates:
+    json:
+    - Every required_field present and non-empty
+    - Nested path matches OUTPUT_TREE
+    active_root:
+    - Exactly one src root (ACTIVE_ROOT)
+    - src/src => status=incomplete
+    markdown:
+    - Matching .md twin exists for every JSON in this stage
+    - Markdown exposes the same required fields (no JSON dump that drops fields)
+    content:
+    - business_rules / ADR / migration fully inlined
+  retry_contract:
+    max_cycles: none
+    rule: Incomplete until every gate passes. Never status=complete or success with remaining gaps.
+  schema_completeness_gate:
+    rule: Completeness report itself must include all required_fields
+  dual_write:
+    json_root: artifacts/canonical/backlog/
+    markdown_root: artifacts/projections/backlog/
+    when: parallel_same_stage_via_markdown_renderer
+    governance_pass_required: false

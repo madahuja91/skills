@@ -1,0 +1,16 @@
+{
+  "skill": {
+    "id": "backlog-prompt-contract",
+    "name": "Backlog Prompt Contract",
+    "version": "2.3.0",
+    "artifact_naming": {
+      "epic": "epic-<verbatim title>",
+      "feature": "feature-<verbatim title>",
+      "examples": ["epic-System Data Management", "feature-Contract pricing"],
+      "forbid": ["EPIC-001", "FEAT-001", "ST-001"]
+    },
+    "completeness_after_markdown": {
+      "rule": "Completeness Validator must run after Markdown Renderer. Missing Markdown => incomplete and retry Markdown Renderer."
+    }
+  }
+}

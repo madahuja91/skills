@@ -1,0 +1,55 @@
+{
+  "skill": {
+    "id": "markdown-rendering",
+    "name": "Markdown Rendering",
+    "version": "2.0.0",
+    "purpose": "Sole Markdown writer (Claude Sonnet 4.5). Render schema-complete human-readable Markdown from backlog JSON. Do not author JSON.",
+    "rules": [
+      "JSON is authoritative.",
+      "Preserve Epic -> Feature -> Story hierarchy.",
+      "Display FAC/AAC at Feature level.",
+      "Display full technical LLD sections at Story level.",
+      "Display SAC at Story level.",
+      "Preserve exact Story area names.",
+      "Do not add content not present in JSON.",
+      "Write src/artifacts/projections/backlog/ folder tree mirroring canonical (Epic/Feature/FAC/AAC/ST/SAC).",
+      "Write folder-tree Markdown under src/artifacts/projections/backlog/ mirroring canonical 1:1 (not a single backlog.md only).",
+      "NEVER remove, drop, merge, or omit any Epic folder under projections/backlog/Epic/.",
+      "Projection Epic count MUST equal canonical Epic count.",
+      "On Governance FAIL leave existing Epic markdown untouched.",
+      "JSON agents write schema-complete JSON under src/artifacts/canonical/backlog/ only. Markdown Renderer (Claude Sonnet 4.5) writes matching .md twins under src/artifacts/projections/backlog/. Do not dual-write Markdown from JSON agents.",
+      "JSON path root: src/artifacts/canonical/backlog/. Markdown path root: src/artifacts/projections/backlog/.",
+      "All skill schema required_fields must be present and non-empty before status=complete; otherwise status=incomplete and retry.",
+      "Never write under src/canonical/ or use flat Feature/FAC/AAC siblings of Epic.",
+      "Markdown Renderer creates/reconciles Markdown as soon as canonical JSON exists; strictly mirror required schema fields.",
+      "You ALWAYS write .md twins. json_only_no_markdown_writes is forbidden. Do not skip because validation.json is missing or not PASS.",
+      "The JSON-agent do-not-write-Markdown rule does not apply to Markdown Renderer.",
+      "Reconcile missing .md files under src/artifacts/projections/backlog/ to match canonical nested tree 1:1.",
+      "Write src/artifacts/projections/backlog/ folder tree (not only backlog.md).",
+      "Never paste a full JSON object or JSON code fence of the source artifact into Markdown.",
+      "When mentioning Epic/Feature/FAC/AAC/Story/SAC, write title/name plus id, never the id alone."
+    ],
+    "dual_write": {
+      "json_root": "src/artifacts/canonical/backlog/",
+      "markdown_root": "src/artifacts/projections/backlog/",
+      "when": "markdown_renderer_only",
+      "governance_pass_required": false
+    },
+    "schema_completeness_gate": {
+      "rule": "STRICT schema compliance — All output.required_fields must be present and non-empty before status=complete; never rename/drop/stub required fields"
+    },
+    "feature_selection": {
+      "input": "feature_selection",
+      "epic_names_unchanged": true,
+      "when_empty": "LLM decides how many Features each Epic needs from evidence.",
+      "when_provided": "Tokens epic-N-feature-M. N=1-based Epic order; M=exact Feature count."
+    },
+    "story_layer_selection": {
+      "input": "story_layer_selection",
+      "when_empty": "LLM decides selected_areas per Feature.",
+      "when_provided": "Tokens epic-N-feature-M-story-<layers>. Only those layers get Stories."
+    },
+    "human_readable_refs": "Never refer to Epic/Feature/FAC/AAC/Story/SAC by ID alone; always include the human title/name with the id.",
+    "markdown_no_json_dump": "Never paste full JSON into Markdown. JSON already exists in canonical files."
+  }
+}
