@@ -38,7 +38,7 @@ skill:
       SAC/sac-<title>.json
     markdown_writer: Markdown Renderer only. JSON agents must not skip Markdown Renderer.
   completeness_after_markdown:
-    rule: After Markdown Renderer returns, Completeness Validator MUST run. Missing or incomplete .md => status=incomplete, owning_agents includes Markdown Renderer, retry_directives to the manager. Never skip Completeness.
+    rule: Markdown Renderer and Completeness Validator are subagents of the stage orchestrator. Completeness checks ALL files (JSON + Markdown). The manager dispatches JSON writers, then Markdown Renderer, then Completeness. json_gaps name the JSON owner; markdown_gaps name Markdown Renderer. Never skip Completeness.
   naming_refs:
     rule: Refer to artifacts by their title-based id (epic-System Data Management), never EPIC-001.
   schema:

@@ -10,7 +10,7 @@
       "forbid": ["EPIC-001", "FEAT-001", "ST-001"]
     },
     "completeness_after_markdown": {
-      "rule": "Completeness Validator must run after Markdown Renderer. Missing Markdown => incomplete and retry Markdown Renderer."
+      "rule": "Markdown Renderer and Completeness Validator are subagents. Completeness checks ALL files. json_gaps name the JSON owner; markdown_gaps name Markdown Renderer."
     }
   }
 }

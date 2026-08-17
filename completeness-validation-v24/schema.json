@@ -34,7 +34,7 @@
       ]
     },
     "after_markdown": {
-      "rule": "Completeness Validator must run after Markdown Renderer. Missing or incomplete Markdown => status=incomplete, owning_agents includes Markdown Renderer, retry_directives tell the stage orchestrator (manager) to retry Markdown Renderer."
+      "rule": "Completeness Validator is a subagent of the stage orchestrator. It checks ALL files. json_gaps name the JSON owner; markdown_gaps name Markdown Renderer."
     },
     "artifact_naming": {
       "rule": "Folders are epic-<title>, feature-<title>, story-<title>. Never EPIC-001 / FEAT-001 / ST-001."

@@ -1,24 +1,29 @@
 ---
 name: completeness-validation-v24
 description: >-
-  Stage-level completeness gate. Always run after Markdown Renderer. Never report complete when JSON or Markdown is incomplete. Inform the manager to retry Markdown Renderer when .md twins are missing.
+  Stage-level completeness gate. Subagent of the stage orchestrator. Check ALL files (JSON and Markdown). Retry the owning subagent for each gap.
 ---
 
 # Completeness Validation
 
 Load this skill. Do not copy it into prompts.
 
-## Always after Markdown Renderer
+## You are a subagent of the manager
 
-On Epic-Feature and Technical Story, you are a sequential node after Markdown Renderer. You always run. You are not an optional subagent.
+You hang under the stage orchestrator (`parent` → `subagent`), same as Epic Agent, Feature Agent, and Markdown Renderer. You are not a sequential default agent and you are not nested under Markdown Renderer.
 
-If any canonical JSON in this stage lacks a same-path `.md` twin, or the Markdown is a stub/JSON dump/empty, then:
-- `status=incomplete` (never `complete` or `success`)
-- `markdown_gaps` lists the missing/incomplete files
-- `owning_agents` includes `Markdown Renderer`
-- `retry_directives` tell the **stage orchestrator (manager)** to retry **Markdown Renderer** only
+The manager must dispatch you after the JSON specialists and Markdown Renderer. You still check **every** file this stage owns.
 
-Do not skip this gate. Do not mark complete because JSON exists.
+## Stage gate for ALL files
+
+Inspect JSON and Markdown. Gaps name the real owner:
+
+- Missing/empty JSON `required_field` → owning JSON agent (Epic Agent, Feature Agent, FAC Agent, Story agent, …)
+- Missing FAC/AAC or `story-<title>` JSON → owning JSON agent
+- Missing or stub `.md` twin → **Markdown Renderer**
+- `src/src` → `status=incomplete`
+
+`status=incomplete`. `retry_directives` tell the **manager** which subagent to rerun. Never treat Completeness as Markdown-only.
 
 ## Title-based folders
 
@@ -28,7 +33,7 @@ Expected ids/folders: `epic-System Data Management`, `feature-Contract pricing`,
 
 `status` is only `complete` or `incomplete`. Never `success` / `PASS`.
 
-`complete` is allowed only after you list the stage directories and verify every bound-skill `required_field` on disk. If any required field is missing, any Markdown twin is missing, any Feature in Technical Story has no `Technical-Stories/story-*.json`, or `src/src` exists → `status=incomplete` with `retry_directives`. Empty gap arrays are not a pass if you did not inspect the files.
+`complete` is allowed only after you list the stage directories and verify every bound-skill `required_field` on disk. Empty gap arrays are not a pass if you did not inspect the files.
 
 ## Gates
 - JSON: every `required_field` present and non-empty

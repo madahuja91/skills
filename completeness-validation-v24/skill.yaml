@@ -46,7 +46,7 @@ skill:
     - you guessed without listing the artifact directories
     retry: Write retry_directives with exact subagent_name + artifact ids + missing fields. Orchestrator (manager) reruns those agents. Do not mark complete to end the stage.
   after_markdown:
-    rule: Completeness Validator must run after Markdown Renderer. Missing or incomplete Markdown => status=incomplete, owning_agents includes Markdown Renderer, retry_directives tell the stage orchestrator (manager) to retry Markdown Renderer.
+    rule: Completeness Validator is a subagent of the stage orchestrator, not a sequential node after Markdown Renderer. The manager dispatches JSON writers, then Markdown Renderer, then Completeness. Completeness checks ALL files. json_gaps name the JSON owner; markdown_gaps name Markdown Renderer.
   artifact_naming:
     rule: Folders are epic-<title>, feature-<title>, story-<title>. Never EPIC-001 / FEAT-001 / ST-001.
   gates:

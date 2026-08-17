@@ -1,7 +1,7 @@
 ---
 name: backlog-prompt-contract-v23
 description: >-
-  Shared backlog contract. Title-based artifact ids (epic-System Data Management, feature-Contract pricing). Completeness must run after Markdown Renderer.
+  Shared backlog contract. Title-based artifact ids (epic-System Data Management, feature-Contract pricing). Markdown Renderer and Completeness Validator are subagents. Completeness checks all files.
 ---
 
 # Backlog Prompt Contract
@@ -19,8 +19,8 @@ If cwd is `src`, write `artifacts/...` (never `src/artifacts/...`, never `src/sr
 - Requirement: `req-<title>`
 Forbidden: `EPIC-001`, `FEAT-001`, `ST-001`. Sanitize `\/:*?"<>|` only; keep spaces.
 
-## Completeness after Markdown
-Markdown Renderer writes `.md` twins. Completeness Validator **must run after** that. Incomplete/missing Markdown → `status=incomplete`, tell the manager (`retry_directives`, owning agent = Markdown Renderer). Never skip Completeness. Never `json_only_no_markdown_writes`.
+## Completeness (subagent, all files)
+Markdown Renderer and Completeness Validator are **subagents** of the stage orchestrator, same as JSON agents. Completeness is the stage gate for **all** files (JSON + Markdown), not a Markdown-only step. The manager dispatches JSON writers, then Markdown Renderer, then Completeness Validator. json_gaps → owning JSON agent. markdown_gaps → Markdown Renderer. Never skip Completeness. Never `json_only_no_markdown_writes`.
 
 ## Schema, names, retry
 Required fields non-empty. `id` equals folder name. Retry only the named agent.

@@ -15,7 +15,7 @@ Forbidden:
 
 Jira waits for Governance PASS. Markdown does not.
 
-Folders follow title-based ids: `epic-System Data Management`, `feature-Contract pricing`, `story-<title>`. Completeness Validator runs after you and will status=incomplete if any `.md` twin is missing.
+Folders follow title-based ids: `epic-System Data Management`, `feature-Contract pricing`, `story-<title>`. You are a subagent. Completeness Validator is a separate subagent that checks JSON and Markdown after the manager dispatches it.
 
 # Markdown Rendering
 
